@@ -2,13 +2,13 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>x3ero0&#39;s blog</title>
-    <link>http://x3ero0.tech/</link>
+    <link>https://x3ero0.tech/</link>
     <description>Recent content on x3ero0&#39;s blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <copyright>Copyright © 2008–2019</copyright>
     
-	<atom:link href="http://x3ero0.tech/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://x3ero0.tech/index.xml" rel="self" type="application/rss+xml" />
     
     
   </channel>
