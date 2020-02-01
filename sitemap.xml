@@ -3,19 +3,19 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
-    <loc>http://localhost:4141/index.html/categories/</loc>
+    <loc>https://x3ero0.github.io/categories/</loc>
   </url>
   
   <url>
-    <loc>http://localhost:4141/index.html/series/</loc>
+    <loc>https://x3ero0.github.io/series/</loc>
   </url>
   
   <url>
-    <loc>http://localhost:4141/index.html/tags/</loc>
+    <loc>https://x3ero0.github.io/tags/</loc>
   </url>
   
   <url>
-    <loc>http://localhost:4141/index.html/</loc>
+    <loc>https://x3ero0.github.io/</loc>
   </url>
   
 </urlset>
