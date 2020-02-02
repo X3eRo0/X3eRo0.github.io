@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>x3ero0&#39;s blog</title>
-    <link>https://x3ero0.tech/</link>
-    <description>Recent content on x3ero0&#39;s blog</description>
+    <title>Posts on x3ero0&#39;s blog</title>
+    <link>https://x3ero0.tech/posts/</link>
+    <description>Recent content in Posts on x3ero0&#39;s blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <copyright>Copyright © 2008–2019</copyright>
     <lastBuildDate>Sun, 02 Feb 2020 06:34:52 +0000</lastBuildDate>
     
-	<atom:link href="https://x3ero0.tech/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://x3ero0.tech/posts/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
@@ -22,15 +22,6 @@
 ───▄▄██▌█ BEEP BEEP
 ▄▄▄▌▐██▌█ POOR SCRIPTING DELIVERY ███████▌█▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄​▄▄▄▄▄▄▌
 ▀(@)▀▀▀▀▀▀▀(@)(@)▀▀▀▀▀▀▀▀▀▀▀▀▀​▀▀▀▀(@)▀ so I made a poor packer which is available here packer.</description>
-    </item>
-    
-    <item>
-      <title>Crackmes</title>
-      <link>https://x3ero0.tech/crackmes/</link>
-      <pubDate>Sat, 01 Feb 2020 23:37:00 +0530</pubDate>
-      
-      <guid>https://x3ero0.tech/crackmes/</guid>
-      <description>======== ========= === ======== === === ==== ==== =================== :+: :+: :+: :+: :+: :+: :+: :+: :+: :+: +:+:+: :+:+:+ :+: :+: :+: +:+ +:+ +:+ +:+ +:+ +:+ +:+ +:+ +:+ +:+:+ +:+ +:+ +:+ +#+ +#++:++#: +#++:++#++: +#+ +#++:++ +#+ +:+ +#+ +#++:++# +#++:++#++ +#+ +#+ +#+ +#+ +#+ +#+ +#+ +#+ +#+ +#+ +#+ +#+ #+# #+# #+# #+# #+# #+# #+# #+# #+# #+# #+# #+# #+# #+# #+# ######## ### ### ### ### ######## ### ### ### ### ########## ########   Crackmes</description>
     </item>
     
   </channel>

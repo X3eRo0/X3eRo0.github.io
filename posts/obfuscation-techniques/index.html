@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+	<meta charset="utf-8">
+	<meta name="description" content='X3eRo0&#39;s Blog about Reverse Engineering'>
+	<meta name="keywords" content='X3eRo0, Reverse, Reverse Engineering, Crackmes, blog'>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" type="text/css" href='https://x3ero0.tech/css/bootstrap.min.css'>
+	<title>Obfuscation_Techniques</title>
+	<nav class="navbar text-center sticky-top bg-white mt-2 mb-1">
+		<a href='https://x3ero0.tech/'><span class="btn btn-sm btn-outline-primary">Home</span></a>
+		<a href='https://x3ero0.tech/crackmes'><span class="btn btn-sm btn-outline-secondary">Crackmes</span></a>
+		<a href='https://x3ero0.tech/posts'><span class="btn btn-sm btn-outline-success">Blog</span></a>
+		<a href='https://x3ero0.tech/tags'><span class="btn btn-sm btn-outline-warning">Tags</span></a>
+	</nav>
+</head>
+<body>
+      <div id="content">
+
+
+	<section class="container text-justified mt-3">
+	  <h2 class="text-center mb-4">Obfuscation_Techniques</h2>
+	    <div class="text-monospace">
+			<p>Recently I was watching <a href="https://www.youtube.com/user/GynvaelEN">GynvaelEN&rsquo;s</a> Old <a href="https://www.youtube.com/watch?v=5RK7sYTOeNk">Stream</a> about ELF Packers, and I thought why not make a PE Packer. I decided that I will write a python script to Parse PE Headers from scratch, I was able to parse some headers and then I got stuck and decided that I will use <a href="https://github.com/erocarrera/pefile">PEFILE</a>.
+──────▄▌▐▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀​▀▀▀▀▀▀▌<br>
+───▄▄██▌█ BEEP BEEP<br>
+▄▄▄▌▐██▌█ POOR SCRIPTING DELIVERY
+███████▌█▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄​▄▄▄▄▄▄▌<br>
+▀(@)▀▀▀▀▀▀▀(@)(@)▀▀▀▀▀▀▀▀▀▀▀▀▀​▀▀▀▀(@)▀
+so I made a poor packer which is available here <a href="https://github.com/X3eRo0/packer/">packer</a>.
+Keep in mind it only works for some 32bit Windows Executables.
+Now the question comes that what are some anti-debugging techniques in windows like we have in Linux.</p>
+<p>I looked around on the internet and found some techniques. I will keep updating this post as I find more techniques</p>
+<hr>
+<h2 id="windows">Windows</h2>
+<ol>
+<li><strong>BeingDebugged in PEB</strong>:</li>
+</ol>
+<pre><code>struct _PEB {
+    0x000 BYTE InheritedAddressSpace;
+    0x001 BYTE ReadImageFileExecOptions;
+    0x002 BYTE BeingDebugged; // fs:[0x30]
+    ..... .... ..............
+    ..... .... ..............
+    ..... .... ..............
+    ..... .... ..............
+	0x204 void* SystemAssemblyStorageMap;
+    0x208 DWORD MinimumStackCommit;
+);
+</code></pre><p>you can access the Process Environment Block in assembly using &ldquo;fs&rdquo;.
+the following inline assembly code fetches the value of BeingDebugged</p>
+<pre><code>/* MINGW add -masm=intel while compiling */
+BOOL found = FALSE;
+__asm__(
+	&quot;xor eax, eax\n&quot;
+	&quot;mov eax, fs:[0x30]\n&quot;
+	&quot;mov eax, [eax + 0x02]\n&quot;
+	&quot;and eax, 0x000000FF\n&quot;
+	&quot;mov %0, eax\n&quot; :&quot;=r&quot; (found)
+);
+if(found){
+	printf(&quot;YES\n&quot;);
+} else {
+	printf(&quot;NO\n&quot;);
+}
+
+</code></pre><pre><code>/* VISUALC++ */
+BOOL found = FALSE;
+_asm
+{
+	xor eax, eax; 			// clear eax
+	mov eax, fs:[0x30]; 	// Reference start of the PEB
+	mov eax, [eax + 0x02]; 	// PEB+2 points to BeingDebugged
+	and eax, 0x000000FF; 	// only reference one byte
+	mov found, eax; 		// Copy BeingDebugged into 'found'
+}
+if(found){
+	printf(&quot;YES\n&quot;);
+} else {
+	printf(&quot;NO\n&quot;);
+}
+
+</code></pre><ol start="2">
+<li><strong>Detecting Breakpoints :</strong></li>
+</ol>
+<pre><code>/* VISUALC++ */
+void detect_breakpoint() {
+	BOOL found = TRUE;
+	__try {
+		_asm {
+			int 3; // \xCC
+		}
+	}
+	__except (EXCEPTION_EXECUTE_HANDLER) {
+		found = FALSE;
+	}
+	if (found) {
+		printf(&quot;NO DEBUGGING\n&quot;);
+	} else {
+		printf(&quot;GOOD\n&quot;);
+	}
+}
+</code></pre><ol start="3">
+<li><strong>Erase PE Headers From Memory:</strong></li>
+</ol>
+<blockquote>
+<p>This trick helps in ruining any attempt of dumping unpacked binary from memory</p>
+</blockquote>
+<pre><code>// from AntiRE.h
+inline void ErasePEHeaderFromMemory()
+{
+	DWORD OldProtect = 0;
+	
+	// Get base address of module
+	char *pBaseAddr = (char*)GetModuleHandle(NULL);
+
+	// Change memory protection
+	VirtualProtect(pBaseAddr, 4096, // Assume x86 page size
+			PAGE_READWRITE, &amp;OldProtect);
+
+	// Erase the header
+	ZeroMemory(pBaseAddr, 4096);
+}
+
+</code></pre><ol start="4">
+<li><strong>OutputDebugString() :</strong></li>
+</ol>
+<blockquote>
+<p>CheckOutputDebugString checks whether OutputDebugString causes an error to occur or not .if the error does occur then we know there&rsquo;s no debugger, otherwise if there IS a debugger no error will occur</p>
+</blockquote>
+<pre><code>inline bool CheckOutputDebugString(LPCTSTR String)
+{
+	OutputDebugString(String);
+	if (GetLastError() == 0)
+		return true;
+	else
+		return false;
+}
+</code></pre><h2 id="linux">LINUX</h2>
+<ol>
+<li><strong>Ptrace :</strong></li>
+</ol>
+<pre><code>/* trying-to-make-your-binary-shut-up.txt : https://www.exploit-db.com/raw/13188 */
+#include &lt;stdio.h&gt;
+#include &lt;sys/ptrace.h&gt;
+
+void main(void)
+{
+ FILE *fd;
+ if (ptrace(PTRACE_TRACEME, 0, 1, 0) == -1)
+ {
+   printf(&quot;so you wanna trace me?...\n&quot;);
+   return(-1);
+ }
+
+ fd = fopen(&quot;/etc/passwd&quot;, &quot;r&quot;);
+ if(fd == NULL) return;
+ else printf(&quot;file opend\n&quot;);
+ exit(-1);
+}
+</code></pre><ol start="2">
+<li>You Tell</li>
+</ol>
+
+		</div>
+	</section>
+
+
+      </div>
+  </body><footer>
+  <div class="container-fluid bg-dark text-white text-monospace text-center mt-4">
+    <small> Last Crackme Uploaded: <a href="https://github.com/X3eRo0/Crackmes/raw/master/Crackmes/X3eRo0/not%20so%20good%20encryption/nsge.zip/" style="color:#ffffff">Not So Good Encryption</a> </small>
+  </div>
+</footer>
+</html>
