@@ -19,9 +19,9 @@
       
       <guid>https://x3ero0.tech/posts/obfuscation-techniques/</guid>
       <description>Recently I was watching GynvaelEN&amp;rsquo;s Old Stream about ELF Packers, and I thought why not make a PE Packer. I decided that I will write a python script to Parse PE Headers from scratch, I was able to parse some headers and then I got stuck and decided that I will use PEFILE.
-──────▄▌▐▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀​▀▀▀▀▀▀▌
-───▄▄██▌█ BEEP BEEP ▄▄▄▌▐██▌█ POOR SCRIPT DELIVERY
-███████▌█▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄​▄▄▄▄▄▄▌ ▀(@)▀▀▀▀▀▀▀(@)(@)▀▀▀▀▀▀▀▀▀▀▀▀▀​▀▀▀▀(@)▀ so I made a poor packer which is available here packer.</description>
+──────▄▌▐▀▀▀▀▀▀▀▀▀▀▀▀▀​▀▀▀▀▀▀▌
+───▄▄██▌█ BEEP BEEP ▄▄▄▌▐██▌█ POOR SCRIPT AHEAD
+███████▌█▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▌ ▀(@)▀▀▀▀▀▀▀(@)(@)▀▀▀▀▀▀▀▀(@)▀ so I made a poor packer which is available here packer.</description>
     </item>
     
     <item>
