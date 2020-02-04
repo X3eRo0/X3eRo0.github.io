@@ -387,17 +387,6 @@ a.close.disabled {
 }
 
 
-.btn {
-    background-color: transparent;
-    color: #fff;
-    border-radius: 3px;
-    padding: .5em 2em;
-    -webkit-transition: all .2s;
-    transition: all .2s;
-    outline: 0;
-    font-weight: 700
-}
-
 .btn:hover {
     -webkit-transform: translateY(-2px);
     transform: translateY(-2px);
