@@ -7,10 +7,19 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <copyright>Copyright © 2008–2019</copyright>
-    <lastBuildDate>Sun, 02 Feb 2020 06:34:52 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 04 Feb 2020 20:07:32 +0530</lastBuildDate>
     
 	<atom:link href="https://x3ero0.tech/posts/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Lol</title>
+      <link>https://x3ero0.tech/posts/lol/</link>
+      <pubDate>Tue, 04 Feb 2020 20:07:32 +0530</pubDate>
+      
+      <guid>https://x3ero0.tech/posts/lol/</guid>
+      <description></description>
+    </item>
     
     <item>
       <title>Obfuscation_Techniques</title>
@@ -30,7 +39,7 @@
       <pubDate>Sat, 01 Feb 2020 23:37:00 +0530</pubDate>
       
       <guid>https://x3ero0.tech/posts/crackmes/</guid>
-      <description>======== ========= === ======== === === ==== ==== =================== :+: :+: :+: :+: :+: :+: :+: :+: :+: :+: +:+:+: :+:+:+ :+: :+: :+: +:+ +:+ +:+ +:+ +:+ +:+ +:+ +:+ +:+ +:+:+ +:+ +:+ +:+ +#+ +#++:++#: +#++:++#++: +#+ +#++:++ +#+ +:+ +#+ +#++:++# +#++:++#++ +#+ +#+ +#+ +#+ +#+ +#+ +#+ +#+ +#+ +#+ +#+ +#+ #+# #+# #+# #+# #+# #+# #+# #+# #+# #+# #+# #+# #+# #+# #+# ######## ### ### ### ### ######## ### ### ### ### ########## ########   Crackmes</description>
+      <description>======== ========= === ======== === === ==== ==== =================== :+: :+: :+: :+: :+: :+: :+: :+: :+: :+: +:+:+: :+:+:+ :+: :+: :+: +:+ +:+ +:+ +:+ +:+ +:+ +:+ +:+ +:+ +:+:+ +:+ +:+ +:+ +#+ +#++:++#: +#++:++#++: +#+ +#++:++ +#+ +:+ +#+ +#++:++# +#++:++#++ +#+ +#+ +#+ +#+ +#+ +#+ +#+ +#+ +#+ +#+ +#+ +#+ #+# #+# #+# #+# #+# #+# #+# #+# #+# #+# #+# #+# #+# #+# #+# ######## ### ### ### ### ######## ### ### ### ### ########## ########   &#34;</description>
     </item>
     
   </channel>
