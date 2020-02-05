@@ -47,9 +47,7 @@ Now the question comes that what are some anti-debugging techniques in windows l
 <p>I looked around on the internet and found some techniques. I will keep updating this post as I find more techniques</p>
 <hr>
 <h2 id="windows">Windows</h2>
-<ol>
-<li><strong>BeingDebugged in PEB</strong>:</li>
-</ol>
+<p><strong>1. BeingDebugged in PEB</strong>:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#66d9ef">struct</span> _PEB {
     <span style="color:#ae81ff">0x000</span> BYTE InheritedAddressSpace;
     <span style="color:#ae81ff">0x001</span> BYTE ReadImageFileExecOptions;
@@ -94,9 +92,7 @@ _asm
 	printf(<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">NO</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>);
 }
 
-</code></pre></div><ol start="2">
-<li><strong>Detecting Breakpoints :</strong></li>
-</ol>
+</code></pre></div><p><strong>2. Detecting Breakpoints :</strong></p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#75715e">/* VISUALC++ */</span>
 <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">detect_breakpoint</span>() {
 	BOOL found <span style="color:#f92672">=</span> TRUE;
@@ -114,9 +110,7 @@ _asm
 		printf(<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">GOOD</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>);
 	}
 }
-</code></pre></div><ol start="3">
-<li><strong>Erase PE Headers From Memory:</strong></li>
-</ol>
+</code></pre></div><p><strong>3. Erase PE Headers From Memory:</strong></p>
 <blockquote>
 <p>This trick helps in ruining any attempt of dumping unpacked binary from memory</p>
 </blockquote>
@@ -136,9 +130,7 @@ _asm
 </span><span style="color:#75715e"></span>	ZeroMemory(pBaseAddr, <span style="color:#ae81ff">4096</span>);
 }
 
-</code></pre></div><ol start="4">
-<li><strong>OutputDebugString() :</strong></li>
-</ol>
+</code></pre></div><p><strong>4. OutputDebugString() :</strong></p>
 <blockquote>
 <p>CheckOutputDebugString checks whether OutputDebugString causes an error to occur or not .if the error does occur then we know there&rsquo;s no debugger, otherwise if there IS a debugger no error will occur</p>
 </blockquote>
@@ -172,9 +164,7 @@ _asm
  <span style="color:#66d9ef">else</span> printf(<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">file opend</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>);
  exit(<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>);
 }
-</code></pre></div><ol start="2">
-<li><strong>You Tell :</strong></li>
-</ol>
+</code></pre></div><p><strong>2. You Tell :</strong></p>
 
 		</div>
 	</section>
