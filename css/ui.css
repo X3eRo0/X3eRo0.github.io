@@ -24,6 +24,10 @@
     margin-right: 10px;
 }
 
+strong {
+	color: #000000;
+}
+
 pre {
 	margin: auto;
 	width: 90%;
