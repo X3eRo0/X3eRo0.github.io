@@ -32,5 +32,27 @@ X3eRo0 recently released a Paid Software at a price of $31337. Now we Know its v
 X3eRo0 recently learned about Virtual-Machine Based protection so he made a little Crackme challenge for you. this VM only has simple opcodes like mov, and, xor. NO JMPs or CALLS. The bytecode literally contains the hint.</description>
     </item>
     
+    <item>
+      <title>[0x003] Not So Good Encryption</title>
+      <link>https://x3ero0.tech/crackmes/not_so_good_encryption/</link>
+      <pubDate>Wed, 05 Feb 2020 05:06:29 +0000</pubDate>
+      
+      <guid>https://x3ero0.tech/crackmes/not_so_good_encryption/</guid>
+      <description>[Not So Good Encryption]Download Filesbody{color : #000000;}p { color: #000000;font-family: Inconsolata Bold,monospace;font-size: 17px;line-height: 1em;text-align: justify;text-justify: inter-word; }li {margin: 0;padding: 0.2em;}
+Very Simple Crackme :)
+Crackme : Not So Good EncryptionDifficulty : EasyPlatform : LinuxPoints : 3/10 Date : 2020-02-02 Objective : Find the Correct password which gives a &amp;#39;Correct Password&amp;#39; Message </description>
+    </item>
+    
+    <item>
+      <title>[0x004] Easy Licensing</title>
+      <link>https://x3ero0.tech/crackmes/easy_licensing/</link>
+      <pubDate>Wed, 05 Feb 2020 05:06:29 +0000</pubDate>
+      
+      <guid>https://x3ero0.tech/crackmes/easy_licensing/</guid>
+      <description>[Easy Licensing]Download Filesbody{color : #000000;}p { color: #000000;font-family: Inconsolata Bold,monospace;font-size: 17px;line-height: 1em;text-align: justify;text-justify: inter-word; }li {margin: 0;padding: 0.2em;}
+Another Shitty Password Checking
+Crackme : Easy LicensingDifficulty : EasyPlatform : LinuxPoints : 3/10 Date : 2020-02-02 Objective : Find the Correct password which gives a &amp;#39;Correct Password!</description>
+    </item>
+    
   </channel>
 </rss>
