@@ -50,129 +50,129 @@ Now the question comes that what are some anti-debugging techniques in windows l
 <ol>
 <li><strong>BeingDebugged in PEB</strong>:</li>
 </ol>
-<pre><code>struct _PEB {
-    0x000 BYTE InheritedAddressSpace;
-    0x001 BYTE ReadImageFileExecOptions;
-    0x002 BYTE BeingDebugged; // fs:[0x30]
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#66d9ef">struct</span> _PEB {
+    <span style="color:#ae81ff">0x000</span> BYTE InheritedAddressSpace;
+    <span style="color:#ae81ff">0x001</span> BYTE ReadImageFileExecOptions;
+    <span style="color:#ae81ff">0x002</span> BYTE BeingDebugged; <span style="color:#75715e">// fs:[0x30]
+</span><span style="color:#75715e"></span>    ..... .... ..............
     ..... .... ..............
     ..... .... ..............
     ..... .... ..............
-    ..... .... ..............
-    0x204 void* SystemAssemblyStorageMap;
-    0x208 DWORD MinimumStackCommit;
+    <span style="color:#ae81ff">0x204</span> <span style="color:#66d9ef">void</span><span style="color:#f92672">*</span> SystemAssemblyStorageMap;
+    <span style="color:#ae81ff">0x208</span> DWORD MinimumStackCommit;
 );
-</code></pre><p>you can access the Process Environment Block in assembly using &ldquo;fs&rdquo;.
+</code></pre></div><p>you can access the Process Environment Block in assembly using &ldquo;fs&rdquo;.
 the following inline assembly code fetches the value of BeingDebugged</p>
-<pre><code>/* MINGW add -masm=intel while compiling */
-BOOL found = FALSE;
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#75715e">/* MINGW add -masm=intel while compiling */</span>
+BOOL found <span style="color:#f92672">=</span> FALSE;
 __asm__(
-	&quot;xor eax, eax\n&quot;
-	&quot;mov eax, fs:[0x30]\n&quot;
-	&quot;mov eax, [eax + 0x02]\n&quot;
-	&quot;and eax, 0x000000FF\n&quot;
-	&quot;mov %0, eax\n&quot; :&quot;=r&quot; (found)
+	<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">xor eax, eax</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>
+	<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">mov eax, fs:[0x30]</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>
+	<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">mov eax, [eax + 0x02]</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>
+	<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">and eax, 0x000000FF</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>
+	<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">mov %0, eax</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span> <span style="color:#f92672">:</span><span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">=r</span><span style="color:#e6db74">&#34;</span> (found)
 );
-if(found){
-	printf(&quot;YES\n&quot;);
-} else {
-	printf(&quot;NO\n&quot;);
+<span style="color:#66d9ef">if</span>(found){
+	printf(<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">YES</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>);
+} <span style="color:#66d9ef">else</span> {
+	printf(<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">NO</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>);
 }
 
-</code></pre><pre><code>/* VISUALC++ */
-BOOL found = FALSE;
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#75715e">/* VISUALC++ */</span>
+BOOL found <span style="color:#f92672">=</span> FALSE;
 _asm
 {
-	xor eax, eax; 			// clear eax
-	mov eax, fs:[0x30]; 	// Reference start of the PEB
-	mov eax, [eax + 0x02]; 	// PEB+2 points to BeingDebugged
-	and eax, 0x000000FF; 	// only reference one byte
-	mov found, eax; 		// Copy BeingDebugged into 'found'
-}
-if(found){
-	printf(&quot;YES\n&quot;);
-} else {
-	printf(&quot;NO\n&quot;);
+	xor eax, eax; 			<span style="color:#75715e">// clear eax
+</span><span style="color:#75715e"></span>	mov eax, fs:[<span style="color:#ae81ff">0x30</span>]; 	<span style="color:#75715e">// Reference start of the PEB
+</span><span style="color:#75715e"></span>	mov eax, [eax <span style="color:#f92672">+</span> <span style="color:#ae81ff">0x02</span>]; 	<span style="color:#75715e">// PEB+2 points to BeingDebugged
+</span><span style="color:#75715e"></span>	and eax, <span style="color:#ae81ff">0x000000FF</span>; 	<span style="color:#75715e">// only reference one byte
+</span><span style="color:#75715e"></span>	mov found, eax; 		<span style="color:#75715e">// Copy BeingDebugged into &#39;found&#39;
+</span><span style="color:#75715e"></span>}
+<span style="color:#66d9ef">if</span>(found){
+	printf(<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">YES</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>);
+} <span style="color:#66d9ef">else</span> {
+	printf(<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">NO</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>);
 }
 
-</code></pre><ol start="2">
+</code></pre></div><ol start="2">
 <li><strong>Detecting Breakpoints :</strong></li>
 </ol>
-<pre><code>/* VISUALC++ */
-void detect_breakpoint() {
-	BOOL found = TRUE;
-	__try {
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#75715e">/* VISUALC++ */</span>
+<span style="color:#66d9ef">void</span> <span style="color:#a6e22e">detect_breakpoint</span>() {
+	BOOL found <span style="color:#f92672">=</span> TRUE;
+	<span style="color:#66d9ef">__try</span> {
 		_asm {
-			int 3; // \xCC
-		}
+			<span style="color:#66d9ef">int</span> <span style="color:#ae81ff">3</span>; <span style="color:#75715e">// \xCC
+</span><span style="color:#75715e"></span>		}
 	}
-	__except (EXCEPTION_EXECUTE_HANDLER) {
-		found = FALSE;
+	<span style="color:#66d9ef">__except</span> (EXCEPTION_EXECUTE_HANDLER) {
+		found <span style="color:#f92672">=</span> FALSE;
 	}
-	if (found) {
-		printf(&quot;NO DEBUGGING\n&quot;);
-	} else {
-		printf(&quot;GOOD\n&quot;);
+	<span style="color:#66d9ef">if</span> (found) {
+		printf(<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">NO DEBUGGING</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>);
+	} <span style="color:#66d9ef">else</span> {
+		printf(<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">GOOD</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>);
 	}
 }
-</code></pre><ol start="3">
+</code></pre></div><ol start="3">
 <li><strong>Erase PE Headers From Memory:</strong></li>
 </ol>
 <blockquote>
 <p>This trick helps in ruining any attempt of dumping unpacked binary from memory</p>
 </blockquote>
-<pre><code>// from AntiRE.h
-inline void ErasePEHeaderFromMemory()
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#75715e">// from AntiRE.h
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">inline</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">ErasePEHeaderFromMemory</span>()
 {
-	DWORD OldProtect = 0;
+	DWORD OldProtect <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>;
 	
-	// Get base address of module
-	char *pBaseAddr = (char*)GetModuleHandle(NULL);
+	<span style="color:#75715e">// Get base address of module
+</span><span style="color:#75715e"></span>	<span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span>pBaseAddr <span style="color:#f92672">=</span> (<span style="color:#66d9ef">char</span><span style="color:#f92672">*</span>)GetModuleHandle(NULL);
 
-	// Change memory protection
-	VirtualProtect(pBaseAddr, 4096, // Assume x86 page size
-			PAGE_READWRITE, &amp;OldProtect);
+	<span style="color:#75715e">// Change memory protection
+</span><span style="color:#75715e"></span>	VirtualProtect(pBaseAddr, <span style="color:#ae81ff">4096</span>, <span style="color:#75715e">// Assume x86 page size
+</span><span style="color:#75715e"></span>			PAGE_READWRITE, <span style="color:#f92672">&amp;</span>OldProtect);
 
-	// Erase the header
-	ZeroMemory(pBaseAddr, 4096);
+	<span style="color:#75715e">// Erase the header
+</span><span style="color:#75715e"></span>	ZeroMemory(pBaseAddr, <span style="color:#ae81ff">4096</span>);
 }
 
-</code></pre><ol start="4">
+</code></pre></div><ol start="4">
 <li><strong>OutputDebugString() :</strong></li>
 </ol>
 <blockquote>
 <p>CheckOutputDebugString checks whether OutputDebugString causes an error to occur or not .if the error does occur then we know there&rsquo;s no debugger, otherwise if there IS a debugger no error will occur</p>
 </blockquote>
-<pre><code>inline bool CheckOutputDebugString(LPCTSTR String)
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#66d9ef">inline</span> <span style="color:#66d9ef">bool</span> <span style="color:#a6e22e">CheckOutputDebugString</span>(LPCTSTR String)
 {
 	OutputDebugString(String);
-	if (GetLastError() == 0)
-		return true;
-	else
-		return false;
+	<span style="color:#66d9ef">if</span> (GetLastError() <span style="color:#f92672">=</span><span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>)
+		<span style="color:#66d9ef">return</span> true;
+	<span style="color:#66d9ef">else</span>
+		<span style="color:#66d9ef">return</span> false;
 }
-</code></pre><h2 id="linux">LINUX</h2>
+</code></pre></div><h2 id="linux">LINUX</h2>
 <ol>
 <li><strong>Ptrace :</strong></li>
 </ol>
-<pre><code>/* trying-to-make-your-binary-shut-up.txt : https://www.exploit-db.com/raw/13188 */
-#include &lt;stdio.h&gt;
-#include &lt;sys/ptrace.h&gt;
-
-void main(void)
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#75715e">/* trying-to-make-your-binary-shut-up.txt : https://www.exploit-db.com/raw/13188 */</span>
+<span style="color:#75715e">#</span><span style="color:#75715e">include</span> <span style="color:#75715e">&lt;stdio.h&gt;</span><span style="color:#75715e">
+</span><span style="color:#75715e"></span><span style="color:#75715e">#</span><span style="color:#75715e">include</span> <span style="color:#75715e">&lt;sys/ptrace.h&gt;</span><span style="color:#75715e">
+</span><span style="color:#75715e"></span>
+<span style="color:#66d9ef">void</span> <span style="color:#a6e22e">main</span>(<span style="color:#66d9ef">void</span>)
 {
- FILE *fd;
- if (ptrace(PTRACE_TRACEME, 0, 1, 0) == -1)
+ FILE <span style="color:#f92672">*</span>fd;
+ <span style="color:#66d9ef">if</span> (ptrace(PTRACE_TRACEME, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">0</span>) <span style="color:#f92672">=</span><span style="color:#f92672">=</span> <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>)
  {
-   printf(&quot;so you wanna trace me?...\n&quot;);
-   return(-1);
+   printf(<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">so you wanna trace me?...</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>);
+   <span style="color:#66d9ef">return</span>(<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>);
  }
 
- fd = fopen(&quot;/etc/passwd&quot;, &quot;r&quot;);
- if(fd == NULL) return;
- else printf(&quot;file opend\n&quot;);
- exit(-1);
+ fd <span style="color:#f92672">=</span> fopen(<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">/etc/passwd</span><span style="color:#e6db74">&#34;</span>, <span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">r</span><span style="color:#e6db74">&#34;</span>);
+ <span style="color:#66d9ef">if</span>(fd <span style="color:#f92672">=</span><span style="color:#f92672">=</span> NULL) <span style="color:#66d9ef">return</span>;
+ <span style="color:#66d9ef">else</span> printf(<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">file opend</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>);
+ exit(<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>);
 }
-</code></pre><ol start="2">
+</code></pre></div><ol start="2">
 <li><strong>You Tell :</strong></li>
 </ol>
 
