@@ -5,6 +5,45 @@
 *,::after,::before {
     box-sizing: border-box
 }
+.margin-top {
+    margin-top: 10px;
+}
+
+p { 
+    color: #685206;
+    font-family: Inconsolata Bold,monospace;
+    font-size: 17px;
+    line-height: 24px;
+    margin: 0 0 24px;
+    text-align: justify;
+    text-justify: inter-word; 
+}
+
+/* Wrapper */
+.wrapper {
+    padding: 0 15px;
+}
+
+/*  Flex header */
+.flex-header {
+    display: flex;
+    justify-content: space-between;
+}
+
+.flex-header-buttons > button:not(:last-child) {
+    margin-right: 10px;
+}
+
+/* Code block */
+.code-block {
+    border: 2px solid #393c5563;
+    border-radius: 4px;
+}
+
+.solution-code-block {
+    border: 2px solid #3d4058; 
+    border-radius: 4px;
+}
 
 html {
     font-family: sans-serif;
