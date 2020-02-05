@@ -23,6 +23,18 @@ the task is from RootersCTF2019 and story goes like this... your client was infe
     </item>
     
     <item>
+      <title>Obfuscation_Techniques</title>
+      <link>https://x3ero0.tech/posts/obfuscation-techniques/</link>
+      <pubDate>Wed, 05 Feb 2020 06:34:52 +0000</pubDate>
+      
+      <guid>https://x3ero0.tech/posts/obfuscation-techniques/</guid>
+      <description>Recently I was watching GynvaelEN&amp;rsquo;s Old Stream about ELF Packers, and I thought why not make a PE Packer. I decided that I will write a python script to Parse PE Headers from scratch, I was able to parse some headers and then I got stuck and decided that I will use PEFILE.
+──────▄▌▐▀▀▀▀▀▀▀▀▀▀▀▀▀​▀▀▀▀▀▀▌
+───▄▄██▌█ BEEP BEEP ▄▄▄▌▐██▌█ POOR SCRIPT AHEAD
+███████▌█▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▌ ▀(@)▀▀▀▀▀▀▀(@)(@)▀▀▀▀▀▀▀▀(@)▀ so I made a poor packer which is available here packer.</description>
+    </item>
+    
+    <item>
       <title>[0x001] p4id_s0ftwar3</title>
       <link>https://x3ero0.tech/crackmes/p41d_s0ftw43/</link>
       <pubDate>Wed, 05 Feb 2020 05:06:29 +0000</pubDate>
@@ -62,18 +74,6 @@ Very Simple Crackme :)
       <description>[Easy Licensing]Download Filesbody{color : #000000;}p { color: #000000;font-family: Inconsolata Bold,monospace;font-size: 17px;line-height: 1em;text-align: justify;text-justify: inter-word; }li {margin: 0;padding: 0.2em;}
 Another Shitty Password Checking
 Crackme : Easy LicensingDifficulty : EasyPlatform : LinuxPoints : 3/10 Date : 2020-02-02 Objective : Find the Correct password which gives a &amp;#39;Correct Password!</description>
-    </item>
-    
-    <item>
-      <title>Obfuscation_Techniques</title>
-      <link>https://x3ero0.tech/posts/obfuscation-techniques/</link>
-      <pubDate>Sun, 02 Feb 2020 06:34:52 +0000</pubDate>
-      
-      <guid>https://x3ero0.tech/posts/obfuscation-techniques/</guid>
-      <description>Recently I was watching GynvaelEN&amp;rsquo;s Old Stream about ELF Packers, and I thought why not make a PE Packer. I decided that I will write a python script to Parse PE Headers from scratch, I was able to parse some headers and then I got stuck and decided that I will use PEFILE.
-──────▄▌▐▀▀▀▀▀▀▀▀▀▀▀▀▀​▀▀▀▀▀▀▌
-───▄▄██▌█ BEEP BEEP ▄▄▄▌▐██▌█ POOR SCRIPT AHEAD
-███████▌█▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▌ ▀(@)▀▀▀▀▀▀▀(@)(@)▀▀▀▀▀▀▀▀(@)▀ so I made a poor packer which is available here packer.</description>
     </item>
     
     <item>
