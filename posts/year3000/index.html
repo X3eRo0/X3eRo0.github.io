@@ -24,8 +24,7 @@
 	<section class="container text-justified mt-3">
 	  <h2 class="text-center mb-4">Year3000</h2>
 	    <div class="text-monospace">
-			<p><img src="https://x3ero0.tech/img/year3000/main.png" alt="dump of 3.bin"></p>
-<h2 id="year3000-re---nullcon-hackim2020-ctf">Year3000 [RE - Nullcon Hackim2020 CTF]</h2>
+			<h2 id="year3000-re---nullcon-hackim2020-ctf">Year3000 [RE - Nullcon Hackim2020 CTF]</h2>
 <blockquote>
 <p>One day when I came home at lunchtime I heard a funny noise Went out to the back yard to find out If it was one of those rowdy boys Stood there was my neighbor called Peter And a flux capacitor
 I guess there must be quite some entropy in a flux capacitor&hellip;</p>
@@ -86,7 +85,7 @@ call    sub_64D ; password check function
 ;..  or 'You Failed'  ..;
 ;..                   ..;
 </code></pre><p>lets look at sub_64D</p>
-<pre><code class="language-assembly" data-lang="assembly">		(fcn) sub.memcmp_64d 131
+<pre><code class="language-assembly" data-lang="assembly">       (fcn) sub.memcmp_64d 131
        ; var int local_15h @ ebp-0x15
        ; var int local_14h @ ebp-0x14
        ; var int local_10h @ ebp-0x10
@@ -169,6 +168,16 @@ okay now lets look at the instruction at 0x000006ab again</p>
 and you can actually see that ida already calculated the offset for us.
 so memcmp checks that the bytes after &lsquo;c&rsquo; * 0x54 with the dword value at 0x2008
 which is <code>.data:00002008 dword_2008      dd 0A7C6D169h</code></p>
+
+
+
+<div class="center">
+  <img
+    src="https://x3ero0.tech/img/year3000/main.png"
+    alt="Dump Of 3.bin"
+    decoding="async"
+  />
+</div>
 <p>also one more thing to point out is that this value is always stored at the end of .data section. so the correct password for 3.bin is</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> struct
 <span style="color:#66d9ef">print</span> <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">c</span><span style="color:#e6db74">&#39;</span> <span style="color:#f92672">*</span> <span style="color:#ae81ff">0x54</span> <span style="color:#f92672">+</span> struct<span style="color:#f92672">.</span>pack(<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">&lt;I</span><span style="color:#e6db74">&#39;</span>, <span style="color:#ae81ff">0xA7C6D169</span>)
