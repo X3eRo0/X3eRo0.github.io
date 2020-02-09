@@ -28,6 +28,10 @@ strong {
 	color: #000000;
 }
 
+small {
+    color: #000000;
+}
+
 pre {
 	margin: auto;
 	width: 90%;
