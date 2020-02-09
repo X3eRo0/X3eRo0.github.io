@@ -41,11 +41,17 @@ pre {
 
 /* Code block */
 code {
-    font-family: SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono","Courier New",monospace;
-    font-size: 1em
-    border: 50px solid #272822;
+    font-family: Inconsolata, monospace;
+    font-size: large;
+    color: #9539f7;
     border-radius: 2px;
-    color: #ff4473;
+    word-wrap: break-word
+}
+
+code[class*=language-] {
+    font-family: Inconsolata, monospace;
+    font-size: large;
+    border-radius: 2px;
     word-wrap: break-word
 }
 
@@ -122,12 +128,6 @@ p {
         -webkit-transition: none;
         transition: none
     }
-}
-
-code {
-    font-size: 87.5%;
-    color: #ff4473;
-    word-wrap: break-word
 }
 
 a>code {
@@ -606,8 +606,8 @@ a.close.disabled {
     border-top: 3px solid #757aa1
 }
 
-code[class*=language-],pre[class*=language-] {
-    font-size: 16px!important;
+pre[class*=language-] {
+    font-size: 1em;
     font-family: 'Fira Mono',monospace!important
 }
 
