@@ -3,6 +3,21 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>https://x3ero0.tech/posts/</loc>
+    <lastmod>2020-02-08T18:04:11+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://x3ero0.tech/</loc>
+    <lastmod>2020-02-08T18:04:11+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://x3ero0.tech/posts/year3000/</loc>
+    <lastmod>2020-02-08T18:04:11+00:00</lastmod>
+  </url>
+  
+  <url>
     <loc>https://x3ero0.tech/crackmes/hackme/</loc>
     <lastmod>2020-02-05T15:13:50+00:00</lastmod>
   </url>
@@ -13,17 +28,7 @@
   </url>
   
   <url>
-    <loc>https://x3ero0.tech/</loc>
-    <lastmod>2020-02-05T15:13:50+00:00</lastmod>
-  </url>
-  
-  <url>
     <loc>https://x3ero0.tech/posts/obfuscation-techniques/</loc>
-    <lastmod>2020-02-05T06:34:52+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://x3ero0.tech/posts/</loc>
     <lastmod>2020-02-05T06:34:52+00:00</lastmod>
   </url>
   

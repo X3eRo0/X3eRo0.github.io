@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+	<meta charset="utf-8">
+	<meta name="description" content='X3eRo0&#39;s Blog about Reverse Engineering'>
+	<meta name="keywords" content='X3eRo0, Reverse, Reverse Engineering, Crackmes, blog'>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="generator" content="Hugo 0.63.2" />
+	<link rel="stylesheet" type="text/css" href='https://x3ero0.tech/css/bootstrap.min.css'>
+	<link rel="stylesheet" type="text/css" href='https://x3ero0.tech/css/custom.css'>
+	<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.css" integrity="sha256-46qynGAkLSFpVbEBog43gvNhfrOj+BmwXdxFgVK/Kvc=" crossorigin=anonymous>
+	<link rel="stylesheet" type="text/css"  href="https://x3ero0.tech/css/ui.css">
+	<title>Year3000</title>
+	<nav class="navbar text-center sticky-top bg-white mt-2 mb-1">
+		<a href='https://x3ero0.tech/'><span class="btn btn-sm btn-outline-primary">Home</span></a>
+		<a href='https://x3ero0.tech/crackmes'><span class="btn btn-sm btn-outline-secondary">Crackmes</span></a>
+		<a href='https://x3ero0.tech/posts'><span class="btn btn-sm btn-outline-success">Blog</span></a>
+		<a href='https://x3ero0.tech/tags'><span class="btn btn-sm btn-outline-warning">Tags</span></a>
+	</nav>
+</head>
+<body>
+      <div id="content">
+
+
+	<section class="container text-justified mt-3">
+	  <h2 class="text-center mb-4">Year3000</h2>
+	    <div class="text-monospace">
+			<p><img src="https://x3ero0.tech/img/year3000/main.png" alt="dump of 3.bin"></p>
+<h2 id="year3000-re---nullcon-hackim2020-ctf">Year3000 [RE - Nullcon Hackim2020 CTF]</h2>
+<blockquote>
+<p>One day when I came home at lunchtime I heard a funny noise Went out to the back yard to find out If it was one of those rowdy boys Stood there was my neighbor called Peter And a flux capacitor
+I guess there must be quite some entropy in a flux capacitor&hellip;</p>
+</blockquote>
+<pre><code>nc re.ctf.nullcon.net 1234
+</code></pre><p>we were given 3000 stripped ELF binaries some 64bit binaries and 32bit binaries. the description of the challenge did&rsquo;nt explained what exactly the task was, so i tried to connect to the given netcat link.</p>
+<pre><code>x3ero0 :: year3000 » nc re.ctf.nullcon.net 1234
+1252.bin
+&gt;
+</code></pre><p>so it was clear that for each binary we need to send the correct password of the binary.
+lets reverse engineer one of the binaries.</p>
+<pre><code class="language-assembly" data-lang="assembly">public start
+start proc near
+xor     ebp, ebp
+pop     esi
+mov     ecx, esp
+and     esp, 0FFFFFFF0h
+push    eax
+push    esp             ; stack_end
+push    edx             ; rtld_fini
+call    sub_542
+add     ebx, 1AA0h
+lea     eax, (nullsub_1 - 1FC0h)[ebx]
+push    eax             ; fini
+lea     eax, (sub_7B0 - 1FC0h)[ebx]
+push    eax             ; init
+push    ecx             ; ubp_av
+push    esi             ; argc
+push    ds:(off_1FF8 - 1FC0h)[ebx] ; main
+call    ___libc_start_main
+hlt
+start endp
+</code></pre><p>i calculated the offset of main function through gdb and it was sub_6D0</p>
+<pre><code class="language-assembly" data-lang="assembly">sub_6D0 proc near
+
+var_74= dword ptr -74h
+s= byte ptr -70h
+var_C= dword ptr -0Ch
+
+; __unwind {
+lea     ecx, [esp+4]
+and     esp, 0FFFFFFF0h
+;..                          ..;
+;.. some buffering functions ..;
+;..                          ..;
+push    eax             ; stream
+push    64h ; 'd'       ; n
+lea     eax, [ebp+s]
+push    eax             ; s
+call    _fgets
+add     esp, 10h
+sub     esp, 0Ch
+lea     eax, [ebp+s]
+push    eax
+call    sub_64D ; password check function
+;..                   ..;
+;.. print 'Well done' ..;
+;..  or 'You Failed'  ..;
+;..                   ..;
+</code></pre><p>lets look at sub_64D</p>
+<pre><code class="language-assembly" data-lang="assembly">		(fcn) sub.memcmp_64d 131
+       ; var int local_15h @ ebp-0x15
+       ; var int local_14h @ ebp-0x14
+       ; var int local_10h @ ebp-0x10
+       ; var int local_ch @ ebp-0xc
+       ; var int local_4h @ ebp-0x4
+       ; arg int arg_8h @ ebp+0x8
+       0x0000064d      55             push ebp
+       0x0000064e      89e5           mov ebp, esp
+       0x00000650      53             push ebx
+       0x00000651      83ec14         sub esp, 0x14
+       0x00000654      e84a010000     call fcn.000007a3
+       0x00000659      0567190000     add eax, 0x1967
+       0x0000065e      c745f4540000.  mov dword [local_ch], 0x54  ; 'T'
+       0x00000665      c645eb63       mov byte [local_15h], 0x63  ; 'c'
+       0x00000669      c745ec010000.  mov dword [local_14h], 1
+       0x00000670      c745f0000000.  mov dword [local_10h], 0
+   ,=&lt; 0x00000677      eb1d           jmp 0x696
+  .--&gt; 0x00000679      8b4df0         mov ecx, dword [local_10h]
+  :|   0x0000067c      8b5508         mov edx, dword [arg_8h]     ; [0x8:4]=0
+  :|   0x0000067f      01ca           add edx, ecx
+  :|   0x00000681      0fb612         movzx edx, byte [edx]
+  :|   0x00000684      3855eb         cmp byte [local_15h], dl
+ ,===&lt; 0x00000687      7409           je 0x692
+ |:|   0x00000689      c745ec000000.  mov dword [local_14h], 0
+,====&lt; 0x00000690      eb0c           jmp 0x69e
+|`---&gt; 0x00000692      8345f001       add dword [local_10h], 1
+| :`-&gt; 0x00000696      8b55f0         mov edx, dword [local_10h]
+| :    0x00000699      3b55f4         cmp edx, dword [local_ch]
+| `==&lt; 0x0000069c      7cdb           jl 0x679
+`----&gt; 0x0000069e      8b4df4         mov ecx, dword [local_ch]
+       0x000006a1      8b5508         mov edx, dword [arg_8h]     ; [0x8:4]=0
+       0x000006a4      01d1           add ecx, edx
+       0x000006a6      83ec04         sub esp, 4
+       0x000006a9      6a04           push 4
+       0x000006ab      8d9048000000   lea edx, dword [eax + 0x48] ; 'H'
+       0x000006b1      52             push edx
+       0x000006b2      51             push ecx
+       0x000006b3      89c3           mov ebx, eax
+       0x000006b5      e8f6fdffff     call sym.imp.memcmp
+       0x000006ba      83c410         add esp, 0x10
+       0x000006bd      85c0           test eax, eax
+   ,=&lt; 0x000006bf      7407           je 0x6c8
+   |   0x000006c1      c745ec000000.  mov dword [local_14h], 0
+   `-&gt; 0x000006c8      8b45ec         mov eax, dword [local_14h]
+       0x000006cb      8b5dfc         mov ebx, dword [local_4h]
+       0x000006ce      c9             leave
+       0x000006cf      c3             ret
+
+</code></pre><p>if you see this function and notice that at 0x0000065e a number is loaded into dword [local_ch] and at 0x00000665 a character is loaded into byte [local_15h].</p>
+<pre><code class="language-assembly" data-lang="assembly">.text:0000065E                 mov     [ebp+var_C], 54h ; 'T'
+.text:00000665                 mov     [ebp+var_15], 63h ; 'c'
+</code></pre><p>the following loop after this simply checks if the user input is &lsquo;c&rsquo; *0x54
+then comes a memcmp at 0x6b5. now to statically analyse the arguments passed to memcmp we need to figure out whats going at 0x6b0</p>
+<pre><code class="language-assembly" data-lang="assembly">; ida64
+.text:000006AB                 lea     edx, (unk_2008 - 1FC0h)[eax]
+; r2 
+0x000006ab      8d9048000000   lea 	   edx, dword [eax + 0x48] 
+</code></pre><p>now lets see what exactly is the value of eax at this instruction. we scroll a little bit up</p>
+<pre><code class="language-assembly" data-lang="assembly">; ida64
+.text:00000654                 call    sub_7A3
+.text:00000659                 add     eax, 1967h
+
+; r2
+0x00000654      e84a010000     call fcn.000007a3
+0x00000659      0567190000     add eax, 0x1967
+</code></pre><p>lets see what this function is at 0x7a3</p>
+<pre><code class="language-assembly" data-lang="assembly">.text:000007A3 sub_7A3         proc near               ; CODE XREF: sub_64D+7↑p
+.text:000007A3 ; __unwind {
+.text:000007A3                 mov     eax, [esp+0]
+.text:000007A6                 retn
+.text:000007A6 ; } // starts at 7A3
+.text:000007A6 sub_7A3         endp
+.text:000007A6
+</code></pre><p>it returns the address which was pushed on the stack when this function was called.
+basically eax = address_of_next_instruction_after_call_0x7a3, so eax = 0x00000659
+and then eax += 0x1967, so eax = 0x1fc0.
+okay now lets look at the instruction at 0x000006ab again</p>
+<pre><code>0x000006ab      8d9048000000   lea 	   edx, dword [eax + 0x48] 
+</code></pre><p>so it becomes <code>lea edx, dword [0x1fc0 + 0x48] ; 0x2008</code>
+and you can actually see that ida already calculated the offset for us.
+so memcmp checks that the bytes after &lsquo;c&rsquo; * 0x54 with the dword value at 0x2008
+which is <code>.data:00002008 dword_2008      dd 0A7C6D169h</code></p>
+<p>also one more thing to point out is that this value is always stored at the end of .data section. so the correct password for 3.bin is</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> struct
+<span style="color:#66d9ef">print</span> <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">c</span><span style="color:#e6db74">&#39;</span> <span style="color:#f92672">*</span> <span style="color:#ae81ff">0x54</span> <span style="color:#f92672">+</span> struct<span style="color:#f92672">.</span>pack(<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">&lt;I</span><span style="color:#e6db74">&#39;</span>, <span style="color:#ae81ff">0xA7C6D169</span>)
+</code></pre></div><p>output -&gt;</p>
+<pre><code>x3ero0 :: year3000 » python solve_3.py | ./3.bin
+Well done
+</code></pre><p>so i quickly wrote a script to fetch these values and generate a correct password for all the binaries both 64 bit binaries or 32 bit binaries.</p>
+<p>exploit script &ndash;&gt;</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">from</span> pwn <span style="color:#f92672">import</span> <span style="color:#f92672">*</span>
+<span style="color:#f92672">import</span> base64
+
+
+context<span style="color:#f92672">.</span>log_level <span style="color:#f92672">=</span> <span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">critical</span><span style="color:#e6db74">&#34;</span>
+
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">solve</span>(filename):
+
+	file <span style="color:#f92672">=</span> open(filename, <span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">rb</span><span style="color:#e6db74">&#34;</span>)<span style="color:#f92672">.</span>read()
+	
+	ELF64_Coun <span style="color:#f92672">=</span> <span style="color:#ae81ff">0x816</span>
+	ELF64_Valu <span style="color:#f92672">=</span> <span style="color:#ae81ff">0x81d</span>
+
+	ELF32_Coun <span style="color:#f92672">=</span> <span style="color:#ae81ff">0x65e</span>
+	ELF32_Valu <span style="color:#f92672">=</span> <span style="color:#ae81ff">0x665</span>
+
+
+	ELF64_Addr <span style="color:#f92672">=</span> <span style="color:#ae81ff">0x1010</span>
+	ELF32_Addr <span style="color:#f92672">=</span> <span style="color:#ae81ff">0x1008</span>
+
+	
+	Format <span style="color:#f92672">=</span> ord(file[<span style="color:#ae81ff">0x04</span>])
+	<span style="color:#66d9ef">if</span> (Format <span style="color:#f92672">==</span> <span style="color:#ae81ff">2</span>):
+
+		context<span style="color:#f92672">.</span>update(arch<span style="color:#f92672">=</span><span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">amd64</span><span style="color:#e6db74">&#39;</span>, os<span style="color:#f92672">=</span><span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">linux</span><span style="color:#e6db74">&#39;</span>)
+
+		code_count <span style="color:#f92672">=</span> file[ELF64_Coun : ELF64_Coun<span style="color:#f92672">+</span><span style="color:#ae81ff">7</span>]
+		code_value <span style="color:#f92672">=</span> file[ELF64_Valu : ELF64_Valu<span style="color:#f92672">+</span><span style="color:#ae81ff">4</span>]
+
+		disa_count <span style="color:#f92672">=</span> disasm(code_count)
+		disa_value <span style="color:#f92672">=</span> disasm(code_value)
+
+		code_count <span style="color:#f92672">=</span> int(disa_count<span style="color:#f92672">.</span>split(<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">0x</span><span style="color:#e6db74">&#39;</span>)[<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>], <span style="color:#ae81ff">16</span>)
+		code_value <span style="color:#f92672">=</span> chr(int(disa_value<span style="color:#f92672">.</span>split(<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">0x</span><span style="color:#e6db74">&#39;</span>)[<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>], <span style="color:#ae81ff">16</span>))
+
+		<span style="color:#75715e">#value = u64(file[ELF64_Addr : ELF64_Addr+8])</span>
+		value <span style="color:#f92672">=</span> file[ELF64_Addr : ELF64_Addr<span style="color:#f92672">+</span><span style="color:#ae81ff">8</span>]
+		value_n <span style="color:#f92672">=</span> u64(value)
+
+		flag <span style="color:#f92672">=</span> code_value <span style="color:#f92672">*</span> code_count <span style="color:#f92672">+</span> value
+
+	<span style="color:#66d9ef">elif</span>(Format <span style="color:#f92672">==</span> <span style="color:#ae81ff">1</span>):
+
+		context<span style="color:#f92672">.</span>update(arch<span style="color:#f92672">=</span><span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">i386</span><span style="color:#e6db74">&#39;</span>, os<span style="color:#f92672">=</span><span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">linux</span><span style="color:#e6db74">&#39;</span>)
+
+		code_count <span style="color:#f92672">=</span> file[ELF32_Coun : ELF32_Coun<span style="color:#f92672">+</span><span style="color:#ae81ff">7</span>]
+		code_value <span style="color:#f92672">=</span> file[ELF32_Valu : ELF32_Valu<span style="color:#f92672">+</span><span style="color:#ae81ff">4</span>]
+
+		disa_count <span style="color:#f92672">=</span> disasm(code_count)
+		disa_value <span style="color:#f92672">=</span> disasm(code_value)
+
+		code_count <span style="color:#f92672">=</span> int(disa_count<span style="color:#f92672">.</span>split(<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">0x</span><span style="color:#e6db74">&#39;</span>)[<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>], <span style="color:#ae81ff">16</span>)
+		code_value <span style="color:#f92672">=</span> chr(int(disa_value<span style="color:#f92672">.</span>split(<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">0x</span><span style="color:#e6db74">&#39;</span>)[<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>], <span style="color:#ae81ff">16</span>))
+
+		<span style="color:#75715e">#value = u32(file[ELF32_Addr:ELF32_Addr+4])</span>
+		value <span style="color:#f92672">=</span> file[ELF32_Addr:ELF32_Addr<span style="color:#f92672">+</span><span style="color:#ae81ff">4</span>]
+		value_n <span style="color:#f92672">=</span> u32(value)
+		flag <span style="color:#f92672">=</span> code_value <span style="color:#f92672">*</span> code_count <span style="color:#f92672">+</span> value
+	
+	<span style="color:#75715e">#print &#34;[!] file : &#34; + filename</span>
+	<span style="color:#75715e">#print &#34;[!] count: &#34; + hex(code_count)</span>
+	<span style="color:#75715e">#print &#34;[!] value: &#34; + code_value</span>
+	<span style="color:#75715e">#print &#34;[!] numbe: &#34; + hex(value_n)</span>
+
+	<span style="color:#66d9ef">return</span> flag
+
+
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">main</span>():
+
+
+	dump <span style="color:#f92672">=</span> <span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">&#34;</span>
+	i <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>
+	p <span style="color:#f92672">=</span> remote(<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">re.ctf.nullcon.net</span><span style="color:#e6db74">&#34;</span>, <span style="color:#ae81ff">1234</span>)
+	a <span style="color:#f92672">=</span> <span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">&#34;</span>
+	temp <span style="color:#f92672">=</span> <span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">&#34;</span>
+	<span style="color:#66d9ef">while</span>(<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">hackim</span><span style="color:#e6db74">&#39;</span> <span style="color:#f92672">not</span> <span style="color:#f92672">in</span> dump):
+
+		<span style="color:#75715e"># i noticed that only 10 files were asked</span>
+		<span style="color:#66d9ef">if</span>(i<span style="color:#f92672">==</span><span style="color:#ae81ff">10</span>):
+			<span style="color:#66d9ef">print</span> <span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">Flag: </span><span style="color:#e6db74">&#34;</span> <span style="color:#f92672">+</span> p<span style="color:#f92672">.</span>recvline()
+			p<span style="color:#f92672">.</span>close()
+			exit()
+		file <span style="color:#f92672">=</span> p<span style="color:#f92672">.</span>recvline()<span style="color:#f92672">.</span>strip()
+
+		a <span style="color:#f92672">=</span> p<span style="color:#f92672">.</span>recvuntil(<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">&gt; </span><span style="color:#e6db74">&#34;</span>)
+		solver <span style="color:#f92672">=</span> solve(file)
+		<span style="color:#75715e"># .encode(&#39;base64&#39;) doesnt work with bytes </span>
+		p<span style="color:#f92672">.</span>sendline(base64<span style="color:#f92672">.</span>b64encode(solver))
+		<span style="color:#75715e">#print str(solver).encode(&#39;base64&#39;)</span>
+		temp <span style="color:#f92672">=</span> p<span style="color:#f92672">.</span>recvline()
+		<span style="color:#66d9ef">if</span>(<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">Well done</span><span style="color:#e6db74">&#34;</span> <span style="color:#f92672">in</span> temp):
+			<span style="color:#66d9ef">print</span> <span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">[0x</span><span style="color:#e6db74">%.4x</span><span style="color:#e6db74">]</span><span style="color:#ae81ff">\t</span><span style="color:#e6db74">&#34;</span> <span style="color:#f92672">%</span> i<span style="color:#f92672">+</span> file <span style="color:#f92672">+</span> <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#ae81ff">\t</span><span style="color:#e6db74">: Well Done</span><span style="color:#e6db74">&#39;</span>
+		<span style="color:#66d9ef">else</span>:
+			<span style="color:#66d9ef">print</span> <span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">[+] Failed:</span><span style="color:#ae81ff">\t</span><span style="color:#e6db74">&#34;</span> <span style="color:#f92672">+</span> file <span style="color:#f92672">+</span> <span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\t</span><span style="color:#e6db74">dumping recieved data</span><span style="color:#e6db74">&#34;</span>
+			exit()
+		i <span style="color:#f92672">+</span><span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>
+
+<span style="color:#66d9ef">if</span> __name__ <span style="color:#f92672">==</span> <span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">__main__</span><span style="color:#e6db74">&#34;</span>:
+	main()
+</code></pre></div><p>
+
+<br>
+
+
+
+<br>
+</p>
+<p>and running this script gives us the flag
+
+
+<br>
+
+
+
+<br>
+
+
+
+<script id="asciicast-Dr0XnWhv3pzEa6biFKK7evLYC" src="https://asciinema.org/a/Dr0XnWhv3pzEa6biFKK7evLYC.js" async></script>
+</p>
+
+		</div>
+	</section>
+
+
+      </div>
+  </body><footer>
+  <div class="container-fluid bg-dark text-white text-monospace text-center mt-4">
+    <small> Last Crackme Uploaded: <a href="https://github.com/X3eRo0/Crackmes/raw/master/Crackmes/X3eRo0/not%20so%20good%20encryption/nsge.zip/" style="color:#ff45ff">Not So Good Encryption</a> </small>
+  </div>
+</footer></html>
