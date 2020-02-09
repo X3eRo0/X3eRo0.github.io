@@ -41,8 +41,8 @@ pre {
 
 /* Code block */
 code {
-    font-family: Inconsolata, monospace;
-    font-size: 14px;
+    font-family: SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono","Courier New",monospace;
+    font-size: 1em
     border: 50px solid #272822;
     border-radius: 2px;
     color: #ff4473;
