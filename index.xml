@@ -18,8 +18,9 @@
       <pubDate>Sat, 08 Feb 2020 18:04:11 +0000</pubDate>
       
       <guid>https://x3ero0.tech/posts/year3000/</guid>
-      <description>Year3000 [RE - Nullcon Hackim2020 CTF]  One day when I came home at lunchtime I heard a funny noise Went out to the back yard to find out If it was one of those rowdy boys Stood there was my neighbor called Peter And a flux capacitor I guess there must be quite some entropy in a flux capacitor&amp;hellip;
- nc re.ctf.nullcon.net 1234we were given 3000 stripped ELF binaries some 64bit binaries and 32bit binaries.</description>
+      <description>Year3000 [RE - Nullcon Hackim2020 CTF] Description
+ One day when I came home at lunchtime I heard a funny noise Went out to the back yard to find out If it was one of those rowdy boys Stood there was my neighbor called Peter And a flux capacitorI guess there must be quite some entropy in a flux capacitor... Netcat Link : nc re.ctf.nullcon.net 1234
+ we were given 3000 stripped ELF binaries some 64bit binaries and 32bit binaries.</description>
     </item>
     
     <item>
