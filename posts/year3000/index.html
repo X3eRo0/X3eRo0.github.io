@@ -24,151 +24,368 @@
 	<section class="container text-justified mt-3">
 	  <h2 class="text-center mb-4">Year3000</h2>
 	    <div class="text-monospace">
-			<h2 id="year3000-re---nullcon-hackim2020-ctf">Year3000 [RE - Nullcon Hackim2020 CTF]</h2>
+			
+
+<link rel="stylesheet" href="https://x3ero0.tech/css/styles/monokai.css">
+<script src="https://x3ero0.tech/js/highlight.pack.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
+<h2 id="year3000-re---nullcon-hackim2020-ctf">Year3000 [RE - Nullcon Hackim2020 CTF]</h2>
 <p><strong>Description</strong></p>
 <hr>
 <p><code>One day when I came home at lunchtime I heard a funny noise Went out to the back yard to find out If it was one of those rowdy boys Stood there was my neighbor called Peter And a flux capacitor I guess there must be quite some entropy in a flux capacitor... 
 <br>
 <br> Netcat Link : nc re.ctf.nullcon.net 1234</code></p>
 <hr>
-<p>we were given 3000 stripped ELF binaries some 64bit binaries and 32bit binaries. the description of the challenge did&rsquo;nt explained what exactly the task was, so i tried to connect to the given netcat link.</p>
-<pre><code>x3ero0 :: year3000 » nc re.ctf.nullcon.net 1234
+<p>we were given 3000 stripped ELF binaries some 64bit binaries and 32bit binaries. the description of the challenge did&rsquo;nt explained what exactly the task was, so i tried to connect to the given netcat link.
+
+
+<pre><code class="plaintext">x3ero0 :: year3000 » nc re.ctf.nullcon.net 1234
 1252.bin
-&gt;
-</code></pre><p>so it was clear that for each binary we need to send the correct password of the binary.
-lets reverse engineer one of the binaries.</p>
-<pre><code class="language-assembly" data-lang="assembly">public start
-start proc near
-xor     ebp, ebp
-pop     esi
-mov     ecx, esp
-and     esp, 0FFFFFFF0h
-push    eax
-push    esp             ; stack_end
-push    edx             ; rtld_fini
-call    sub_542
-add     ebx, 1AA0h
-lea     eax, (nullsub_1 - 1FC0h)[ebx]
-push    eax             ; fini
-lea     eax, (sub_7B0 - 1FC0h)[ebx]
-push    eax             ; init
-push    ecx             ; ubp_av
-push    esi             ; argc
-push    ds:(off_1FF8 - 1FC0h)[ebx] ; main
-call    ___libc_start_main
-hlt
-start endp
-</code></pre><p>i calculated the offset of main function through gdb and it was sub_6D0</p>
-<pre><code class="language-assembly" data-lang="assembly">sub_6D0 proc near
+></code></pre>
+</p>
+<p>
 
-var_74= dword ptr -74h
-s= byte ptr -70h
-var_C= dword ptr -0Ch
+<br>
 
-; __unwind {
-lea     ecx, [esp+4]
-and     esp, 0FFFFFFF0h
-;..                          ..;
-;.. some buffering functions ..;
-;..                          ..;
-push    eax             ; stream
-push    64h ; 'd'       ; n
-lea     eax, [ebp+s]
-push    eax             ; s
-call    _fgets
-add     esp, 10h
-sub     esp, 0Ch
-lea     eax, [ebp+s]
-push    eax
-call    sub_64D ; password check function
-;..                   ..;
-;.. print 'Well done' ..;
-;..  or 'You Failed'  ..;
-;..                   ..;
-</code></pre><p>lets look at sub_64D</p>
-<pre><code class="language-assembly" data-lang="assembly">       (fcn) sub.memcmp_64d 131
-       ; var int local_15h @ ebp-0x15
-       ; var int local_14h @ ebp-0x14
-       ; var int local_10h @ ebp-0x10
-       ; var int local_ch @ ebp-0xc
-       ; var int local_4h @ ebp-0x4
-       ; arg int arg_8h @ ebp+0x8
-       0x0000064d      55             push ebp
-       0x0000064e      89e5           mov ebp, esp
-       0x00000650      53             push ebx
-       0x00000651      83ec14         sub esp, 0x14
-       0x00000654      e84a010000     call fcn.000007a3
-       0x00000659      0567190000     add eax, 0x1967
-       0x0000065e      c745f4540000.  mov dword [local_ch], 0x54  ; 'T'
-       0x00000665      c645eb63       mov byte [local_15h], 0x63  ; 'c'
-       0x00000669      c745ec010000.  mov dword [local_14h], 1
-       0x00000670      c745f0000000.  mov dword [local_10h], 0
-   ,=&lt; 0x00000677      eb1d           jmp 0x696
-  .--&gt; 0x00000679      8b4df0         mov ecx, dword [local_10h]
-  :|   0x0000067c      8b5508         mov edx, dword [arg_8h]     ; [0x8:4]=0
-  :|   0x0000067f      01ca           add edx, ecx
-  :|   0x00000681      0fb612         movzx edx, byte [edx]
-  :|   0x00000684      3855eb         cmp byte [local_15h], dl
- ,===&lt; 0x00000687      7409           je 0x692
- |:|   0x00000689      c745ec000000.  mov dword [local_14h], 0
-,====&lt; 0x00000690      eb0c           jmp 0x69e
-|`---&gt; 0x00000692      8345f001       add dword [local_10h], 1
-| :`-&gt; 0x00000696      8b55f0         mov edx, dword [local_10h]
-| :    0x00000699      3b55f4         cmp edx, dword [local_ch]
-| `==&lt; 0x0000069c      7cdb           jl 0x679
-`----&gt; 0x0000069e      8b4df4         mov ecx, dword [local_ch]
-       0x000006a1      8b5508         mov edx, dword [arg_8h]     ; [0x8:4]=0
-       0x000006a4      01d1           add ecx, edx
-       0x000006a6      83ec04         sub esp, 4
-       0x000006a9      6a04           push 4
-       0x000006ab      8d9048000000   lea edx, dword [eax + 0x48] ; 'H'
-       0x000006b1      52             push edx
-       0x000006b2      51             push ecx
-       0x000006b3      89c3           mov ebx, eax
-       0x000006b5      e8f6fdffff     call sym.imp.memcmp
-       0x000006ba      83c410         add esp, 0x10
-       0x000006bd      85c0           test eax, eax
-   ,=&lt; 0x000006bf      7407           je 0x6c8
-   |   0x000006c1      c745ec000000.  mov dword [local_14h], 0
-   `-&gt; 0x000006c8      8b45ec         mov eax, dword [local_14h]
-       0x000006cb      8b5dfc         mov ebx, dword [local_4h]
-       0x000006ce      c9             leave
-       0x000006cf      c3             ret
 
-</code></pre><p>if you see this function and notice that at 0x0000065e a number is loaded into dword [local_ch] and at 0x00000665 a character is loaded into byte [local_15h].</p>
-<pre><code class="language-assembly" data-lang="assembly">.text:0000065E                 mov     [ebp+var_C], 54h ; 'T'
-.text:00000665                 mov     [ebp+var_15], 63h ; 'c'
-</code></pre><p>the following loop after this simply checks if the user input is &lsquo;c&rsquo; *0x54
-then comes a memcmp at 0x6b5. now to statically analyse the arguments passed to memcmp we need to figure out whats going at 0x6b0</p>
-<pre><code class="language-assembly" data-lang="assembly">; ida64
-.text:000006AB                 lea     edx, (unk_2008 - 1FC0h)[eax]
-; r2 
-0x000006ab      8d9048000000   lea 	   edx, dword [eax + 0x48] 
-</code></pre><p>now lets see what exactly is the value of eax at this instruction. we scroll a little bit up</p>
-<pre><code class="language-assembly" data-lang="assembly">; ida64
+
+<br>
+
+so it was clear that for each binary we need to send the correct password of the binary.
+lets reverse engineer one of the binaries.
+
+
+<br>
+
+
+
+<br>
+</p>
+<pre><code>.text:00000510 ; ===========================================================================
+.text:00000510
+.text:00000510 ; Segment type: Pure code
+.text:00000510 ; Segment permissions: Read/Execute
+.text:00000510 _text           segment para public 'CODE' use32
+.text:00000510                 assume cs:_text
+.text:00000510                 ;org 510h
+.text:00000510                 assume es:nothing, ss:nothing, ds:_data, fs:nothing, gs:nothing
+.text:00000510
+.text:00000510 ; =============== S U B R O U T I N E =======================================
+.text:00000510
+.text:00000510 ; Attributes: noreturn fuzzy-sp
+.text:00000510
+.text:00000510                 public start
+.text:00000510 start           proc near               ; DATA XREF: LOAD:00000018↑o
+.text:00000510                 xor     ebp, ebp
+.text:00000512                 pop     esi
+.text:00000513                 mov     ecx, esp
+.text:00000515                 and     esp, 0FFFFFFF0h
+.text:00000518                 push    eax
+.text:00000519                 push    esp             ; stack_end
+.text:0000051A                 push    edx             ; rtld_fini
+.text:0000051B                 call    sub_542
+.text:00000520                 add     ebx, 1AA0h
+.text:00000526                 lea     eax, (nullsub_1 - 1FC0h)[ebx]
+.text:0000052C                 push    eax             ; fini
+.text:0000052D                 lea     eax, (sub_7B0 - 1FC0h)[ebx]
+.text:00000533                 push    eax             ; init
+.text:00000534                 push    ecx             ; ubp_av
+.text:00000535                 push    esi             ; argc
+.text:00000536                 push    ds:(off_1FF8 - 1FC0h)[ebx] ; main
+.text:0000053C                 call    ___libc_start_main
+.text:00000541                 hlt
+.text:00000541 start           endp
+</code></pre><p>
+
+<br>
+
+
+
+<br>
+</p>
+<p>i calculated the offset of main function through gdb and it was sub_6D0
+
+
+<br>
+
+
+
+<br>
+</p>
+<pre><code>.text:000006D0 ; __unwind {
+.text:000006D0                 lea     ecx, [esp+4]
+.text:000006D4                 and     esp, 0FFFFFFF0h
+.text:000006D7                 push    dword ptr [ecx-4]
+.text:000006DA                 push    ebp
+.text:000006DB                 mov     ebp, esp
+.text:000006DD                 push    ebx
+.text:000006DE                 push    ecx
+.text:000006DF                 sub     esp, 70h
+.text:000006E2                 call    sub_550
+.text:000006E7                 add     ebx, 18D9h
+.text:000006ED                 mov     eax, large gs:14h
+.text:000006F3                 mov     [ebp+var_C], eax
+.text:000006F6                 xor     eax, eax
+.text:000006F8                 mov     eax, ds:(stdin_ptr - 1FC0h)[ebx]
+.text:000006FE                 mov     eax, [eax]
+; ...
+; ...
+; ...
+.text:00000723                 add     esp, 10h
+.text:00000726                 mov     eax, ds:(stdin_ptr - 1FC0h)[ebx]
+.text:0000072C                 mov     eax, [eax]
+.text:0000072E                 sub     esp, 4
+.text:00000731                 push    eax             ; stream
+.text:00000732                 push    64h ; 'd'       ; n
+.text:00000734                 lea     eax, [ebp+s]
+.text:00000737                 push    eax             ; s
+.text:00000738                 call    _fgets
+.text:0000073D                 add     esp, 10h
+.text:00000740                 sub     esp, 0Ch
+.text:00000743                 lea     eax, [ebp+s]
+.text:00000746                 push    eax
+.text:00000747                 call    sub_64D ; Password Check Function
+.text:0000074C                 add     esp, 10h
+.text:0000074F                 mov     [ebp+var_74], eax
+.text:00000752                 cmp     [ebp+var_74], 0
+.text:00000756                 jz      short loc_76C
+.text:00000758                 sub     esp, 0Ch
+.text:0000075B                 lea     eax, (aWellDone - 1FC0h)[ebx] ; &quot;Well done&quot;
+.text:00000761                 push    eax             ; s
+.text:00000762                 call    _puts
+.text:00000767                 add     esp, 10h
+.text:0000076A                 jmp     short loc_77E
+.text:0000076C ; ---------------------------------------------------------------------------
+.text:0000076C
+.text:0000076C loc_76C:                                ; CODE XREF: sub_6D0+86↑j
+.text:0000076C                 sub     esp, 0Ch
+.text:0000076F                 lea     eax, (aYouHaveFailed - 1FC0h)[ebx] ; &quot;You have failed&quot;
+.text:00000775                 push    eax             ; s
+.text:00000776                 call    _puts
+.text:0000077B                 add     esp, 10h
+.text:0000077E
+.text:0000077E loc_77E:                                ; CODE XREF: sub_6D0+9A↑j
+.text:0000077E                 cmp     [ebp+var_74], 1
+.text:00000782                 setnz   al
+.text:00000785                 movzx   eax, al
+.text:00000788                 mov     edx, [ebp+var_C]
+.text:0000078B                 xor     edx, large gs:14h
+.text:00000792                 jz      short loc_799
+.text:00000794                 call    sub_820
+.text:00000799 ; ---------------------------------------------------------------------------
+.text:00000799
+.text:00000799 loc_799:                                ; CODE XREF: sub_6D0+C2↑j
+.text:00000799                 lea     esp, [ebp-8]
+.text:0000079C                 pop     ecx
+.text:0000079D                 pop     ebx
+.text:0000079E                 pop     ebp
+.text:0000079F                 lea     esp, [ecx-4]
+.text:000007A2                 retn
+.text:000007A2 ; } // starts at 6D0
+.text:000007A2 sub_6D0         endp
+.text:000007A2
+</code></pre><p>
+
+<br>
+
+
+
+<br>
+</p>
+<p>lets look at sub_64D
+
+
+<br>
+
+
+
+<br>
+</p>
+<pre><code>.text:0000064D ; =============== S U B R O U T I N E =======================================
+.text:0000064D
+.text:0000064D ; Attributes: bp-based frame
+.text:0000064D
+.text:0000064D sub_64D         proc near               ; CODE XREF: sub_6D0+77↓p
+.text:0000064D
+.text:0000064D var_15          = byte ptr -15h
+.text:0000064D var_14          = dword ptr -14h
+.text:0000064D var_10          = dword ptr -10h
+.text:0000064D var_C           = dword ptr -0Ch
+.text:0000064D var_4           = dword ptr -4
+.text:0000064D arg_0           = dword ptr  8
+.text:0000064D
+.text:0000064D ; __unwind {
+.text:0000064D                 push    ebp
+.text:0000064E                 mov     ebp, esp
+.text:00000650                 push    ebx
+.text:00000651                 sub     esp, 00000014h
 .text:00000654                 call    sub_7A3
 .text:00000659                 add     eax, 1967h
+.text:0000065E                 mov     [ebp+var_C], 54h ; 'T'
+.text:00000665                 mov     [ebp+var_15], 63h ; 'c'
+.text:00000669                 mov     [ebp+var_14], 1
+.text:00000670                 mov     [ebp+var_10], 0
+.text:00000677                 jmp     short loc_696
+.text:00000679 ; ---------------------------------------------------------------------------
+.text:00000679
+.text:00000679 loc_679:                                ; CODE XREF: sub_64D+4F↓j
+.text:00000679                 mov     ecx, [ebp+var_10]
+.text:0000067C                 mov     edx, [ebp+arg_0]
+.text:0000067F                 add     edx, ecx
+.text:00000681                 movzx   edx, byte ptr [edx]
+.text:00000684                 cmp     [ebp+var_15], dl
+.text:00000687                 jz      short loc_692
+.text:00000689                 mov     [ebp+var_14], 0
+.text:00000690                 jmp     short loc_69E
+.text:00000692 ; ---------------------------------------------------------------------------
+.text:00000692
+.text:00000692 loc_692:                                ; CODE XREF: sub_64D+3A↑j
+.text:00000692                 add     [ebp+var_10], 1
+.text:00000696
+.text:00000696 loc_696:                                ; CODE XREF: sub_64D+2A↑j
+.text:00000696                 mov     edx, [ebp+var_10]
+.text:00000699                 cmp     edx, [ebp+var_C]
+.text:0000069C                 jl      short loc_679
+.text:0000069E
+.text:0000069E loc_69E:                                ; CODE XREF: sub_64D+43↑j
+.text:0000069E                 mov     ecx, [ebp+var_C]
+.text:000006A1                 mov     edx, [ebp+arg_0]
+.text:000006A4                 add     ecx, edx
+.text:000006A6                 sub     esp, 4
+.text:000006A9                 push    4               ; n
+.text:000006AB                 lea     edx, (dword_2008 - 1FC0h)[eax]
+.text:000006B1                 push    edx             ; s2
+.text:000006B2                 push    ecx             ; s1
+.text:000006B3                 mov     ebx, eax
+.text:000006B5                 call    _memcmp
+.text:000006BA                 add     esp, 10h
+.text:000006BD                 test    eax, eax
+.text:000006BF                 jz      short loc_6C8
+.text:000006C1                 mov     [ebp+var_14], 0
+.text:000006C8
+.text:000006C8 loc_6C8:                                ; CODE XREF: sub_64D+72↑j
+.text:000006C8                 mov     eax, [ebp+var_14]
+.text:000006CB                 mov     ebx, [ebp+var_4]
+.text:000006CE                 leave
+.text:000006CF                 retn
+.text:000006CF ; } // starts at 64D
+.text:000006CF sub_64D         endp
+.text:000006CF
+</code></pre><p>
 
-; r2
-0x00000654      e84a010000     call fcn.000007a3
-0x00000659      0567190000     add eax, 0x1967
-</code></pre><p>lets see what this function is at 0x7a3</p>
-<pre><code class="language-assembly" data-lang="assembly">.text:000007A3 sub_7A3         proc near               ; CODE XREF: sub_64D+7↑p
+<br>
+
+
+
+<br>
+</p>
+<p>if you see this function and notice that at 0x0000065e a number is loaded into dword [local_ch] and at 0x00000665 a character is loaded into byte [local_15h].
+
+
+<br>
+
+
+
+<br>
+</p>
+<pre><code>.text:0000065E                 mov     [ebp+var_C], 54h ; 'T'
+.text:00000665                 mov     [ebp+var_15], 63h ; 'c'
+</code></pre><p>
+
+<br>
+
+
+
+<br>
+</p>
+<p>the following loop after this simply checks if the user input is &lsquo;c&rsquo; *0x54
+then comes a memcmp at 0x6b5. now to statically analyse the arguments passed to memcmp we need to figure out whats going at 0x6ab
+
+
+<br>
+
+
+
+<br>
+</p>
+<pre><code>.text:000006AB                 lea     edx, (unk_2008 - 1FC0h)[eax]
+</code></pre><p>
+
+<br>
+
+
+
+<br>
+</p>
+<p>now lets see what exactly is the value of eax at this instruction. we scroll a little bit up</p>
+<pre><code>.text:00000654                 call    sub_7A3
+.text:00000659                 add     eax, 1967h
+</code></pre><p>
+
+<br>
+
+
+
+<br>
+</p>
+<p>lets see what this function is at 0x7a3
+
+
+<br>
+
+
+
+<br>
+</p>
+<pre><code>.text:000007A3 sub_7A3         proc near               ; CODE XREF: sub_64D+7↑p
 .text:000007A3 ; __unwind {
 .text:000007A3                 mov     eax, [esp+0]
 .text:000007A6                 retn
 .text:000007A6 ; } // starts at 7A3
 .text:000007A6 sub_7A3         endp
 .text:000007A6
-</code></pre><p>it returns the address which was pushed on the stack when this function was called.
+</code></pre><p>
+
+<br>
+
+
+
+<br>
+</p>
+<p>it returns the address which was pushed on the stack when this function was called.
 basically eax = address_of_next_instruction_after_call_0x7a3, so eax = 0x00000659
 and then eax += 0x1967, so eax = 0x1fc0.
-okay now lets look at the instruction at 0x000006ab again</p>
+okay now lets look at the instruction at 0x000006ab again
+
+
+<br>
+
+
+
+<br>
+</p>
 <pre><code>0x000006ab      8d9048000000   lea 	   edx, dword [eax + 0x48] 
-</code></pre><p>so it becomes <code>lea edx, dword [0x1fc0 + 0x48] ; 0x2008</code>
+</code></pre><p>
+
+<br>
+
+
+
+<br>
+</p>
+<p>so it becomes <code>lea edx, dword [0x1fc0 + 0x48] ; 0x2008</code>
 and you can actually see that ida already calculated the offset for us.
 so memcmp checks that the bytes after &lsquo;c&rsquo; * 0x54 with the dword value at 0x2008
-which is <code>.data:00002008 dword_2008      dd 0A7C6D169h</code></p>
+which is <code>.data:00002008 dword_2008      dd 0A7C6D169h</code>
+
+
+<br>
+
+
+
+<br>
+</p>
 
 
 
@@ -179,114 +396,151 @@ which is <code>.data:00002008 dword_2008      dd 0A7C6D169h</code></p>
     decoding="async"
   />
 </div>
-<p>also one more thing to point out is that this value is always stored at the end of .data section. so the correct password for 3.bin is</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> struct
-<span style="color:#66d9ef">print</span> <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">c</span><span style="color:#e6db74">&#39;</span> <span style="color:#f92672">*</span> <span style="color:#ae81ff">0x54</span> <span style="color:#f92672">+</span> struct<span style="color:#f92672">.</span>pack(<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">&lt;I</span><span style="color:#e6db74">&#39;</span>, <span style="color:#ae81ff">0xA7C6D169</span>)
-</code></pre></div><p>output -&gt;</p>
+<p>
+
+<br>
+
+
+
+<br>
+</p>
+<p>also one more thing to point out is that this value is always stored at the end of .data section. so the correct password for 3.bin is
+
+
+<br>
+
+
+
+<br>
+</p>
+<pre><code>import struct
+print 'c' * 0x54 + struct.pack('&lt;I', 0xA7C6D169)
+</code></pre><p>
+
+<br>
+
+
+
+<br>
+</p>
+<p>output -&gt;</p>
 <pre><code>x3ero0 :: year3000 » python solve_3.py | ./3.bin
 Well done
-</code></pre><p>so i quickly wrote a script to fetch these values and generate a correct password for all the binaries both 64 bit binaries or 32 bit binaries.</p>
-<p>exploit script &ndash;&gt;</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">from</span> pwn <span style="color:#f92672">import</span> <span style="color:#f92672">*</span>
-<span style="color:#f92672">import</span> base64
+</code></pre><p>
+
+<br>
 
 
-context<span style="color:#f92672">.</span>log_level <span style="color:#f92672">=</span> <span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">critical</span><span style="color:#e6db74">&#34;</span>
 
-<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">solve</span>(filename):
+<br>
+</p>
+<p>so i quickly wrote a script to fetch these values and generate a correct password for all the binaries both 64 bit binaries or 32 bit binaries.</p>
+<p>exploit script &ndash;&gt;
 
-	file <span style="color:#f92672">=</span> open(filename, <span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">rb</span><span style="color:#e6db74">&#34;</span>)<span style="color:#f92672">.</span>read()
+
+<br>
+
+
+
+<br>
+</p>
+<pre><code>from pwn import *
+import base64
+
+
+context.log_level = &quot;critical&quot;
+
+def solve(filename):
+
+	file = open(filename, &quot;rb&quot;).read()
 	
-	ELF64_Coun <span style="color:#f92672">=</span> <span style="color:#ae81ff">0x816</span>
-	ELF64_Valu <span style="color:#f92672">=</span> <span style="color:#ae81ff">0x81d</span>
+	ELF64_Coun = 0x816
+	ELF64_Valu = 0x81d
 
-	ELF32_Coun <span style="color:#f92672">=</span> <span style="color:#ae81ff">0x65e</span>
-	ELF32_Valu <span style="color:#f92672">=</span> <span style="color:#ae81ff">0x665</span>
+	ELF32_Coun = 0x65e
+	ELF32_Valu = 0x665
 
 
-	ELF64_Addr <span style="color:#f92672">=</span> <span style="color:#ae81ff">0x1010</span>
-	ELF32_Addr <span style="color:#f92672">=</span> <span style="color:#ae81ff">0x1008</span>
+	ELF64_Addr = 0x1010
+	ELF32_Addr = 0x1008
 
 	
-	Format <span style="color:#f92672">=</span> ord(file[<span style="color:#ae81ff">0x04</span>])
-	<span style="color:#66d9ef">if</span> (Format <span style="color:#f92672">==</span> <span style="color:#ae81ff">2</span>):
+	Format = ord(file[0x04])
+	if (Format == 2):
 
-		context<span style="color:#f92672">.</span>update(arch<span style="color:#f92672">=</span><span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">amd64</span><span style="color:#e6db74">&#39;</span>, os<span style="color:#f92672">=</span><span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">linux</span><span style="color:#e6db74">&#39;</span>)
+		context.update(arch='amd64', os='linux')
 
-		code_count <span style="color:#f92672">=</span> file[ELF64_Coun : ELF64_Coun<span style="color:#f92672">+</span><span style="color:#ae81ff">7</span>]
-		code_value <span style="color:#f92672">=</span> file[ELF64_Valu : ELF64_Valu<span style="color:#f92672">+</span><span style="color:#ae81ff">4</span>]
+		code_count = file[ELF64_Coun : ELF64_Coun+7]
+		code_value = file[ELF64_Valu : ELF64_Valu+4]
 
-		disa_count <span style="color:#f92672">=</span> disasm(code_count)
-		disa_value <span style="color:#f92672">=</span> disasm(code_value)
+		disa_count = disasm(code_count)
+		disa_value = disasm(code_value)
 
-		code_count <span style="color:#f92672">=</span> int(disa_count<span style="color:#f92672">.</span>split(<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">0x</span><span style="color:#e6db74">&#39;</span>)[<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>], <span style="color:#ae81ff">16</span>)
-		code_value <span style="color:#f92672">=</span> chr(int(disa_value<span style="color:#f92672">.</span>split(<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">0x</span><span style="color:#e6db74">&#39;</span>)[<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>], <span style="color:#ae81ff">16</span>))
+		code_count = int(disa_count.split('0x')[-1], 16)
+		code_value = chr(int(disa_value.split('0x')[-1], 16))
 
-		<span style="color:#75715e">#value = u64(file[ELF64_Addr : ELF64_Addr+8])</span>
-		value <span style="color:#f92672">=</span> file[ELF64_Addr : ELF64_Addr<span style="color:#f92672">+</span><span style="color:#ae81ff">8</span>]
-		value_n <span style="color:#f92672">=</span> u64(value)
+		#value = u64(file[ELF64_Addr : ELF64_Addr+8])
+		value = file[ELF64_Addr : ELF64_Addr+8]
+		value_n = u64(value)
 
-		flag <span style="color:#f92672">=</span> code_value <span style="color:#f92672">*</span> code_count <span style="color:#f92672">+</span> value
+		flag = code_value * code_count + value
 
-	<span style="color:#66d9ef">elif</span>(Format <span style="color:#f92672">==</span> <span style="color:#ae81ff">1</span>):
+	elif(Format == 1):
 
-		context<span style="color:#f92672">.</span>update(arch<span style="color:#f92672">=</span><span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">i386</span><span style="color:#e6db74">&#39;</span>, os<span style="color:#f92672">=</span><span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">linux</span><span style="color:#e6db74">&#39;</span>)
+		context.update(arch='i386', os='linux')
 
-		code_count <span style="color:#f92672">=</span> file[ELF32_Coun : ELF32_Coun<span style="color:#f92672">+</span><span style="color:#ae81ff">7</span>]
-		code_value <span style="color:#f92672">=</span> file[ELF32_Valu : ELF32_Valu<span style="color:#f92672">+</span><span style="color:#ae81ff">4</span>]
+		code_count = file[ELF32_Coun : ELF32_Coun+7]
+		code_value = file[ELF32_Valu : ELF32_Valu+4]
 
-		disa_count <span style="color:#f92672">=</span> disasm(code_count)
-		disa_value <span style="color:#f92672">=</span> disasm(code_value)
+		disa_count = disasm(code_count)
+		disa_value = disasm(code_value)
 
-		code_count <span style="color:#f92672">=</span> int(disa_count<span style="color:#f92672">.</span>split(<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">0x</span><span style="color:#e6db74">&#39;</span>)[<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>], <span style="color:#ae81ff">16</span>)
-		code_value <span style="color:#f92672">=</span> chr(int(disa_value<span style="color:#f92672">.</span>split(<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">0x</span><span style="color:#e6db74">&#39;</span>)[<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>], <span style="color:#ae81ff">16</span>))
+		code_count = int(disa_count.split('0x')[-1], 16)
+		code_value = chr(int(disa_value.split('0x')[-1], 16))
 
-		<span style="color:#75715e">#value = u32(file[ELF32_Addr:ELF32_Addr+4])</span>
-		value <span style="color:#f92672">=</span> file[ELF32_Addr:ELF32_Addr<span style="color:#f92672">+</span><span style="color:#ae81ff">4</span>]
-		value_n <span style="color:#f92672">=</span> u32(value)
-		flag <span style="color:#f92672">=</span> code_value <span style="color:#f92672">*</span> code_count <span style="color:#f92672">+</span> value
+		#value = u32(file[ELF32_Addr:ELF32_Addr+4])
+		value = file[ELF32_Addr:ELF32_Addr+4]
+		value_n = u32(value)
+		flag = code_value * code_count + value
 	
-	<span style="color:#75715e">#print &#34;[!] file : &#34; + filename</span>
-	<span style="color:#75715e">#print &#34;[!] count: &#34; + hex(code_count)</span>
-	<span style="color:#75715e">#print &#34;[!] value: &#34; + code_value</span>
-	<span style="color:#75715e">#print &#34;[!] numbe: &#34; + hex(value_n)</span>
+	#print &quot;[!] file : &quot; + filename
+	#print &quot;[!] count: &quot; + hex(code_count)
+	#print &quot;[!] value: &quot; + code_value
+	#print &quot;[!] numbe: &quot; + hex(value_n)
 
-	<span style="color:#66d9ef">return</span> flag
-
-
-<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">main</span>():
+	return flag
 
 
-	dump <span style="color:#f92672">=</span> <span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">&#34;</span>
-	i <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>
-	p <span style="color:#f92672">=</span> remote(<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">re.ctf.nullcon.net</span><span style="color:#e6db74">&#34;</span>, <span style="color:#ae81ff">1234</span>)
-	a <span style="color:#f92672">=</span> <span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">&#34;</span>
-	temp <span style="color:#f92672">=</span> <span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">&#34;</span>
-	<span style="color:#66d9ef">while</span>(<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">hackim</span><span style="color:#e6db74">&#39;</span> <span style="color:#f92672">not</span> <span style="color:#f92672">in</span> dump):
+def main():
 
-		<span style="color:#75715e"># i noticed that only 10 files were asked</span>
-		<span style="color:#66d9ef">if</span>(i<span style="color:#f92672">==</span><span style="color:#ae81ff">10</span>):
-			<span style="color:#66d9ef">print</span> <span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">Flag: </span><span style="color:#e6db74">&#34;</span> <span style="color:#f92672">+</span> p<span style="color:#f92672">.</span>recvline()
-			p<span style="color:#f92672">.</span>close()
+
+	i = 0
+	p = remote(&quot;re.ctf.nullcon.net&quot;, 1234)
+	temp = &quot;&quot;
+	while(i != 10):
+
+		file = p.recvline().strip()
+
+		a = p.recvuntil(&quot;&gt; &quot;)
+		solver = solve(file)
+		# .encode('base64') doesnt work with bytes 
+		p.sendline(base64.b64encode(solver))
+		#print str(solver).encode('base64')
+		temp = p.recvline()
+		if(&quot;Well done&quot; in temp):
+			print &quot;[0x%.4x]\t&quot; % i+ file + '\t: Well Done'
+		else:
+			print &quot;[+] Failed:\t&quot; + file + &quot;\tdumping recieved data&quot;
 			exit()
-		file <span style="color:#f92672">=</span> p<span style="color:#f92672">.</span>recvline()<span style="color:#f92672">.</span>strip()
+		i += 1
 
-		a <span style="color:#f92672">=</span> p<span style="color:#f92672">.</span>recvuntil(<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">&gt; </span><span style="color:#e6db74">&#34;</span>)
-		solver <span style="color:#f92672">=</span> solve(file)
-		<span style="color:#75715e"># .encode(&#39;base64&#39;) doesnt work with bytes </span>
-		p<span style="color:#f92672">.</span>sendline(base64<span style="color:#f92672">.</span>b64encode(solver))
-		<span style="color:#75715e">#print str(solver).encode(&#39;base64&#39;)</span>
-		temp <span style="color:#f92672">=</span> p<span style="color:#f92672">.</span>recvline()
-		<span style="color:#66d9ef">if</span>(<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">Well done</span><span style="color:#e6db74">&#34;</span> <span style="color:#f92672">in</span> temp):
-			<span style="color:#66d9ef">print</span> <span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">[0x</span><span style="color:#e6db74">%.4x</span><span style="color:#e6db74">]</span><span style="color:#ae81ff">\t</span><span style="color:#e6db74">&#34;</span> <span style="color:#f92672">%</span> i<span style="color:#f92672">+</span> file <span style="color:#f92672">+</span> <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#ae81ff">\t</span><span style="color:#e6db74">: Well Done</span><span style="color:#e6db74">&#39;</span>
-		<span style="color:#66d9ef">else</span>:
-			<span style="color:#66d9ef">print</span> <span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">[+] Failed:</span><span style="color:#ae81ff">\t</span><span style="color:#e6db74">&#34;</span> <span style="color:#f92672">+</span> file <span style="color:#f92672">+</span> <span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\t</span><span style="color:#e6db74">dumping recieved data</span><span style="color:#e6db74">&#34;</span>
-			exit()
-		i <span style="color:#f92672">+</span><span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>
+	print &quot;Flag: &quot; + p.recvline()
+	p.close()
+	exit()
 
-<span style="color:#66d9ef">if</span> __name__ <span style="color:#f92672">==</span> <span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">__main__</span><span style="color:#e6db74">&#34;</span>:
+if __name__ == &quot;__main__&quot;:
 	main()
-</code></pre></div><p>
+</code></pre><p>
 
 <br>
 
