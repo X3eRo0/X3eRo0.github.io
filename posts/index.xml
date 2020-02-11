@@ -18,8 +18,8 @@
       <pubDate>Tue, 11 Feb 2020 07:47:19 +0000</pubDate>
       
       <guid>https://x3ero0.tech/posts/reversing_a_malware_in_disguise/</guid>
-      <description>hljs.initHighlightingOnLoad();My Friend recommended this Super Awesome game The_Elder_Scrolls_V_Skyrim.zip and obviously it was downloaded from a random website from the internet ( some ripoff of the OceanOfGames.com ). the contents of the The_Elder_Scrolls_V_Skyrim.zip are as follows 
-the setup file was very much suspicious because
+      <description>hljs.initHighlightingOnLoad();My Friend recommended this Super Awesome game The_Elder_Scrolls_V_Skyrim.zip and obviously it was downloaded from a random website from the internet ( some ripoff of the OceanOfGames.com ). The contents of the The_Elder_Scrolls_V_Skyrim.zip are as follows : - 
+The setup file was very much suspicious because
  the size was only 506KB Windows Defender was preventing it from extracting in the VM. the icon was also acting weird when view of the file explorer was changed (i dont really know whats up with that) but a well made setup for game wont go crazy like this.</description>
     </item>
     
