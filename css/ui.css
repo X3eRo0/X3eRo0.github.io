@@ -20,17 +20,6 @@
     justify-content: space-between;
 }
 
-dl,ol,ul {
-    color: #000000;
-    margin-top: 0;
-    margin-bottom: 1rem
-}
-
-ol ol,ol ul,ul ol,ul ul {
-    margin-bottom: 0
-}
-
-
 .flex-header-buttons > button:not(:last-child) {
     margin-right: 10px;
 }

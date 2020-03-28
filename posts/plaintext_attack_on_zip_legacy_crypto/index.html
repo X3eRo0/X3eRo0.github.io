@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+	<meta charset="utf-8">
+	<meta name="description" content='X3eRo0&#39;s Blog about Reverse Engineering'>
+	<meta name="keywords" content='X3eRo0, Reverse, Reverse Engineering, Crackmes, blog'>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="generator" content="Hugo 0.63.2" />
+	<link rel="stylesheet" type="text/css" href='https://x3ero0.tech/css/bootstrap.min.css'>
+	<link rel="stylesheet" type="text/css" href='https://x3ero0.tech/css/custom.css'>
+	<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.css" integrity="sha256-46qynGAkLSFpVbEBog43gvNhfrOj+BmwXdxFgVK/Kvc=" crossorigin=anonymous>
+	<link rel="stylesheet" type="text/css"  href='https://x3ero0.tech/css/ui.css'>
+	<title>Plaintext_attack_on_zip_legacy_crypto</title>
+	<nav class="navbar text-center sticky-top bg-white mt-2 mb-1">
+		<a href='https://x3ero0.tech/'><span class="btn btn-sm btn-outline-primary">Home</span></a>
+		<a href='https://x3ero0.tech/crackmes'><span class="btn btn-sm btn-outline-secondary">Crackmes</span></a>
+		<a href='https://x3ero0.tech/posts'><span class="btn btn-sm btn-outline-success">Blog</span></a>
+		<a href='https://x3ero0.tech/tags'><span class="btn btn-sm btn-outline-warning">Tags</span></a>
+	</nav>
+</head>
+<body>
+      <div id="content">
+
+
+	<section class="container text-justified mt-3">
+	  <h2 class="text-center mb-4">Plaintext_attack_on_zip_legacy_crypto</h2>
+	    <div class="text-monospace">
+			
+
+<link rel="stylesheet" href="/css/styles/monokai.css">
+<script src="/js/highlight.pack.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
+<h3 id="the-vulnerability">The Vulnerability</h3>
+<p>The PKZIP program is one of the more widely used archive/compression programs on personal computers. PKZIP provides a stream cipher which allows users to scramble files with variable length keys ( passwords ). We can find the internal representation of the key within a few hours on a PC using a few bytes of known plaintext. This Stream cipher was designed by Roger Schlafly.</p>
+<p>We will take a look at the Forensics 3 challenge from RiftCTF2020, But first lets understand the weakness.
+The attack primarily finds the 96-bit internal representation of the key, which suffices to decrypt the whole file and any other file encrypted under the same key. Later the original key can be constructed.</p>
+<h3 id="the-pkzip-stream-cipher">The PKZIP Stream Cipher</h3>
+<p>PKZIP manages a ZIP file which is an archive containing many files in a compressed form, along with file headers describing (for each file) the file name, the compression method, whether the file is encrypted , the CRC-32 value, the original and compressed sizes of the file, and other auxiliary information. You can find the above mentioned information in the Local File header of each file.
+You can fuck with the zip files by changing these headers, for example you can modify the bit which tells whether the zip is encrypted or not, by doing so you can confuse the extracting software into asking password for an unencrypted zip file ;).</p>
+<p>The cipher is byte-oriented, encrypting under variable length keys. It has a 96-bit internal memory, divided into three 32-bit words called key0, key1, and key2. An 8-bit variable key3 (not part of the internal memory) is derived from key2. The key initializes the memory: each key has an equivalent internal representation as three 32-bit words. The plaintext bytes update the memory during encryption.</p>
+<p>The main function of the cipher is called update_keys, and is used to update the internal memory and to derive the variable key3, for each given input (usually plaintext) byte:</p>
+<pre><code>update_keys(char):
+    local unsigned short temp
+    key0 &lt;-- crc32(key0, char)
+    key1 &lt;-- (key1 + LSB(key0)) * 0x8088405 + 1 (mod 2^32)
+    key2 &lt;-- crc32(key2, MSB(key1))
+    temp &lt;-- key2 | 3 (16 LS Bits)
+    key3 &lt;-- LSB((temp * (temp ^ 0x1)) &gt;&gt; 0x8)
+end update_keys
+</code></pre><p>Our Goal is to find out the internal representation of these keys.</p>
+<p>Under a known plaintext attack, both the ciphertext and plaintext are known. In the PKZIP cipher, given a plaintext byte and the corresponding ciphertext byte, the value of the variable key3 can be calculated by</p>
+<p><code>key3 = P ^ C</code></p>
+<p>Where P and C are plaintext and ciphertext bytes respectively.</p>
+<p>To know how to derive key1 and key2 i would recommend these Papers about the attack</p>
+<ul>
+<li><a href="https://link.springer.com/content/pdf/10.1007%2F3-540-60590-8_12.pdf">A Known Plaintext Attack on the PKZIP Stream Cipher</a></li>
+<li><a href="http://www.cs.sjsu.edu/faculty/stamp/crypto/PowerPoint_PDF/8_PKZIP.pdf">PKZIP Stream Cipher</a></li>
+<li><a href="https://www.os3.nl/_media/2014-2015/courses/rp1/p57_report.pdf">Study on a known-plaintext attack on ZIP Encryption</a></li>
+</ul>
+<p>Once we get the keys, we can decrypt all the files in the zip file. One great tool to do just that is <a href="https://github.com/keyunluo/pkcrack">pkcrack</a></p>
+<p>Lets see the Forensics3 challenge from RIFTCTF2020</p>
+
+
+
+<div class="center">
+  <img
+    src="https://x3ero0.tech/img/forensics3/files.png"
+    alt="Given Files"
+    decoding="async"
+  />
+</div>
+<p>We have enough files to decrypt the zip file and get the flag.txt.
+if you look inside the flag.zip you will find there are 2 files</p>
+<ul>
+<li>flag.txt</li>
+<li>readme.txt</li>
+</ul>
+<p>and we do have a copy of readme.txt and readme.txt is infact long enough to support this attack.
+So, we run pkcrack and wait, and wait, and some more wait.</p>
+<p>After some time we see this.
+
+
+
+<div class="center">
+  <img
+    src="https://x3ero0.tech/img/forensics3/result.jpg"
+    alt="pkcrack"
+    decoding="async"
+  />
+</div></p>
+
+
+
+<div class="center">
+  <img
+    src="https://x3ero0.tech/img/forensics3/decrypted.jpg"
+    alt="Decrypted Files"
+    decoding="async"
+  />
+</div>
+<p>and the flag is 
+
+
+
+<div class="center">
+  <img
+    src="https://x3ero0.tech/img/forensics3/flag.JPG"
+    alt="flag"
+    decoding="async"
+  />
+</div></p>
+
+		</div>
+	</section>
+
+
+      </div>
+  </body><footer>
+  <div class="container-fluid bg-dark text-white text-monospace text-center mt-4">
+    <small style="color:#ffffff">
+    	<b>-=[ </b>
+    	<a href="https://youtube.com/pulkitsinghaniapulkittech" style="color:#e6ffff">YouTube</a>
+    	<a href="https://www.linkedin.com/in/pulkit-singh-singaria-500a53166/" style="color:#e6ffff">LinkedIn</a>
+    	<a href="https://twitter.com/X3eRo0" style="color:#e6ffff">Twitter</a>
+    	<a href="https://ctftime.org/user/43759" style="color:#e6ffff">CTFTime</a>
+    	<b> ]=-</b>
+    </small>
+  </div>
+</footer></html>

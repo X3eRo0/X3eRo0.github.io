@@ -7,20 +7,19 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <copyright>Copyright © 2008–2019</copyright>
-    <lastBuildDate>Tue, 11 Feb 2020 07:47:19 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 27 Mar 2020 09:54:19 +0000</lastBuildDate>
     
 	<atom:link href="https://x3ero0.tech/posts/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
-      <title>Reversing_A_Malware_in_Disguise</title>
-      <link>https://x3ero0.tech/posts/reversing_a_malware_in_disguise/</link>
-      <pubDate>Tue, 11 Feb 2020 07:47:19 +0000</pubDate>
+      <title>Plaintext_attack_on_zip_legacy_crypto</title>
+      <link>https://x3ero0.tech/posts/plaintext_attack_on_zip_legacy_crypto/</link>
+      <pubDate>Fri, 27 Mar 2020 09:54:19 +0000</pubDate>
       
-      <guid>https://x3ero0.tech/posts/reversing_a_malware_in_disguise/</guid>
-      <description>hljs.initHighlightingOnLoad();My Friend recommended this Super Awesome game The_Elder_Scrolls_V_Skyrim.zip and obviously it was downloaded from a random website from the internet ( some ripoff of the OceanOfGames.com ). The contents of the The_Elder_Scrolls_V_Skyrim.zip are as follows : - 
-The setup file was very much suspicious because
- the size was only 506KB Windows Defender was preventing it from extracting in the VM. the icon was also acting weird when view of the file explorer was changed (i dont really know whats up with that) but a well made setup for game wont go crazy like this.</description>
+      <guid>https://x3ero0.tech/posts/plaintext_attack_on_zip_legacy_crypto/</guid>
+      <description>hljs.initHighlightingOnLoad();The Vulnerability The PKZIP program is one of the more widely used archive/compression programs on personal computers. PKZIP provides a stream cipher which allows users to scramble files with variable length keys ( passwords ). We can find the internal representation of the key within a few hours on a PC using a few bytes of known plaintext. This Stream cipher was designed by Roger Schlafly.
+We will take a look at the Forensics 3 challenge from RiftCTF2020, But first lets understand the weakness.</description>
     </item>
     
     <item>
