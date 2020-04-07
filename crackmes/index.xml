@@ -18,7 +18,7 @@
       <pubDate>Tue, 07 Apr 2020 08:47:07 +0000</pubDate>
       
       <guid>https://x3ero0.tech/crackmes/real_web_cr4kme/</guid>
-      <description>[Real WEB cr4kme]Download Files
+      <description>body{color : #000000;}p { color: #000000;font-family: Inconsolata Bold,monospace;font-size: 17px;line-height: 1em;text-align: justify;text-justify: inter-word; }li {margin: 0;padding: 0.2em;}[Real WEB cr4kme]Download Files
 flag format riftCTF{.*}
 Crackme : Real WEB cr4kmeDifficulty : MediumPlatform : WEBPoints : 5/10 Date : Tue, 07 Apr 2020 08:47:07 &amp;#43;0000 Objective : Find the password which displays &amp;#39;Correct Password&amp;#39;   </description>
     </item>
@@ -29,9 +29,8 @@ flag format riftCTF{.*}
       <pubDate>Wed, 05 Feb 2020 15:13:50 +0000</pubDate>
       
       <guid>https://x3ero0.tech/crackmes/hackme/</guid>
-      <description>[hackme]Download Files
-the task is from RootersCTF2019 and story goes like this... your client was infected by a really nasty malware and you found some peices of the original malware hidden in the /tmp/dupedive folder. find what this malware left behind ...
-Crackme : hackmeDifficulty : MediumPlatform : LinuxPoints : 6/10 Date : Wed, 05 Feb 2020 15:13:50 &amp;#43;0000 Objective : Find the hidden flag </description>
+      <description>body{color : #000000;}p { color: #000000;font-family: Inconsolata Bold,monospace;font-size: 17px;line-height: 1em;text-align: justify;text-justify: inter-word; }li {margin: 0;padding: 0.2em;}[hackme]Download Files
+the task is from RootersCTF2019 and story goes like this... your client was infected by a really nasty malware and you found some peices of the original malware hidden in the /tmp/dupedive folder.</description>
     </item>
     
     <item>
@@ -40,9 +39,8 @@ the task is from RootersCTF2019 and story goes like this... your client was infe
       <pubDate>Wed, 05 Feb 2020 05:06:29 +0000</pubDate>
       
       <guid>https://x3ero0.tech/crackmes/p41d_s0ftw43/</guid>
-      <description>[p4id_s0ftw4r3]Download Files
-X3eRo0 recently released a Paid Software at a price of $31337. Now we Know its very Costly for a software that does nothing (LOL), but you decided to make it free for other people to use.
-Crackme : p4id_s0ftw43Difficulty : EasyPlatform : Win32Points : 3/10 Date : 2020-02-02 Objective : Find the Correct Password which pops a &amp;#39;Registered!</description>
+      <description>body{color : #000000;}p { color: #000000;font-family: Inconsolata Bold,monospace;font-size: 17px;line-height: 1em;text-align: justify;text-justify: inter-word; }li {margin: 0;padding: 0.2em;}[p4id_s0ftw4r3]Download Files
+X3eRo0 recently released a Paid Software at a price of $31337. Now we Know its very Costly for a software that does nothing (LOL), but you decided to make it free for other people to use.</description>
     </item>
     
     <item>
@@ -51,9 +49,8 @@ X3eRo0 recently released a Paid Software at a price of $31337. Now we Know its v
       <pubDate>Wed, 05 Feb 2020 05:06:29 +0000</pubDate>
       
       <guid>https://x3ero0.tech/crackmes/xvm_001/</guid>
-      <description>[xvm_001]Download Files
-X3eRo0 recently learned about Virtual-Machine Based protection so he made a little Crackme challenge for you. this VM only has simple opcodes like mov, and, xor. NO JMPs or CALLS. The bytecode literally contains the hint.
-Crackme : xvm_001Difficulty : EasyPlatform : LinuxPoints : 4/10 Date : 2020-02-02 Objective : Find the Correct password which gives a &amp;#39;[!</description>
+      <description>body{color : #000000;}p { color: #000000;font-family: Inconsolata Bold,monospace;font-size: 17px;line-height: 1em;text-align: justify;text-justify: inter-word; }li {margin: 0;padding: 0.2em;}[xvm_001]Download Files
+X3eRo0 recently learned about Virtual-Machine Based protection so he made a little Crackme challenge for you. this VM only has simple opcodes like mov, and, xor. NO JMPs or CALLS. The bytecode literally contains the hint.</description>
     </item>
     
     <item>
@@ -62,7 +59,7 @@ X3eRo0 recently learned about Virtual-Machine Based protection so he made a litt
       <pubDate>Wed, 05 Feb 2020 05:06:29 +0000</pubDate>
       
       <guid>https://x3ero0.tech/crackmes/not_so_good_encryption/</guid>
-      <description>[Not So Good Encryption]Download Files
+      <description>body{color : #000000;}p { color: #000000;font-family: Inconsolata Bold,monospace;font-size: 17px;line-height: 1em;text-align: justify;text-justify: inter-word; }li {margin: 0;padding: 0.2em;}[Not So Good Encryption]Download Files
 Very Simple Crackme :)
 Crackme : Not So Good EncryptionDifficulty : EasyPlatform : LinuxPoints : 3/10 Date : 2020-02-02 Objective : Find the Correct password which gives a &amp;#39;Correct Password&amp;#39; Message </description>
     </item>
@@ -73,9 +70,9 @@ Very Simple Crackme :)
       <pubDate>Wed, 05 Feb 2020 05:06:29 +0000</pubDate>
       
       <guid>https://x3ero0.tech/crackmes/easy_licensing/</guid>
-      <description>[Easy Licensing]Download Files
+      <description>body{color : #000000;}p { color: #000000;font-family: Inconsolata Bold,monospace;font-size: 17px;line-height: 1em;text-align: justify;text-justify: inter-word; }li {margin: 0;padding: 0.2em;}[Easy Licensing]Download Files
 Another Shitty Password Checking
-Crackme : Easy LicensingDifficulty : EasyPlatform : LinuxPoints : 3/10 Date : 2020-02-02 Objective : Find the Correct password which gives a &amp;#39;Correct Password!!!!!!!&amp;#39; Message </description>
+Crackme : Easy LicensingDifficulty : EasyPlatform : LinuxPoints : 3/10 Date : 2020-02-02 Objective : Find the Correct password which gives a &amp;#39;Correct Password!</description>
     </item>
     
   </channel>
