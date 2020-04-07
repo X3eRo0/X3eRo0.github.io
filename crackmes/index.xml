@@ -7,20 +7,20 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <copyright>Copyright © 2008–2019</copyright>
-    <lastBuildDate>Mon, 06 Apr 2020 19:51:01 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 07 Apr 2020 08:47:07 +0000</lastBuildDate>
     
 	<atom:link href="https://x3ero0.tech/crackmes/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
-      <title>[0x0005] Real WEB cr4kme</title>
+      <title>[0x0006] Real WEB cr4kme</title>
       <link>https://x3ero0.tech/crackmes/real_web_cr4kme/</link>
-      <pubDate>Mon, 06 Apr 2020 19:51:01 +0000</pubDate>
+      <pubDate>Tue, 07 Apr 2020 08:47:07 +0000</pubDate>
       
       <guid>https://x3ero0.tech/crackmes/real_web_cr4kme/</guid>
       <description>[Real WEB cr4kme]Download Filesbody{color : #000000;}p { color: #000000;font-family: Inconsolata Bold,monospace;font-size: 17px;line-height: 1em;text-align: justify;text-justify: inter-word; }li {margin: 0;padding: 0.2em;}
-Flag format riftCTF{.*}
-Crackme : Real WEB cr4kmeDifficulty : MediumPlatform : WEBPoints : 5/10 Date : Mon, 06 Apr 2020 19:51:01 &amp;#43;0000 Objective : Find the flag which prints &amp;#39;Correct Password&amp;#39;   </description>
+flag format riftCTF{.*}
+Crackme : Real WEB cr4kmeDifficulty : MediumPlatform : WEBPoints : 5/10 Date : Tue, 07 Apr 2020 08:47:07 &amp;#43;0000 Objective : Find the password which displays &amp;#39;Correct Password&amp;#39;   </description>
     </item>
     
     <item>
