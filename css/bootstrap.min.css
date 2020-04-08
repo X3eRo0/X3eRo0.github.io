@@ -28,6 +28,15 @@ article,aside,figcaption,figure,footer,header,hgroup,main,nav,section {
     display: block
 }
 
+span{
+    opacity: 0;
+    transition: all 1s ease;
+}
+
+span.fade{
+    opacity: 1;
+}
+
 body {
     margin: 0;
     font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
