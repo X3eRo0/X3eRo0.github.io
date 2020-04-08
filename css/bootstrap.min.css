@@ -29,12 +29,12 @@ article,aside,figcaption,figure,footer,header,hgroup,main,nav,section {
 }
 
 span{
-    opacity: 0;
-    transition: all 1s ease;
+    opacity: 1;
+    transition: all 0.5s ease;
 }
 
 span.fade{
-    opacity: 1;
+    opacity: 0;
 }
 
 body {

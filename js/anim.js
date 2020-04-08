@@ -1,4 +1,4 @@
-const text = document.querySelector('.ml3');
+const text = document.getElementById("anim");
 const str_ = text.textContent;
 const chr_ = str_.split("");
 
