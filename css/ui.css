@@ -551,7 +551,7 @@ a.close.disabled {
     cursor: pointer;
     height: 150px auto;
     overflow: hidden;
-    padding: .5em 1em;
+    padding: 2em 2em;
     width: 250px auto;
     -webkit-transition: all .2s;
     transition: all .2s;
