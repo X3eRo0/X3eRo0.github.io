@@ -549,13 +549,13 @@ a.close.disabled {
     background-color: #0088cc;
     border-radius: 2px;
     cursor: pointer;
-    height: 150px;
+    height: 150px auto;
     overflow: hidden;
     padding: 20px;
-    width: 250px;
+    width: 250px auto;
     -webkit-transition: all .2s;
     transition: all .2s;
-    margin: 7px auto
+    margin: 50px;
 }
 
 .card:hover {
