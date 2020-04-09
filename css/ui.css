@@ -545,12 +545,14 @@ a.close.disabled {
 }
 
 .card-flex {
+    display: inline-block;
     background-color: #140033;
     border-radius: 2px;
     cursor: pointer;
-    height: auto;
+    height: 150px auto;
     overflow: hidden;
-    width: auto;
+    padding: .5em 1em;
+    width: 250px auto;
     -webkit-transition: all .2s;
     transition: all .2s;
     margin: 15px auto
