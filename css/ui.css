@@ -544,6 +544,18 @@ a.close.disabled {
     margin: 15px auto
 }
 
+.card-flex {
+    background-color: #140033;
+    border-radius: 2px;
+    cursor: pointer;
+    height: auto;
+    overflow: hidden;
+    width: auto;
+    -webkit-transition: all .2s;
+    transition: all .2s;
+    margin: 15px auto
+}
+
 .card:hover {
     -webkit-transform: translateY(-5px);
     transform: translateY(-5px);
