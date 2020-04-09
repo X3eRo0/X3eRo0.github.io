@@ -545,7 +545,8 @@ a.close.disabled {
 }
 
 .card-flex {
-    background-color: #432f75;
+    display: inline-block;
+    background-color: #061539;
     border-radius: 2px;
     cursor: pointer;
     height: 150px;
@@ -562,7 +563,6 @@ a.close.disabled {
     box-shadow: 0 7px 14px rgba(0,0,0,.35)
 }
 
-
 .card-flex:hover {
     -webkit-transform: translateY(-5px);
     transform: translateY(-5px);
@@ -570,11 +570,13 @@ a.close.disabled {
 }
 
 .card-title {
+    display: inline-block;
     padding-left: 5px;
     font-size: 1vw;
 }
 
 .card-data {
+    display: inline-block;
     width: 100%;
     -webkit-box-pack: justify;
     justify-content: space-between
