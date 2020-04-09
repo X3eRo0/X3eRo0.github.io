@@ -549,16 +549,20 @@ a.close.disabled {
     background-color: #140033;
     border-radius: 2px;
     cursor: pointer;
-    height: 150px auto;
     overflow: hidden;
     padding: 2em 2em;
-    width: 250px auto;
     -webkit-transition: all .2s;
     transition: all .2s;
     margin: 15px auto
 }
 
 .card:hover {
+    -webkit-transform: translateY(-5px);
+    transform: translateY(-5px);
+    box-shadow: 0 7px 14px rgba(0,0,0,.35)
+}
+
+.card-flex:hover {
     -webkit-transform: translateY(-5px);
     transform: translateY(-5px);
     box-shadow: 0 7px 14px rgba(0,0,0,.35)
