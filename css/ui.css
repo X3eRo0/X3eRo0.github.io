@@ -9,6 +9,11 @@
     margin-top: 10px;
 }
 
+.responsive{
+    max-width: 100%;
+    height: auto;
+}
+
 /* Wrapper */
 .wrapper {
     padding: 0 15px;
@@ -42,17 +47,21 @@ pre {
 /* Code block */
 code {
     font-family: Inconsolata, monospace;
-    font-size: large;
+    font-size: 1.3vh;
     color: #9539f7;
     border-radius: 2px;
-    word-wrap: break-word
+    word-wrap: break-word;
+    max-width: 100%;
+    height: auto;
 }
 
 code[class*=language-] {
     font-family: Inconsolata, monospace;
-    font-size: large;
+    font-size: 1.3vh;
     border-radius: 2px;
-    word-wrap: break-word
+    word-wrap: break-word;
+    max-width: 100%;
+    height: auto;
 }
 
 highlight {
