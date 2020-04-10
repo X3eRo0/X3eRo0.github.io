@@ -65,6 +65,9 @@ code[class*=language-] {
 }
 
 highlight {
+    font-size: 1.3vh;
+    max-width: 100%;
+    height: auto;
     font-family: Inconsolata, monospace;
     line-height: 1.15;
     -webkit-text-size-adjust: 100%;

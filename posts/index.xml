@@ -7,10 +7,31 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <copyright>Copyright © 2008–2019</copyright>
-    <lastBuildDate>Fri, 27 Mar 2020 09:54:19 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 10 Apr 2020 20:20:07 +0000</lastBuildDate>
     
 	<atom:link href="https://x3ero0.tech/posts/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Watevr_repyc</title>
+      <link>https://x3ero0.tech/posts/watevr_repyc/</link>
+      <pubDate>Fri, 10 Apr 2020 20:20:07 +0000</pubDate>
+      
+      <guid>https://x3ero0.tech/posts/watevr_repyc/</guid>
+      <description>hljs.initHighlightingOnLoad();Challenge: REPYC [REV] - 147 Points Challenge Description:
+ woo thi chal sooo repyc! file: 3nohtyp.pyc Difficulty estimate: Easy  We are given a pyc file and running file on this pyc reveals that its a python 3.6 compiled python bytecode.
+[~]$ file 3nohtyp.pyc 3nohtyp.pyc: python 3.6 byte-compiledso i went with the usuall approach to a python pyc challenge, where the first part is to decompile the bytecode.</description>
+    </item>
+    
+    <item>
+      <title>HSCTF License</title>
+      <link>https://x3ero0.tech/posts/hsctf-license/</link>
+      <pubDate>Fri, 10 Apr 2020 20:06:26 +0000</pubDate>
+      
+      <guid>https://x3ero0.tech/posts/hsctf-license/</guid>
+      <description>hljs.initHighlightingOnLoad();Challenge: License [ 298(DYN) RE ] Challenge Description:
+Written by: ItzSomebodyDescription: Keith made a cool license-checking program but he forgot the flag he used to create the key! To make matters worse, he lost the source code and stripped the binary for his license-generator program. Can you help Keith recover his flag? All he knows is:• The license key is 4-EZF2M-7O5F4-V9P7O-EVFDP-E4VDO-O• He put his name (in the form of &amp;#39;k3ith&amp;#39;) as the first part of the flag• There are 3 underscores• The flag is in the format hsctf{}• The flag doesn&amp;#39;t have random character sequences (you should be able to read the entire flag easily).</description>
+    </item>
     
     <item>
       <title>Plaintext Attack on Zip</title>

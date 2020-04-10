@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+	<meta charset="utf-8">
+	<meta name="description" content='X3eRo0&#39;s Blog about Reverse Engineering'>
+	<meta name="keywords" content='X3eRo0, Reverse, Reverse Engineering, Crackmes, blog'>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="generator" content="Hugo 0.64.1" />
+	<link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="/css/custom.css">
+	<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.css" integrity="sha256-46qynGAkLSFpVbEBog43gvNhfrOj+BmwXdxFgVK/Kvc=" crossorigin=anonymous>
+	<link rel="stylesheet" type="text/css"  href="/css/ui.css">
+	<title>HSCTF License</title>
+	<link rel="shortcut icon" type="image/x-icon" href="/img/favicon.ico">
+	<nav class="navbar text-center sticky-top bg-white mt-2 mb-1">
+		<a href='https://x3ero0.tech/'><span class="btn btn-sm btn-outline-primary">Home</span></a>
+		<a href="/crackmes"><span class="btn btn-sm btn-outline-secondary">Crackmes</span></a>
+		<a href="/posts"><span class="btn btn-sm btn-outline-success">Blog</span></a>
+		<a href="/tags"><span class="btn btn-sm btn-outline-warning">Tags</span></a>
+	</nav>
+</head>
+<body>
+      <div id="content">
+
+
+	<section class="container text-justified mt-3">
+	  <h2 class="text-center mb-4">HSCTF License</h2>
+	    <div class="text-monospace">
+			
+
+<link rel="stylesheet" href="/css/styles/atelier-forest-dark.css">
+<script src="/js/highlight.pack.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
+<h3 id="challenge-license--298dyn-re-">Challenge: License [ 298(DYN) RE ]</h3>
+<p>Challenge Description:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-plaintext" data-lang="plaintext">Written by: ItzSomebody
+
+Description: 
+Keith made a cool license-checking program but he forgot the flag he used to create the key! To make matters worse, he lost the source code and stripped the binary for his license-generator program. Can you help Keith recover his flag? All he knows is:
+• The license key is 4-EZF2M-7O5F4-V9P7O-EVFDP-E4VDO-O
+• He put his name (in the form of &#39;k3ith&#39;) as the first part of the flag
+• There are 3 underscores
+• The flag is in the format hsctf{}
+• The flag doesn&#39;t have random character sequences (you should be able to read the entire flag easily).
+• The flag only contains lowercase English letters and numbers.
+• The generator might produce the same keys for different inputs because Keith was too lazy to write the algorithm properly.
+</code></pre></div><p>Binary : <a href="https://github.com/X3eRo0/Crackmes/raw/master/hsctf/license">license</a></p>
+<p>before opening the binary in any disassembler or any debugger, i thought lets take a look at what it does.</p>
+<p>runing the binary will make your work a little easier in this case.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-plaintext" data-lang="plaintext">╭─pulkit@pulkit-ER28-0652 ~/Capture_The_Flag/hsctf 
+╰─$ ./license 
+gimme dat string: A
+generating key for: a
+X
+╭─pulkit@pulkit-ER28-0652 ~/Capture_The_Flag/hsctf 
+╰─$ ./license
+gimme dat string: B
+generating key for: b
+Y
+╭─pulkit@pulkit-ER28-0652 ~/Capture_The_Flag/hsctf 
+╰─$ ./license
+gimme dat string: C
+generating key for: c
+Z
+</code></pre></div><p>you can clearly see the pattern. each letter is simply substituted by some other letter.</p>
+<p>so what we can do in this case is that we can get a python dictionary which will store which charecter is substituted by which letter.
+once we have that dictionary we resubstitute the charecters in the key given to us.</p>
+<p>i made a script for that</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">from</span> pwn <span style="color:#f92672">import</span> <span style="color:#f92672">*</span>
+<span style="color:#f92672">import</span> string
+context<span style="color:#f92672">.</span>log_level <span style="color:#f92672">=</span> <span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">critical</span><span style="color:#e6db74">&#34;</span>
+
+flag_license <span style="color:#f92672">=</span> <span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">4-EZF2M-7O5F4-V9P7O-EVFDP-E4VDO-O</span><span style="color:#e6db74">&#34;</span><span style="color:#f92672">.</span>replace(<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">-</span><span style="color:#e6db74">&#34;</span>,<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">&#34;</span>)
+
+chars <span style="color:#f92672">=</span> {}
+
+<span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">0x21</span>,<span style="color:#ae81ff">0x7f</span>):
+    p <span style="color:#f92672">=</span> process(<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">./license</span><span style="color:#e6db74">&#34;</span>)
+    p<span style="color:#f92672">.</span>recvuntil(<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">gimme dat string: </span><span style="color:#e6db74">&#34;</span>)
+    p<span style="color:#f92672">.</span>sendline(chr(i))
+    corchar <span style="color:#f92672">=</span> p<span style="color:#f92672">.</span>recv(<span style="color:#ae81ff">23</span>)[<span style="color:#ae81ff">22</span>:]
+    
+    chars[corchar] <span style="color:#f92672">=</span> chr(i)
+    p<span style="color:#f92672">.</span>close
+
+flag <span style="color:#f92672">=</span> <span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">&#34;</span>
+
+<span style="color:#66d9ef">for</span> ch <span style="color:#f92672">in</span> flag_license:
+    flag <span style="color:#f92672">+</span><span style="color:#f92672">=</span> chars[ch]
+
+<span style="color:#66d9ef">print</span> flag
+</code></pre></div><p>running this script gives us partial flag</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-plaintext" data-lang="plaintext">╭─pulkit@pulkit-ER28-0652 ~/Capture_The_Flag/hsctf 
+╰─$ python find_keys.py 
+hsctf{k}ith_m~k}s_tr~sh_r}}
+</code></pre></div><p>we can see that &ldquo;}&rdquo; is also 3 and &ldquo;~&rdquo; is 4
+in the end flag comes out to be</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-plaintext" data-lang="plaintext">hsctf{k3ith_m4k3s_tr4sh_r3}
+</code></pre></div><p>Thanks for reading that.</p>
+
+		</div>
+	</section>
+<div id="disqus_thread" class="container"></div>
+<script>
+	(function() { 
+		var d = document, s = d.createElement('script');
+		s.src = 'https://x3ero0-tech.disqus.com/embed.js';
+		s.setAttribute('data-timestamp', +new Date());
+		(d.head || d.body).appendChild(s);
+	})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+                            
+
+
+      </div>
+  </body><footer>
+  <div class="container-fluid bg-dark text-white text-monospace text-center mt-4">
+    <small style="color:#ffffff">
+    	<b>-=[ </b>
+    	<a href="https://youtube.com/pulkitsinghaniapulkittech" style="color:#e6ffff">YouTube</a>
+    	<a href="https://www.linkedin.com/in/pulkit-singh-singaria-500a53166/" style="color:#e6ffff">LinkedIn</a>
+    	<a href="https://twitter.com/X3eRo0" style="color:#e6ffff">Twitter</a>
+    	<a href="https://ctftime.org/user/43759" style="color:#e6ffff">CTFTime</a>
+    	<b> ]=-</b>
+    </small>
+  </div>
+</footer></html>
