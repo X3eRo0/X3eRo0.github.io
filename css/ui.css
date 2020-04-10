@@ -564,6 +564,7 @@ a.close.disabled {
     height: 150px;
     padding: 20px;
     width: 500px;
+    min-width: 400px;
     -webkit-transition: all .2s;
     transition: all .2s;
     margin: 15px;
