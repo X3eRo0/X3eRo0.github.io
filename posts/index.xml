@@ -7,10 +7,21 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <copyright>Copyright © 2008–2019</copyright>
-    <lastBuildDate>Fri, 10 Apr 2020 20:20:07 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 14 Apr 2020 17:51:27 +0000</lastBuildDate>
     
 	<atom:link href="https://x3ero0.tech/posts/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Reversing_a_malware_in_disguise</title>
+      <link>https://x3ero0.tech/posts/reversing_a_malware_in_disguise/</link>
+      <pubDate>Tue, 14 Apr 2020 17:51:27 +0000</pubDate>
+      
+      <guid>https://x3ero0.tech/posts/reversing_a_malware_in_disguise/</guid>
+      <description>hljs.initHighlightingOnLoad();My Friend recommended this Super Awesome game The_Elder_Scrolls_V_Skyrim.zip and obviously it was downloaded from a random website from the internet ( some ripoff of the OceanOfGames.com ). The contents of the The_Elder_Scrolls_V_Skyrim.zip are as follows : -
+ The setup file was very much suspicious because
+ the size was only 506KB Windows Defender was preventing it from extracting in the VM. the icon was also acting weird when view of the file explorer was changed (i don&amp;rsquo;t really know whats up with that) but a well made setup for game wont go crazy like this.</description>
+    </item>
     
     <item>
       <title>Watevr_repyc</title>
