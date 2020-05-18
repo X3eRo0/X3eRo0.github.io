@@ -7,10 +7,19 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <copyright>Copyright © 2008–2019</copyright>
-    <lastBuildDate>Tue, 14 Apr 2020 17:51:27 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 01 Feb 2020 23:37:00 +0530</lastBuildDate>
     
 	<atom:link href="https://x3ero0.tech/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Hell86 - ttlhacker</title>
+      <link>https://x3ero0.tech/posts/hell86_from_ttlhacker/</link>
+      <pubDate>Mon, 18 May 2020 13:03:48 +0000</pubDate>
+      
+      <guid>https://x3ero0.tech/posts/hell86_from_ttlhacker/</guid>
+      <description>hljs.initHighlightingOnLoad(); Hell86   Author : ttlhacker Language : Assembler Upload : 8:03 PM 10/12/2018 Level : 3 Platform : Unix/Linux etc. Crackme : crackmes.one  Desc: - x86_64 linux binary (tested on debian 9 and ubuntu 18.04, should run on any distro). - Takes one command line argument and outputs &amp;#34;OK!&amp;#34; if it&amp;#39;s correct, &amp;#34;Wrong&amp;#34; if it&amp;#39;s not. - Partially written in C, actual verification routine is assembly.</description>
+    </item>
     
     <item>
       <title>Reversing_a_malware_in_disguise</title>

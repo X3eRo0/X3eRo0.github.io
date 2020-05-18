@@ -1,0 +1,942 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+	<meta charset="utf-8">
+	<meta name="description" content='X3eRo0&#39;s Blog about Reverse Engineering'>
+	<meta name="keywords" content='X3eRo0, Reverse, Reverse Engineering, Crackmes, blog'>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="generator" content="Hugo 0.68.3" />
+	<link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="/css/custom.css">
+	<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.css" integrity="sha256-46qynGAkLSFpVbEBog43gvNhfrOj+BmwXdxFgVK/Kvc=" crossorigin=anonymous>
+	<link rel="stylesheet" type="text/css"  href="/css/ui.css">
+	<title>Hell86 - ttlhacker</title>
+	<link rel="shortcut icon" type="image/x-icon" href="/img/favicon.ico">
+	<nav class="navbar text-center sticky-top bg-white mt-2 mb-1">
+		<a href='https://x3ero0.tech/'><span class="btn btn-sm btn-outline-primary">Home</span></a>
+		<a href="/crackmes"><span class="btn btn-sm btn-outline-secondary">Crackmes</span></a>
+		<a href="/posts"><span class="btn btn-sm btn-outline-success">Blog</span></a>
+		<a href="/tags"><span class="btn btn-sm btn-outline-warning">Tags</span></a>
+	</nav>
+</head>
+<body>
+      <div id="content">
+
+
+	<section class="container text-justified mt-3">
+	  <h2 class="text-center mb-4">Hell86 - ttlhacker</h2>
+	    <div class="text-monospace">
+			
+
+<link rel="stylesheet" href="/css/styles/atelier-forest-dark.css">
+<script src="/js/highlight.pack.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
+<h3 id="hell86">Hell86</h3>
+<hr>
+<ul>
+<li>Author : <a href="https://crackmes.one/user/ttlhacker">ttlhacker</a></li>
+<li>Language : Assembler</li>
+<li>Upload : 8:03 PM 10/12/2018</li>
+<li>Level : 3</li>
+<li>Platform : Unix/Linux etc.</li>
+<li>Crackme : <a href="https://crackmes.one/crackme/5bc0fe0033c5d4110a29b296">crackmes.one</a></li>
+</ul>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-plaintext" data-lang="plaintext">Desc: 
+
+   - x86_64 linux binary (tested on debian 9 and ubuntu 18.04, should run on any distro).
+   - Takes one command line argument and outputs &#34;OK!&#34; if it&#39;s correct, &#34;Wrong&#34; if it&#39;s not.
+   - Partially written in C, actual verification routine is assembly.
+   - Don&#39;t patch the binary, of course - find the correct input.
+
+  SHA256: 134b53b78fe74d477bf381ebfd965f92d270f8314886518d451ec3aca29156fa hell86
+</code></pre></div><hr>
+
+
+<br>
+
+<p>hell86 is a super awesome crackme by <a href="https://crackmes.one/user/ttlhacker">ttlhacker</a> on <a href="https://crackmes.one/">crackmes.one</a>. it implements VM in an unusual and creative way using signals and stuff. Lets start our analysis by running it.</p>
+<p>Lets start by giving a random input to our crackme.</p>
+
+
+
+<div class="center">
+  <img
+    class="responsive"
+    src="https://x3ero0.tech/img/hell86/first_run.png"
+    alt="Initial run of the crackme"
+    decoding="async"
+  />
+</div>
+
+
+<br>
+
+<p>So, as we can see the binary takes input using argv
+and throws an error if no argument is passed.</p>
+<p>Lets trace the binary using ltrace and see what it does.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-plaintext" data-lang="plaintext">_ZNSt8ios_base4InitC1Ev(0x55b4f3a8b881, 0x7ffe79e0e7b8, 0x7ffe79e0e7d0, 224) = 0
+__cxa_atexit(0x7f06e2a07990, 0x55b4f3a8b881, 0x55b4f3a8b068, 6) = 0
+malloc(8192)                                     = 0x55b4f497feb0
+sigaltstack(0x7ffe79e0e688, 0, 0, 0)             = 0
+sigfillset(~&lt;31-32&gt;)                             = 0
+sigaction(SIGILL, { 0x55b4f3889946, ~&lt;31-32&gt;, 0xffffffff, 0xffffffffffffffff }, nil) = 0
+--- SIGILL (Illegal instruction) ---
+--- SIGILL (Illegal instruction) ---
+--- SIGILL (Illegal instruction) ---
+.....                           .....
+.....                           .....
+.....                           .....
+--- SIGILL (Illegal instruction) ---
+--- SIGILL (Illegal instruction) ---
+--- SIGILL (Illegal instruction) ---
+puts(&#34;Wrong&#34;)                                    = 6
+Wrong
++++ exited (status 0) +++
+
+</code></pre></div>
+
+<br>
+
+<p>The ltrace output tells us that a lot of SIGILL signals were raised. We will take a look at why but first lets see what is SIGILL and is this a normal behavior?</p>
+<ul>
+<li><strong>SIGILL</strong> : is a Linux signal that is raised when an ILLEGAL instruction is encountered. By default it terminates the program.</li>
+<li><strong>THIS IS NOT NORMAL</strong> : When a program receives SIGILL it should terminate unlike hell86 which is raising multiple SIGILLs.</li>
+</ul>
+<p>So, What the Hell is going on?</p>
+<p>This behavior can only be explained if there is a signal handler to handle this &ldquo;SIGILL&rdquo;.
+A normal program terminates like this</p>
+
+
+
+<div class="center">
+  <img
+    class="responsive"
+    src="https://x3ero0.tech/img/hell86/sigill.png"
+    alt="a test asm binary crashing with SIGILL"
+    decoding="async"
+  />
+</div>
+
+
+<br>
+
+<p>Lets open the binary in IDA Pro.</p>
+<p>
+
+
+<div class="center">
+  <img
+    class="responsive"
+    src="https://x3ero0.tech/img/hell86/ida_main.png"
+    alt="main() in ida pro"
+    decoding="async"
+  />
+</div>
+
+
+<br>
+</p>
+<p>As you can see <code>main()</code> is just calling other functions to do the actual stuff. Lets take a look at all of these one by one.</p>
+<p>First lets see <code>init_sigaltstack()</code></p>
+
+
+
+<div class="center">
+  <img
+    class="responsive"
+    src="https://x3ero0.tech/img/hell86/sigaltstack.png"
+    alt="init_sigaltstack()"
+    decoding="async"
+  />
+</div>
+
+
+<br>
+
+<p>In this function <code>init_sigaltstack()</code> the program is allocating 0x2000 Bytes in the heap to use as an alternate stack. Then it initializes a stack_t structure</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#75715e">/* Structure describing a signal stack.  */</span>
+<span style="color:#66d9ef">typedef</span> <span style="color:#66d9ef">struct</span>
+  {
+    <span style="color:#66d9ef">void</span> <span style="color:#f92672">*</span>ss_sp;
+    <span style="color:#66d9ef">int</span> ss_flags;
+    size_t ss_size;
+  } stack_t;
+</code></pre></div>
+
+<br>
+
+<p>and finally it calls <code>sigaltstack()</code>. This new stack will only be used when a signal handler of any signal is executing. The stack pointer will point to this new stack in heap while the signal handler is in control.
+if the call to <code>sigaltstack()</code> fails, then we call <code>free()</code> to free the allocated memory.
+
+
+<br>
+
+Now lets look at <code>register_sigill_handler()</code>
+
+
+
+<div class="center">
+  <img
+    class="responsive"
+    src="https://x3ero0.tech/img/hell86/handler.png"
+    alt="register_sigill_handler()"
+    decoding="async"
+  />
+</div></p>
+
+
+<br>
+
+<p>and this is the same function from the actual source</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#66d9ef">bool</span> <span style="color:#a6e22e">register_sigill_handler</span>() {
+    <span style="color:#66d9ef">struct</span> sigaction sa <span style="color:#f92672">=</span> {};
+    sa.sa_sigaction <span style="color:#f92672">=</span> sigill_handler;
+    sa.sa_flags <span style="color:#f92672">=</span> SA_ONSTACK <span style="color:#f92672">|</span> SA_SIGINFO;
+    <span style="color:#66d9ef">if</span> (sigfillset(<span style="color:#f92672">&amp;</span>sa.sa_mask) <span style="color:#f92672">!=</span> <span style="color:#ae81ff">0</span>) {
+        <span style="color:#66d9ef">return</span> false;
+    }
+    <span style="color:#66d9ef">return</span> sigaction(SIGILL, <span style="color:#f92672">&amp;</span>sa, nullptr) <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>;
+}
+</code></pre></div>
+
+<br>
+
+<p>here <code>sigill_handler</code> is the pointer to the SIGILL handler function. It is initializing the <code>sigaction</code> struct to call <code>sigaction()</code>. Now whenever a SIGILL is raised we will call this handler function instead of terminating the program and this is the reason why we saw all those SIGILLs in the ltrace output.</p>
+
+
+<br>
+
+<p>Now lets take a look at <code>sigill_handler</code></p>
+
+
+
+<div class="center">
+  <img
+    class="responsive"
+    src="https://x3ero0.tech/img/hell86/sigill_handler_text_view.png"
+    alt="text view of sigill_handler()"
+    decoding="async"
+  />
+</div>
+
+
+<br>
+
+<p><code>loc_1ee0:</code>
+
+
+<br>
+</p>
+
+
+
+<div class="center">
+  <img
+    class="responsive"
+    src="https://x3ero0.tech/img/hell86/sigill_handler_jmp.png"
+    alt="sigill_handler() cont."
+    decoding="async"
+  />
+</div>
+
+
+<br>
+
+<p>As you can see <code>sigill_handler()</code> is just a huge switch case with opcode of the VM instructions as the switch parameter.
+
+
+<br>
+
+
+
+
+<div class="center">
+  <img
+    class="responsive"
+    src="https://x3ero0.tech/img/hell86/graph_sigill_handler.png"
+    alt="sigill_handler() graph view"
+    decoding="async"
+  />
+</div>
+
+
+<br>
+</p>
+<hr>
+<h3 id="the-bytecode">The Bytecode</h3>
+
+
+<br>
+
+<p>Now lets go back to main and take a look at <code>verify_input()</code></p>
+<p>we will analyze this function in text view</p>
+
+
+
+<div class="center">
+  <img
+    class="responsive"
+    src="https://x3ero0.tech/img/hell86/bytecode.png"
+    alt="bytecode"
+    decoding="async"
+  />
+</div>
+
+
+<br>
+
+<p>Look what we found, the actual reason of SIGILLs. These are UD2 instructions which basically raise Illegal instruction signal or SIGILL. There are some more bytes after each <code>UD2(\x0f\x0b)</code> instruction.</p>
+
+
+
+<div class="center">
+  <img
+    class="responsive"
+    src="https://x3ero0.tech/img/hell86/ud2.png"
+    alt="ud2 from intel manual"
+    decoding="async"
+  />
+</div>
+
+
+<br>
+
+<hr>
+<h3 id="instruction-encoding">Instruction Encoding</h3>
+<p>The instructions are encoding in hell86 is actually one simple thing in this challenge.
+Each instruction has an 8 byte immediate value which lies just after the <code>UD2</code>.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-plaintext" data-lang="plaintext">\x0f\x0b   - UD2
+\x00 * 0x8 - imm64
+\x09       - Opcode
+\x00       - arg1
+\x00       - arg2
+\x00       - arg3 
+</code></pre></div>
+
+<br>
+
+<p>The structure would look like this :</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#75715e">/* hell86 instructions */</span>
+<span style="color:#66d9ef">typedef</span> <span style="color:#66d9ef">struct</span>{
+   uint16_t ud2;
+   int64    imm64;
+   <span style="color:#66d9ef">char</span>     opcode;
+   <span style="color:#66d9ef">char</span>     arg1;
+   <span style="color:#66d9ef">char</span>     arg2;
+   <span style="color:#66d9ef">char</span>     arg3;
+} hell86_instr;
+</code></pre></div>
+
+<br>
+
+<hr>
+<h3 id="vm-instructions">VM Instructions</h3>
+<p>Lets hop back to IDA and look at the switch case in text view and figure out where are the VM registers, i haven&rsquo;t seen any mention of VM registers or stack or even ROM.</p>
+<p>Lets start with case 9 as its the first case that the VM executes in IDA.
+<code>case 9:</code>
+
+
+
+<div class="center">
+  <img
+    class="responsive"
+    src="https://x3ero0.tech/img/hell86/case9.png"
+    alt="case9"
+    decoding="async"
+  />
+</div>
+
+
+<br>
+</p>
+<p>Looks like there is an array of 64 bit numbers at <code>rsi</code> (could it be an array of registers?)</p>
+<p>Lets use <code>gdb</code> to break at this instruction and analyze the values of the registers.</p>
+
+
+
+<div class="center">
+  <img
+    class="responsive"
+    src="https://x3ero0.tech/img/hell86/gdb_case9.png"
+    alt="gdb case9"
+    decoding="async"
+  />
+</div>
+
+<br>
+<p>As you can see <code>rsi</code> points on the stack or should i say the new stack. So this is the part which  i am not so sure about. I think whenever a signal is raised the <code>sigcontext</code> structure is pushed on the <code>altstack</code> and its this structure where <code>rsi</code> is pointing at. if we see the <code>sigcontext</code>
+struct.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#75715e">/*
+</span><span style="color:#75715e"> * The 64-bit signal frame:
+</span><span style="color:#75715e"> */</span>
+<span style="color:#66d9ef">struct</span> sigcontext_64 {
+  __u64       r8;
+  __u64       r9;
+  __u64       r10;
+  __u64       r11;
+  __u64       r12;
+  __u64       r13;
+  __u64       r14;
+  __u64       r15;
+  __u64       di;
+  __u64       si;
+  __u64       bp;
+  __u64       bx;
+  __u64       dx;
+  __u64       ax;
+  __u64       cx;
+  __u64       sp;
+  __u64       ip;
+  __u64       flags;
+  __u16       cs;
+  __u16       gs;
+  __u16       fs;
+  __u16       ss;
+  __u64       err;
+  __u64       trapno;
+  __u64       oldmask;
+  __u64       cr2;
+
+  <span style="color:#75715e">/*
+</span><span style="color:#75715e">   * fpstate is really (struct _fpstate *) or (struct _xstate *)
+</span><span style="color:#75715e">   * depending on the FP_XSTATE_MAGIC1 encoded in the SW reserved
+</span><span style="color:#75715e">   * bytes of (struct _fpstate) and FP_XSTATE_MAGIC2 present at the end
+</span><span style="color:#75715e">   * of extended memory layout. See comments at the definition of
+</span><span style="color:#75715e">   * (struct _fpx_sw_bytes)
+</span><span style="color:#75715e">   */</span>
+  __u64       fpstate; <span style="color:#75715e">/* Zero when no FPU/extended context */</span>
+  __u64       reserved1[<span style="color:#ae81ff">8</span>];
+};
+</code></pre></div>
+<br>
+<p>This structure is pushed on the stack whenever a signal is raised by the Operating System, and this same structure is then used by sigreturn syscall to restore the values through this structure.</p>
+
+<br>
+
+
+
+<div class="center">
+  <img
+    class="responsive"
+    src="https://x3ero0.tech/img/hell86/sigreturn_syscall.png"
+    alt="gdb case9"
+    decoding="async"
+  />
+</div>
+
+<br>
+<p>You know what this means? this VM doesnt even uses virtual registers. IT USES
+ACTUAL x86_64 register <code>BRUH MOMENT</code></p>
+<hr>
+<h3 id="the-disassembler">The Disassembler</h3>
+<p>Okay, Now that we understand everything (almost), lets get the disassmbler working.
+The following disassembler is just to disassemble the instructions which the VM was
+using. I didn&rsquo;t implemented the ones which were not used.</p>
+<p>After looking at the instructions which the VM was using, i found out that there were total 50 instructions implemented while only 44 were used.</p>
+<p>Also there were some imm64 values which were used as an operand for <code>jmp</code> and <code>call</code> instructions for example <code>malloc()</code> and <code>free()</code> are one of them. these addresses were placed in the bytecode so i just dumped the bytecode using gdb.</p>
+<p>disass.py</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">from</span> struct <span style="color:#f92672">import</span> unpack
+
+MALLOC <span style="color:#f92672">=</span> <span style="color:#ae81ff">0x7ffff7b1c260</span>
+FREE   <span style="color:#f92672">=</span> <span style="color:#ae81ff">0x7ffff7b1c850</span>
+
+op_addrs <span style="color:#f92672">=</span> [
+    <span style="color:#ae81ff">0x1a1f</span>,
+    <span style="color:#ae81ff">0x1a20</span>,
+    <span style="color:#ae81ff">0x1a39</span>,
+    <span style="color:#ae81ff">0x1a52</span>,
+    <span style="color:#ae81ff">0x1a6c</span>,
+    <span style="color:#ae81ff">0x1a87</span>,
+    <span style="color:#ae81ff">0x1aa2</span>,
+    <span style="color:#ae81ff">0x1abe</span>,
+    <span style="color:#ae81ff">0x1ae6</span>,
+    <span style="color:#ae81ff">0x1ada</span>,
+    <span style="color:#ae81ff">0x1afa</span>,
+    <span style="color:#ae81ff">0x1b12</span>,
+    <span style="color:#ae81ff">0x1b2b</span>,
+    <span style="color:#ae81ff">0x1b43</span>,
+    <span style="color:#ae81ff">0x1b5c</span>,
+    <span style="color:#ae81ff">0x1b73</span>,
+    <span style="color:#ae81ff">0x1b8b</span>,
+    <span style="color:#ae81ff">0x1ba3</span>,
+    <span style="color:#ae81ff">0x1bba</span>,
+    <span style="color:#ae81ff">0x1bd2</span>,
+    <span style="color:#ae81ff">0x1be9</span>,
+    <span style="color:#ae81ff">0x1c01</span>,
+    <span style="color:#ae81ff">0x1c1a</span>,
+    <span style="color:#ae81ff">0x1c2e</span>,
+    <span style="color:#ae81ff">0x1c43</span>,
+    <span style="color:#ae81ff">0x1c54</span>,
+    <span style="color:#ae81ff">0x1c6d</span>,
+    <span style="color:#ae81ff">0x1c86</span>,
+    <span style="color:#ae81ff">0x1c9f</span>,
+    <span style="color:#ae81ff">0x1cb3</span>,
+    <span style="color:#ae81ff">0x1cd2</span>,
+    <span style="color:#ae81ff">0x1cf1</span>,
+    <span style="color:#ae81ff">0x1d10</span>,
+    <span style="color:#ae81ff">0x1d2f</span>,
+    <span style="color:#ae81ff">0x1d4e</span>,
+    <span style="color:#ae81ff">0x1d6d</span>,
+    <span style="color:#ae81ff">0x1d87</span>,
+    <span style="color:#ae81ff">0x1da1</span>,
+    <span style="color:#ae81ff">0x1db9</span>,
+    <span style="color:#ae81ff">0x1dcf</span>,
+    <span style="color:#ae81ff">0x1de5</span>,
+    <span style="color:#ae81ff">0x1e07</span>,
+    <span style="color:#ae81ff">0x1e9c</span>,
+    <span style="color:#ae81ff">0x1ebe</span>,
+    <span style="color:#ae81ff">0x1e1e</span>,
+    <span style="color:#ae81ff">0x1e32</span>,
+    <span style="color:#ae81ff">0x1e49</span>,
+    <span style="color:#ae81ff">0x1e60</span>,
+    <span style="color:#ae81ff">0x1e74</span>,
+    <span style="color:#ae81ff">0x1e88</span>
+]
+
+registers <span style="color:#f92672">=</span> {
+    <span style="color:#ae81ff">0</span> : <span style="color:#e6db74">&#34;r8&#34;</span>,
+    <span style="color:#ae81ff">1</span> : <span style="color:#e6db74">&#34;r9&#34;</span>,
+    <span style="color:#ae81ff">2</span> : <span style="color:#e6db74">&#34;r10&#34;</span>,
+    <span style="color:#ae81ff">3</span> : <span style="color:#e6db74">&#34;r11&#34;</span>,
+    <span style="color:#ae81ff">4</span> : <span style="color:#e6db74">&#34;r12&#34;</span>,
+    <span style="color:#ae81ff">5</span> : <span style="color:#e6db74">&#34;r13&#34;</span>,
+    <span style="color:#ae81ff">6</span> : <span style="color:#e6db74">&#34;r14&#34;</span>,
+    <span style="color:#ae81ff">7</span> : <span style="color:#e6db74">&#34;r15&#34;</span>,
+    <span style="color:#ae81ff">8</span> : <span style="color:#e6db74">&#34;rdi&#34;</span>,
+    <span style="color:#ae81ff">9</span> : <span style="color:#e6db74">&#34;rsi&#34;</span>,
+    <span style="color:#ae81ff">10</span> : <span style="color:#e6db74">&#34;rbp&#34;</span>,
+    <span style="color:#ae81ff">11</span> : <span style="color:#e6db74">&#34;rbx&#34;</span>,
+    <span style="color:#ae81ff">12</span> : <span style="color:#e6db74">&#34;rdx&#34;</span>,
+    <span style="color:#ae81ff">13</span> : <span style="color:#e6db74">&#34;rax&#34;</span>,
+    <span style="color:#ae81ff">14</span> : <span style="color:#e6db74">&#34;rcx&#34;</span>,
+    <span style="color:#ae81ff">15</span> : <span style="color:#e6db74">&#34;sp&#34;</span>,
+    <span style="color:#ae81ff">16</span> : <span style="color:#e6db74">&#34;pc&#34;</span>  
+}
+
+
+bytecode <span style="color:#f92672">=</span> open(<span style="color:#e6db74">&#34;bytecode&#34;</span>, <span style="color:#e6db74">&#34;rb&#34;</span>)<span style="color:#f92672">.</span>read()<span style="color:#75715e">#[0x1190:0x1946]</span>
+
+<span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">0</span>, len(bytecode), <span style="color:#ae81ff">0xE</span>):
+    instruction <span style="color:#f92672">=</span> bytecode[i<span style="color:#f92672">+</span><span style="color:#ae81ff">2</span>:i<span style="color:#f92672">+</span><span style="color:#ae81ff">0xe</span>]
+    opcode <span style="color:#f92672">=</span> ord(instruction[<span style="color:#ae81ff">8</span>])
+    arg1   <span style="color:#f92672">=</span> ord(instruction[<span style="color:#ae81ff">9</span>])
+    arg2   <span style="color:#f92672">=</span> ord(instruction[<span style="color:#ae81ff">10</span>])
+    arg3   <span style="color:#f92672">=</span> ord(instruction[<span style="color:#ae81ff">11</span>])
+
+    imm    <span style="color:#f92672">=</span> unpack(<span style="color:#e6db74">&#34;Q&#34;</span>, instruction[<span style="color:#ae81ff">0</span>: <span style="color:#ae81ff">8</span>])[<span style="color:#ae81ff">0</span>]
+    <span style="color:#75715e">#tmp = &#34;&#34;.join([(&#34;\\x%.2X&#34; % ord(x)) for x in instruction])</span>
+    dis <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;</span><span style="color:#e6db74">%.4i</span><span style="color:#e6db74">: [</span><span style="color:#e6db74">%.2i</span><span style="color:#e6db74">][ </span><span style="color:#e6db74">%.4x</span><span style="color:#e6db74"> ][ </span><span style="color:#e6db74">%.4x</span><span style="color:#e6db74"> ] &#34;</span> <span style="color:#f92672">%</span> (i, opcode, op_addrs[opcode], <span style="color:#ae81ff">0x1190</span> <span style="color:#f92672">+</span> i)
+    <span style="color:#75715e">#dis = &#34;%.4x: [%.4x] %s\t&#34; % (i, 0x1190 + i, tmp)</span>
+
+    <span style="color:#66d9ef">if</span>   opcode <span style="color:#f92672">==</span> <span style="color:#ae81ff">9</span>:
+        <span style="color:#66d9ef">if</span> imm <span style="color:#f92672">&amp;</span> <span style="color:#ae81ff">0x555555550000</span>:
+            imm <span style="color:#f92672">=</span> imm <span style="color:#f92672">-</span> <span style="color:#ae81ff">0x555555554000</span>
+        <span style="color:#66d9ef">if</span> registers[arg1] <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;pc&#34;</span>:
+            dis <span style="color:#f92672">+=</span>  <span style="color:#e6db74">&#34;jmp 0x</span><span style="color:#e6db74">%.4x</span><span style="color:#e6db74">&#34;</span> <span style="color:#f92672">%</span> (imm)
+        <span style="color:#66d9ef">else</span>:
+            dis <span style="color:#f92672">+=</span>  <span style="color:#e6db74">&#34;</span><span style="color:#e6db74">%s</span><span style="color:#e6db74"> = 0x</span><span style="color:#e6db74">%.4x</span><span style="color:#e6db74">&#34;</span> <span style="color:#f92672">%</span> (registers[arg1], imm)
+    <span style="color:#66d9ef">elif</span> opcode <span style="color:#f92672">==</span> <span style="color:#ae81ff">36</span>:
+        dis <span style="color:#f92672">+=</span>  <span style="color:#e6db74">&#34;if </span><span style="color:#e6db74">%s</span><span style="color:#e6db74"> != 0x</span><span style="color:#e6db74">%.4x</span><span style="color:#e6db74">: </span><span style="color:#e6db74">%s</span><span style="color:#e6db74"> = 1; else: </span><span style="color:#e6db74">%s</span><span style="color:#e6db74"> = 0;&#34;</span> <span style="color:#f92672">%</span> (registers[arg2], imm, registers[arg1], registers[arg1])
+    <span style="color:#66d9ef">elif</span> opcode <span style="color:#f92672">==</span> <span style="color:#ae81ff">37</span>:
+        dis <span style="color:#f92672">+=</span>  <span style="color:#e6db74">&#34;if </span><span style="color:#e6db74">%s</span><span style="color:#e6db74"> == 0: </span><span style="color:#e6db74">%s</span><span style="color:#e6db74"> = 1;&#34;</span> <span style="color:#f92672">%</span> (registers[arg2], registers[arg1])
+    <span style="color:#66d9ef">elif</span> opcode <span style="color:#f92672">==</span> <span style="color:#ae81ff">1</span>:
+        dis <span style="color:#f92672">+=</span>  <span style="color:#e6db74">&#34;</span><span style="color:#e6db74">%s</span><span style="color:#e6db74"> = </span><span style="color:#e6db74">%s</span><span style="color:#e6db74"> + </span><span style="color:#e6db74">%s</span><span style="color:#e6db74">&#34;</span> <span style="color:#f92672">%</span> (registers[arg1], registers[arg2], registers[arg3])
+    <span style="color:#66d9ef">elif</span> opcode <span style="color:#f92672">==</span> <span style="color:#ae81ff">2</span>:
+        dis <span style="color:#f92672">+=</span>  <span style="color:#e6db74">&#34;</span><span style="color:#e6db74">%s</span><span style="color:#e6db74"> = </span><span style="color:#e6db74">%s</span><span style="color:#e6db74"> - </span><span style="color:#e6db74">%s</span><span style="color:#e6db74">&#34;</span> <span style="color:#f92672">%</span> (registers[arg1], registers[arg2], registers[arg3])
+    <span style="color:#66d9ef">elif</span> opcode <span style="color:#f92672">==</span> <span style="color:#ae81ff">3</span>:
+        dis <span style="color:#f92672">+=</span>  <span style="color:#e6db74">&#34;</span><span style="color:#e6db74">%s</span><span style="color:#e6db74"> = </span><span style="color:#e6db74">%s</span><span style="color:#e6db74"> * </span><span style="color:#e6db74">%s</span><span style="color:#e6db74">&#34;</span> <span style="color:#f92672">%</span> (registers[arg1], registers[arg2], registers[arg3])
+    <span style="color:#66d9ef">elif</span> opcode <span style="color:#f92672">==</span> <span style="color:#ae81ff">4</span> <span style="color:#f92672">or</span> opcode <span style="color:#f92672">==</span> <span style="color:#ae81ff">5</span>:
+        dis <span style="color:#f92672">+=</span>  <span style="color:#e6db74">&#34;</span><span style="color:#e6db74">%s</span><span style="color:#e6db74"> = </span><span style="color:#e6db74">%s</span><span style="color:#e6db74"> / </span><span style="color:#e6db74">%s</span><span style="color:#e6db74">&#34;</span> <span style="color:#f92672">%</span> (registers[arg1], registers[arg2], registers[arg3])
+    <span style="color:#66d9ef">elif</span> opcode <span style="color:#f92672">==</span> <span style="color:#ae81ff">6</span>:
+        dis <span style="color:#f92672">+=</span>  <span style="color:#e6db74">&#34;</span><span style="color:#e6db74">%s</span><span style="color:#e6db74"> = </span><span style="color:#e6db74">%s</span><span style="color:#e6db74"> &gt;&gt; </span><span style="color:#e6db74">%s</span><span style="color:#e6db74">&#34;</span> <span style="color:#f92672">%</span> (registers[arg1], registers[arg2], registers[arg3])
+    <span style="color:#66d9ef">elif</span> opcode <span style="color:#f92672">==</span> <span style="color:#ae81ff">7</span>:
+        dis <span style="color:#f92672">+=</span>  <span style="color:#e6db74">&#34;</span><span style="color:#e6db74">%s</span><span style="color:#e6db74"> = </span><span style="color:#e6db74">%s</span><span style="color:#e6db74"> &lt;&lt; </span><span style="color:#e6db74">%s</span><span style="color:#e6db74">&#34;</span> <span style="color:#f92672">%</span> (registers[arg1], registers[arg2], registers[arg3])
+    <span style="color:#66d9ef">elif</span> opcode <span style="color:#f92672">==</span> <span style="color:#ae81ff">8</span>:
+        dis <span style="color:#f92672">+=</span>  <span style="color:#e6db74">&#34;</span><span style="color:#e6db74">%s</span><span style="color:#e6db74"> = ~</span><span style="color:#e6db74">%s</span><span style="color:#e6db74">&#34;</span> <span style="color:#f92672">%</span> (registers[arg1], registers[arg2])
+    <span style="color:#66d9ef">elif</span> opcode <span style="color:#f92672">==</span> <span style="color:#ae81ff">10</span> <span style="color:#f92672">or</span> opcode <span style="color:#f92672">==</span> <span style="color:#ae81ff">11</span>:
+        dis <span style="color:#f92672">+=</span>  <span style="color:#e6db74">&#34;(WORD)  </span><span style="color:#e6db74">%s</span><span style="color:#e6db74"> = BYTE  [</span><span style="color:#e6db74">%s</span><span style="color:#e6db74"> + 0x</span><span style="color:#e6db74">%.4x</span><span style="color:#e6db74">]&#34;</span> <span style="color:#f92672">%</span> (registers[arg1], registers[arg2], imm)
+    <span style="color:#66d9ef">elif</span> opcode <span style="color:#f92672">==</span> <span style="color:#ae81ff">11</span>:
+        dis <span style="color:#f92672">+=</span>  <span style="color:#e6db74">&#34;(QWORD) </span><span style="color:#e6db74">%s</span><span style="color:#e6db74"> = BYTE  [</span><span style="color:#e6db74">%s</span><span style="color:#e6db74"> + 0x</span><span style="color:#e6db74">%.4x</span><span style="color:#e6db74">]&#34;</span> <span style="color:#f92672">%</span> (registers[arg1], registers[arg2], imm)
+    <span style="color:#66d9ef">elif</span> opcode <span style="color:#f92672">==</span> <span style="color:#ae81ff">12</span>:
+        dis <span style="color:#f92672">+=</span>  <span style="color:#e6db74">&#34;(DWORD) </span><span style="color:#e6db74">%s</span><span style="color:#e6db74"> = WORD  [</span><span style="color:#e6db74">%s</span><span style="color:#e6db74"> + 0x</span><span style="color:#e6db74">%.4x</span><span style="color:#e6db74">]&#34;</span> <span style="color:#f92672">%</span> (registers[arg1], registers[arg2], imm)
+    <span style="color:#66d9ef">elif</span> opcode <span style="color:#f92672">==</span> <span style="color:#ae81ff">13</span>:
+        dis <span style="color:#f92672">+=</span>  <span style="color:#e6db74">&#34;(QWORD) </span><span style="color:#e6db74">%s</span><span style="color:#e6db74"> = WORD  [</span><span style="color:#e6db74">%s</span><span style="color:#e6db74"> + 0x</span><span style="color:#e6db74">%.4x</span><span style="color:#e6db74">]&#34;</span> <span style="color:#f92672">%</span> (registers[arg1], registers[arg2], imm)
+    <span style="color:#66d9ef">elif</span> opcode <span style="color:#f92672">==</span> <span style="color:#ae81ff">14</span>:
+        dis <span style="color:#f92672">+=</span>  <span style="color:#e6db74">&#34;(DWORD) </span><span style="color:#e6db74">%s</span><span style="color:#e6db74"> = QWORD [</span><span style="color:#e6db74">%s</span><span style="color:#e6db74"> + 0x</span><span style="color:#e6db74">%.4x</span><span style="color:#e6db74">]&#34;</span> <span style="color:#f92672">%</span> (registers[arg1], registers[arg2], imm)
+    <span style="color:#66d9ef">elif</span> opcode <span style="color:#f92672">==</span> <span style="color:#ae81ff">15</span>:
+        dis <span style="color:#f92672">+=</span>  <span style="color:#e6db74">&#34;(QWORD) </span><span style="color:#e6db74">%s</span><span style="color:#e6db74"> = DWORD [</span><span style="color:#e6db74">%s</span><span style="color:#e6db74"> + 0x</span><span style="color:#e6db74">%.4x</span><span style="color:#e6db74">]&#34;</span> <span style="color:#f92672">%</span> (registers[arg1], registers[arg2], imm)
+    <span style="color:#66d9ef">elif</span> opcode <span style="color:#f92672">==</span> <span style="color:#ae81ff">16</span>:
+        <span style="color:#66d9ef">if</span> imm <span style="color:#f92672">&amp;</span> <span style="color:#ae81ff">0xffffffffffffff00</span>:
+            imm <span style="color:#f92672">=</span> <span style="color:#ae81ff">0x10000000000000000</span> <span style="color:#f92672">-</span> imm
+            dis <span style="color:#f92672">+=</span>  <span style="color:#e6db74">&#34;(QWORD) </span><span style="color:#e6db74">%s</span><span style="color:#e6db74"> = DWORD [</span><span style="color:#e6db74">%s</span><span style="color:#e6db74"> - 0x</span><span style="color:#e6db74">%.4x</span><span style="color:#e6db74">]&#34;</span> <span style="color:#f92672">%</span> (registers[arg1], registers[arg2], imm)
+        <span style="color:#66d9ef">else</span>:
+            dis <span style="color:#f92672">+=</span>  <span style="color:#e6db74">&#34;(QWORD) </span><span style="color:#e6db74">%s</span><span style="color:#e6db74"> = DWORD [</span><span style="color:#e6db74">%s</span><span style="color:#e6db74"> + 0x</span><span style="color:#e6db74">%.4x</span><span style="color:#e6db74">]&#34;</span> <span style="color:#f92672">%</span> (registers[arg1], registers[arg2], imm)
+    <span style="color:#66d9ef">elif</span> opcode <span style="color:#f92672">==</span> <span style="color:#ae81ff">17</span>:
+        dis <span style="color:#f92672">+=</span>  <span style="color:#e6db74">&#34;[</span><span style="color:#e6db74">%s</span><span style="color:#e6db74"> + 0x</span><span style="color:#e6db74">%.4x</span><span style="color:#e6db74">] = </span><span style="color:#e6db74">%s</span><span style="color:#e6db74"> &amp; 0xff&#34;</span> <span style="color:#f92672">%</span> (registers[arg1], registers[arg2], imm)
+    <span style="color:#66d9ef">elif</span> opcode <span style="color:#f92672">==</span> <span style="color:#ae81ff">18</span>:
+        dis <span style="color:#f92672">+=</span>  <span style="color:#e6db74">&#34;[</span><span style="color:#e6db74">%s</span><span style="color:#e6db74"> + 0x</span><span style="color:#e6db74">%.4x</span><span style="color:#e6db74">] = </span><span style="color:#e6db74">%s</span><span style="color:#e6db74"> &amp; 0xffff&#34;</span> <span style="color:#f92672">%</span> (registers[arg1], registers[arg2], imm)
+    <span style="color:#66d9ef">elif</span> opcode <span style="color:#f92672">==</span> <span style="color:#ae81ff">19</span>:
+        dis <span style="color:#f92672">+=</span>  <span style="color:#e6db74">&#34;[</span><span style="color:#e6db74">%s</span><span style="color:#e6db74"> + 0x</span><span style="color:#e6db74">%.4x</span><span style="color:#e6db74">] = </span><span style="color:#e6db74">%s</span><span style="color:#e6db74"> &amp; 0xffffffff&#34;</span> <span style="color:#f92672">%</span> (registers[arg1], registers[arg2], imm)
+    <span style="color:#66d9ef">elif</span> opcode <span style="color:#f92672">==</span> <span style="color:#ae81ff">20</span>:
+        <span style="color:#66d9ef">if</span> imm <span style="color:#f92672">&amp;</span> <span style="color:#ae81ff">0xffffffffffffff00</span>:
+            imm <span style="color:#f92672">=</span> <span style="color:#ae81ff">0x10000000000000000</span> <span style="color:#f92672">-</span> imm
+            dis <span style="color:#f92672">+=</span>  <span style="color:#e6db74">&#34;[</span><span style="color:#e6db74">%s</span><span style="color:#e6db74"> - 0x</span><span style="color:#e6db74">%.4x</span><span style="color:#e6db74">] = </span><span style="color:#e6db74">%s</span><span style="color:#e6db74">&#34;</span> <span style="color:#f92672">%</span> (registers[arg2], imm, registers[arg3])
+        <span style="color:#66d9ef">else</span>:
+            dis <span style="color:#f92672">+=</span>  <span style="color:#e6db74">&#34;[</span><span style="color:#e6db74">%s</span><span style="color:#e6db74"> + 0x</span><span style="color:#e6db74">%.4x</span><span style="color:#e6db74">] = </span><span style="color:#e6db74">%s</span><span style="color:#e6db74">&#34;</span> <span style="color:#f92672">%</span> (registers[arg2], imm, registers[arg3])
+    <span style="color:#66d9ef">elif</span> opcode <span style="color:#f92672">==</span> <span style="color:#ae81ff">21</span>:
+        dis <span style="color:#f92672">+=</span>  <span style="color:#e6db74">&#34;push </span><span style="color:#e6db74">%s</span><span style="color:#e6db74">&#34;</span> <span style="color:#f92672">%</span> (registers[arg2])
+    <span style="color:#66d9ef">elif</span> opcode <span style="color:#f92672">==</span> <span style="color:#ae81ff">22</span>:
+        dis <span style="color:#f92672">+=</span>  <span style="color:#e6db74">&#34;push 0x</span><span style="color:#e6db74">%.4x</span><span style="color:#e6db74">&#34;</span> <span style="color:#f92672">%</span> (imm)
+    <span style="color:#66d9ef">elif</span> opcode <span style="color:#f92672">==</span> <span style="color:#ae81ff">23</span>:
+        dis <span style="color:#f92672">+=</span>  <span style="color:#e6db74">&#34;pop </span><span style="color:#e6db74">%s</span><span style="color:#e6db74">&#34;</span> <span style="color:#f92672">%</span> (registers[arg1])
+    <span style="color:#66d9ef">elif</span> opcode <span style="color:#f92672">==</span> <span style="color:#ae81ff">24</span>:
+        dis <span style="color:#f92672">+=</span>  <span style="color:#e6db74">&#34;</span><span style="color:#e6db74">%s</span><span style="color:#e6db74"> = </span><span style="color:#e6db74">%s</span><span style="color:#e6db74">&#34;</span> <span style="color:#f92672">%</span> (registers[arg1], registers[arg2])
+    <span style="color:#66d9ef">elif</span> opcode <span style="color:#f92672">==</span> <span style="color:#ae81ff">25</span>:
+        dis <span style="color:#f92672">+=</span>  <span style="color:#e6db74">&#34;</span><span style="color:#e6db74">%s</span><span style="color:#e6db74"> = </span><span style="color:#e6db74">%s</span><span style="color:#e6db74"> | </span><span style="color:#e6db74">%s</span><span style="color:#e6db74">&#34;</span> <span style="color:#f92672">%</span> (registers[arg1], registers[arg2], registers[arg3])
+    <span style="color:#66d9ef">elif</span> opcode <span style="color:#f92672">==</span> <span style="color:#ae81ff">26</span>:
+        dis <span style="color:#f92672">+=</span> <span style="color:#e6db74">&#34;</span><span style="color:#e6db74">%s</span><span style="color:#e6db74"> = </span><span style="color:#e6db74">%s</span><span style="color:#e6db74"> &amp; </span><span style="color:#e6db74">%s</span><span style="color:#e6db74">&#34;</span> <span style="color:#f92672">%</span> (registers[arg1], registers[arg2], registers[arg3])
+    <span style="color:#66d9ef">elif</span> opcode <span style="color:#f92672">==</span> <span style="color:#ae81ff">27</span>:
+        dis <span style="color:#f92672">+=</span> <span style="color:#e6db74">&#34;</span><span style="color:#e6db74">%s</span><span style="color:#e6db74"> = </span><span style="color:#e6db74">%s</span><span style="color:#e6db74"> ^ </span><span style="color:#e6db74">%s</span><span style="color:#e6db74">&#34;</span> <span style="color:#f92672">%</span> (registers[arg1], registers[arg2], registers[arg3])
+    <span style="color:#66d9ef">elif</span> opcode <span style="color:#f92672">==</span> <span style="color:#ae81ff">28</span>:
+        dis <span style="color:#f92672">+=</span> <span style="color:#e6db74">&#34;</span><span style="color:#e6db74">%s</span><span style="color:#e6db74"> = ! </span><span style="color:#e6db74">%s</span><span style="color:#e6db74">&#34;</span> <span style="color:#f92672">%</span> (registers[arg1], registers[arg2])
+    <span style="color:#66d9ef">elif</span> opcode <span style="color:#f92672">==</span> <span style="color:#ae81ff">29</span>:
+        <span style="color:#66d9ef">pass</span>
+    <span style="color:#66d9ef">elif</span> opcode <span style="color:#f92672">==</span> <span style="color:#ae81ff">33</span>:
+        dis <span style="color:#f92672">+=</span> <span style="color:#e6db74">&#34;if </span><span style="color:#e6db74">%s</span><span style="color:#e6db74"> ==  </span><span style="color:#e6db74">%s</span><span style="color:#e6db74">: </span><span style="color:#e6db74">%s</span><span style="color:#e6db74"> = 1&#34;</span> <span style="color:#f92672">%</span> (registers[arg3], registers[arg2], registers[arg1])
+    <span style="color:#66d9ef">elif</span> opcode <span style="color:#f92672">==</span> <span style="color:#ae81ff">38</span>:
+        <span style="color:#66d9ef">if</span> imm <span style="color:#f92672">&amp;</span> <span style="color:#ae81ff">0x555555550000</span>:
+            imm <span style="color:#f92672">=</span> imm <span style="color:#f92672">-</span> <span style="color:#ae81ff">0x555555554000</span>
+        dis <span style="color:#f92672">+=</span> <span style="color:#e6db74">&#34;if </span><span style="color:#e6db74">%s</span><span style="color:#e6db74"> == 0; jmp 0x</span><span style="color:#e6db74">%.4x</span><span style="color:#e6db74">&#34;</span> <span style="color:#f92672">%</span> (registers[arg2], imm)
+    <span style="color:#66d9ef">elif</span> opcode <span style="color:#f92672">==</span> <span style="color:#ae81ff">39</span>:
+        <span style="color:#66d9ef">if</span> imm <span style="color:#f92672">&amp;</span> <span style="color:#ae81ff">0x555555550000</span>:
+            imm <span style="color:#f92672">=</span> imm <span style="color:#f92672">-</span> <span style="color:#ae81ff">0x555555554000</span>
+        dis <span style="color:#f92672">+=</span> <span style="color:#e6db74">&#34;if </span><span style="color:#e6db74">%s</span><span style="color:#e6db74"> != 0; jmp 0x</span><span style="color:#e6db74">%.4x</span><span style="color:#e6db74">&#34;</span> <span style="color:#f92672">%</span> (registers[arg2], imm)
+    <span style="color:#66d9ef">elif</span> opcode <span style="color:#f92672">==</span> <span style="color:#ae81ff">40</span>:
+        <span style="color:#66d9ef">if</span> imm <span style="color:#f92672">==</span> FREE: <span style="color:#75715e"># free</span>
+            dis <span style="color:#f92672">+=</span> <span style="color:#e6db74">&#34;call </span><span style="color:#e6db74">%s</span><span style="color:#e6db74">&#34;</span> <span style="color:#f92672">%</span> (<span style="color:#e6db74">&#34;free&#34;</span>)
+        <span style="color:#66d9ef">elif</span> imm <span style="color:#f92672">==</span> MALLOC: <span style="color:#75715e"># malloc</span>
+            dis <span style="color:#f92672">+=</span> <span style="color:#e6db74">&#34;call </span><span style="color:#e6db74">%s</span><span style="color:#e6db74">&#34;</span> <span style="color:#f92672">%</span> (<span style="color:#e6db74">&#34;malloc&#34;</span>)
+        <span style="color:#66d9ef">else</span>:
+            <span style="color:#66d9ef">if</span> imm <span style="color:#f92672">&amp;</span> <span style="color:#ae81ff">0x555555550000</span>:
+                imm <span style="color:#f92672">=</span> imm <span style="color:#f92672">-</span> <span style="color:#ae81ff">0x555555554000</span>
+            dis <span style="color:#f92672">+=</span> <span style="color:#e6db74">&#34;call 0x</span><span style="color:#e6db74">%.4x</span><span style="color:#e6db74">&#34;</span> <span style="color:#f92672">%</span> (imm)
+    <span style="color:#66d9ef">elif</span> opcode <span style="color:#f92672">==</span> <span style="color:#ae81ff">41</span>:
+        dis <span style="color:#f92672">+=</span> <span style="color:#e6db74">&#34;return&#34;</span>
+    <span style="color:#66d9ef">elif</span> opcode <span style="color:#f92672">==</span> <span style="color:#ae81ff">42</span>:
+        dis <span style="color:#f92672">+=</span>  <span style="color:#e6db74">&#34;if </span><span style="color:#e6db74">%s</span><span style="color:#e6db74"> != 0; return&#34;</span> <span style="color:#f92672">%</span> (registers[arg2])
+    <span style="color:#66d9ef">elif</span> opcode <span style="color:#f92672">==</span> <span style="color:#ae81ff">43</span>:
+        dis <span style="color:#f92672">+=</span> <span style="color:#e6db74">&#34;if </span><span style="color:#e6db74">%s</span><span style="color:#e6db74"> == 0; return&#34;</span> <span style="color:#f92672">%</span> (registers[arg2])
+    <span style="color:#66d9ef">elif</span> opcode <span style="color:#f92672">==</span> <span style="color:#ae81ff">44</span>:
+        <span style="color:#66d9ef">if</span> imm <span style="color:#f92672">&amp;</span> <span style="color:#ae81ff">0xffffffffffffff00</span>:
+            imm <span style="color:#f92672">=</span> <span style="color:#ae81ff">0x10000000000000000</span> <span style="color:#f92672">-</span> imm
+            dis <span style="color:#f92672">+=</span>  <span style="color:#e6db74">&#34;</span><span style="color:#e6db74">%s</span><span style="color:#e6db74"> = </span><span style="color:#e6db74">%s</span><span style="color:#e6db74"> - 0x</span><span style="color:#e6db74">%.4x</span><span style="color:#e6db74">&#34;</span> <span style="color:#f92672">%</span> (registers[arg1], registers[arg2], imm)
+        <span style="color:#66d9ef">else</span>:
+            dis <span style="color:#f92672">+=</span>  <span style="color:#e6db74">&#34;</span><span style="color:#e6db74">%s</span><span style="color:#e6db74"> = </span><span style="color:#e6db74">%s</span><span style="color:#e6db74"> + 0x</span><span style="color:#e6db74">%.4x</span><span style="color:#e6db74">&#34;</span> <span style="color:#f92672">%</span> (registers[arg1], registers[arg2], imm)
+    <span style="color:#66d9ef">elif</span> opcode <span style="color:#f92672">==</span> <span style="color:#ae81ff">45</span>:
+        dis <span style="color:#f92672">+=</span> <span style="color:#e6db74">&#34;</span><span style="color:#e6db74">%s</span><span style="color:#e6db74"> = </span><span style="color:#e6db74">%s</span><span style="color:#e6db74"> &gt;&gt; 0x</span><span style="color:#e6db74">%.4x</span><span style="color:#e6db74">&#34;</span> <span style="color:#f92672">%</span> (registers[arg1], registers[arg2], (imm <span style="color:#f92672">&amp;</span> <span style="color:#ae81ff">0xff</span>))
+    <span style="color:#66d9ef">elif</span> opcode <span style="color:#f92672">==</span> <span style="color:#ae81ff">46</span>:
+        dis <span style="color:#f92672">+=</span> <span style="color:#e6db74">&#34;</span><span style="color:#e6db74">%s</span><span style="color:#e6db74"> = </span><span style="color:#e6db74">%s</span><span style="color:#e6db74"> &lt;&lt; 0x</span><span style="color:#e6db74">%.4x</span><span style="color:#e6db74">&#34;</span> <span style="color:#f92672">%</span> (registers[arg1], registers[arg2], (imm <span style="color:#f92672">&amp;</span> <span style="color:#ae81ff">0xff</span>))
+    <span style="color:#66d9ef">elif</span> opcode <span style="color:#f92672">==</span> <span style="color:#ae81ff">47</span>:
+        dis <span style="color:#f92672">+=</span> <span style="color:#e6db74">&#34;</span><span style="color:#e6db74">%s</span><span style="color:#e6db74"> = </span><span style="color:#e6db74">%s</span><span style="color:#e6db74"> | 0x</span><span style="color:#e6db74">%.4x</span><span style="color:#e6db74">&#34;</span> <span style="color:#f92672">%</span> (registers[arg1], registers[arg2], imm)
+    <span style="color:#66d9ef">elif</span> opcode <span style="color:#f92672">==</span> <span style="color:#ae81ff">48</span>:
+        dis <span style="color:#f92672">+=</span> <span style="color:#e6db74">&#34;</span><span style="color:#e6db74">%s</span><span style="color:#e6db74"> = </span><span style="color:#e6db74">%s</span><span style="color:#e6db74"> &amp; 0x</span><span style="color:#e6db74">%.4x</span><span style="color:#e6db74">&#34;</span> <span style="color:#f92672">%</span> (registers[arg1], registers[arg2], imm)
+    <span style="color:#66d9ef">elif</span> opcode <span style="color:#f92672">==</span> <span style="color:#ae81ff">49</span>:
+        dis <span style="color:#f92672">+=</span> <span style="color:#e6db74">&#34;</span><span style="color:#e6db74">%s</span><span style="color:#e6db74"> = </span><span style="color:#e6db74">%s</span><span style="color:#e6db74"> ^ 0x</span><span style="color:#e6db74">%.4x</span><span style="color:#e6db74">&#34;</span> <span style="color:#f92672">%</span> (registers[arg1], registers[arg2], imm)
+    <span style="color:#66d9ef">else</span>:
+        dis <span style="color:#f92672">+=</span>  <span style="color:#e6db74">&#34;</span><span style="color:#e6db74">%s</span><span style="color:#e6db74">&#34;</span> <span style="color:#f92672">%</span> (<span style="color:#e6db74">&#34;UNKNOWN&#34;</span>)
+
+    <span style="color:#66d9ef">print</span> dis
+</code></pre></div>
+ <br> 
+<p>After running this you will get this disassembly</p>
+
+<br>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-plaintext" data-lang="plaintext">0000: [09][ 1ada ][ 1190 ] rax = 0x0002                                
+0014: [36][ 1d87 ][ 119e ] if rdi != 0x0002: r8 = 1; else: r8 = 0;     
+0028: [42][ 1e9c ][ 11ac ] if r8 != 0; return                          
+0042: [44][ 1e1e ][ 11ba ] rsi = rsi + 0x0008                          
+0056: [16][ 1b8b ][ 11c8 ] (QWORD) rdi = DWORD [rsi + 0x0000]          
+0070: [09][ 1ada ][ 11d6 ] jmp 0x11e4                                  
+0084: [21][ 1c01 ][ 11e4 ] push rbp                                    
+0098: [24][ 1c43 ][ 11f2 ] rbp = sp                                    
+0112: [44][ 1e1e ][ 1200 ] sp = sp - 0x0010                            
+0126: [20][ 1be9 ][ 120e ] [rbp - 0x0010] = rdi                        
+0140: [40][ 1de5 ][ 121c ] call 0x17da                                 
+0154: [36][ 1d87 ][ 122a ] if rax != 0x0024: rax = 1; else: rax = 0;   
+0168: [39][ 1dcf ][ 1238 ] if rax != 0; jmp 0x13ce                     
+0182: [09][ 1ada ][ 1246 ] rdi = 0x20cd                                
+0196: [40][ 1de5 ][ 1254 ] call 0x17da                                 
+0210: [20][ 1be9 ][ 1262 ] [rbp - 0x0008] = rax                        
+0224: [16][ 1b8b ][ 1270 ] (QWORD) rdi = DWORD [rbp - 0x0010]          
+0238: [09][ 1ada ][ 127e ] rsi = 0x20cd                                
+0252: [24][ 1c43 ][ 128c ] rdx = rax                                   
+0266: [40][ 1de5 ][ 129a ] call 0x182e                                 
+0280: [39][ 1dcf ][ 12a8 ] if rax != 0; jmp 0x13ce                     
+0294: [16][ 1b8b ][ 12b6 ] (QWORD) rdi = DWORD [rbp - 0x0010]          
+0308: [10][ 1afa ][ 12c4 ] (WORD)  rsi = BYTE  [rdi + 0x0023]          
+0322: [36][ 1d87 ][ 12d2 ] if rsi != 0x007d: rsi = 1; else: rsi = 0;   
+0336: [39][ 1dcf ][ 12e0 ] if rsi != 0; jmp 0x13ce                     
+0350: [16][ 1b8b ][ 12ee ] (QWORD) rsi = DWORD [rbp - 0x0008]          
+0364: [01][ 1a20 ][ 12fc ] rdi = rdi + rsi                             
+0378: [08][ 1ae6 ][ 130a ] rsi = ~rsi                                  
+0392: [44][ 1e1e ][ 1318 ] rsi = rsi + 0x0023                          
+0406: [21][ 1c01 ][ 1326 ] push rsi                                    
+0420: [40][ 1de5 ][ 1334 ] call 0x1406                                 
+0434: [23][ 1c2e ][ 1342 ] pop rsi                                     
+0448: [38][ 1db9 ][ 1350 ] if rax == 0; jmp 0x13ce                     
+0462: [24][ 1c43 ][ 135e ] rdi = rax                                   
+0476: [21][ 1c01 ][ 136c ] push rdi                                    
+0490: [40][ 1de5 ][ 137a ] call 0x15fe                                 
+0504: [23][ 1c2e ][ 1388 ] pop rdi                                     
+0518: [21][ 1c01 ][ 1396 ] push rax                                    
+0532: [40][ 1de5 ][ 13a4 ] call free                                   
+0546: [23][ 1c2e ][ 13b2 ] pop rax                                     
+0560: [09][ 1ada ][ 13c0 ] jmp 0x13dc                                  
+0574: [09][ 1ada ][ 13ce ] rax = 0x0001                                
+0588: [24][ 1c43 ][ 13dc ] sp = rbp                                    
+0602: [23][ 1c2e ][ 13ea ] pop rbp                                     
+0616: [41][ 1e07 ][ 13f8 ] return                                      
+0630: [09][ 1ada ][ 1406 ] rax = 0x0000                                
+0644: [43][ 1ebe ][ 1414 ] if rsi == 0; return                         
+0658: [21][ 1c01 ][ 1422 ] push rdi                                    
+0672: [21][ 1c01 ][ 1430 ] push rsi                                    
+0686: [46][ 1e49 ][ 143e ] rdi = rsi &lt;&lt; 0x0003                         
+0700: [40][ 1de5 ][ 144c ] call malloc                                 
+0714: [23][ 1c2e ][ 145a ] pop rsi                                     
+0728: [23][ 1c2e ][ 1468 ] pop rdi                                     
+0742: [43][ 1ebe ][ 1476 ] if rax == 0; return                         
+0756: [24][ 1c43 ][ 1484 ] r8 = rax                                    
+0770: [24][ 1c43 ][ 1492 ] r9 = rax                                    
+0784: [21][ 1c01 ][ 14a0 ] push r9                                     
+0798: [21][ 1c01 ][ 14ae ] push r8                                     
+0812: [21][ 1c01 ][ 14bc ] push rdi                                    
+0826: [21][ 1c01 ][ 14ca ] push rsi                                    
+0840: [10][ 1afa ][ 14d8 ] (WORD)  rsi = BYTE  [rdi + 0x0000]          
+0854: [09][ 1ada ][ 14e6 ] rdi = 0x20a0                                
+0868: [40][ 1de5 ][ 14f4 ] call 0x18c8                                 
+0882: [23][ 1c2e ][ 1502 ] pop rsi                                     
+0896: [23][ 1c2e ][ 1510 ] pop rdi                                     
+0910: [23][ 1c2e ][ 151e ] pop r8                                      
+0924: [23][ 1c2e ][ 152c ] pop r9                                      
+0938: [38][ 1db9 ][ 153a ] if rax == 0; jmp 0x15c6                     
+0952: [09][ 1ada ][ 1548 ] r10 = 0x20a0                                
+0966: [02][ 1a39 ][ 1556 ] rax = rax - r10                             
+0980: [20][ 1be9 ][ 1564 ] [r9 + 0x0000] = rax                         
+0994: [44][ 1e1e ][ 1572 ] r9 = r9 + 0x0008                            
+1008: [44][ 1e1e ][ 1580 ] rdi = rdi + 0x0001                          
+1022: [44][ 1e1e ][ 158e ] rsi = rsi - 0x0001                          
+1036: [39][ 1dcf ][ 159c ] if rsi != 0; jmp 0x14a0                     
+1050: [24][ 1c43 ][ 15aa ] rax = r8                                    
+1064: [41][ 1e07 ][ 15b8 ] return                                      
+1078: [24][ 1c43 ][ 15c6 ] rdi = r8                                    
+1092: [40][ 1de5 ][ 15d4 ] call free                                   
+1106: [09][ 1ada ][ 15e2 ] rax = 0x0000                                
+1120: [41][ 1e07 ][ 15f0 ] return                                      
+1134: [09][ 1ada ][ 15fe ] rax = 0x0001                                
+1148: [43][ 1ebe ][ 160c ] if rsi == 0; return                         
+1162: [16][ 1b8b ][ 161a ] (QWORD) r8 = DWORD [rdi + 0x0000]           
+1176: [36][ 1d87 ][ 1628 ] if r8 != 0x0016: r8 = 1; else: r8 = 0;      
+1190: [42][ 1e9c ][ 1636 ] if r8 != 0; return                          
+1204: [21][ 1c01 ][ 1644 ] push rdi                                    
+1218: [21][ 1c01 ][ 1652 ] push rsi                                    
+1232: [40][ 1de5 ][ 1660 ] call 0x1724                                 
+1246: [23][ 1c2e ][ 166e ] pop rsi                                     
+1260: [23][ 1c2e ][ 167c ] pop rdi                                     
+1274: [44][ 1e1e ][ 168a ] rsi = rsi - 0x0001                          
+1288: [21][ 1c01 ][ 1698 ] push rdi                                    
+1302: [46][ 1e49 ][ 16a6 ] rdx = rsi &lt;&lt; 0x0003                         
+1316: [09][ 1ada ][ 16b4 ] rsi = 0x1fa0                                
+1330: [40][ 1de5 ][ 16c2 ] call 0x182e                                 
+1344: [23][ 1c2e ][ 16d0 ] pop rdi                                     
+1358: [24][ 1c43 ][ 16de ] r8 = rax                                    
+1372: [09][ 1ada ][ 16ec ] rax = 0x0001                                
+1386: [42][ 1e9c ][ 16fa ] if r8 != 0; return                          
+1400: [09][ 1ada ][ 1708 ] rax = 0x0000                                
+1414: [41][ 1e07 ][ 1716 ] return                                      
+1428: [43][ 1ebe ][ 1724 ] if rsi == 0; return                         
+1442: [44][ 1e1e ][ 1732 ] rsi = rsi - 0x0001                          
+1456: [43][ 1ebe ][ 1740 ] if rsi == 0; return                         
+1470: [16][ 1b8b ][ 174e ] (QWORD) r8 = DWORD [rdi + 0x0000]           
+1484: [16][ 1b8b ][ 175c ] (QWORD) r9 = DWORD [rdi + 0x0008]           
+1498: [02][ 1a39 ][ 176a ] r8 = r9 - r8                                
+1512: [27][ 1c86 ][ 1778 ] r8 = r8 ^ rsi                               
+1526: [03][ 1a52 ][ 1786 ] r9 = r8 * r8                                
+1540: [03][ 1a52 ][ 1794 ] r8 = r9 * r8                                
+1554: [20][ 1be9 ][ 17a2 ] [rdi + 0x0000] = r8                         
+1568: [44][ 1e1e ][ 17b0 ] rdi = rdi + 0x0008                          
+1582: [44][ 1e1e ][ 17be ] rsi = rsi - 0x0001                          
+1596: [09][ 1ada ][ 17cc ] jmp 0x1740                                  
+1610: [09][ 1ada ][ 17da ] rax = 0x0000                                
+1624: [10][ 1afa ][ 17e8 ] (WORD)  r10 = BYTE  [rdi + 0x0000]          
+1638: [43][ 1ebe ][ 17f6 ] if r10 == 0; return                         
+1652: [44][ 1e1e ][ 1804 ] rdi = rdi + 0x0001                          
+1666: [44][ 1e1e ][ 1812 ] rax = rax + 0x0001                          
+1680: [09][ 1ada ][ 1820 ] jmp 0x17e8                                  
+1694: [09][ 1ada ][ 182e ] rax = 0x0000                                
+1708: [43][ 1ebe ][ 183c ] if rdx == 0; return                         
+1722: [10][ 1afa ][ 184a ] (WORD)  r8 = BYTE  [rdi + 0x0000]           
+1736: [10][ 1afa ][ 1858 ] (WORD)  r9 = BYTE  [rsi + 0x0000]           
+1750: [27][ 1c86 ][ 1866 ] r8 = r8 ^ r9                                
+1764: [25][ 1c54 ][ 1874 ] rax = rax | r8                              
+1778: [44][ 1e1e ][ 1882 ] rdx = rdx - 0x0001                          
+1792: [44][ 1e1e ][ 1890 ] rdi = rdi + 0x0001                          
+1806: [44][ 1e1e ][ 189e ] rsi = rsi + 0x0001                          
+1820: [39][ 1dcf ][ 18ac ] if rdx != 0; jmp 0x184a                     
+1834: [41][ 1e07 ][ 18ba ] return                                      
+1848: [24][ 1c43 ][ 18c8 ] rax = rdi                                   
+1862: [10][ 1afa ][ 18d6 ] (WORD)  r8 = BYTE  [rax + 0x0000]           
+1876: [38][ 1db9 ][ 18e4 ] if r8 == 0; jmp 0x192a                      
+1890: [33][ 1d2f ][ 18f2 ] if rsi ==  r8: r8 = 1                       
+1904: [42][ 1e9c ][ 1900 ] if r8 != 0; return                          
+1918: [44][ 1e1e ][ 190e ] rax = rax + 0x0001                          
+1932: [09][ 1ada ][ 191c ] jmp 0x18d6                                  
+1946: [09][ 1ada ][ 192a ] rax = 0x0000                                
+1960: [41][ 1e07 ][ 1938 ] return                                      
+</code></pre></div>
+<br>
+<hr>
+<h3 id="flag-checking">Flag Checking</h3>
+<p>After analyzing the whole disassembly i managed to understand how its all working.</p>
+<p>At the entry point of our bytecode, <code>argv</code> and <code>argc</code> are in <code>rsi</code> and <code>rdi</code> respectively.</p>
+<p>The Flag Checking is done like this:</p>
+<ol>
+<li>if argc != 2; return</li>
+<li>if argv[1][:5] != &ldquo;FLAG{&quot;; return</li>
+<li>if argv[1][::-1] != &ldquo;}&quot;; return</li>
+<li>if argv[1][6] != &ldquo;x&rdquo;; return</li>
+<li>if len(argv[1][5:-1]) != 0x1e; return</li>
+</ol>
+<p>Now this is where it gets interesting. it calls <code>malloc()</code> to create an array of size 0x1e
+and then it loops through our input.
+For each character in our input it calculates the index of the character in a global string at 0x20A0 &ndash; <code>abdfgehikmanoqrstucvwlxyz-01h23p456u78j9-_.+</code> and then stores that index into the malloc&rsquo;d array.</p>
+<p>As of Now our flag should look like this
+<code>FLAG{xbbbbbbbbbbbbbbbbbbbbbbbbbbbbb}</code></p>
+<p>Now it performs this operation on our index array:
+
+<br></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">0x1d</span>):
+  r8 <span style="color:#f92672">=</span> input[i<span style="color:#f92672">+</span><span style="color:#ae81ff">0</span>]
+  r9 <span style="color:#f92672">=</span> input[i<span style="color:#f92672">+</span><span style="color:#ae81ff">1</span>]
+  r8 <span style="color:#f92672">=</span> r9 <span style="color:#f92672">-</span> r8
+  r8 <span style="color:#f92672">=</span> r8 <span style="color:#f92672">^</span> (<span style="color:#ae81ff">0x1d</span> <span style="color:#f92672">-</span> i)
+  r8 <span style="color:#f92672">=</span> r8 <span style="color:#f92672">*</span> r8 <span style="color:#f92672">*</span> r8
+  input[i] <span style="color:#f92672">=</span> r8
+</code></pre></div><p>
+<br>
+And after this the binary was checking the modified input index array with another array at 0x1FA0.
+Without wasting time i put together a quick z3 script to print the flag and it worked in like first try. This challenge is my favourite until i solve another amazing crackme. Thanks ttlhacker for this amazing challange here is the script in action.</p>
+<p>solve.py</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">from</span> z3 <span style="color:#f92672">import</span> <span style="color:#f92672">*</span>
+
+chrset <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;abdfgehikmanoqrstucvwlxyz-01h23p456u78j9-_.+&#34;</span>
+inpt <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;FLAG{xbbbbbbbbbbbbbbbbbbbbbbbbbbbbb}&#34;</span>
+
+enc <span style="color:#f92672">=</span> [
+    <span style="color:#ae81ff">0x16C8</span>,
+    <span style="color:#ae81ff">0x0FFFFFFFFFFFF8BA1</span>,
+    <span style="color:#ae81ff">0x0FFFFFFFFFFFFE0C0</span>,
+    <span style="color:#ae81ff">0x3600</span>,
+    <span style="color:#ae81ff">0x0FFFFFFFFFFFFE535</span>,
+    <span style="color:#ae81ff">0x16C8</span>,
+    <span style="color:#ae81ff">0x0FFFFFFFFFFFF8BA1</span>,
+    <span style="color:#ae81ff">0x5F45</span>,
+    <span style="color:#ae81ff">0x0FFFFFFFFFFFFD668</span>,
+    <span style="color:#ae81ff">0x0FFFFFFFFFFFFFFF8</span>,
+    <span style="color:#ae81ff">0x5F45</span>,
+    <span style="color:#ae81ff">0x0FFFFFFFFFFFFCA00</span>,
+    <span style="color:#ae81ff">0x0FFFFFFFFFFFFBB58</span>,
+    <span style="color:#ae81ff">0x0AB8</span>,
+    <span style="color:#ae81ff">0x0FFFFFFFFFFFFBB58</span>,
+    <span style="color:#ae81ff">0x4CE3</span>,
+    <span style="color:#ae81ff">0x0FFFFFFFFFFFF8000</span>,
+    <span style="color:#ae81ff">0x2D9</span>,
+    <span style="color:#ae81ff">0x4CE3</span>,
+    <span style="color:#ae81ff">0x0FFFFFFFFFFFFFFFF</span>,
+    <span style="color:#ae81ff">0x2D9</span>,
+    <span style="color:#ae81ff">0x3E8</span>,
+    <span style="color:#ae81ff">0x7D</span>,
+    <span style="color:#ae81ff">0x0FFFFFFFFFFFFE938</span>,
+    <span style="color:#ae81ff">0x200</span>,
+    <span style="color:#ae81ff">0x200</span>,
+    <span style="color:#ae81ff">0x0FFFFFFFFFFFFE535</span>,
+    <span style="color:#ae81ff">0x1F40</span>,
+    <span style="color:#ae81ff">0x0FFFFFFFFFFFFE0C0</span>,
+]
+
+flag <span style="color:#f92672">=</span> [BitVec(<span style="color:#e6db74">&#34;flag_</span><span style="color:#e6db74">%i</span><span style="color:#e6db74">&#34;</span> <span style="color:#f92672">%</span> i, <span style="color:#ae81ff">64</span>) <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">0x1e</span>)]
+
+
+s <span style="color:#f92672">=</span> Solver()
+s<span style="color:#f92672">.</span>add(flag[<span style="color:#ae81ff">0</span>] <span style="color:#f92672">==</span> <span style="color:#ae81ff">0x16</span>)
+
+enc_f <span style="color:#f92672">=</span> []
+
+i <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>
+<span style="color:#66d9ef">while</span> i <span style="color:#f92672">!=</span> <span style="color:#ae81ff">0x1d</span>:
+    a <span style="color:#f92672">=</span> flag[i]
+    b <span style="color:#f92672">=</span> flag[i<span style="color:#f92672">+</span><span style="color:#ae81ff">1</span>]
+    a <span style="color:#f92672">=</span> b <span style="color:#f92672">-</span> a
+    a <span style="color:#f92672">=</span> a <span style="color:#f92672">^</span> (<span style="color:#ae81ff">0x1d</span> <span style="color:#f92672">-</span> i)
+    b <span style="color:#f92672">=</span> a <span style="color:#f92672">*</span> a
+    a <span style="color:#f92672">=</span> b <span style="color:#f92672">*</span> a
+    enc_f<span style="color:#f92672">.</span>append(a)
+    i <span style="color:#f92672">+=</span> <span style="color:#ae81ff">1</span>
+
+<span style="color:#75715e">#print len(enc_f), len(enc)</span>
+<span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">0x1d</span>):
+    s<span style="color:#f92672">.</span>add(enc_f[i] <span style="color:#f92672">==</span> enc[i])
+
+<span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">0x1e</span>, <span style="color:#ae81ff">1</span>):
+    s<span style="color:#f92672">.</span>add(flag[i] <span style="color:#f92672">&lt;</span> len(chrset))
+    s<span style="color:#f92672">.</span>add(flag[i] <span style="color:#f92672">&gt;=</span> <span style="color:#ae81ff">0</span>)
+
+<span style="color:#66d9ef">if</span> s<span style="color:#f92672">.</span>check() <span style="color:#f92672">!=</span> <span style="color:#e6db74">&#34;unsat&#34;</span>:
+    m <span style="color:#f92672">=</span> s<span style="color:#f92672">.</span>model()
+
+    solved <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;FLAG{&#34;</span>
+    <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">0x1e</span>):
+        obj <span style="color:#f92672">=</span> flag[i]
+        solved <span style="color:#f92672">+=</span> chrset[m[obj]<span style="color:#f92672">.</span>as_long()]
+
+    <span style="color:#66d9ef">print</span> solved <span style="color:#f92672">+</span> <span style="color:#e6db74">&#34;}&#34;</span>
+<span style="color:#66d9ef">else</span>:
+    <span style="color:#66d9ef">print</span> <span style="color:#e6db74">&#34;unsat&#34;</span>
+</code></pre></div><p>
+<br>
+The solving script in action:
+
+
+<script id="asciicast-CXHotULlSW5rHKSRUy8scgRvq" src="https://asciinema.org/a/CXHotULlSW5rHKSRUy8scgRvq.js" async></script>
+
+
+<br></p>
+<p><code>FLAG{x86-1s-s0-fund4m3nt4lly-br0k3n}</code></p>
+
+		</div>
+	</section>
+<div id="disqus_thread" class="container"></div>
+<script>
+	(function() { 
+		var d = document, s = d.createElement('script');
+		s.src = 'https://x3ero0-tech.disqus.com/embed.js';
+		s.setAttribute('data-timestamp', +new Date());
+		(d.head || d.body).appendChild(s);
+	})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+                            
+
+
+      </div>
+  </body><footer>
+  <div class="container-fluid bg-dark text-white text-monospace text-center mt-4">
+    <small style="color:#ffffff">
+    	<b>-=[ </b>
+    	<a href="https://youtube.com/pulkitsinghaniapulkittech" style="color:#e6ffff">YouTube</a>
+    	<a href="https://www.linkedin.com/in/pulkit-singh-singaria-500a53166/" style="color:#e6ffff">LinkedIn</a>
+    	<a href="https://twitter.com/X3eRo0" style="color:#e6ffff">Twitter</a>
+    	<a href="https://ctftime.org/user/43759" style="color:#e6ffff">CTFTime</a>
+    	<b> ]=-</b>
+    </small>
+  </div>
+</footer></html>

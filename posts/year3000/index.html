@@ -4,7 +4,7 @@
 	<meta name="description" content='X3eRo0&#39;s Blog about Reverse Engineering'>
 	<meta name="keywords" content='X3eRo0, Reverse, Reverse Engineering, Crackmes, blog'>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<meta name="generator" content="Hugo 0.64.1" />
+	<meta name="generator" content="Hugo 0.68.3" />
 	<link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css">
 	<link rel="stylesheet" type="text/css" href="/css/custom.css">
 	<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.css" integrity="sha256-46qynGAkLSFpVbEBog43gvNhfrOj+BmwXdxFgVK/Kvc=" crossorigin=anonymous>
@@ -283,11 +283,11 @@ Well done
 <span style="color:#f92672">import</span> base64
 
 
-context<span style="color:#f92672">.</span>log_level <span style="color:#f92672">=</span> <span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">critical</span><span style="color:#e6db74">&#34;</span>
+context<span style="color:#f92672">.</span>log_level <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;critical&#34;</span>
 
 <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">solve</span>(filename):
 
-	file <span style="color:#f92672">=</span> open(filename, <span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">rb</span><span style="color:#e6db74">&#34;</span>)<span style="color:#f92672">.</span>read()
+	file <span style="color:#f92672">=</span> open(filename, <span style="color:#e6db74">&#34;rb&#34;</span>)<span style="color:#f92672">.</span>read()
 	
 	ELF64_Coun <span style="color:#f92672">=</span> <span style="color:#ae81ff">0x816</span>
 	ELF64_Valu <span style="color:#f92672">=</span> <span style="color:#ae81ff">0x81d</span>
@@ -303,7 +303,7 @@ context<span style="color:#f92672">.</span>log_level <span style="color:#f92672"
 	Format <span style="color:#f92672">=</span> ord(file[<span style="color:#ae81ff">0x04</span>])
 	<span style="color:#66d9ef">if</span> (Format <span style="color:#f92672">==</span> <span style="color:#ae81ff">2</span>):
 
-		context<span style="color:#f92672">.</span>update(arch<span style="color:#f92672">=</span><span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">amd64</span><span style="color:#e6db74">&#39;</span>, os<span style="color:#f92672">=</span><span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">linux</span><span style="color:#e6db74">&#39;</span>)
+		context<span style="color:#f92672">.</span>update(arch<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;amd64&#39;</span>, os<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;linux&#39;</span>)
 
 		code_count <span style="color:#f92672">=</span> file[ELF64_Coun : ELF64_Coun<span style="color:#f92672">+</span><span style="color:#ae81ff">7</span>]
 		code_value <span style="color:#f92672">=</span> file[ELF64_Valu : ELF64_Valu<span style="color:#f92672">+</span><span style="color:#ae81ff">4</span>]
@@ -311,8 +311,8 @@ context<span style="color:#f92672">.</span>log_level <span style="color:#f92672"
 		disa_count <span style="color:#f92672">=</span> disasm(code_count)
 		disa_value <span style="color:#f92672">=</span> disasm(code_value)
 
-		code_count <span style="color:#f92672">=</span> int(disa_count<span style="color:#f92672">.</span>split(<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">0x</span><span style="color:#e6db74">&#39;</span>)[<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>], <span style="color:#ae81ff">16</span>)
-		code_value <span style="color:#f92672">=</span> chr(int(disa_value<span style="color:#f92672">.</span>split(<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">0x</span><span style="color:#e6db74">&#39;</span>)[<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>], <span style="color:#ae81ff">16</span>))
+		code_count <span style="color:#f92672">=</span> int(disa_count<span style="color:#f92672">.</span>split(<span style="color:#e6db74">&#39;0x&#39;</span>)[<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>], <span style="color:#ae81ff">16</span>)
+		code_value <span style="color:#f92672">=</span> chr(int(disa_value<span style="color:#f92672">.</span>split(<span style="color:#e6db74">&#39;0x&#39;</span>)[<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>], <span style="color:#ae81ff">16</span>))
 
 		<span style="color:#75715e">#value = u64(file[ELF64_Addr : ELF64_Addr+8])</span>
 		value <span style="color:#f92672">=</span> file[ELF64_Addr : ELF64_Addr<span style="color:#f92672">+</span><span style="color:#ae81ff">8</span>]
@@ -322,7 +322,7 @@ context<span style="color:#f92672">.</span>log_level <span style="color:#f92672"
 
 	<span style="color:#66d9ef">elif</span>(Format <span style="color:#f92672">==</span> <span style="color:#ae81ff">1</span>):
 
-		context<span style="color:#f92672">.</span>update(arch<span style="color:#f92672">=</span><span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">i386</span><span style="color:#e6db74">&#39;</span>, os<span style="color:#f92672">=</span><span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">linux</span><span style="color:#e6db74">&#39;</span>)
+		context<span style="color:#f92672">.</span>update(arch<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;i386&#39;</span>, os<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;linux&#39;</span>)
 
 		code_count <span style="color:#f92672">=</span> file[ELF32_Coun : ELF32_Coun<span style="color:#f92672">+</span><span style="color:#ae81ff">7</span>]
 		code_value <span style="color:#f92672">=</span> file[ELF32_Valu : ELF32_Valu<span style="color:#f92672">+</span><span style="color:#ae81ff">4</span>]
@@ -330,8 +330,8 @@ context<span style="color:#f92672">.</span>log_level <span style="color:#f92672"
 		disa_count <span style="color:#f92672">=</span> disasm(code_count)
 		disa_value <span style="color:#f92672">=</span> disasm(code_value)
 
-		code_count <span style="color:#f92672">=</span> int(disa_count<span style="color:#f92672">.</span>split(<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">0x</span><span style="color:#e6db74">&#39;</span>)[<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>], <span style="color:#ae81ff">16</span>)
-		code_value <span style="color:#f92672">=</span> chr(int(disa_value<span style="color:#f92672">.</span>split(<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">0x</span><span style="color:#e6db74">&#39;</span>)[<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>], <span style="color:#ae81ff">16</span>))
+		code_count <span style="color:#f92672">=</span> int(disa_count<span style="color:#f92672">.</span>split(<span style="color:#e6db74">&#39;0x&#39;</span>)[<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>], <span style="color:#ae81ff">16</span>)
+		code_value <span style="color:#f92672">=</span> chr(int(disa_value<span style="color:#f92672">.</span>split(<span style="color:#e6db74">&#39;0x&#39;</span>)[<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>], <span style="color:#ae81ff">16</span>))
 
 		<span style="color:#75715e">#value = u32(file[ELF32_Addr:ELF32_Addr+4])</span>
 		value <span style="color:#f92672">=</span> file[ELF32_Addr:ELF32_Addr<span style="color:#f92672">+</span><span style="color:#ae81ff">4</span>]
@@ -349,34 +349,34 @@ context<span style="color:#f92672">.</span>log_level <span style="color:#f92672"
 <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">main</span>():
 
 
-	dump <span style="color:#f92672">=</span> <span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">&#34;</span>
+	dump <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;&#34;</span>
 	i <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>
-	p <span style="color:#f92672">=</span> remote(<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">re.ctf.nullcon.net</span><span style="color:#e6db74">&#34;</span>, <span style="color:#ae81ff">1234</span>)
-	a <span style="color:#f92672">=</span> <span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">&#34;</span>
-	temp <span style="color:#f92672">=</span> <span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">&#34;</span>
-	<span style="color:#66d9ef">while</span>(<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">hackim</span><span style="color:#e6db74">&#39;</span> <span style="color:#f92672">not</span> <span style="color:#f92672">in</span> dump):
+	p <span style="color:#f92672">=</span> remote(<span style="color:#e6db74">&#34;re.ctf.nullcon.net&#34;</span>, <span style="color:#ae81ff">1234</span>)
+	a <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;&#34;</span>
+	temp <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;&#34;</span>
+	<span style="color:#66d9ef">while</span>(<span style="color:#e6db74">&#39;hackim&#39;</span> <span style="color:#f92672">not</span> <span style="color:#f92672">in</span> dump):
 
 		<span style="color:#75715e"># i noticed that only 10 files were asked</span>
 		<span style="color:#66d9ef">if</span>(i<span style="color:#f92672">==</span><span style="color:#ae81ff">10</span>):
-			<span style="color:#66d9ef">print</span> <span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">Flag: </span><span style="color:#e6db74">&#34;</span> <span style="color:#f92672">+</span> p<span style="color:#f92672">.</span>recvline()
+			<span style="color:#66d9ef">print</span> <span style="color:#e6db74">&#34;Flag: &#34;</span> <span style="color:#f92672">+</span> p<span style="color:#f92672">.</span>recvline()
 			p<span style="color:#f92672">.</span>close()
 			exit()
 		file <span style="color:#f92672">=</span> p<span style="color:#f92672">.</span>recvline()<span style="color:#f92672">.</span>strip()
 
-		a <span style="color:#f92672">=</span> p<span style="color:#f92672">.</span>recvuntil(<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">&gt; </span><span style="color:#e6db74">&#34;</span>)
+		a <span style="color:#f92672">=</span> p<span style="color:#f92672">.</span>recvuntil(<span style="color:#e6db74">&#34;&gt; &#34;</span>)
 		solver <span style="color:#f92672">=</span> solve(file)
 		<span style="color:#75715e"># .encode(&#39;base64&#39;) doesnt work with bytes </span>
 		p<span style="color:#f92672">.</span>sendline(base64<span style="color:#f92672">.</span>b64encode(solver))
 		<span style="color:#75715e">#print str(solver).encode(&#39;base64&#39;)</span>
 		temp <span style="color:#f92672">=</span> p<span style="color:#f92672">.</span>recvline()
-		<span style="color:#66d9ef">if</span>(<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">Well done</span><span style="color:#e6db74">&#34;</span> <span style="color:#f92672">in</span> temp):
-			<span style="color:#66d9ef">print</span> <span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">[0x</span><span style="color:#e6db74">%.4x</span><span style="color:#e6db74">]</span><span style="color:#ae81ff">\t</span><span style="color:#e6db74">&#34;</span> <span style="color:#f92672">%</span> i<span style="color:#f92672">+</span> file <span style="color:#f92672">+</span> <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#ae81ff">\t</span><span style="color:#e6db74">: Well Done</span><span style="color:#e6db74">&#39;</span>
+		<span style="color:#66d9ef">if</span>(<span style="color:#e6db74">&#34;Well done&#34;</span> <span style="color:#f92672">in</span> temp):
+			<span style="color:#66d9ef">print</span> <span style="color:#e6db74">&#34;[0x</span><span style="color:#e6db74">%.4x</span><span style="color:#e6db74">]</span><span style="color:#ae81ff">\t</span><span style="color:#e6db74">&#34;</span> <span style="color:#f92672">%</span> i<span style="color:#f92672">+</span> file <span style="color:#f92672">+</span> <span style="color:#e6db74">&#39;</span><span style="color:#ae81ff">\t</span><span style="color:#e6db74">: Well Done&#39;</span>
 		<span style="color:#66d9ef">else</span>:
-			<span style="color:#66d9ef">print</span> <span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">[+] Failed:</span><span style="color:#ae81ff">\t</span><span style="color:#e6db74">&#34;</span> <span style="color:#f92672">+</span> file <span style="color:#f92672">+</span> <span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\t</span><span style="color:#e6db74">dumping recieved data</span><span style="color:#e6db74">&#34;</span>
+			<span style="color:#66d9ef">print</span> <span style="color:#e6db74">&#34;[+] Failed:</span><span style="color:#ae81ff">\t</span><span style="color:#e6db74">&#34;</span> <span style="color:#f92672">+</span> file <span style="color:#f92672">+</span> <span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\t</span><span style="color:#e6db74">dumping recieved data&#34;</span>
 			exit()
-		i <span style="color:#f92672">+</span><span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>
+		i <span style="color:#f92672">+=</span> <span style="color:#ae81ff">1</span>
 
-<span style="color:#66d9ef">if</span> __name__ <span style="color:#f92672">==</span> <span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">__main__</span><span style="color:#e6db74">&#34;</span>:
+<span style="color:#66d9ef">if</span> __name__ <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;__main__&#34;</span>:
 	main()
 </code></pre></div><p>
 
