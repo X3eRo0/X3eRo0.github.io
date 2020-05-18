@@ -803,7 +803,7 @@ bytecode <span style="color:#f92672">=</span> open(<span style="color:#e6db74">&
 <li>if argc != 2; return</li>
 <li>if argv[1][:5] != &ldquo;FLAG{&quot;; return</li>
 <li>if argv[1][::-1] != &ldquo;}&quot;; return</li>
-<li>if argv[1][6] != &ldquo;x&rdquo;; return</li>
+<li>if argv[1][5] != &ldquo;x&rdquo;; return</li>
 <li>if len(argv[1][5:-1]) != 0x1e; return</li>
 </ol>
 <p>Now this is where it gets interesting. it calls <code>malloc()</code> to create an array of size 0x1e
