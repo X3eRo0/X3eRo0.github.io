@@ -4,7 +4,7 @@
 	<meta name="description" content='X3eRo0&#39;s Blog about Reverse Engineering'>
 	<meta name="keywords" content='X3eRo0, Reverse, Reverse Engineering, Crackmes, blog'>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<meta name="generator" content="Hugo 0.68.3" />
+	<meta name="generator" content="Hugo 0.63.2" />
 	<link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css">
 	<link rel="stylesheet" type="text/css" href="/css/custom.css">
 	<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.css" integrity="sha256-46qynGAkLSFpVbEBog43gvNhfrOj+BmwXdxFgVK/Kvc=" crossorigin=anonymous>
@@ -74,16 +74,16 @@ the following inline assembly code fetches the value of BeingDebugged</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#75715e">/* MINGW add -masm=intel while compiling */</span>
 BOOL found <span style="color:#f92672">=</span> FALSE;
 __asm__(
-	<span style="color:#e6db74">&#34;xor eax, eax</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>
-	<span style="color:#e6db74">&#34;mov eax, fs:[0x30]</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>
-	<span style="color:#e6db74">&#34;mov eax, [eax + 0x02]</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>
-	<span style="color:#e6db74">&#34;and eax, 0x000000FF</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>
-	<span style="color:#e6db74">&#34;mov %0, eax</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span> <span style="color:#f92672">:</span><span style="color:#e6db74">&#34;=r&#34;</span> (found)
+	<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">xor eax, eax</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>
+	<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">mov eax, fs:[0x30]</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>
+	<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">mov eax, [eax + 0x02]</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>
+	<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">and eax, 0x000000FF</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>
+	<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">mov %0, eax</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span> <span style="color:#f92672">:</span><span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">=r</span><span style="color:#e6db74">&#34;</span> (found)
 );
 <span style="color:#66d9ef">if</span>(found){
-	printf(<span style="color:#e6db74">&#34;YES</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>);
+	printf(<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">YES</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>);
 } <span style="color:#66d9ef">else</span> {
-	printf(<span style="color:#e6db74">&#34;NO</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>);
+	printf(<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">NO</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>);
 }
 
 </code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#75715e">/* VISUALC++ */</span>
@@ -97,9 +97,9 @@ _asm
 </span><span style="color:#75715e"></span>	mov found, eax; 		<span style="color:#75715e">// Copy BeingDebugged into &#39;found&#39;
 </span><span style="color:#75715e"></span>}
 <span style="color:#66d9ef">if</span>(found){
-	printf(<span style="color:#e6db74">&#34;YES</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>);
+	printf(<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">YES</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>);
 } <span style="color:#66d9ef">else</span> {
-	printf(<span style="color:#e6db74">&#34;NO</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>);
+	printf(<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">NO</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>);
 }
 
 </code></pre></div><p><strong>2. Detecting Breakpoints :</strong></p>
@@ -115,9 +115,9 @@ _asm
 		found <span style="color:#f92672">=</span> FALSE;
 	}
 	<span style="color:#66d9ef">if</span> (found) {
-		printf(<span style="color:#e6db74">&#34;NO DEBUGGING</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>);
+		printf(<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">NO DEBUGGING</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>);
 	} <span style="color:#66d9ef">else</span> {
-		printf(<span style="color:#e6db74">&#34;GOOD</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>);
+		printf(<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">GOOD</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>);
 	}
 }
 </code></pre></div><p><strong>3. Erase PE Headers From Memory:</strong></p>
@@ -147,7 +147,7 @@ _asm
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#66d9ef">inline</span> <span style="color:#66d9ef">bool</span> <span style="color:#a6e22e">CheckOutputDebugString</span>(LPCTSTR String)
 {
 	OutputDebugString(String);
-	<span style="color:#66d9ef">if</span> (GetLastError() <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>)
+	<span style="color:#66d9ef">if</span> (GetLastError() <span style="color:#f92672">=</span><span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>)
 		<span style="color:#66d9ef">return</span> true;
 	<span style="color:#66d9ef">else</span>
 		<span style="color:#66d9ef">return</span> false;
@@ -157,21 +157,21 @@ _asm
 <li><strong>Ptrace :</strong></li>
 </ol>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#75715e">/* trying-to-make-your-binary-shut-up.txt : https://www.exploit-db.com/raw/13188 */</span>
-<span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;stdio.h&gt;</span><span style="color:#75715e">
-</span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;sys/ptrace.h&gt;</span><span style="color:#75715e">
+<span style="color:#75715e">#</span><span style="color:#75715e">include</span> <span style="color:#75715e">&lt;stdio.h&gt;</span><span style="color:#75715e">
+</span><span style="color:#75715e"></span><span style="color:#75715e">#</span><span style="color:#75715e">include</span> <span style="color:#75715e">&lt;sys/ptrace.h&gt;</span><span style="color:#75715e">
 </span><span style="color:#75715e"></span>
 <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">main</span>(<span style="color:#66d9ef">void</span>)
 {
  FILE <span style="color:#f92672">*</span>fd;
- <span style="color:#66d9ef">if</span> (ptrace(PTRACE_TRACEME, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">0</span>) <span style="color:#f92672">==</span> <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>)
+ <span style="color:#66d9ef">if</span> (ptrace(PTRACE_TRACEME, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">0</span>) <span style="color:#f92672">=</span><span style="color:#f92672">=</span> <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>)
  {
-   printf(<span style="color:#e6db74">&#34;so you wanna trace me?...</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>);
+   printf(<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">so you wanna trace me?...</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>);
    <span style="color:#66d9ef">return</span>(<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>);
  }
 
- fd <span style="color:#f92672">=</span> fopen(<span style="color:#e6db74">&#34;/etc/passwd&#34;</span>, <span style="color:#e6db74">&#34;r&#34;</span>);
- <span style="color:#66d9ef">if</span>(fd <span style="color:#f92672">==</span> NULL) <span style="color:#66d9ef">return</span>;
- <span style="color:#66d9ef">else</span> printf(<span style="color:#e6db74">&#34;file opend</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>);
+ fd <span style="color:#f92672">=</span> fopen(<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">/etc/passwd</span><span style="color:#e6db74">&#34;</span>, <span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">r</span><span style="color:#e6db74">&#34;</span>);
+ <span style="color:#66d9ef">if</span>(fd <span style="color:#f92672">=</span><span style="color:#f92672">=</span> NULL) <span style="color:#66d9ef">return</span>;
+ <span style="color:#66d9ef">else</span> printf(<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">file opend</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>);
  exit(<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>);
 }
 </code></pre></div><p><strong>2. You Tell :</strong></p>

@@ -4,7 +4,7 @@
 	<meta name="description" content='X3eRo0&#39;s Blog about Reverse Engineering'>
 	<meta name="keywords" content='X3eRo0, Reverse, Reverse Engineering, Crackmes, blog'>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<meta name="generator" content="Hugo 0.68.3" />
+	<meta name="generator" content="Hugo 0.63.2" />
 	<link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css">
 	<link rel="stylesheet" type="text/css" href="/css/custom.css">
 	<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.css" integrity="sha256-46qynGAkLSFpVbEBog43gvNhfrOj+BmwXdxFgVK/Kvc=" crossorigin=anonymous>
@@ -68,25 +68,25 @@ once we have that dictionary we resubstitute the charecters in the key given to 
 <p>i made a script for that</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">from</span> pwn <span style="color:#f92672">import</span> <span style="color:#f92672">*</span>
 <span style="color:#f92672">import</span> string
-context<span style="color:#f92672">.</span>log_level <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;critical&#34;</span>
+context<span style="color:#f92672">.</span>log_level <span style="color:#f92672">=</span> <span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">critical</span><span style="color:#e6db74">&#34;</span>
 
-flag_license <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;4-EZF2M-7O5F4-V9P7O-EVFDP-E4VDO-O&#34;</span><span style="color:#f92672">.</span>replace(<span style="color:#e6db74">&#34;-&#34;</span>,<span style="color:#e6db74">&#34;&#34;</span>)
+flag_license <span style="color:#f92672">=</span> <span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">4-EZF2M-7O5F4-V9P7O-EVFDP-E4VDO-O</span><span style="color:#e6db74">&#34;</span><span style="color:#f92672">.</span>replace(<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">-</span><span style="color:#e6db74">&#34;</span>,<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">&#34;</span>)
 
 chars <span style="color:#f92672">=</span> {}
 
 <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">0x21</span>,<span style="color:#ae81ff">0x7f</span>):
-    p <span style="color:#f92672">=</span> process(<span style="color:#e6db74">&#34;./license&#34;</span>)
-    p<span style="color:#f92672">.</span>recvuntil(<span style="color:#e6db74">&#34;gimme dat string: &#34;</span>)
+    p <span style="color:#f92672">=</span> process(<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">./license</span><span style="color:#e6db74">&#34;</span>)
+    p<span style="color:#f92672">.</span>recvuntil(<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">gimme dat string: </span><span style="color:#e6db74">&#34;</span>)
     p<span style="color:#f92672">.</span>sendline(chr(i))
     corchar <span style="color:#f92672">=</span> p<span style="color:#f92672">.</span>recv(<span style="color:#ae81ff">23</span>)[<span style="color:#ae81ff">22</span>:]
     
     chars[corchar] <span style="color:#f92672">=</span> chr(i)
     p<span style="color:#f92672">.</span>close
 
-flag <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;&#34;</span>
+flag <span style="color:#f92672">=</span> <span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">&#34;</span>
 
 <span style="color:#66d9ef">for</span> ch <span style="color:#f92672">in</span> flag_license:
-    flag <span style="color:#f92672">+=</span> chars[ch]
+    flag <span style="color:#f92672">+</span><span style="color:#f92672">=</span> chars[ch]
 
 <span style="color:#66d9ef">print</span> flag
 </code></pre></div><p>running this script gives us partial flag</p>

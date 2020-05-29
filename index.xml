@@ -7,10 +7,21 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <copyright>Copyright © 2008–2019</copyright>
-    <lastBuildDate>Sat, 01 Feb 2020 23:37:00 +0530</lastBuildDate>
+    <lastBuildDate>Fri, 29 May 2020 05:09:29 +0000</lastBuildDate>
     
 	<atom:link href="https://x3ero0.tech/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>[0x007] fl04t</title>
+      <link>https://x3ero0.tech/crackmes/fl04t/</link>
+      <pubDate>Fri, 29 May 2020 05:09:29 +0000</pubDate>
+      
+      <guid>https://x3ero0.tech/crackmes/fl04t/</guid>
+      <description>[fl04t]Download Filesbody{color : #000000;}p { color: #000000;font-family: Inconsolata Bold,monospace;font-size: 17px;line-height: 1em;text-align: justify;text-justify: inter-word; }li {margin: 0;padding: 0.2em;}
+Can you Crack the fl04ts? Can you Defeat ME? FLAG DOESNT FOLLOW ANY FLAG FORMAT
+Crackme : fl04tDifficulty : MediumPlatform : LinuxPoints : 5/10 Date : Fri, 29 May 2020 05:09:29 &amp;#43;0000 Objective : Find the correct password which prints Correct Password   </description>
+    </item>
     
     <item>
       <title>Hell86 - ttlhacker</title>
