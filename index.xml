@@ -7,7 +7,7 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <copyright>Copyright © 2008–2019</copyright>
-    <lastBuildDate>Fri, 29 May 2020 05:09:29 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 10 Apr 2020 20:06:26 +0000</lastBuildDate>
     
 	<atom:link href="https://x3ero0.tech/index.xml" rel="self" type="application/rss+xml" />
     
@@ -52,6 +52,35 @@ Can you Crack the fl04ts? Can you Defeat ME? FLAG DOESNT FOLLOW ANY FLAG FORMAT
       <description>hljs.initHighlightingOnLoad();Challenge: REPYC [REV] - 147 Points Challenge Description:
  woo thi chal sooo repyc! file: 3nohtyp.pyc Difficulty estimate: Easy  We are given a pyc file and running file on this pyc reveals that its a python 3.6 compiled python bytecode.
 [~]$ file 3nohtyp.pyc 3nohtyp.pyc: python 3.6 byte-compiledso i went with the usuall approach to a python pyc challenge, where the first part is to decompile the bytecode.</description>
+    </item>
+    
+    <item>
+      <title>Crackmes</title>
+      <link>https://x3ero0.tech/crackmes/</link>
+      <pubDate>Fri, 10 Apr 2020 20:06:26 +0000</pubDate>
+      
+      <guid>https://x3ero0.tech/crackmes/</guid>
+      <description>Crackmesp41d_s0ftw4r3
+Win32
+Easy
+3
+ xvm_001
+Linux
+Easy
+4
+ Not So Good Encryption
+Win32
+Easy
+3
+ Easy Licensing
+Linux
+Easy
+3
+ hackme
+Linux
+Medium
+6
+ real WEB cr4kme</description>
     </item>
     
     <item>
@@ -157,35 +186,6 @@ Very Simple Crackme :)
       <description>[Easy Licensing]Download Filesbody{color : #000000;}p { color: #000000;font-family: Inconsolata Bold,monospace;font-size: 17px;line-height: 1em;text-align: justify;text-justify: inter-word; }li {margin: 0;padding: 0.2em;}
 Another Shitty Password Checking
 Crackme : Easy LicensingDifficulty : EasyPlatform : LinuxPoints : 3/10 Date : 2020-02-02 Objective : Find the Correct password which gives a &amp;#39;Correct Password!</description>
-    </item>
-    
-    <item>
-      <title>Crackmes</title>
-      <link>https://x3ero0.tech/crackmes/</link>
-      <pubDate>Sat, 01 Feb 2020 23:37:00 +0530</pubDate>
-      
-      <guid>https://x3ero0.tech/crackmes/</guid>
-      <description>Crackmesp41d_s0ftw4r3
-Win32
-Easy
-3
- xvm_001
-Linux
-Easy
-4
- Not So Good Encryption
-Win32
-Easy
-3
- Easy Licensing
-Linux
-Easy
-3
- hackme
-Linux
-Medium
-6
- real WEB cr4kme</description>
     </item>
     
   </channel>

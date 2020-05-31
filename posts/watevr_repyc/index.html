@@ -4,7 +4,7 @@
 	<meta name="description" content='X3eRo0&#39;s Blog about Reverse Engineering'>
 	<meta name="keywords" content='X3eRo0, Reverse, Reverse Engineering, Crackmes, blog'>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<meta name="generator" content="Hugo 0.63.2" />
+	<meta name="generator" content="Hugo 0.68.3" />
 	<link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css">
 	<link rel="stylesheet" type="text/css" href="/css/custom.css">
 	<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.css" integrity="sha256-46qynGAkLSFpVbEBog43gvNhfrOj+BmwXdxFgVK/Kvc=" crossorigin=anonymous>
@@ -118,41 +118,41 @@ but then i noticed that the instructions in the bottom were not correctly indent
 <p>after that i just did a lot of find and replace and i finally fixed the whole python file
 and i ended up with this VM Bytecode</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">VM([
- [<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">mov</span><span style="color:#e6db74">&#39;</span>, <span style="color:#ae81ff">0</span>, <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">Authentication token: </span><span style="color:#e6db74">&#39;</span>],
- [<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">mem_mov</span><span style="color:#e6db74">&#39;</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>], <span style="color:#75715e"># mem(r1) = r2</span>
- [<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">mov</span><span style="color:#e6db74">&#39;</span>, <span style="color:#ae81ff">6</span>, <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">á×äÓâæíäàßåÉÛãåäÉÖÓÉäàÓÉÖÓåäÉÓÚÕæïèäßÙÚÉÛÓäàÙÔÉÓâæÉàÓÚÕÓÒÙæäàÉäàßåÉßåÉäàÓÉÚÓáÉ·Ôâ×ÚÕÓÔÉ³ÚÕæïèäßÙÚÉÅä×ÚÔ×æÔÉ×Úïá×ïåÉßÉÔÙÚäÉæÓ×ÜÜïÉà×âÓÉ×ÉÑÙÙÔÉâßÔÉÖãäÉßÉæÓ×ÜÜïÉÓÚÞÙïÉäàßåÉåÙÚÑÉßÉàÙèÓÉïÙãÉáßÜÜÉÓÚÞÙïÉßäÉ×åáÓÜÜ</span><span style="color:#ae81ff">\x97</span><span style="color:#e6db74">ÉïÙãäãÖÓ</span><span style="color:#ae81ff">\x9a</span><span style="color:#e6db74">ÕÙÛ</span><span style="color:#ae81ff">\x99</span><span style="color:#e6db74">á×äÕà©â«³£ï²ÕÔÈ·±â¨ë</span><span style="color:#e6db74">&#39;</span>],
- [<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">mov</span><span style="color:#e6db74">&#39;</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">120</span>],
- [<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">mov</span><span style="color:#e6db74">&#39;</span>, <span style="color:#ae81ff">4</span>, <span style="color:#ae81ff">15</span>],
- [<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">mov</span><span style="color:#e6db74">&#39;</span>, <span style="color:#ae81ff">3</span>, <span style="color:#ae81ff">1</span>],
- [<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">multiply</span><span style="color:#e6db74">&#39;</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">3</span>], <span style="color:#75715e"># r2 = r2 * r3</span>
- [<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">add</span><span style="color:#e6db74">&#39;</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">4</span>], <span style="color:#75715e"># r2 = r2 + r4</span>
- [<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">nop</span><span style="color:#e6db74">&#39;</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">2</span>], <span style="color:#75715e"># maybe nop</span>
- [<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">zero_reg</span><span style="color:#e6db74">&#39;</span>, <span style="color:#ae81ff">3</span>], <span style="color:#75715e"># sets r3 = 0</span>
- [<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">xor_string</span><span style="color:#e6db74">&#39;</span>, <span style="color:#ae81ff">6</span>, <span style="color:#ae81ff">3</span>],
- [<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">mov</span><span style="color:#e6db74">&#39;</span>, <span style="color:#ae81ff">0</span>, <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">Thanks.</span><span style="color:#e6db74">&#39;</span>],
- [<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">mov</span><span style="color:#e6db74">&#39;</span>, <span style="color:#ae81ff">1</span>, <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">Authorizing access...</span><span style="color:#e6db74">&#39;</span>],
- [<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">print_reg</span><span style="color:#e6db74">&#39;</span>, <span style="color:#ae81ff">0</span>], <span style="color:#75715e"># prints r0</span>
- [<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">reg2mem</span><span style="color:#e6db74">&#39;</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>], <span style="color:#75715e"># set r[arg0] = mem[arg1]</span>
- [<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">xor_string</span><span style="color:#e6db74">&#39;</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">2</span>],
- [<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">subtract_string</span><span style="color:#e6db74">&#39;</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">4</span>],
- [<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">mov</span><span style="color:#e6db74">&#39;</span>, <span style="color:#ae81ff">5</span>, <span style="color:#ae81ff">19</span>],
- [<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">strcmp</span><span style="color:#e6db74">&#39;</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">6</span>, <span style="color:#ae81ff">5</span>], <span style="color:#75715e"># check strings ; if not equal r[7] = 1 ; push r[arg[2]]</span>
- [<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">print_reg</span><span style="color:#e6db74">&#39;</span>, <span style="color:#ae81ff">1</span>],
- [<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">mov</span><span style="color:#e6db74">&#39;</span>, <span style="color:#ae81ff">1</span>, <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">Access denied!</span><span style="color:#e6db74">&#39;</span>],
- [<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">print_reg</span><span style="color:#e6db74">&#39;</span>, <span style="color:#ae81ff">1</span>],
- [<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">hlt</span><span style="color:#e6db74">&#39;</span>]])
+ [<span style="color:#e6db74">&#39;mov&#39;</span>, <span style="color:#ae81ff">0</span>, <span style="color:#e6db74">&#39;Authentication token: &#39;</span>],
+ [<span style="color:#e6db74">&#39;mem_mov&#39;</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>], <span style="color:#75715e"># mem(r1) = r2</span>
+ [<span style="color:#e6db74">&#39;mov&#39;</span>, <span style="color:#ae81ff">6</span>, <span style="color:#e6db74">&#39;á×äÓâæíäàßåÉÛãåäÉÖÓÉäàÓÉÖÓåäÉÓÚÕæïèäßÙÚÉÛÓäàÙÔÉÓâæÉàÓÚÕÓÒÙæäàÉäàßåÉßåÉäàÓÉÚÓáÉ·Ôâ×ÚÕÓÔÉ³ÚÕæïèäßÙÚÉÅä×ÚÔ×æÔÉ×Úïá×ïåÉßÉÔÙÚäÉæÓ×ÜÜïÉà×âÓÉ×ÉÑÙÙÔÉâßÔÉÖãäÉßÉæÓ×ÜÜïÉÓÚÞÙïÉäàßåÉåÙÚÑÉßÉàÙèÓÉïÙãÉáßÜÜÉÓÚÞÙïÉßäÉ×åáÓÜÜ</span><span style="color:#ae81ff">\x97</span><span style="color:#e6db74">ÉïÙãäãÖÓ</span><span style="color:#ae81ff">\x9a</span><span style="color:#e6db74">ÕÙÛ</span><span style="color:#ae81ff">\x99</span><span style="color:#e6db74">á×äÕà©â«³£ï²ÕÔÈ·±â¨ë&#39;</span>],
+ [<span style="color:#e6db74">&#39;mov&#39;</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">120</span>],
+ [<span style="color:#e6db74">&#39;mov&#39;</span>, <span style="color:#ae81ff">4</span>, <span style="color:#ae81ff">15</span>],
+ [<span style="color:#e6db74">&#39;mov&#39;</span>, <span style="color:#ae81ff">3</span>, <span style="color:#ae81ff">1</span>],
+ [<span style="color:#e6db74">&#39;multiply&#39;</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">3</span>], <span style="color:#75715e"># r2 = r2 * r3</span>
+ [<span style="color:#e6db74">&#39;add&#39;</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">4</span>], <span style="color:#75715e"># r2 = r2 + r4</span>
+ [<span style="color:#e6db74">&#39;nop&#39;</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">2</span>], <span style="color:#75715e"># maybe nop</span>
+ [<span style="color:#e6db74">&#39;zero_reg&#39;</span>, <span style="color:#ae81ff">3</span>], <span style="color:#75715e"># sets r3 = 0</span>
+ [<span style="color:#e6db74">&#39;xor_string&#39;</span>, <span style="color:#ae81ff">6</span>, <span style="color:#ae81ff">3</span>],
+ [<span style="color:#e6db74">&#39;mov&#39;</span>, <span style="color:#ae81ff">0</span>, <span style="color:#e6db74">&#39;Thanks.&#39;</span>],
+ [<span style="color:#e6db74">&#39;mov&#39;</span>, <span style="color:#ae81ff">1</span>, <span style="color:#e6db74">&#39;Authorizing access...&#39;</span>],
+ [<span style="color:#e6db74">&#39;print_reg&#39;</span>, <span style="color:#ae81ff">0</span>], <span style="color:#75715e"># prints r0</span>
+ [<span style="color:#e6db74">&#39;reg2mem&#39;</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>], <span style="color:#75715e"># set r[arg0] = mem[arg1]</span>
+ [<span style="color:#e6db74">&#39;xor_string&#39;</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">2</span>],
+ [<span style="color:#e6db74">&#39;subtract_string&#39;</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">4</span>],
+ [<span style="color:#e6db74">&#39;mov&#39;</span>, <span style="color:#ae81ff">5</span>, <span style="color:#ae81ff">19</span>],
+ [<span style="color:#e6db74">&#39;strcmp&#39;</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">6</span>, <span style="color:#ae81ff">5</span>], <span style="color:#75715e"># check strings ; if not equal r[7] = 1 ; push r[arg[2]]</span>
+ [<span style="color:#e6db74">&#39;print_reg&#39;</span>, <span style="color:#ae81ff">1</span>],
+ [<span style="color:#e6db74">&#39;mov&#39;</span>, <span style="color:#ae81ff">1</span>, <span style="color:#e6db74">&#39;Access denied!&#39;</span>],
+ [<span style="color:#e6db74">&#39;print_reg&#39;</span>, <span style="color:#ae81ff">1</span>],
+ [<span style="color:#e6db74">&#39;hlt&#39;</span>]])
 </code></pre></div><p>clearly it loads this huge string into r6 and then xors it with 135 and then subtract 15 from each charecter and then compares with our input so i quicly wrote a decrypt function</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">find_flag</span>():
 
-    b <span style="color:#f92672">=</span> <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">á×äÓâæíäàßåÉÛãåäÉÖÓÉäàÓÉÖÓåäÉÓÚÕæïèäßÙÚÉÛÓäàÙÔÉÓâæÉàÓÚÕÓÒÙæäàÉäàßåÉßåÉäàÓÉÚÓáÉ·Ôâ×ÚÕÓÔÉ³ÚÕæïèäßÙÚÉÅä×ÚÔ×æÔÉ×Úïá×ïåÉßÉÔÙÚäÉæÓ×ÜÜïÉà×âÓÉ×ÉÑÙÙÔÉâßÔÉÖãäÉßÉæÓ×ÜÜïÉÓÚÞÙïÉäàßåÉåÙÚÑÉßÉàÙèÓÉïÙãÉáßÜÜÉÓÚÞÙïÉßäÉ×åáÓÜÜ</span><span style="color:#ae81ff">\x97</span><span style="color:#e6db74">ÉïÙãäãÖÓ</span><span style="color:#ae81ff">\x9a</span><span style="color:#e6db74">ÕÙÛ</span><span style="color:#ae81ff">\x99</span><span style="color:#e6db74">á×äÕà©â«³£ï²ÕÔÈ·±â¨ë</span><span style="color:#e6db74">&#39;</span>
-    temp <span style="color:#f92672">=</span> <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">&#39;</span>
+    b <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;á×äÓâæíäàßåÉÛãåäÉÖÓÉäàÓÉÖÓåäÉÓÚÕæïèäßÙÚÉÛÓäàÙÔÉÓâæÉàÓÚÕÓÒÙæäàÉäàßåÉßåÉäàÓÉÚÓáÉ·Ôâ×ÚÕÓÔÉ³ÚÕæïèäßÙÚÉÅä×ÚÔ×æÔÉ×Úïá×ïåÉßÉÔÙÚäÉæÓ×ÜÜïÉà×âÓÉ×ÉÑÙÙÔÉâßÔÉÖãäÉßÉæÓ×ÜÜïÉÓÚÞÙïÉäàßåÉåÙÚÑÉßÉàÙèÓÉïÙãÉáßÜÜÉÓÚÞÙïÉßäÉ×åáÓÜÜ</span><span style="color:#ae81ff">\x97</span><span style="color:#e6db74">ÉïÙãäãÖÓ</span><span style="color:#ae81ff">\x9a</span><span style="color:#e6db74">ÕÙÛ</span><span style="color:#ae81ff">\x99</span><span style="color:#e6db74">á×äÕà©â«³£ï²ÕÔÈ·±â¨ë&#39;</span>
+    temp <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;&#39;</span>
     <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(len(b)):
-        temp <span style="color:#f92672">+</span><span style="color:#f92672">=</span> chr(ord(b[i]) <span style="color:#f92672">+</span> <span style="color:#ae81ff">15</span>)
+        temp <span style="color:#f92672">+=</span> chr(ord(b[i]) <span style="color:#f92672">+</span> <span style="color:#ae81ff">15</span>)
 
     a <span style="color:#f92672">=</span> temp
-    temp <span style="color:#f92672">=</span> <span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">&#34;</span>
+    temp <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;&#34;</span>
     <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(len(a)):
-        temp <span style="color:#f92672">+</span><span style="color:#f92672">=</span> chr(ord(a[i]) <span style="color:#f92672">^</span> <span style="color:#ae81ff">135</span>)
+        temp <span style="color:#f92672">+=</span> chr(ord(a[i]) <span style="color:#f92672">^</span> <span style="color:#ae81ff">135</span>)
 
     <span style="color:#66d9ef">print</span>(temp)
 </code></pre></div><p>and just after that i got the flag</p>
