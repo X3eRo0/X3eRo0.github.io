@@ -181,13 +181,13 @@ We know that x86 has a completely different set of registers and cpu for floats,
 
 
 <br>
-
-If we follow the disassembly, we see that our input (in rdi) is loaded in the st(0) floating point register.
-then fcos instruction is executed.
+</p>
+<p>If we follow the disassembly, we see that our input (in rdi) is loaded in the st(0) floating point register.
+then fcos instruction is executed.</p>
 
 
 <br>
-</p>
+
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-plaintext" data-lang="plaintext">FCOS:
     &gt; Calculates the approximate cosine value of st(0) and puts the result back in st(0).
     &gt; If the value is st(0) is outside the acceptable range (−2^63 to +2^63) a special flag (C2 flag) in the FPUStatusWord is set. This flag is the 10th bit in the FPUStatusWord.
@@ -205,17 +205,17 @@ Then <code>fstsw ax</code>  is executed.
      &gt; Store FPU status word in AX register after
        checking for pending unmasked floating-point
        exceptions.
-</code></pre></div><p>
+</code></pre></div>
 
 <br>
 
-So the binary shifts this FPUStatusWord right by 10 bits and checks if C2 flag is set. If it is set that means the input is out of valid range. 
+<p>So the binary shifts this FPUStatusWord right by 10 bits and checks if C2 flag is set. If it is set that means the input is out of valid range. 
 The check_flag() function checks if the input tword is in the valid range or not. if its not then it returns 0.
-other wise it again loads the input in the register stack, this time the value will be in st(1) as st(0) is already occupied. Finally <code>fucomi st, st(1)</code> is executed.
+other wise it again loads the input in the register stack, this time the value will be in st(1) as st(0) is already occupied. Finally <code>fucomi st, st(1)</code> is executed.</p>
 
 
 <br>
-</p>
+
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-plaintext" data-lang="plaintext">FUCOM:
    &gt; Compare ST(0) with ST(1).
 </code></pre></div><p>
@@ -226,17 +226,17 @@ So basically, the cosine of our input is calculated and then checked if its equa
 
 
 <br>
-
-<code>cos(input) == input ?</code>
+</p>
+<p><code>cos(input) == input ?</code></p>
 
 
 <br>
-</p>
+
 <hr>
 <h2 id="solving-the-equation">Solving The Equation</h2>
 <p>So the solution of this crackme boils down to this equation
-<code>cos(x) == x</code>
-
+<code>cos(x) == x</code></p>
+<p>
 
 <br>
 

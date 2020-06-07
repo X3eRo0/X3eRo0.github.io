@@ -27,7 +27,7 @@
       <pubDate>Mon, 18 May 2020 13:03:48 +0000</pubDate>
       
       <guid>https://x3ero0.tech/posts/hell86_from_ttlhacker/</guid>
-      <description>hljs.initHighlightingOnLoad(); Hell86   Author : ttlhacker Language : Assembler Upload : 8:03 PM 10/12/2018 Level : 3 Platform : Unix/Linux etc. Crackme : crackmes.one  Desc: - x86_64 linux binary (tested on debian 9 and ubuntu 18.04, should run on any distro). - Takes one command line argument and outputs &amp;#34;OK!&amp;#34; if it&amp;#39;s correct, &amp;#34;Wrong&amp;#34; if it&amp;#39;s not. - Partially written in C, actual verification routine is assembly.</description>
+      <description>hljs.initHighlightingOnLoad();Hell86   Author : ttlhacker Language : Assembler Upload : 8:03 PM 10/12/2018 Level : 3 Platform : Unix/Linux etc. Crackme : crackmes.one  Desc: - x86_64 linux binary (tested on debian 9 and ubuntu 18.04, should run on any distro).- Takes one command line argument and outputs &amp;#34;OK!&amp;#34; if it&amp;#39;s correct, &amp;#34;Wrong&amp;#34; if it&amp;#39;s not.- Partially written in C, actual verification routine is assembly.</description>
     </item>
     
     <item>

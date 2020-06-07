@@ -364,7 +364,7 @@ Each instruction has an 8 byte immediate value which lies just after the <code>U
 </div>
 
 <br>
-<p>As you can see <code>rsi</code> points on the stack or should i say the new stack. So this is the part which  i am not so sure about. I think whenever a signal is raised the <code>sigcontext</code> structure is pushed on the <code>altstack</code> and its this structure where <code>rsi</code> is pointing at. if we see the <code>sigcontext</code>
+<p>As you can see <code>rsi</code> points on the stack or should i say the new stack. So this is the part which  i am not so sure about. I think whenever a signal is raised the <code>sigcontext</code> structure is pushed on the <code>altstack</code> and its this structure where <code>rsi</code> is pointing at. if we see the <code>sigcontext</code> 
 struct.</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#75715e">/*
 </span><span style="color:#75715e"> * The 64-bit signal frame:
@@ -514,7 +514,7 @@ registers <span style="color:#f92672">=</span> {
 }
 
 
-bytecode <span style="color:#f92672">=</span> open(<span style="color:#e6db74">&#34;bytecode&#34;</span>, <span style="color:#e6db74">&#34;rb&#34;</span>)<span style="color:#f92672">.</span>read()<span style="color:#75715e">#[0x1190:0x1946]</span>
+bytecode <span style="color:#f92672">=</span> open(<span style="color:#e6db74">&#34;bytecode&#34;</span>, <span style="color:#e6db74">&#34;rb&#34;</span>)<span style="color:#f92672">.</span>read()<span style="color:#75715e">#[0x1190:0x1946]</span>
 
 <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">0</span>, len(bytecode), <span style="color:#ae81ff">0xE</span>):
     instruction <span style="color:#f92672">=</span> bytecode[i<span style="color:#f92672">+</span><span style="color:#ae81ff">2</span>:i<span style="color:#f92672">+</span><span style="color:#ae81ff">0xe</span>]
@@ -524,9 +524,9 @@ bytecode <span style="color:#f92672">=</span> open(<span style="color:#e6db74">&
     arg3   <span style="color:#f92672">=</span> ord(instruction[<span style="color:#ae81ff">11</span>])
 
     imm    <span style="color:#f92672">=</span> unpack(<span style="color:#e6db74">&#34;Q&#34;</span>, instruction[<span style="color:#ae81ff">0</span>: <span style="color:#ae81ff">8</span>])[<span style="color:#ae81ff">0</span>]
-    <span style="color:#75715e">#tmp = &#34;&#34;.join([(&#34;\\x%.2X&#34; % ord(x)) for x in instruction])</span>
+    <span style="color:#75715e">#tmp = &#34;&#34;.join([(&#34;\\x%.2X&#34; % ord(x)) for x in instruction])</span>
     dis <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;</span><span style="color:#e6db74">%.4i</span><span style="color:#e6db74">: [</span><span style="color:#e6db74">%.2i</span><span style="color:#e6db74">][ </span><span style="color:#e6db74">%.4x</span><span style="color:#e6db74"> ][ </span><span style="color:#e6db74">%.4x</span><span style="color:#e6db74"> ] &#34;</span> <span style="color:#f92672">%</span> (i, opcode, op_addrs[opcode], <span style="color:#ae81ff">0x1190</span> <span style="color:#f92672">+</span> i)
-    <span style="color:#75715e">#dis = &#34;%.4x: [%.4x] %s\t&#34; % (i, 0x1190 + i, tmp)</span>
+    <span style="color:#75715e">#dis = &#34;%.4x: [%.4x] %s\t&#34; % (i, 0x1190 + i, tmp)</span>
 
     <span style="color:#66d9ef">if</span>   opcode <span style="color:#f92672">==</span> <span style="color:#ae81ff">9</span>:
         <span style="color:#66d9ef">if</span> imm <span style="color:#f92672">&amp;</span> <span style="color:#ae81ff">0x555555550000</span>:
@@ -612,9 +612,9 @@ bytecode <span style="color:#f92672">=</span> open(<span style="color:#e6db74">&
             imm <span style="color:#f92672">=</span> imm <span style="color:#f92672">-</span> <span style="color:#ae81ff">0x555555554000</span>
         dis <span style="color:#f92672">+=</span> <span style="color:#e6db74">&#34;if </span><span style="color:#e6db74">%s</span><span style="color:#e6db74"> != 0; jmp 0x</span><span style="color:#e6db74">%.4x</span><span style="color:#e6db74">&#34;</span> <span style="color:#f92672">%</span> (registers[arg2], imm)
     <span style="color:#66d9ef">elif</span> opcode <span style="color:#f92672">==</span> <span style="color:#ae81ff">40</span>:
-        <span style="color:#66d9ef">if</span> imm <span style="color:#f92672">==</span> FREE: <span style="color:#75715e"># free</span>
+        <span style="color:#66d9ef">if</span> imm <span style="color:#f92672">==</span> FREE: <span style="color:#75715e"># free</span>
             dis <span style="color:#f92672">+=</span> <span style="color:#e6db74">&#34;call </span><span style="color:#e6db74">%s</span><span style="color:#e6db74">&#34;</span> <span style="color:#f92672">%</span> (<span style="color:#e6db74">&#34;free&#34;</span>)
-        <span style="color:#66d9ef">elif</span> imm <span style="color:#f92672">==</span> MALLOC: <span style="color:#75715e"># malloc</span>
+        <span style="color:#66d9ef">elif</span> imm <span style="color:#f92672">==</span> MALLOC: <span style="color:#75715e"># malloc</span>
             dis <span style="color:#f92672">+=</span> <span style="color:#e6db74">&#34;call </span><span style="color:#e6db74">%s</span><span style="color:#e6db74">&#34;</span> <span style="color:#f92672">%</span> (<span style="color:#e6db74">&#34;malloc&#34;</span>)
         <span style="color:#66d9ef">else</span>:
             <span style="color:#66d9ef">if</span> imm <span style="color:#f92672">&amp;</span> <span style="color:#ae81ff">0x555555550000</span>:
@@ -806,7 +806,7 @@ bytecode <span style="color:#f92672">=</span> open(<span style="color:#e6db74">&
 <li>if argv[1][5] != &ldquo;x&rdquo;; return</li>
 <li>if len(argv[1][5:-1]) != 0x1e; return</li>
 </ol>
-<p>Now this is where it gets interesting. it calls <code>malloc()</code> to create an array of size 0x1e
+<p>Now this is where it gets interesting. it calls <code>malloc()</code> to create an array of size 0x1e 
 and then it loops through our input.
 For each character in our input it calculates the index of the character in a global string at 0x20A0 &ndash; <code>abdfgehikmanoqrstucvwlxyz-01h23p456u78j9-_.+</code> and then stores that index into the malloc&rsquo;d array.</p>
 <p>As of Now our flag should look like this
@@ -882,7 +882,7 @@ i <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>
     enc_f<span style="color:#f92672">.</span>append(a)
     i <span style="color:#f92672">+=</span> <span style="color:#ae81ff">1</span>
 
-<span style="color:#75715e">#print len(enc_f), len(enc)</span>
+<span style="color:#75715e">#print len(enc_f), len(enc)</span>
 <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">0x1d</span>):
     s<span style="color:#f92672">.</span>add(enc_f[i] <span style="color:#f92672">==</span> enc[i])
 
