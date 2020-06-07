@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+	<meta charset="utf-8">
+	<meta name="description" content='X3eRo0&#39;s Blog about Reverse Engineering'>
+	<meta name="keywords" content='X3eRo0, Reverse, Reverse Engineering, Crackmes, blog'>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="generator" content="Hugo 0.68.3" />
+	<link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="/css/custom.css">
+	<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.css" integrity="sha256-46qynGAkLSFpVbEBog43gvNhfrOj+BmwXdxFgVK/Kvc=" crossorigin=anonymous>
+	<link rel="stylesheet" type="text/css"  href="/css/ui.css">
+	<title>Float Writeup</title>
+	<link rel="shortcut icon" type="image/x-icon" href="/img/favicon.ico">
+	<nav class="navbar text-center sticky-top bg-white mt-2 mb-1">
+		<a href='https://x3ero0.tech/'><span class="btn btn-sm btn-outline-primary">Home</span></a>
+		<a href="/crackmes"><span class="btn btn-sm btn-outline-secondary">Crackmes</span></a>
+		<a href="/posts"><span class="btn btn-sm btn-outline-success">Blog</span></a>
+		<a href="/tags"><span class="btn btn-sm btn-outline-warning">Tags</span></a>
+	</nav>
+</head>
+<body>
+      <div id="content">
+
+
+	<section class="container text-justified mt-3">
+	  <h2 class="text-center mb-4">Float Writeup</h2>
+	    <div class="text-monospace">
+			
+
+<link rel="stylesheet" href="/css/styles/ir-black.css">
+<script src="/js/highlight.pack.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
+<h3 id="fl04t">fl04t</h3>
+<hr>
+<ul>
+<li>Author : <a href="https://x3ero0.tech/crackmes/">X3eRo0</a></li>
+<li>Language : Assembler</li>
+<li>Upload : Fri, 29 May 2020 05:09:29</li>
+<li>Difficulty: 3</li>
+<li>Platform : Unix/Linux etc.</li>
+<li>Crackme : <a href="https://x3ero0.tech/crackmes/fl04t/">fl04t</a></li>
+</ul>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-plaintext" data-lang="plaintext">Desc: 
+
+   - Find the correct password which prints [- PASSWORD ACCEPTED -]
+   - Written in x86_64 asm
+   - Don&#39;t patch the binary, of course - find the correct input.
+
+  SHA256: c5d23382b4fe9ed760a09d8346311d3bbbbbaf48311906912bb52fc77d903786  fl04t
+</code></pre></div><hr>
+
+
+<br>
+
+<p>Hey there!
+Another day, another crackme. This time we have a fl04t crackme. Lets start by doing the initial recon.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-plaintext" data-lang="plaintext">--------------------------------------------------------------------------------------------------------------------------------------
+/c/Users/X3eRo0/Desktop/asm/fl04t_x3ero0 » ls -las                                                                       x3ero0@x3ero0
+total 16
+ 0 drwxrwx--- 1 root vboxsf    0 Jun  7 05:56 .
+ 4 drwxrwx--- 1 root vboxsf 4096 Jun  7 05:56 ..
+12 -rwxrwx--- 1 root vboxsf 8480 Jun  7 05:55 fl04t
+--------------------------------------------------------------------------------------------------------------------------------------
+/c/Users/X3eRo0/Desktop/asm/fl04t_x3ero0 »
+</code></pre></div><p>
+
+<br>
+
+As you can see the binary just around 2KB.
+
+
+<br>
+</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-plaintext" data-lang="plaintext">--------------------------------------------------------------------------------------------------------------------------------------
+/c/Users/X3eRo0/Desktop/asm/fl04t_x3ero0 » ./fl04t                                                                      x3ero0@x3ero0
++---------=[ X3eRo0 ]=---------+
+[+] input length must be 20
+:= float?
+:= let_me_in___let_me_in
+:= AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+:= := := pls
+:= wtf
+:= 01234567890123456789
+[- SEE YOU LATER -]
+</code></pre></div><hr>
+<p>
+
+<br>
+
+Seems like it only checks the password if the length is 0x14 Bytes.</p>
+
+
+<br>
+
+<p>Lets open it in Ghidra, already analysed the code and labeled them accordingly.</p>
+
+
+
+<div class="center">
+  <img
+    class="responsive"
+    src="https://x3ero0.tech/img/fl04t/decompiled.png"
+    alt="ghidra decompiled code"
+    decoding="async"
+  />
+</div>
+
+
+<br>
+
+<p>Looking at the main() function, we see that our input is 20 Bytes and they are divided in 2 blocks of 10 bytes each. The checking is done like this.
+
+
+<br>
+</p>
+<ol>
+<li>xor first 10 bytes of input with with first 10 bytes of encrypted flag.</li>
+<li>result of check_flag(first_half_of_input); is stored in a global variable isFlagValid;</li>
+<li>next 10 bytes of input are then xored with the next 10 bytes of encrypted flag</li>
+<li>result of check_flag(second_half_of_input); is binary anded (&amp;) with the isFlagValid.</li>
+<li>if isFlagValid is not equal to 1 then print &ldquo;SEE YOU LATER&rdquo;</li>
+<li>otherwise print &ldquo;PASSWORD ACCEPTED&rdquo;</li>
+</ol>
+<p>The goal is clear the correct flag will result in a sequence of bytes that when passed to the check_flag() returns 1.</p>
+<hr>
+<h2 id="check_flaglong-double--input">Check_flag(long double * input)</h2>
+<p>
+
+<br>
+
+Lets look at check_flag()
+
+
+
+<div class="center">
+  <img
+    class="responsive"
+    src="https://x3ero0.tech/img/fl04t/check_flag.png"
+    alt="check_flag() decompiled code"
+    decoding="async"
+  />
+</div>
+
+
+<br>
+</p>
+<p>Ghidra recognized the argument to the function as a pointer to float10. If we see the assembly its actually 
+tword (10 Bytes) or in C a long double.
+
+
+<br>
+</p>
+<pre><code class="language-x86" data-lang="x86">FLD        tword ptr [input]
+</code></pre><p>
+
+<br>
+
+We know that x86 has a completely different set of registers and cpu for floats, i,e. FPU.
+
+
+<br>
+</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-plaintext" data-lang="plaintext">FLD:
+    &gt; Loads the given tword in st(0) floating point register.
+</code></pre></div><p>
+
+<br>
+
+
+
+
+<div class="center">
+  <img
+    class="responsive"
+    src="https://x3ero0.tech/img/fl04t/check_flag_disassembly.png"
+    alt="disassembly"
+    decoding="async"
+  />
+</div>
+
+
+<br>
+
+If we follow the disassembly, we see that our input (in rdi) is loaded in the st(0) floating point register.
+then fcos instruction is executed.
+
+
+<br>
+</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-plaintext" data-lang="plaintext">FCOS:
+    &gt; Calculates the approximate cosine value of st(0) and puts the result back in st(0).
+    &gt; If the value is st(0) is outside the acceptable range (−2^63 to +2^63) a special flag (C2 flag) in the FPUStatusWord is set. This flag is the 10th bit in the FPUStatusWord.
+    &gt; In case C2 flag is set the st(0) remains unchanged.
+</code></pre></div><p>
+
+<br>
+
+Then <code>fstsw ax</code>  is executed. 
+
+
+<br>
+</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-plaintext" data-lang="plaintext">FSTSW ax:
+     &gt; Store FPU status word in AX register after
+       checking for pending unmasked floating-point
+       exceptions.
+</code></pre></div><p>
+
+<br>
+
+So the binary shifts this FPUStatusWord right by 10 bits and checks if C2 flag is set. If it is set that means the input is out of valid range. 
+The check_flag() function checks if the input tword is in the valid range or not. if its not then it returns 0.
+other wise it again loads the input in the register stack, this time the value will be in st(1) as st(0) is already occupied. Finally <code>fucomi st, st(1)</code> is executed.
+
+
+<br>
+</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-plaintext" data-lang="plaintext">FUCOM:
+   &gt; Compare ST(0) with ST(1).
+</code></pre></div><p>
+
+<br>
+
+So basically, the cosine of our input is calculated and then checked if its equal to our input or not.
+
+
+<br>
+
+<code>cos(input) == input ?</code>
+
+
+<br>
+</p>
+<hr>
+<h2 id="solving-the-equation">Solving The Equation</h2>
+<p>So the solution of this crackme boils down to this equation
+<code>cos(x) == x</code>
+
+
+<br>
+
+
+
+<br>
+
+
+
+
+<div class="center">
+  <img
+    class="responsive"
+    src="https://x3ero0.tech/img/fl04t/graph.png"
+    alt="desmos graph"
+    decoding="async"
+  />
+</div>
+
+
+<br>
+</p>
+<p>Desmos graph tells us a not so precise solution of the equation rounded upto 3 decimal places, but in order to get the correct long double so that fcos(input) == input we need a precise solution. To find the solution i made a simple C program to find the solution using binary search or bisection. The concept is that we keep on dividing the search space to half until we find the solution. You can find a lot of resources on this technique online.</p>
+
+
+<br>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;stdio.h&gt;</span><span style="color:#75715e">
+</span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;math.h&gt;</span><span style="color:#75715e">
+</span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;string.h&gt;</span><span style="color:#75715e">
+</span><span style="color:#75715e"></span>
+<span style="color:#66d9ef">void</span> <span style="color:#a6e22e">print_mem</span>(<span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span>mem, <span style="color:#66d9ef">int</span> len){
+
+    <span style="color:#66d9ef">for</span> (<span style="color:#66d9ef">int</span> i <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>; i <span style="color:#f92672">&lt;</span> len; i<span style="color:#f92672">++</span>){
+        printf(<span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\\</span><span style="color:#e6db74">x%.2X&#34;</span>, <span style="color:#f92672">*</span>(<span style="color:#66d9ef">unsigned</span> <span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span>)(mem <span style="color:#f92672">+</span> i));
+    }
+    printf(<span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>);
+
+}
+
+<span style="color:#66d9ef">int</span> <span style="color:#a6e22e">main</span>(){
+
+    <span style="color:#66d9ef">long</span> <span style="color:#66d9ef">double</span> right <span style="color:#f92672">=</span> <span style="color:#ae81ff">1.5707963267948966</span>;
+    <span style="color:#66d9ef">long</span> <span style="color:#66d9ef">double</span> left  <span style="color:#f92672">=</span> <span style="color:#ae81ff">0.00000</span>;
+    <span style="color:#66d9ef">long</span> <span style="color:#66d9ef">double</span> midd  <span style="color:#f92672">=</span> (left <span style="color:#f92672">+</span> right)<span style="color:#f92672">/</span> <span style="color:#ae81ff">2</span>;
+    <span style="color:#66d9ef">long</span> <span style="color:#66d9ef">double</span> ress  <span style="color:#f92672">=</span> cosl(midd);
+    <span style="color:#66d9ef">int</span> i <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>;
+    printf(<span style="color:#e6db74">&#34;midd: %Lf</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>, midd);
+    printf(<span style="color:#e6db74">&#34;numm: %Lf</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>, number);
+    <span style="color:#66d9ef">while</span>(memcmp((<span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span>)<span style="color:#f92672">&amp;</span>ress, (<span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span>)<span style="color:#f92672">&amp;</span>midd, <span style="color:#ae81ff">10</span>) <span style="color:#f92672">!=</span> <span style="color:#ae81ff">0</span>){
+
+        <span style="color:#66d9ef">if</span>(midd <span style="color:#f92672">&gt;</span> ress){
+            right  <span style="color:#f92672">=</span> midd;
+        }
+        <span style="color:#66d9ef">if</span>(midd <span style="color:#f92672">&lt;</span> ress){
+            left <span style="color:#f92672">=</span> midd;
+        }
+        midd <span style="color:#f92672">=</span> (left <span style="color:#f92672">+</span> right) <span style="color:#f92672">/</span> <span style="color:#ae81ff">2</span>;
+        ress <span style="color:#f92672">=</span> cosl(midd);
+
+    }
+
+    printf(<span style="color:#e6db74">&#34;midd: %Lf</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>, midd);
+    print_mem((<span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span>)<span style="color:#f92672">&amp;</span>midd, <span style="color:#ae81ff">10</span>);
+    printf(<span style="color:#e6db74">&#34;ress: %Lf</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>, ress);
+    print_mem((<span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span>)<span style="color:#f92672">&amp;</span>ress, <span style="color:#ae81ff">10</span>);
+
+}
+</code></pre></div><p>
+
+<br>
+
+This gives the exact 10 Byte value of the solution. 
+
+
+<br>
+</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#f92672">---------------------------------------------------------------------------------------------</span>
+<span style="color:#f92672">/</span>c<span style="color:#f92672">/</span>Users<span style="color:#f92672">/</span>X3eRo0<span style="color:#f92672">/</span>Desktop<span style="color:#f92672">/</span><span style="color:#66d9ef">asm</span> <span style="color:#960050;background-color:#1e0010">»</span> .<span style="color:#f92672">/</span>a.out                                          x3ero0<span style="color:#960050;background-color:#1e0010">@</span>x3ero0 
+midd: <span style="color:#ae81ff">0.739085</span>
+<span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\xCB\x6D\x71\x1E\xEC\xAE\x34\xBD\xFE\x3F</span><span style="color:#e6db74">&#34;</span>
+ress: <span style="color:#ae81ff">0.739085</span>
+<span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\xCB\x6D\x71\x1E\xEC\xAE\x34\xBD\xFE\x3F</span><span style="color:#e6db74">&#34;</span>
+<span style="color:#f92672">---------------------------------------------------------------------------------------------</span>
+<span style="color:#f92672">/</span>c<span style="color:#f92672">/</span>Users<span style="color:#f92672">/</span>X3eRo0<span style="color:#f92672">/</span>Desktop<span style="color:#f92672">/</span><span style="color:#66d9ef">asm</span> <span style="color:#960050;background-color:#1e0010">»</span>
+</code></pre></div><p>
+
+<br>
+
+The Decimal values are useless to us because 
+
+
+<br>
+</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-plaintext" data-lang="plaintext">float lesson number 06: 
+            never ever use decimal representation for floats
+            if you need a precise float value :) that&#39;s because
+            floats are binary; and in fractional numbers decimals
+            and binary numbers differ in what can be expressed 
+            e.g number 0.1 &lt;-- perfectly sane in decimal is not
+            expressable in binary it requires infinite number of 
+            digits.
+</code></pre></div>
+
+<br>
+
+<p>Now that we know what is the correct value we can xor these bytes with the encrypted bytes in the binary
+to get the flag.</p>
+
+
+<br>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">solution  <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\xCB\x6D\x71\x1E\xEC\xAE\x34\xBD\xFE\x3F</span><span style="color:#e6db74">&#34;</span>
+enc_bytes <span style="color:#f92672">=</span> [
+    <span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\xAD\x1F\x41\x73\xB3\xC8\x58\x8D\xCA\x4B</span><span style="color:#e6db74">&#34;</span>,
+    <span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\xB8\x32\x40\x73\x9C\x9E\x46\xC9\xA1\x15</span><span style="color:#e6db74">&#34;</span>
+]
+
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">xor</span>(data, key):
+    res <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;&#34;</span>
+    <span style="color:#66d9ef">if</span> len(data) <span style="color:#f92672">!=</span> len(key):
+        <span style="color:#66d9ef">return</span> res
+    <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">10</span>):
+        res <span style="color:#f92672">+=</span> chr(ord(data[i]) <span style="color:#f92672">^</span> ord(key[i]))
+    <span style="color:#66d9ef">return</span> res
+
+flag <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;&#34;</span>
+
+<span style="color:#66d9ef">for</span> enc_byte <span style="color:#f92672">in</span> enc_bytes:
+    flag <span style="color:#f92672">+=</span> xor(enc_byte, solution)
+
+<span style="color:#66d9ef">print</span>(flag)
+</code></pre></div><p>
+
+<br>
+
+This gives us the flag <code>fr0m_fl04ts_1mp0rt_*</code></p>
+
+		</div>
+	</section>
+<div id="disqus_thread" class="container"></div>
+<script>
+	(function() { 
+		var d = document, s = d.createElement('script');
+		s.src = 'https://x3ero0-tech.disqus.com/embed.js';
+		s.setAttribute('data-timestamp', +new Date());
+		(d.head || d.body).appendChild(s);
+	})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+                            
+
+
+      </div>
+  </body><footer>
+  <div class="container-fluid bg-dark text-white text-monospace text-center mt-4">
+    <small style="color:#ffffff">
+    	<b>-=[ </b>
+    	<a href="https://youtube.com/pulkitsinghaniapulkittech" style="color:#e6ffff">YouTube</a>
+    	<a href="https://www.linkedin.com/in/pulkit-singh-singaria-500a53166/" style="color:#e6ffff">LinkedIn</a>
+    	<a href="https://twitter.com/X3eRo0" style="color:#e6ffff">Twitter</a>
+    	<a href="https://ctftime.org/user/43759" style="color:#e6ffff">CTFTime</a>
+    	<b> ]=-</b>
+    </small>
+  </div>
+</footer></html>
