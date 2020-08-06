@@ -86,7 +86,7 @@ so it was&rsquo;nt super hard or anything just some basic anti-debugging tricks 
 <br>
 
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-JS" data-lang="JS">...
-<span style="color:#f92672">&lt;</span><span style="color:#a6e22e">script</span> <span style="color:#a6e22e">src</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;crackme.js&#34;</span><span style="color:#f92672">&gt;&lt;</span><span style="color:#960050;background-color:#1e0010">/script&gt;</span>
+<span style="color:#f92672">&lt;</span><span style="color:#a6e22e">script</span> <span style="color:#a6e22e">src</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;crackme.js&#34;</span><span style="color:#f92672">&gt;&lt;</span><span style="color:#960050;background-color:#1e0010">/script&gt;</span>
 ...
 </code></pre></div>
 
@@ -122,7 +122,7 @@ so it was&rsquo;nt super hard or anything just some basic anti-debugging tricks 
 <br>
 
 <p>I renamed the parameter to the check function as password because the parameter is an array so it has to be the password array.</p>
-<p>So lets look at some of the checks - 
+<p>So lets look at some of the checks -
 
 
 <br>
@@ -171,18 +171,18 @@ so it was&rsquo;nt super hard or anything just some basic anti-debugging tricks 
 
 <br>
 
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">from</span> z3 <span style="color:#f92672">import</span> <span style="color:#f92672">*</span> <span style="color:#75715e"># import everything from z3</span>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">from</span> z3 <span style="color:#f92672">import</span> <span style="color:#f92672">*</span> <span style="color:#75715e"># import everything from z3</span>
 
 
-<span style="color:#75715e"># this inp list is the list of &#39;password&#39; vectors</span>
-<span style="color:#75715e"># basically i have defined each character of password</span>
-<span style="color:#75715e"># as a vector.</span>
+<span style="color:#75715e"># this inp list is the list of &#39;password&#39; vectors</span>
+<span style="color:#75715e"># basically i have defined each character of password</span>
+<span style="color:#75715e"># as a vector.</span>
 inp <span style="color:#f92672">=</span> [BitVec(<span style="color:#e6db74">&#34;inp[</span><span style="color:#e6db74">%d</span><span style="color:#e6db74">]&#34;</span> <span style="color:#f92672">%</span> i, <span style="color:#ae81ff">32</span>) <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0x25</span>)]
 
-<span style="color:#75715e"># initialize the z3 solver</span>
+<span style="color:#75715e"># initialize the z3 solver</span>
 z3_solver <span style="color:#f92672">=</span> Solver()
 
-flag <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;&#34;</span> <span style="color:#75715e"># the string where we will get the flag</span>
+flag <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;&#34;</span> <span style="color:#75715e"># the string where we will get the flag</span>
 </code></pre></div>
 
 <br>
@@ -224,17 +224,17 @@ if the set of equations is satisfiable, then z3_solver.check() will return sat, 
     sol <span style="color:#f92672">=</span> z3_solver<span style="color:#f92672">.</span>model()
     <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">0x25</span>):
         <span style="color:#66d9ef">try</span>:
-            <span style="color:#75715e">#print(str(hex(i)) + &#34;: &#34; + str(sol[inp[i]]))</span>
+            <span style="color:#75715e">#print(str(hex(i)) + &#34;: &#34; + str(sol[inp[i]]))</span>
             flag <span style="color:#f92672">+=</span> chr(int(str(sol[inp[i]])))
         <span style="color:#66d9ef">except</span>:
             <span style="color:#66d9ef">pass</span>
-            <span style="color:#75715e">#print(str(hex(i)) + &#34;: &#34; + str(sol[inp[i]]))</span>
+            <span style="color:#75715e">#print(str(hex(i)) + &#34;: &#34; + str(sol[inp[i]]))</span>
 </code></pre></div>
 
 <br>
 
 <p>The full solver script is here.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e">#!/usr/bin/python</span>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e">#!/usr/bin/python</span>
 
 <span style="color:#f92672">from</span> z3 <span style="color:#f92672">import</span> <span style="color:#f92672">*</span>
 
@@ -243,7 +243,7 @@ inp <span style="color:#f92672">=</span> [BitVec(<span style="color:#e6db74">&#3
 z3_solver <span style="color:#f92672">=</span> Solver()
 flag <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;&#34;</span>
 
-<span style="color:#75715e"># inp</span>
+<span style="color:#75715e"># inp</span>
 <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">0</span>,len(inp)):
 
 	z3_solver<span style="color:#f92672">.</span>add(inp[<span style="color:#ae81ff">14</span>] <span style="color:#f92672">==</span> <span style="color:#ae81ff">95</span>)
