@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+	<meta charset="utf-8">
+	<meta name="description" content='X3eRo0&#39;s Blog about Reverse Engineering'>
+	<meta name="keywords" content='X3eRo0, Reverse, Reverse Engineering, Crackmes, blog'>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="generator" content="Hugo 0.68.3" />
+	<link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="/css/custom.css">
+	<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.css" integrity="sha256-46qynGAkLSFpVbEBog43gvNhfrOj+BmwXdxFgVK/Kvc=" crossorigin=anonymous>
+	<link rel="stylesheet" type="text/css"  href="/css/ui.css">
+	<title>Real_world_crackme_writeup</title>
+	<link rel="shortcut icon" type="image/x-icon" href="/img/favicon.ico">
+	<nav class="navbar text-center sticky-top bg-white mt-2 mb-1">
+		<a href='https://x3ero0.tech/'><span class="btn btn-sm btn-outline-primary">Home</span></a>
+		<a href="/crackmes"><span class="btn btn-sm btn-outline-secondary">Crackmes</span></a>
+		<a href="/posts"><span class="btn btn-sm btn-outline-success">Blog</span></a>
+		<a href="/tags"><span class="btn btn-sm btn-outline-warning">Tags</span></a>
+	</nav>
+</head>
+<body>
+      <div id="content">
+
+
+	<section class="container text-justified mt-3">
+	  <h2 class="text-center mb-4">Real_world_crackme_writeup</h2>
+	    <div class="text-monospace">
+			
+
+<link rel="stylesheet" href="/css/styles/ir-black.css">
+<script src="/js/highlight.pack.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
+<h3 id="web-crackme">WEB Crackme</h3>
+<hr>
+<ul>
+<li>Author : <a href="https://x3ero0.tech/crackmes/">X3eRo0</a></li>
+<li>Language : JS</li>
+<li>Upload : Fri, 29 May 2020 05:09:29</li>
+<li>Difficulty: 5 (this is relative lol)</li>
+<li>Platform : Unix/Linux etc.</li>
+<li>Crackme : <a href="https://x3ero0.tech/crackmes/real_web_cr4kme/">WEB Crackme</a></li>
+</ul>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-plaintext" data-lang="plaintext">Desc: 
+
+    - find the correct password for the crackme to display &#34;Correct Password&#34; message.
+    - your goal is not to make the app display &#34;Correct Password&#34; but to find the correct password which does that for you.
+    - bruteforcing wont help but you can do whatever you want.
+    - this challenge is not supposed to be hosted, please do not deploy     this in the real world this is only for purpose of this challenge.
+    - flag format ritsCTF{&lt;---flag-here---&gt;}.
+    - Good Luck.
+
+</code></pre></div><hr>
+
+
+<br>
+
+<p>Hey there!
+This week&rsquo;s crackme from <a href="https://twitter.com/f5_experts">f5-experts</a> was from me. So here i am with another shitty writeup.</p>
+<p>This was one of the less solved WEB Crackme, yes web crackmes do exists.
+so it was&rsquo;nt super hard or anything just some basic anti-debugging tricks and obfuscated js. the challenge was to get the script in a somewhat readable form and understand the check function.</p>
+<p>The crackme looks like this when loaded in browser.</p>
+
+
+<br>
+
+
+
+
+<div class="center">
+  <img
+    class="responsive"
+    src="https://x3ero0.tech/img/web_crackme/crackme.PNG"
+    alt="crackme"
+    decoding="async"
+  />
+</div>
+
+
+<br>
+
+<p>You can enter your password, there is not input box. The crackme gets the keystrokes directly.</p>
+<p>if you check the source code for crackme.html, you will see that all the logic is in crackme.js</p>
+
+
+<br>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-JS" data-lang="JS">...
+<span style="color:#f92672">&lt;</span><span style="color:#a6e22e">script</span> <span style="color:#a6e22e">src</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;crackme.js&#34;</span><span style="color:#f92672">&gt;&lt;</span><span style="color:#960050;background-color:#1e0010">/script&gt;</span>
+...
+
+
+<span style="color:#a6e22e"></span><span style="color:#e6db74">```
+</span><span style="color:#e6db74">
+</span><span style="color:#e6db74">But if you look into crackme.js you will find an 
+</span><span style="color:#e6db74">
+</span><span style="color:#e6db74">
+
+<br>
+
+</span><span style="color:#e6db74">```</span><span style="color:#a6e22e">JS</span>
+eval(<span style="color:#a6e22e">atob</span>(<span style="color:#e6db74">&#39;....&#39;</span>))
+</code></pre></div>
+
+<br>
+
+<p>After get the base64 decoded js we see that its heavily obfuscated, but function names are still preserved.</p>
+<p>At this point you can try to load the script in browser and do dynamic analysis but you will end up crashing your browser. The script detects if its running in debugger and it will start an infinite loop.</p>
+<p>you can use the anti-anti-debugging script and this script actually works.</p>
+
+
+<br>
+
+<p>Now we can finally take a look at the check function. Looking at the if conditions you can see that you will use z3 here, because the checks are linear equations here, if your password&rsquo;s characters satisfies these checks then it will print Correct Password.</p>
+
+
+<br>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-JS" data-lang="JS">...
+<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">check</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">function</span> (<span style="color:#a6e22e">password</span>) {
+...
+</code></pre></div>
+
+<br>
+
+<p>I renamed the parameter to the check function as password because the parameter is an array so it has to be the password array.</p>
+<p>So lets look at some of the checks - 
+
+
+<br>
+</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-JS" data-lang="JS"><span style="color:#66d9ef">if</span> (<span style="color:#a6e22e">password</span>[<span style="color:#ae81ff">0x8</span>] <span style="color:#f92672">==</span> <span style="color:#a6e22e">password</span>[<span style="color:#ae81ff">0x23</span>]) {
+    <span style="color:#66d9ef">if</span> (<span style="color:#a6e22e">password</span>[<span style="color:#ae81ff">0x9</span>] <span style="color:#f92672">!=</span> <span style="color:#a6e22e">password</span>[<span style="color:#ae81ff">0x22</span>]) {
+        <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">False</span>;
+    }
+    <span style="color:#66d9ef">if</span> (<span style="color:#a6e22e">password</span>[<span style="color:#ae81ff">0x9</span>] <span style="color:#f92672">!=</span> <span style="color:#e6db74">&#39;-&#39;</span>) {
+        <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">False</span>;
+    }
+    <span style="color:#66d9ef">if</span> (<span style="color:#a6e22e">password</span>[<span style="color:#ae81ff">0x22</span>] <span style="color:#f92672">!=</span> <span style="color:#a6e22e">password</span>[<span style="color:#ae81ff">0x23</span>]) {
+        <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">False</span>;
+    }
+    <span style="color:#66d9ef">var</span> <span style="color:#a6e22e">_0x873b25</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">password</span>[<span style="color:#ae81ff">0x22</span>].<span style="color:#a6e22e">charCodeAt</span>();
+    <span style="color:#66d9ef">if</span> (<span style="color:#a6e22e">_0x873b25</span> <span style="color:#f92672">%</span> <span style="color:#ae81ff">0x9</span> <span style="color:#f92672">!=</span> <span style="color:#ae81ff">0x0</span>) {
+        <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">False</span>;
+    }
+    <span style="color:#66d9ef">if</span> (<span style="color:#a6e22e">_0x873b25</span> <span style="color:#f92672">%</span> <span style="color:#ae81ff">0x5</span> <span style="color:#f92672">!=</span> <span style="color:#ae81ff">0x0</span>) {
+        <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">False</span>;
+    }
+    <span style="color:#66d9ef">if</span> (<span style="color:#a6e22e">_0x873b25</span> <span style="color:#f92672">%</span> <span style="color:#ae81ff">0x28</span> <span style="color:#f92672">!=</span> <span style="color:#ae81ff">0x5</span>) {
+        <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">False</span>;
+    }
+} <span style="color:#66d9ef">else</span> {
+    <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">False</span>;
+}
+</code></pre></div>
+
+<br>
+
+<p>In this check you can see it will fail if password[0x8] does&rsquo;nt match with password[0x23], if they do match however, there are some more checks. So you can see its super easy to build a solver script for it.</p>
+<p>if you are not familiar with z3, i will give you a breif introduction to it. We will use the python z3-solver to get the flag. BUT WHAT IS z3
+
+
+<br>
+</p>
+<h2 id="z3">z3</h2>
+
+
+<br>
+
+<p>Z3 is a POWERFULL Theorem Prover, it is an Efficient SMT-Solver library build by Microsoft. So basically z3 is able to solve math equations for us, its super helpfull when we encounter challenges like this where our little brain can&rsquo;t solve equations, we use z3 when the equations are either very complex to solve or if they are large in number.</p>
+<p>To get started we will initialize the z3 vectors. These vectors are z3 types that will be used to make equations.</p>
+
+
+<br>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">from</span> z3 <span style="color:#f92672">import</span> <span style="color:#f92672">*</span> <span style="color:#75715e"># import everything from z3</span>
+
+
+<span style="color:#75715e"># this inp list is the list of &#39;password&#39; vectors</span>
+<span style="color:#75715e"># basically i have defined each character of password</span>
+<span style="color:#75715e"># as a vector.</span>
+inp <span style="color:#f92672">=</span> [BitVec(<span style="color:#e6db74">&#34;inp[</span><span style="color:#e6db74">%d</span><span style="color:#e6db74">]&#34;</span> <span style="color:#f92672">%</span> i, <span style="color:#ae81ff">32</span>) <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0x25</span>)]
+
+<span style="color:#75715e"># initialize the z3 solver</span>
+z3_solver <span style="color:#f92672">=</span> Solver()
+
+flag <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;&#34;</span> <span style="color:#75715e"># the string where we will get the flag</span>
+</code></pre></div>
+
+<br>
+
+<p>So you have initialized z3, all you have to do now is express the check function in form of equations and give those equations to z3.</p>
+<p>For example this is one of the checks in the check function.
+
+
+<br>
+</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-JS" data-lang="JS"><span style="color:#66d9ef">if</span> (<span style="color:#a6e22e">password</span>[<span style="color:#ae81ff">0x9</span>] <span style="color:#f92672">!=</span> <span style="color:#e6db74">&#39;-&#39;</span>) {
+    <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">False</span>;
+}
+<span style="color:#66d9ef">if</span> (<span style="color:#a6e22e">password</span>[<span style="color:#ae81ff">0x22</span>] <span style="color:#f92672">!=</span> <span style="color:#a6e22e">password</span>[<span style="color:#ae81ff">0x23</span>]) {
+    <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">False</span>;
+}
+</code></pre></div>
+
+<br>
+
+<p>You can translate this checks into z3 equations like this.</p>
+
+
+<br>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">	z3_solver<span style="color:#f92672">.</span>add(inp[<span style="color:#ae81ff">0x9</span>] <span style="color:#f92672">==</span> <span style="color:#ae81ff">45</span>)
+	z3_solver<span style="color:#f92672">.</span>add(inp[<span style="color:#ae81ff">0x22</span>] <span style="color:#f92672">==</span> inp[<span style="color:#ae81ff">0x23</span>])
+</code></pre></div>
+
+<br>
+
+<p>After you have added all the equations to z3, z3 will now solve this equations and it will create a model for those equations.
+if the set of equations is satisfiable, then z3_solver.check() will return sat, otherwise unsat. If it returns sat you can ask z3 to give you the model.</p>
+
+
+<br>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">if</span> z3_solver<span style="color:#f92672">.</span>check() <span style="color:#f92672">==</span> sat:
+    sol <span style="color:#f92672">=</span> z3_solver<span style="color:#f92672">.</span>model()
+    <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">0x25</span>):
+        <span style="color:#66d9ef">try</span>:
+            <span style="color:#75715e">#print(str(hex(i)) + &#34;: &#34; + str(sol[inp[i]]))</span>
+            flag <span style="color:#f92672">+=</span> chr(int(str(sol[inp[i]])))
+        <span style="color:#66d9ef">except</span>:
+            <span style="color:#66d9ef">pass</span>
+            <span style="color:#75715e">#print(str(hex(i)) + &#34;: &#34; + str(sol[inp[i]]))</span>
+</code></pre></div>
+
+<br>
+
+<p>The full solver script is here.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e">#!/usr/bin/python</span>
+
+<span style="color:#f92672">from</span> z3 <span style="color:#f92672">import</span> <span style="color:#f92672">*</span>
+
+inp <span style="color:#f92672">=</span> [BitVec(<span style="color:#e6db74">&#34;inp[</span><span style="color:#e6db74">%d</span><span style="color:#e6db74">]&#34;</span> <span style="color:#f92672">%</span> i,<span style="color:#ae81ff">32</span>)<span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">0</span>,<span style="color:#ae81ff">0x25</span>)]
+
+z3_solver <span style="color:#f92672">=</span> Solver()
+flag <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;&#34;</span>
+
+<span style="color:#75715e"># inp</span>
+<span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">0</span>,len(inp)):
+
+	z3_solver<span style="color:#f92672">.</span>add(inp[<span style="color:#ae81ff">14</span>] <span style="color:#f92672">==</span> <span style="color:#ae81ff">95</span>)
+	z3_solver<span style="color:#f92672">.</span>add(inp[<span style="color:#ae81ff">0x24</span>] <span style="color:#f92672">-</span> inp[<span style="color:#ae81ff">0x7</span>] <span style="color:#f92672">==</span> <span style="color:#ae81ff">2</span>)
+	z3_solver<span style="color:#f92672">.</span>add(inp[<span style="color:#ae81ff">0x24</span>] <span style="color:#f92672">==</span> <span style="color:#ae81ff">125</span>)
+	z3_solver<span style="color:#f92672">.</span>add(inp[<span style="color:#ae81ff">0x8</span>] <span style="color:#f92672">==</span> inp[<span style="color:#ae81ff">0x23</span>])
+	z3_solver<span style="color:#f92672">.</span>add(inp[<span style="color:#ae81ff">0x9</span>] <span style="color:#f92672">==</span> inp[<span style="color:#ae81ff">0x22</span>])
+	z3_solver<span style="color:#f92672">.</span>add(inp[<span style="color:#ae81ff">0x9</span>] <span style="color:#f92672">==</span> <span style="color:#ae81ff">45</span>)
+	z3_solver<span style="color:#f92672">.</span>add(inp[<span style="color:#ae81ff">0x22</span>] <span style="color:#f92672">==</span> inp[<span style="color:#ae81ff">0x23</span>])
+	z3_solver<span style="color:#f92672">.</span>add(inp[<span style="color:#ae81ff">0xa</span>] <span style="color:#f92672">-</span> inp[<span style="color:#ae81ff">0x8</span>]<span style="color:#f92672">*</span><span style="color:#ae81ff">3</span> <span style="color:#f92672">+</span> <span style="color:#ae81ff">0xe</span> <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>)
+	z3_solver<span style="color:#f92672">.</span>add(inp[<span style="color:#ae81ff">0xb</span>] <span style="color:#f92672">==</span> <span style="color:#ae81ff">0x30</span>)
+	z3_solver<span style="color:#f92672">.</span>add(inp[<span style="color:#ae81ff">0xc</span>] <span style="color:#f92672">==</span> <span style="color:#ae81ff">117</span>) 
+	z3_solver<span style="color:#f92672">.</span>add(inp[<span style="color:#ae81ff">0x15</span>] <span style="color:#f92672">==</span> <span style="color:#ae81ff">119</span>) 
+	z3_solver<span style="color:#f92672">.</span>add(inp[<span style="color:#ae81ff">0xd</span>]<span style="color:#f92672">%</span><span style="color:#ae81ff">0x6</span> <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>)
+	z3_solver<span style="color:#f92672">.</span>add(inp[<span style="color:#ae81ff">0xd</span>] <span style="color:#f92672">==</span> <span style="color:#ae81ff">114</span>)
+	z3_solver<span style="color:#f92672">.</span>add(inp[<span style="color:#ae81ff">0xe</span>] <span style="color:#f92672">^</span> inp[<span style="color:#ae81ff">0x14</span>] <span style="color:#f92672">^</span> inp[<span style="color:#ae81ff">0x18</span>] <span style="color:#f92672">^</span> inp[<span style="color:#ae81ff">0x1f</span>] <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>)
+	z3_solver<span style="color:#f92672">.</span>add(inp[<span style="color:#ae81ff">0xf</span>] <span style="color:#f92672">==</span> <span style="color:#ae81ff">102</span>)
+	z3_solver<span style="color:#f92672">.</span>add(inp[<span style="color:#ae81ff">0x10</span>] <span style="color:#f92672">==</span> <span style="color:#ae81ff">0x31</span>)
+	z3_solver<span style="color:#f92672">.</span>add(inp[<span style="color:#ae81ff">0x11</span>] <span style="color:#f92672">==</span> <span style="color:#ae81ff">114</span>)
+	z3_solver<span style="color:#f92672">.</span>add(inp[<span style="color:#ae81ff">0x11</span>] <span style="color:#f92672">+</span> <span style="color:#ae81ff">0x1</span> <span style="color:#f92672">==</span> inp[<span style="color:#ae81ff">0x12</span>])
+	z3_solver<span style="color:#f92672">.</span>add(inp[<span style="color:#ae81ff">0x11</span>] <span style="color:#f92672">+</span> <span style="color:#ae81ff">0x2</span> <span style="color:#f92672">==</span> inp[<span style="color:#ae81ff">0x13</span>])
+	z3_solver<span style="color:#f92672">.</span>add(inp[<span style="color:#ae81ff">0x15</span>] <span style="color:#f92672">==</span> <span style="color:#ae81ff">119</span>)
+	z3_solver<span style="color:#f92672">.</span>add(inp[<span style="color:#ae81ff">0x16</span>] <span style="color:#f92672">==</span> <span style="color:#ae81ff">0x33</span>)
+	z3_solver<span style="color:#f92672">.</span>add(inp[<span style="color:#ae81ff">24</span>] <span style="color:#f92672">==</span> (inp[<span style="color:#ae81ff">26</span>] <span style="color:#f92672">-</span> <span style="color:#ae81ff">19</span>))
+	z3_solver<span style="color:#f92672">.</span>add(inp[<span style="color:#ae81ff">20</span>] <span style="color:#f92672">==</span> inp[<span style="color:#ae81ff">24</span>])
+	z3_solver<span style="color:#f92672">.</span>add(inp[<span style="color:#ae81ff">0x17</span>] <span style="color:#f92672">==</span> <span style="color:#ae81ff">98</span>)
+	z3_solver<span style="color:#f92672">.</span>add(inp[<span style="color:#ae81ff">0x19</span>] <span style="color:#f92672">==</span> <span style="color:#ae81ff">99</span>)
+	z3_solver<span style="color:#f92672">.</span>add(inp[<span style="color:#ae81ff">0x1a</span>] <span style="color:#f92672">==</span> <span style="color:#ae81ff">114</span>)
+	z3_solver<span style="color:#f92672">.</span>add(inp[<span style="color:#ae81ff">0x1b</span>] <span style="color:#f92672">==</span> <span style="color:#ae81ff">0x34</span>)
+	z3_solver<span style="color:#f92672">.</span>add(inp[<span style="color:#ae81ff">0x1c</span>] <span style="color:#f92672">^</span> <span style="color:#ae81ff">0x20</span> <span style="color:#f92672">==</span> <span style="color:#ae81ff">75</span>)
+	z3_solver<span style="color:#f92672">.</span>add(inp[<span style="color:#ae81ff">0x1d</span>] <span style="color:#f92672">==</span> <span style="color:#ae81ff">109</span>)
+	z3_solver<span style="color:#f92672">.</span>add(inp[<span style="color:#ae81ff">0x1e</span>] <span style="color:#f92672">==</span> <span style="color:#ae81ff">101</span>)
+	z3_solver<span style="color:#f92672">.</span>add(inp[<span style="color:#ae81ff">0x20</span>] <span style="color:#f92672">==</span> <span style="color:#ae81ff">88</span>)
+	z3_solver<span style="color:#f92672">.</span>add(inp[<span style="color:#ae81ff">0x21</span>] <span style="color:#f92672">==</span> <span style="color:#ae81ff">79</span>)
+	z3_solver<span style="color:#f92672">.</span>add(inp[<span style="color:#ae81ff">0x0</span>] <span style="color:#f92672">==</span> <span style="color:#ae81ff">114</span>)
+	z3_solver<span style="color:#f92672">.</span>add(inp[<span style="color:#ae81ff">0x1</span>] <span style="color:#f92672">==</span> <span style="color:#ae81ff">105</span>)
+	z3_solver<span style="color:#f92672">.</span>add(inp[<span style="color:#ae81ff">0x2</span>] <span style="color:#f92672">==</span> <span style="color:#ae81ff">102</span>)
+	z3_solver<span style="color:#f92672">.</span>add(inp[<span style="color:#ae81ff">0x3</span>] <span style="color:#f92672">==</span> <span style="color:#ae81ff">116</span>)
+	z3_solver<span style="color:#f92672">.</span>add(inp[<span style="color:#ae81ff">0x4</span>] <span style="color:#f92672">==</span> <span style="color:#ae81ff">67</span>)
+	z3_solver<span style="color:#f92672">.</span>add(inp[<span style="color:#ae81ff">0x5</span>] <span style="color:#f92672">==</span> <span style="color:#ae81ff">84</span>)
+	z3_solver<span style="color:#f92672">.</span>add(inp[<span style="color:#ae81ff">0x6</span>] <span style="color:#f92672">==</span> <span style="color:#ae81ff">70</span>)
+
+	<span style="color:#66d9ef">if</span> z3_solver<span style="color:#f92672">.</span>check() <span style="color:#f92672">==</span> sat:
+		sol <span style="color:#f92672">=</span> z3_solver<span style="color:#f92672">.</span>model()
+		<span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">0x25</span>):
+			<span style="color:#66d9ef">try</span>:
+				flag <span style="color:#f92672">+=</span> chr(int(str(sol[inp[i]])))
+			<span style="color:#66d9ef">except</span>:
+				<span style="color:#66d9ef">pass</span>
+		<span style="color:#66d9ef">break</span>
+
+<span style="color:#66d9ef">print</span>(flag)
+</code></pre></div><p>
+
+<br>
+
+The Output &ndash;
+
+
+<br>
+</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-plaintext" data-lang="plaintext">~/web_crackme » python solve.py
+riftCTF{--y0ur_f1rst_w3b_cr4kme_XO--}
+</code></pre></div>
+
+<br>
+
+<p>AND THATS HOW YOU USE Z3 FOLKS.</p>
+
+		</div>
+	</section>
+<div id="disqus_thread" class="container"></div>
+<script>
+	(function() { 
+		var d = document, s = d.createElement('script');
+		s.src = 'https://x3ero0-tech.disqus.com/embed.js';
+		s.setAttribute('data-timestamp', +new Date());
+		(d.head || d.body).appendChild(s);
+	})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+                            
+
+
+      </div>
+  </body><footer>
+  <div class="container-fluid bg-dark text-white text-monospace text-center mt-4">
+    <small style="color:#ffffff">
+    	<b>-=[ </b>
+    	<a href="https://youtube.com/pulkitsinghaniapulkittech" style="color:#e6ffff">YouTube</a>
+    	<a href="https://www.linkedin.com/in/pulkit-singh-singaria-500a53166/" style="color:#e6ffff">LinkedIn</a>
+    	<a href="https://twitter.com/X3eRo0" style="color:#e6ffff">Twitter</a>
+    	<a href="https://ctftime.org/user/43759" style="color:#e6ffff">CTFTime</a>
+    	<b> ]=-</b>
+    </small>
+  </div>
+</footer></html>

@@ -7,10 +7,19 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <copyright>Copyright © 2008–2019</copyright>
-    <lastBuildDate>Sun, 07 Jun 2020 05:39:55 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 06 Aug 2020 17:18:41 +0000</lastBuildDate>
     
 	<atom:link href="https://x3ero0.tech/posts/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Real_world_crackme_writeup</title>
+      <link>https://x3ero0.tech/posts/real_world_crackme_writeup/</link>
+      <pubDate>Thu, 06 Aug 2020 17:18:41 +0000</pubDate>
+      
+      <guid>https://x3ero0.tech/posts/real_world_crackme_writeup/</guid>
+      <description>hljs.initHighlightingOnLoad();WEB Crackme   Author : X3eRo0 Language : JS Upload : Fri, 29 May 2020 05:09:29 Difficulty: 5 (this is relative lol) Platform : Unix/Linux etc. Crackme : WEB Crackme  Desc: - find the correct password for the crackme to display &amp;#34;Correct Password&amp;#34; message.- your goal is not to make the app display &amp;#34;Correct Password&amp;#34; but to find the correct password which does that for you.</description>
+    </item>
     
     <item>
       <title>Float Writeup</title>

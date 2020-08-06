@@ -3,12 +3,17 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
-    <loc>https://x3ero0.tech/posts/float-writeup/</loc>
-    <lastmod>2020-06-07T05:39:55+00:00</lastmod>
+    <loc>https://x3ero0.tech/posts/</loc>
+    <lastmod>2020-08-06T17:18:41+00:00</lastmod>
   </url>
   
   <url>
-    <loc>https://x3ero0.tech/posts/</loc>
+    <loc>https://x3ero0.tech/posts/real_world_crackme_writeup/</loc>
+    <lastmod>2020-08-06T17:18:41+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://x3ero0.tech/posts/float-writeup/</loc>
     <lastmod>2020-06-07T05:39:55+00:00</lastmod>
   </url>
   
