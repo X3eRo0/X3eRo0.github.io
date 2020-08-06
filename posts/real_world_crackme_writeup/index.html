@@ -85,8 +85,8 @@ so it was&rsquo;nt super hard or anything just some basic anti-debugging tricks 
 
 <br>
 
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-JS" data-lang="JS">...
-<span style="color:#f92672">&lt;</span><span style="color:#a6e22e">script</span> <span style="color:#a6e22e">src</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;crackme.js&#34;</span><span style="color:#f92672">&gt;&lt;</span><span style="color:#960050;background-color:#1e0010">/script&gt;</span>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-HTML" data-lang="HTML">...
+&lt;<span style="color:#f92672">script</span> <span style="color:#a6e22e">src</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;crackme.js&#34;</span>&gt;&lt;/<span style="color:#f92672">script</span>&gt;
 ...
 </code></pre></div>
 
@@ -172,7 +172,6 @@ so it was&rsquo;nt super hard or anything just some basic anti-debugging tricks 
 <br>
 
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">from</span> z3 <span style="color:#f92672">import</span> <span style="color:#f92672">*</span> <span style="color:#75715e"># import everything from z3</span>
-
 
 <span style="color:#75715e"># this inp list is the list of &#39;password&#39; vectors</span>
 <span style="color:#75715e"># basically i have defined each character of password</span>
