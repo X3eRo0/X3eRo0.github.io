@@ -3,21 +3,6 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
-    <loc>https://x3ero0.tech/posts/</loc>
-    <lastmod>2020-08-06T17:18:41+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://x3ero0.tech/posts/real_world_crackme_writeup/</loc>
-    <lastmod>2020-08-06T17:18:41+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://x3ero0.tech/posts/float-writeup/</loc>
-    <lastmod>2020-06-07T05:39:55+00:00</lastmod>
-  </url>
-  
-  <url>
     <loc>https://x3ero0.tech/crackmes/fl04t/</loc>
     <lastmod>2020-05-29T05:09:29+00:00</lastmod>
   </url>
@@ -28,23 +13,8 @@
   </url>
   
   <url>
-    <loc>https://x3ero0.tech/posts/hell86_from_ttlhacker/</loc>
-    <lastmod>2020-05-18T13:03:48+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://x3ero0.tech/posts/reversing_a_malware_in_disguise/</loc>
-    <lastmod>2020-04-14T17:51:27+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://x3ero0.tech/posts/watevr_repyc/</loc>
-    <lastmod>2020-04-10T20:20:07+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://x3ero0.tech/crackmes/</loc>
-    <lastmod>2020-04-10T20:06:26+00:00</lastmod>
+    <loc>https://x3ero0.tech/</loc>
+    <lastmod>2020-05-29T05:09:29+00:00</lastmod>
   </url>
   
   <url>
@@ -53,7 +23,7 @@
   </url>
   
   <url>
-    <loc>https://x3ero0.tech/</loc>
+    <loc>https://x3ero0.tech/posts/</loc>
     <lastmod>2020-04-10T20:06:26+00:00</lastmod>
   </url>
   
