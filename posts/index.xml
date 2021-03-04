@@ -2,52 +2,52 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Posts on x3ero0&#39;s blog</title>
-    <link>https://x3ero0.tech/posts/</link>
+    <link>https://x3ero0.github.io/posts/</link>
     <description>Recent content in Posts on x3ero0&#39;s blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <copyright>Copyright © 2008–2019</copyright>
     <lastBuildDate>Fri, 10 Apr 2020 20:06:26 +0000</lastBuildDate>
     
-	<atom:link href="https://x3ero0.tech/posts/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://x3ero0.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>HSCTF License</title>
-      <link>https://x3ero0.tech/posts/hsctf-license/</link>
+      <link>https://x3ero0.github.io/posts/hsctf-license/</link>
       <pubDate>Fri, 10 Apr 2020 20:06:26 +0000</pubDate>
       
-      <guid>https://x3ero0.tech/posts/hsctf-license/</guid>
+      <guid>https://x3ero0.github.io/posts/hsctf-license/</guid>
       <description>hljs.initHighlightingOnLoad();Challenge: License [ 298(DYN) RE ] Challenge Description:
 Written by: ItzSomebodyDescription: Keith made a cool license-checking program but he forgot the flag he used to create the key! To make matters worse, he lost the source code and stripped the binary for his license-generator program. Can you help Keith recover his flag? All he knows is:• The license key is 4-EZF2M-7O5F4-V9P7O-EVFDP-E4VDO-O• He put his name (in the form of &amp;#39;k3ith&amp;#39;) as the first part of the flag• There are 3 underscores• The flag is in the format hsctf{}• The flag doesn&amp;#39;t have random character sequences (you should be able to read the entire flag easily).</description>
     </item>
     
     <item>
       <title>Plaintext Attack on Zip</title>
-      <link>https://x3ero0.tech/posts/plaintext_attack_on_zip_legacy_crypto/</link>
+      <link>https://x3ero0.github.io/posts/plaintext_attack_on_zip_legacy_crypto/</link>
       <pubDate>Fri, 27 Mar 2020 09:54:19 +0000</pubDate>
       
-      <guid>https://x3ero0.tech/posts/plaintext_attack_on_zip_legacy_crypto/</guid>
+      <guid>https://x3ero0.github.io/posts/plaintext_attack_on_zip_legacy_crypto/</guid>
       <description>hljs.initHighlightingOnLoad();The Vulnerability The PKZIP program is one of the more widely used archive/compression programs on personal computers. PKZIP provides a stream cipher which allows users to scramble files with variable length keys ( passwords ). We can find the internal representation of the key within a few hours on a PC using a few bytes of known plaintext. This Stream cipher was designed by Roger Schlafly.
 We will take a look at the Forensics 3 challenge from RiftCTF2020, But first lets understand the weakness.</description>
     </item>
     
     <item>
       <title>Year3000</title>
-      <link>https://x3ero0.tech/posts/year3000/</link>
+      <link>https://x3ero0.github.io/posts/year3000/</link>
       <pubDate>Sat, 08 Feb 2020 18:04:11 +0000</pubDate>
       
-      <guid>https://x3ero0.tech/posts/year3000/</guid>
+      <guid>https://x3ero0.github.io/posts/year3000/</guid>
       <description>hljs.initHighlightingOnLoad();Year3000 [RE - Nullcon Hackim2020 CTF] Description
  One day when I came home at lunchtime I heard a funny noise Went out to the back yard to find out If it was one of those rowdy boys Stood there was my neighbor called Peter And a flux capacitorI guess there must be quite some entropy in a flux capacitor... Netcat Link : nc re.ctf.nullcon.net 1234</description>
     </item>
     
     <item>
       <title>Obfuscation_Techniques</title>
-      <link>https://x3ero0.tech/posts/obfuscation-techniques/</link>
+      <link>https://x3ero0.github.io/posts/obfuscation-techniques/</link>
       <pubDate>Wed, 05 Feb 2020 06:34:52 +0000</pubDate>
       
-      <guid>https://x3ero0.tech/posts/obfuscation-techniques/</guid>
+      <guid>https://x3ero0.github.io/posts/obfuscation-techniques/</guid>
       <description>hljs.initHighlightingOnLoad();  Recently I was watching GynvaelEN&amp;rsquo;s Old Stream about ELF Packers, and I thought why not make a PE Packer. I decided that I will write a python script to Parse PE Headers from scratch, I was able to parse some headers and then I got stuck and decided that I will use PEFILE.
 ──────▄▌▐▀▀▀▀▀▀▀▀▀▀▀▀▀​▀▀▀▀▀▀▌
 ───▄▄██▌█ BEEP BEEP ▄▄▄▌▐██▌█ POOR SCRIPT AHEAD
