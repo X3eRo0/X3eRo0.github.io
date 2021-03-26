@@ -20,19 +20,12 @@ Webcomic: 4.3
  * =============================================================================
  */
 @font-face {
-  font-family: 'awesome';
-  font-style: normal;
-  font-weight: normal;
-  src: url("https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/fonts/fontawesome-webfont.eot");
-  src: url("https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/fonts/fontawesome-webfont.eot?#iefix") format("embedded-opentype"), url("https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/fonts/fontawesome-webfont.woff") format("woff"), url("https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/fonts/fontawesome-webfont.ttf") format("truetype"), url("https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/fonts/fontawesome-webfont.svg#fontawesomeregular") format("svg"); }
-/*! normalize.css v3.0.2 | MIT License | git.io/normalize */
-/**
- * 1. Set default font family to sans-serif.
- * 2. Prevent iOS text size adjust after orientation change, without disabling
- *    user zoom.
- */
+  font-family: 'Fira Code';
+  src: url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@500&display=swap');
+}
+
 html {
-  font-family: sans-serif;
+  font-family: 'Fira Code', monospace;
   /* 1 */
   -ms-text-size-adjust: 100%;
   /* 2 */
@@ -384,7 +377,7 @@ th {
   padding: 0; }
 
 html {
-  font: 100%/1.4 'helvetica neue', helvetica, sans-serif; }
+  font: 100%/1.4 'Fira Code', monospace; }
 
 body {
   background: #fff;
