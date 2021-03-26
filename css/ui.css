@@ -1,5 +1,5 @@
-@import url(https://fonts.googleapis.com/css?family=Inconsolata:400,700&display=swap);@import url(https://fonts.googleapis.com/css?family=Fira+Mono:400,500&display=swap);* {
-    font-family: Inconsolata,monospace
+@import url('https://fonts.googleapis.com/css2?family=Fira+Code&display=swap');* {
+    font-family: 'Fira Code', monospace;
 }
 
 *,::after,::before {
@@ -50,8 +50,8 @@ pre {
 
 /* Code block */
 code {
-    font-family: Inconsolata, monospace;
-    font-size: 1.3vh;
+    font-family: 'Fira Code', monospace;
+    font-size: 1.8vh;
     color: #9539f7;
     border-radius: 2px;
     word-wrap: break-word;
@@ -60,8 +60,8 @@ code {
 }
 
 code[class*=language-] {
-    font-family: Inconsolata, monospace;
-    font-size: 1.3vh;
+    font-family: 'Fira Code', monospace;
+    font-size: 1.8vh;
     border-radius: 2px;
     word-wrap: break-word;
     max-width: 100%;
@@ -69,10 +69,10 @@ code[class*=language-] {
 }
 
 highlight {
-    font-size: 1.3vh;
+    font-size: 1.8vh;
     max-width: 100%;
     height: auto;
-    font-family: Inconsolata, monospace;
+    font-family: 'Fira Code', monospace;
     line-height: 1.15;
     -webkit-text-size-adjust: 100%;
     -webkit-tap-highlight-color: transparent
