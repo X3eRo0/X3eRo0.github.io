@@ -172,6 +172,8 @@
 
 <br>
 
+<p>So, from the above 2 images its clear that the server sends the whole map and TANK information to the client and the client renders the MAP and the 2 Tanks based on what information the server sent. The client then sends the bullet information to the server which contains information about weapon, angle and power that the player used to fire at the enemy tank. The server then calculates where this bullet should hit using some basic math and deducts health points and Dirt from the map due to the explosion.</p>
+<p>So, now we can start reverse engineering the server binary and look for bugs that we can exploit.</p>
 
 
 <link rel="stylesheet" href="/css/styles/ir-black.css">
