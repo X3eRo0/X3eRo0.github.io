@@ -56,8 +56,16 @@
     decoding="async"
   />
 </div>
+
+
+<br>
+
 <p>Hyperion is a single player clone of Pocket Tanks, except that it requires internet connection even when playing againts a bot. We are given a server binary that runs on Linux and 2 Version of client, one for windows and one for linux. The client binaries requires SDL2 because the game uses SDL for graphics and controls.</p>
 <p>The Goal of this challenge is to not only defeat the bot, but to also get a shell on the server. I immediately opened the server binary in IDA Pro.</p>
+
+
+<br>
+
 
 
 
@@ -69,6 +77,10 @@
     decoding="async"
   />
 </div>
+
+
+<br>
+
 <p>The challenge pops shell if its running in DEBUG environment with &ldquo;HYPERION_ENV_TEST&rdquo; environment variable set. Game also supports fork server mode and single run mode.</p>
 <p>I used the single run mode so that i can the interaction happens through <code>STDIN</code> and <code>STDOUT</code>.</p>
 <p><code>socat TCP-LISTEN:1337,reuseaddr,fork exec:./hyperion_server</code></p>
@@ -87,6 +99,47 @@
     decoding="async"
   />
 </div>
+
+
+<br>
+
+<p>The game has a map of 640x480 pixels or 38400 bytes. Dirt is represented by <code>1</code> and Air is represented by <code>0</code>. We control the Green Tank and Red Tank is the enemy but Red Tank never misses. We have 3 Weapons as described in the above image.</p>
+<ul>
+<li>
+<ol>
+<li>18 Damage, 10 Radius Explosion</li>
+</ol>
+</li>
+<li>
+<ol start="2">
+<li>0 Damage, 15 Radius Dirt Ball</li>
+</ol>
+</li>
+<li>
+<ol start="3">
+<li>8 Damage, 20 Radius Explosion (Deletes Dirt in its radius)</li>
+</ol>
+</li>
+</ul>
+
+
+<br>
+
+
+
+
+<div class="center">
+  <img
+    class="responsive"
+    src="/img/hyperion/game.gif"
+    alt="main()"
+    decoding="async"
+  />
+</div>
+
+
+<br>
+
 
 
 <link rel="stylesheet" href="/css/styles/ir-black.css">
