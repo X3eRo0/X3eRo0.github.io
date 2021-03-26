@@ -187,136 +187,134 @@
 
 <pre>
 	<code class="language-c">
-
-<p>__int64 __fastcall Game(Netsock *c, __int64 some_number, int a3, int a4, int a5, int a6)
+		__int64 __fastcall Game(Netsock *c, __int64 some_number, int a3, int a4, int a5, int a6)
 {
-int v7; // ecx
-int v8; // er8
-int v9; // er9
-_<em>int64 v10; // rdx
-const char *Message</em>; // rdx
-const char *Tank_1; // rax
-const char *Tank; // rax
-const char *v14; // rax
-char map[38400]; // [rsp+10h] [rbp-9608h] BYREF</p>
-<p>if ( !SendText(c, &ldquo;Welcome to Hyperion Tank Game!&quot;) )
-return 1LL;
-memset(map, 0, sizeof(map));
-generate_map(map);
+  int v7; // ecx
+  int v8; // er8
+  int v9; // er9
+  __int64 v10; // rdx
+  const char *Message_; // rdx
+  const char *Tank_1; // rax
+  const char *Tank; // rax
+  const char *v14; // rax
+  char map[38400]; // [rsp+10h] [rbp-9608h] BYREF
+
+  if ( !SendText(c, "Welcome to Hyperion Tank Game!") )
+    return 1LL;
+  memset(map, 0, sizeof(map));
+  generate_map(map);
 LABEL_4:
-AdjustTankPosition(tanks, map);
-AdjustTankPosition(&amp;tanks[1], map);
-if ( !send_map(c, map) || !send_tank(c, tanks) )
-exit(0);
-if ( !unk_208098 )
-{
-cplusplus_string_init(&amp;command_received_by_client);
-unk_208098 = 1;
-<em>cxa_atexit(func, &amp;command_received_by_client, &amp;dso_handle);
+  AdjustTankPosition(tanks, map);
+  AdjustTankPosition(&tanks[1], map);
+  if ( !send_map(c, map) || !send_tank(c, tanks) )
+    exit(0);
+  if ( !unk_208098 )
+  {
+    cplusplus_string_init(&command_received_by_client);
+    unk_208098 = 1;
+    _cxa_atexit(func, &command_received_by_client, &dso_handle);
+  }
+  if ( !RecvClientCommand(c, &command_received_by_client) )
+    return 2LL;
+  if ( not_cplusplus_string_compare(&command_received_by_client, "FIRE") )
+    return 3LL;
+  if ( tanks[0].hp <= 0 )
+  {
+    SendText(c, "Bye.");
+    return 0LL;
+  }
+  t = *array_access_operator(command_received_by_client.data, 0LL);
+  if ( t.Weapon != 1 && t.Weapon != 2 && t.Weapon != 3 )
+    return 4LL;
+  if ( t.Power < 10.0 || t.Power > 100.0 )
+    return 5LL;
+  if ( t.Angle >= 0.0 && t.Angle <= 180.0 )
+  {
+    for ( i = 0; ; ++i )
+    {
+      if ( i > 1 )
+        goto LABEL_4;
+      if ( !unk_2080D8 )
+      {
+        sub_2DBA(&bullet_event);
+        unk_2080D8 = 1;
+        _cxa_atexit(sub_2DD6, &bullet_event, &dso_handle);
+      }
+      if ( i || tanks[0].hp <= 0 )
+      {
+        if ( i != 1 || tanks[1].hp <= 0 )
+          continue;
+        expl = FireTankGunAndCheatHard(map, &bullet_event, &dword_0 + 1, v7, v8, v9);
+      }
+      else
+      {
+        *&expl.exploded = FireTankGun(map, &bullet_event, &t, v7, v8);
+        *&expl.y = v10;
+      }
+      if ( SendBullet(c, &bullet_event) != 1 )
+        goto LABEL_4;
+      tank_hit = 0;
+      if ( LOBYTE(expl.exploded) )
+      {
+        for ( j = 0; j <= 1; ++j )
+        {
+          if ( tanks[j].hp > 0 )
+          {
+            dx_ = expl.x - tanks[j].x;
+            dy_ = expl.y - tanks[j].y;
+            v7 = dy_;
+            dist_sq = dx_ * dx_ + dy_ * dy_;
+            radius = WEAPON_EXPLOSION_RADIUS[expl.weapon];
+            radius_sq = radius * radius;
+            if ( dx_ * dx_ + dy_ * dy_ <= radius * radius )
+            {
+              tank_hit = 1;
+              r_half = radius / 2;
+              r_half_sq = radius / 2 * (radius / 2);
+              damage = WEAPON_EXPLOSION_DMG[expl.weapon];
+              if ( dist_sq > radius / 2 * (radius / 2) )
+                damage /= 2;
+              tanks[j].hp -= damage;
+              if ( tanks[j].hp > 0 )
+              {
+                if ( j )
+                  Tank = "RED";
+                else
+                  Tank = "GREEN";
+                sprintf(Message, "%s tank hit for %i damage.", Tank, damage);
+                SendText(c, Message);
+              }
+              else
+              {
+                tanks[j].hp = 0;
+                if ( j )
+                  Message_ = " Stay & practice :)";
+                else
+                  Message_ = " Game Over.";
+                if ( j )
+                  Tank_1 = "RED";
+                else
+                  Tank_1 = "GREEN";
+                sprintf(s, "%s tank destroyed.%s", Tank_1, Message_);
+                SendText(c, s);
+              }
+            }
+          }
+        }
+      }
+      if ( tank_hit != 1 )
+      {
+        if ( i )
+          v14 = "RED";
+        else
+          v14 = "GREEN";
+        sprintf(Message__, "%s tank missed.", v14);
+        SendText(c, Message__);
+      }
+    }
+  }
+  return 6LL;
 }
-if ( !RecvClientCommand(c, &amp;command_received_by_client) )
-return 2LL;
-if ( not_cplusplus_string_compare(&amp;command_received_by_client, &ldquo;FIRE&rdquo;) )
-return 3LL;
-if ( tanks[0].hp &lt;= 0 )
-{
-SendText(c, &ldquo;Bye.&quot;);
-return 0LL;
-}
-t = *array_access_operator(command_received_by_client.data, 0LL);
-if ( t.Weapon != 1 &amp;&amp; t.Weapon != 2 &amp;&amp; t.Weapon != 3 )
-return 4LL;
-if ( t.Power &lt; 10.0 || t.Power &gt; 100.0 )
-return 5LL;
-if ( t.Angle &gt;= 0.0 &amp;&amp; t.Angle &lt;= 180.0 )
-{
-for ( i = 0; ; ++i )
-{
-if ( i &gt; 1 )
-goto LABEL_4;
-if ( !unk_2080D8 )
-{
-sub_2DBA(&amp;bullet_event);
-unk_2080D8 = 1;
-<em>cxa_atexit(sub_2DD6, &amp;bullet_event, &amp;dso_handle);
-}
-if ( i || tanks[0].hp &lt;= 0 )
-{
-if ( i != 1 || tanks[1].hp &lt;= 0 )
-continue;
-expl = FireTankGunAndCheatHard(map, &amp;bullet_event, &amp;dword_0 + 1, v7, v8, v9);
-}
-else
-{
-*&amp;expl.exploded = FireTankGun(map, &amp;bullet_event, &amp;t, v7, v8);
-*&amp;expl.y = v10;
-}
-if ( SendBullet(c, &amp;bullet_event) != 1 )
-goto LABEL_4;
-tank_hit = 0;
-if ( LOBYTE(expl.exploded) )
-{
-for ( j = 0; j &lt;= 1; ++j )
-{
-if ( tanks[j].hp &gt; 0 )
-{
-dx</em> = expl.x - tanks[j].x;
-dy</em> = expl.y - tanks[j].y;
-v7 = dy_;
-dist_sq = dx_ * dx_ + dy_ * dy_;
-radius = WEAPON_EXPLOSION_RADIUS[expl.weapon];
-radius_sq = radius * radius;
-if ( dx_ * dx_ + dy_ * dy_ &lt;= radius * radius )
-{
-tank_hit = 1;
-r_half = radius / 2;
-r_half_sq = radius / 2 * (radius / 2);
-damage = WEAPON_EXPLOSION_DMG[expl.weapon];
-if ( dist_sq &gt; radius / 2 * (radius / 2) )
-damage /= 2;
-tanks[j].hp -= damage;
-if ( tanks[j].hp &gt; 0 )
-{
-if ( j )
-Tank = &ldquo;RED&rdquo;;
-else
-Tank = &ldquo;GREEN&rdquo;;
-sprintf(Message, &ldquo;%s tank hit for %i damage.&quot;, Tank, damage);
-SendText(c, Message);
-}
-else
-{
-tanks[j].hp = 0;
-if ( j )
-Message_ = &quot; Stay &amp; practice :)&quot;;
-else
-Message_ = &quot; Game Over.&quot;;
-if ( j )
-Tank_1 = &ldquo;RED&rdquo;;
-else
-Tank_1 = &ldquo;GREEN&rdquo;;
-sprintf(s, &ldquo;%s tank destroyed.%s&rdquo;, Tank_1, Message_);
-SendText(c, s);
-}
-}
-}
-}
-}
-if ( tank_hit != 1 )
-{
-if ( i )
-v14 = &ldquo;RED&rdquo;;
-else
-v14 = &ldquo;GREEN&rdquo;;
-sprintf(Message__, &ldquo;%s tank missed.&quot;, v14);
-SendText(c, Message__);
-}
-}
-}
-return 6LL;
-}</p>
-
-
 	</code>
 </pre>
 
