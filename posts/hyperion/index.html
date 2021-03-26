@@ -4,8 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1">
     <title>Hyperion - x3ero0&#39;s blog</title>
-
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@500&display=swap" rel="stylesheet">
     <style type="text/css">
+        font-family: 'Fira Code', monospace;
         img.wp-smiley,
         img.emoji {
             display: inline !important;
@@ -98,11 +100,7 @@
         </header>
 
         <div class="post-content">
-            
-
-<link href="/css/prism.css" rel="stylesheet"/>
-
-<h1 id="pwning-pocket-tanks---hyperion-google-ctf-2017-finals">Pwning Pocket Tanks - Hyperion [Google CTF 2017 Finals]</h1>
+            <h1 id="pwning-pocket-tanks---hyperion-google-ctf-2017-finals">Pwning Pocket Tanks - Hyperion [Google CTF 2017 Finals]</h1>
 <hr>
 <ul>
 <li>Author : <a href="https://gynvael.coldwind.pl/">Gynvael Coldwind</a></li>
@@ -256,142 +254,135 @@
 <p>The server binary has <code>SendText</code>, <code>SendMap</code>, <code>SendTank</code>, <code>SendBullet</code> and <code>SendPacket</code> functions, out these SendPacket Wraps the Data to be sent in a C++ string and sends it along with the 32 bit length of the data. So, it first sends the 4 byte header which contains the length of the data to be received by the other party.</p>
 <p><code>SendText</code>, <code>SendMap</code>, <code>SendTank</code> and <code>SendBullet</code> just sends their respective data structures to the client socket.</p>
 <p>Now let&rsquo;s take a look at the main handler function which handles everything.</p>
-
-
-<pre>
-	<code class="language-c">
-		__int64 __fastcall Game(Netsock *c, __int64 some_number, int a3, int a4, int a5, int a6)
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c++" data-lang="c++"><span style="color:#66d9ef">__int64</span> <span style="color:#66d9ef">__fastcall</span> <span style="color:#a6e22e">Game</span>(Netsock <span style="color:#f92672">*</span>c, <span style="color:#66d9ef">__int64</span> some_number, <span style="color:#66d9ef">int</span> a3, <span style="color:#66d9ef">int</span> a4, <span style="color:#66d9ef">int</span> a5, <span style="color:#66d9ef">int</span> a6)
 {
-  int v7; // ecx
-  int v8; // er8
-  int v9; // er9
-  __int64 v10; // rdx
-  const char *Message_; // rdx
-  const char *Tank_1; // rax
-  const char *Tank; // rax
-  const char *v14; // rax
-  char map[38400]; // [rsp+10h] [rbp-9608h] BYREF
-
-  if ( !SendText(c, "Welcome to Hyperion Tank Game!") )
-    return 1LL;
-  memset(map, 0, sizeof(map));
+  <span style="color:#66d9ef">int</span> v7; <span style="color:#75715e">// ecx
+</span><span style="color:#75715e"></span>  <span style="color:#66d9ef">int</span> v8; <span style="color:#75715e">// er8
+</span><span style="color:#75715e"></span>  <span style="color:#66d9ef">int</span> v9; <span style="color:#75715e">// er9
+</span><span style="color:#75715e"></span>  <span style="color:#66d9ef">__int64</span> v10; <span style="color:#75715e">// rdx
+</span><span style="color:#75715e"></span>  <span style="color:#66d9ef">const</span> <span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span>Message_; <span style="color:#75715e">// rdx
+</span><span style="color:#75715e"></span>  <span style="color:#66d9ef">const</span> <span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span>Tank_1; <span style="color:#75715e">// rax
+</span><span style="color:#75715e"></span>  <span style="color:#66d9ef">const</span> <span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span>Tank; <span style="color:#75715e">// rax
+</span><span style="color:#75715e"></span>  <span style="color:#66d9ef">const</span> <span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span>v14; <span style="color:#75715e">// rax
+</span><span style="color:#75715e"></span>  <span style="color:#66d9ef">char</span> map[<span style="color:#ae81ff">38400</span>]; <span style="color:#75715e">// [rsp+10h] [rbp-9608h] BYREF
+</span><span style="color:#75715e"></span>
+  <span style="color:#66d9ef">if</span> ( <span style="color:#f92672">!</span>SendText(c, <span style="color:#e6db74">&#34;Welcome to Hyperion Tank Game!&#34;</span>) )
+    <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">1LL</span>;
+  memset(map, <span style="color:#ae81ff">0</span>, <span style="color:#66d9ef">sizeof</span>(map));
   generate_map(map);
 LABEL_4:
   AdjustTankPosition(tanks, map);
-  AdjustTankPosition(&tanks[1], map);
-  if ( !send_map(c, map) || !send_tank(c, tanks) )
-    exit(0);
-  if ( !unk_208098 )
+  AdjustTankPosition(<span style="color:#f92672">&amp;</span>tanks[<span style="color:#ae81ff">1</span>], map);
+  <span style="color:#66d9ef">if</span> ( <span style="color:#f92672">!</span>send_map(c, map) <span style="color:#f92672">||</span> <span style="color:#f92672">!</span>send_tank(c, tanks) )
+    exit(<span style="color:#ae81ff">0</span>);
+  <span style="color:#66d9ef">if</span> ( <span style="color:#f92672">!</span>unk_208098 )
   {
-    cplusplus_string_init(&command_received_by_client);
-    unk_208098 = 1;
-    _cxa_atexit(func, &command_received_by_client, &dso_handle);
+    cplusplus_string_init(<span style="color:#f92672">&amp;</span>command_received_by_client);
+    unk_208098 <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>;
+    _cxa_atexit(func, <span style="color:#f92672">&amp;</span>command_received_by_client, <span style="color:#f92672">&amp;</span>dso_handle);
   }
-  if ( !RecvClientCommand(c, &command_received_by_client) )
-    return 2LL;
-  if ( not_cplusplus_string_compare(&command_received_by_client, "FIRE") )
-    return 3LL;
-  if ( tanks[0].hp <= 0 )
+  <span style="color:#66d9ef">if</span> ( <span style="color:#f92672">!</span>RecvClientCommand(c, <span style="color:#f92672">&amp;</span>command_received_by_client) )
+    <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">2LL</span>;
+  <span style="color:#66d9ef">if</span> ( not_cplusplus_string_compare(<span style="color:#f92672">&amp;</span>command_received_by_client, <span style="color:#e6db74">&#34;FIRE&#34;</span>) )
+    <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">3LL</span>;
+  <span style="color:#66d9ef">if</span> ( tanks[<span style="color:#ae81ff">0</span>].hp <span style="color:#f92672">&lt;=</span> <span style="color:#ae81ff">0</span> )
   {
-    SendText(c, "Bye.");
-    return 0LL;
+    SendText(c, <span style="color:#e6db74">&#34;Bye.&#34;</span>);
+    <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0LL</span>;
   }
-  t = *array_access_operator(command_received_by_client.data, 0LL);
-  if ( t.Weapon != 1 && t.Weapon != 2 && t.Weapon != 3 )
-    return 4LL;
-  if ( t.Power < 10.0 || t.Power > 100.0 )
-    return 5LL;
-  if ( t.Angle >= 0.0 && t.Angle <= 180.0 )
+  t <span style="color:#f92672">=</span> <span style="color:#f92672">*</span>array_access_operator(command_received_by_client.data, <span style="color:#ae81ff">0LL</span>);
+  <span style="color:#66d9ef">if</span> ( t.Weapon <span style="color:#f92672">!=</span> <span style="color:#ae81ff">1</span> <span style="color:#f92672">&amp;&amp;</span> t.Weapon <span style="color:#f92672">!=</span> <span style="color:#ae81ff">2</span> <span style="color:#f92672">&amp;&amp;</span> t.Weapon <span style="color:#f92672">!=</span> <span style="color:#ae81ff">3</span> )
+    <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">4LL</span>;
+  <span style="color:#66d9ef">if</span> ( t.Power <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">10.0</span> <span style="color:#f92672">||</span> t.Power <span style="color:#f92672">&gt;</span> <span style="color:#ae81ff">100.0</span> )
+    <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">5LL</span>;
+  <span style="color:#66d9ef">if</span> ( t.Angle <span style="color:#f92672">&gt;=</span> <span style="color:#ae81ff">0.0</span> <span style="color:#f92672">&amp;&amp;</span> t.Angle <span style="color:#f92672">&lt;=</span> <span style="color:#ae81ff">180.0</span> )
   {
-    for ( i = 0; ; ++i )
+    <span style="color:#66d9ef">for</span> ( i <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>; ; <span style="color:#f92672">++</span>i )
     {
-      if ( i > 1 )
-        goto LABEL_4;
-      if ( !unk_2080D8 )
+      <span style="color:#66d9ef">if</span> ( i <span style="color:#f92672">&gt;</span> <span style="color:#ae81ff">1</span> )
+        <span style="color:#66d9ef">goto</span> LABEL_4;
+      <span style="color:#66d9ef">if</span> ( <span style="color:#f92672">!</span>unk_2080D8 )
       {
-        sub_2DBA(&bullet_event);
-        unk_2080D8 = 1;
-        _cxa_atexit(sub_2DD6, &bullet_event, &dso_handle);
+        sub_2DBA(<span style="color:#f92672">&amp;</span>bullet_event);
+        unk_2080D8 <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>;
+        _cxa_atexit(sub_2DD6, <span style="color:#f92672">&amp;</span>bullet_event, <span style="color:#f92672">&amp;</span>dso_handle);
       }
-      if ( i || tanks[0].hp <= 0 )
+      <span style="color:#66d9ef">if</span> ( i <span style="color:#f92672">||</span> tanks[<span style="color:#ae81ff">0</span>].hp <span style="color:#f92672">&lt;=</span> <span style="color:#ae81ff">0</span> )
       {
-        if ( i != 1 || tanks[1].hp <= 0 )
-          continue;
-        expl = FireTankGunAndCheatHard(map, &bullet_event, &dword_0 + 1, v7, v8, v9);
+        <span style="color:#66d9ef">if</span> ( i <span style="color:#f92672">!=</span> <span style="color:#ae81ff">1</span> <span style="color:#f92672">||</span> tanks[<span style="color:#ae81ff">1</span>].hp <span style="color:#f92672">&lt;=</span> <span style="color:#ae81ff">0</span> )
+          <span style="color:#66d9ef">continue</span>;
+        expl <span style="color:#f92672">=</span> FireTankGunAndCheatHard(map, <span style="color:#f92672">&amp;</span>bullet_event, <span style="color:#f92672">&amp;</span>dword_0 <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span>, v7, v8, v9);
       }
-      else
+      <span style="color:#66d9ef">else</span>
       {
-        *&expl.exploded = FireTankGun(map, &bullet_event, &t, v7, v8);
-        *&expl.y = v10;
+        <span style="color:#f92672">*&amp;</span>expl.exploded <span style="color:#f92672">=</span> FireTankGun(map, <span style="color:#f92672">&amp;</span>bullet_event, <span style="color:#f92672">&amp;</span>t, v7, v8);
+        <span style="color:#f92672">*&amp;</span>expl.y <span style="color:#f92672">=</span> v10;
       }
-      if ( SendBullet(c, &bullet_event) != 1 )
-        goto LABEL_4;
-      tank_hit = 0;
-      if ( LOBYTE(expl.exploded) )
+      <span style="color:#66d9ef">if</span> ( SendBullet(c, <span style="color:#f92672">&amp;</span>bullet_event) <span style="color:#f92672">!=</span> <span style="color:#ae81ff">1</span> )
+        <span style="color:#66d9ef">goto</span> LABEL_4;
+      tank_hit <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>;
+      <span style="color:#66d9ef">if</span> ( LOBYTE(expl.exploded) )
       {
-        for ( j = 0; j <= 1; ++j )
+        <span style="color:#66d9ef">for</span> ( j <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>; j <span style="color:#f92672">&lt;=</span> <span style="color:#ae81ff">1</span>; <span style="color:#f92672">++</span>j )
         {
-          if ( tanks[j].hp > 0 )
+          <span style="color:#66d9ef">if</span> ( tanks[j].hp <span style="color:#f92672">&gt;</span> <span style="color:#ae81ff">0</span> )
           {
-            dx_ = expl.x - tanks[j].x;
-            dy_ = expl.y - tanks[j].y;
-            v7 = dy_;
-            dist_sq = dx_ * dx_ + dy_ * dy_;
-            radius = WEAPON_EXPLOSION_RADIUS[expl.weapon];
-            radius_sq = radius * radius;
-            if ( dx_ * dx_ + dy_ * dy_ <= radius * radius )
+            dx_ <span style="color:#f92672">=</span> expl.x <span style="color:#f92672">-</span> tanks[j].x;
+            dy_ <span style="color:#f92672">=</span> expl.y <span style="color:#f92672">-</span> tanks[j].y;
+            v7 <span style="color:#f92672">=</span> dy_;
+            dist_sq <span style="color:#f92672">=</span> dx_ <span style="color:#f92672">*</span> dx_ <span style="color:#f92672">+</span> dy_ <span style="color:#f92672">*</span> dy_;
+            radius <span style="color:#f92672">=</span> WEAPON_EXPLOSION_RADIUS[expl.weapon];
+            radius_sq <span style="color:#f92672">=</span> radius <span style="color:#f92672">*</span> radius;
+            <span style="color:#66d9ef">if</span> ( dx_ <span style="color:#f92672">*</span> dx_ <span style="color:#f92672">+</span> dy_ <span style="color:#f92672">*</span> dy_ <span style="color:#f92672">&lt;=</span> radius <span style="color:#f92672">*</span> radius )
             {
-              tank_hit = 1;
-              r_half = radius / 2;
-              r_half_sq = radius / 2 * (radius / 2);
-              damage = WEAPON_EXPLOSION_DMG[expl.weapon];
-              if ( dist_sq > radius / 2 * (radius / 2) )
-                damage /= 2;
-              tanks[j].hp -= damage;
-              if ( tanks[j].hp > 0 )
+              tank_hit <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>;
+              r_half <span style="color:#f92672">=</span> radius <span style="color:#f92672">/</span> <span style="color:#ae81ff">2</span>;
+              r_half_sq <span style="color:#f92672">=</span> radius <span style="color:#f92672">/</span> <span style="color:#ae81ff">2</span> <span style="color:#f92672">*</span> (radius <span style="color:#f92672">/</span> <span style="color:#ae81ff">2</span>);
+              damage <span style="color:#f92672">=</span> WEAPON_EXPLOSION_DMG[expl.weapon];
+              <span style="color:#66d9ef">if</span> ( dist_sq <span style="color:#f92672">&gt;</span> radius <span style="color:#f92672">/</span> <span style="color:#ae81ff">2</span> <span style="color:#f92672">*</span> (radius <span style="color:#f92672">/</span> <span style="color:#ae81ff">2</span>) )
+                damage <span style="color:#f92672">/=</span> <span style="color:#ae81ff">2</span>;
+              tanks[j].hp <span style="color:#f92672">-=</span> damage;
+              <span style="color:#66d9ef">if</span> ( tanks[j].hp <span style="color:#f92672">&gt;</span> <span style="color:#ae81ff">0</span> )
               {
-                if ( j )
-                  Tank = "RED";
-                else
-                  Tank = "GREEN";
-                sprintf(Message, "%s tank hit for %i damage.", Tank, damage);
+                <span style="color:#66d9ef">if</span> ( j )
+                  Tank <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;RED&#34;</span>;
+                <span style="color:#66d9ef">else</span>
+                  Tank <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;GREEN&#34;</span>;
+                sprintf(Message, <span style="color:#e6db74">&#34;%s tank hit for %i damage.&#34;</span>, Tank, damage);
                 SendText(c, Message);
               }
-              else
+              <span style="color:#66d9ef">else</span>
               {
-                tanks[j].hp = 0;
-                if ( j )
-                  Message_ = " Stay & practice :)";
-                else
-                  Message_ = " Game Over.";
-                if ( j )
-                  Tank_1 = "RED";
-                else
-                  Tank_1 = "GREEN";
-                sprintf(s, "%s tank destroyed.%s", Tank_1, Message_);
+                tanks[j].hp <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>;
+                <span style="color:#66d9ef">if</span> ( j )
+                  Message_ <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34; Stay &amp; practice :)&#34;</span>;
+                <span style="color:#66d9ef">else</span>
+                  Message_ <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34; Game Over.&#34;</span>;
+                <span style="color:#66d9ef">if</span> ( j )
+                  Tank_1 <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;RED&#34;</span>;
+                <span style="color:#66d9ef">else</span>
+                  Tank_1 <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;GREEN&#34;</span>;
+                sprintf(s, <span style="color:#e6db74">&#34;%s tank destroyed.%s&#34;</span>, Tank_1, Message_);
                 SendText(c, s);
               }
             }
           }
         }
       }
-      if ( tank_hit != 1 )
+      <span style="color:#66d9ef">if</span> ( tank_hit <span style="color:#f92672">!=</span> <span style="color:#ae81ff">1</span> )
       {
-        if ( i )
-          v14 = "RED";
-        else
-          v14 = "GREEN";
-        sprintf(Message__, "%s tank missed.", v14);
+        <span style="color:#66d9ef">if</span> ( i )
+          v14 <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;RED&#34;</span>;
+        <span style="color:#66d9ef">else</span>
+          v14 <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;GREEN&#34;</span>;
+        sprintf(Message__, <span style="color:#e6db74">&#34;%s tank missed.&#34;</span>, v14);
         SendText(c, Message__);
       }
     }
   }
-  return 6LL;
+  <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">6LL</span>;
 }
-	</code>
-</pre>
-
-<p>Let&rsquo;s disect this into multiple peices that we can go through one by one.</p>
+</code></pre></div><p>Let&rsquo;s disect this into multiple peices that we can go through one by one.</p>
 <p>So, first we will look at line</p>
 
         </div>
