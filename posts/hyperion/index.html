@@ -105,22 +105,34 @@
 
 <p>The game has a map of 640x480 pixels or 38400 bytes. Dirt is represented by <code>1</code> and Air is represented by <code>0</code>. We control the Green Tank and Red Tank is the enemy but Red Tank never misses. We have 3 Weapons as described in the above image.</p>
 <ul>
-<li>
-<ol>
 <li>18 Damage, 10 Radius Explosion</li>
-</ol>
-</li>
-<li>
-<ol start="2">
 <li>0 Damage, 15 Radius Dirt Ball</li>
-</ol>
-</li>
-<li>
-<ol start="3">
 <li>8 Damage, 20 Radius Explosion (Deletes Dirt in its radius)</li>
-</ol>
-</li>
 </ul>
+<p>Here is a small and very bad gameplay.
+
+
+<br>
+</p>
+
+
+
+<div class="center">
+  <img
+    class="responsive"
+    src="/img/hyperion/gameplay.gif"
+    alt="main()"
+    decoding="async"
+  />
+</div>
+
+
+<br>
+
+<h3 id="the-reverse-engineering-starts">The Reverse Engineering Starts</h3>
+<hr>
+<p>Before starting reversing the code i wanted to look at the network traffic, for that i used wireshark and followed the TCP stream for the packet i found related to the challenge.</p>
+<p>This is what the server was sending the client upon receiving the connection</p>
 
 
 <br>
@@ -131,7 +143,27 @@
 <div class="center">
   <img
     class="responsive"
-    src="/img/hyperion/game.gif"
+    src="/img/hyperion/server_data.png"
+    alt="main()"
+    decoding="async"
+  />
+</div>
+
+
+<br>
+
+<p>And this is what the client was send to the server after the player fires a bullet.</p>
+
+
+<br>
+
+
+
+
+<div class="center">
+  <img
+    class="responsive"
+    src="/img/hyperion/client_data.png"
     alt="main()"
     decoding="async"
   />
