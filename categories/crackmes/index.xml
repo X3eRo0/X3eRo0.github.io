@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Crackmes on X3eRo0&#39;s Blog about Reverse Engineering</title>
+    <link>https://x3ero0.github.io/categories/crackmes/</link>
+    <description>Recent content in Crackmes on X3eRo0&#39;s Blog about Reverse Engineering</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>Copyright © 2008–2021</copyright>
+    <lastBuildDate>Fri, 29 May 2020 05:09:29 +0000</lastBuildDate>
+    
+	<atom:link href="https://x3ero0.github.io/categories/crackmes/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>[0x007] fl04t</title>
+      <link>https://x3ero0.github.io/crackmes/fl04t/</link>
+      <pubDate>Fri, 29 May 2020 05:09:29 +0000</pubDate>
+      
+      <guid>https://x3ero0.github.io/crackmes/fl04t/</guid>
+      <description>[fl04t]Download Filesbody{color : #000000;}p { color: #000000;font-family: Inconsolata Bold,monospace;font-size: 17px;line-height: 1em;text-align: justify;text-justify: inter-word; }li {margin: 0;padding: 0.2em;}
+Can you Crack the fl04ts? Can you Defeat ME? FLAG DOESNT FOLLOW ANY FLAG FORMAT
+Crackme : fl04tDifficulty : MediumPlatform : LinuxPoints : 5/10 Date : Fri, 29 May 2020 05:09:29 &amp;#43;0000 Objective : Find the correct password which prints Correct Password </description>
+    </item>
+    
+    <item>
+      <title>[0x006] WEB cr4kme</title>
+      <link>https://x3ero0.github.io/crackmes/real_web_cr4kme/</link>
+      <pubDate>Mon, 06 Apr 2020 19:51:01 +0000</pubDate>
+      
+      <guid>https://x3ero0.github.io/crackmes/real_web_cr4kme/</guid>
+      <description>[WEB cr4kme]Download Filesbody{color : #000000;}p { color: #000000;font-family: Inconsolata Bold,monospace;font-size: 17px;line-height: 1em;text-align: justify;text-justify: inter-word; }li {margin: 0;padding: 0.2em;}
+Flag format riftCTF{.*}
+Crackme : WEB cr4kmeDifficulty : MediumPlatform : WEBPoints : 5/10 Date : Mon, 06 Apr 2020 19:51:01 &amp;#43;0000 Objective : Find the flag which prints &amp;#39;Correct Password&amp;#39; </description>
+    </item>
+    
+    <item>
+      <title>[0x005] hackme</title>
+      <link>https://x3ero0.github.io/crackmes/hackme/</link>
+      <pubDate>Wed, 05 Feb 2020 15:13:50 +0000</pubDate>
+      
+      <guid>https://x3ero0.github.io/crackmes/hackme/</guid>
+      <description>[hackme]Download Filesbody{color : #000000;}p { color: #000000;font-family: Inconsolata Bold,monospace;font-size: 17px;line-height: 1em;text-align: justify;text-justify: inter-word; }li {margin: 0;padding: 0.2em;}
+the task is from RootersCTF2019 and story goes like this... your client was infected by a really nasty malware and you found some peices of the original malware hidden in the /tmp/dupedive folder.</description>
+    </item>
+    
+    <item>
+      <title>[0x001] p4id_s0ftwar3</title>
+      <link>https://x3ero0.github.io/crackmes/p41d_s0ftw43/</link>
+      <pubDate>Wed, 05 Feb 2020 05:06:29 +0000</pubDate>
+      
+      <guid>https://x3ero0.github.io/crackmes/p41d_s0ftw43/</guid>
+      <description>[p4id_s0ftw4r3]Download Filesbody{color : #000000;}p { color: #000000;font-family: Inconsolata Bold,monospace;font-size: 17px;line-height: 1em;text-align: justify;text-justify: inter-word; }li {margin: 0;padding: 0.2em;}
+X3eRo0 recently released a Paid Software at a price of $31337. Now we Know its very Costly for a software that does nothing (LOL), but you decided to make it free for other people to use.</description>
+    </item>
+    
+    <item>
+      <title>[0x002] xvm_001</title>
+      <link>https://x3ero0.github.io/crackmes/xvm_001/</link>
+      <pubDate>Wed, 05 Feb 2020 05:06:29 +0000</pubDate>
+      
+      <guid>https://x3ero0.github.io/crackmes/xvm_001/</guid>
+      <description>[xvm_001]Download Filesbody{color : #000000;}p { color: #000000;font-family: Inconsolata Bold,monospace;font-size: 17px;line-height: 1em;text-align: justify;text-justify: inter-word; }li {margin: 0;padding: 0.2em;}
+X3eRo0 recently learned about Virtual-Machine Based protection so he made a little Crackme challenge for you. this VM only has simple opcodes like mov, and, xor. NO JMPs or CALLS. The bytecode literally contains the hint.</description>
+    </item>
+    
+    <item>
+      <title>[0x003] Not So Good Encryption</title>
+      <link>https://x3ero0.github.io/crackmes/not_so_good_encryption/</link>
+      <pubDate>Wed, 05 Feb 2020 05:06:29 +0000</pubDate>
+      
+      <guid>https://x3ero0.github.io/crackmes/not_so_good_encryption/</guid>
+      <description>[Not So Good Encryption]Download Filesbody{color : #000000;}p { color: #000000;font-family: Inconsolata Bold,monospace;font-size: 17px;line-height: 1em;text-align: justify;text-justify: inter-word; }li {margin: 0;padding: 0.2em;}
+Very Simple Crackme :)
+Crackme : Not So Good EncryptionDifficulty : EasyPlatform : LinuxPoints : 3/10 Date : 2020-02-02 Objective : Find the Correct password which gives a &amp;#39;Correct Password&amp;#39; Message </description>
+    </item>
+    
+    <item>
+      <title>[0x004] Easy Licensing</title>
+      <link>https://x3ero0.github.io/crackmes/easy_licensing/</link>
+      <pubDate>Wed, 05 Feb 2020 05:06:29 +0000</pubDate>
+      
+      <guid>https://x3ero0.github.io/crackmes/easy_licensing/</guid>
+      <description>[Easy Licensing]Download Filesbody{color : #000000;}p { color: #000000;font-family: Inconsolata Bold,monospace;font-size: 17px;line-height: 1em;text-align: justify;text-justify: inter-word; }li {margin: 0;padding: 0.2em;}
+Another Shitty Password Checking
+Crackme : Easy LicensingDifficulty : EasyPlatform : LinuxPoints : 3/10 Date : 2020-02-02 Objective : Find the Correct password which gives a &amp;#39;Correct Password!</description>
+    </item>
+    
+  </channel>
+</rss>

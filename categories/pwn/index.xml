@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Pwn on X3eRo0&#39;s Blog about Reverse Engineering</title>
+    <link>https://x3ero0.github.io/categories/pwn/</link>
+    <description>Recent content in Pwn on X3eRo0&#39;s Blog about Reverse Engineering</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>Copyright © 2008–2021</copyright>
+    <lastBuildDate>Fri, 26 Mar 2021 12:13:38 +0530</lastBuildDate>
+    
+	<atom:link href="https://x3ero0.github.io/categories/pwn/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Hyperion</title>
+      <link>https://x3ero0.github.io/posts/hyperion/</link>
+      <pubDate>Fri, 26 Mar 2021 12:13:38 +0530</pubDate>
+      
+      <guid>https://x3ero0.github.io/posts/hyperion/</guid>
+      <description>Pwning Pocket Tanks - Hyperion [Google CTF 2017 Finals]   Author : Gynvael Coldwind Language : C/C++ Upload : May 9th, 2018 Level : I will rate it 8/10 Platform : Server: Linux | Client: Windows/Linux etc. Files : change the link hyperion  Desc:- It&amp;#39;s 2017, so even single-player games require Internet connection. Hyperion was one of the pwn challenges from Google CTF 2017 Finals. One day I randomly asked Gynvael (who is the author of this challenge) to give me some CTF challenges.</description>
+    </item>
+    
+  </channel>
+</rss>
