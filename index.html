@@ -24,6 +24,7 @@
     <link rel='stylesheet' href='/css/custom.css' type='text/css' media='all' />
     <link rel='stylesheet' href='/css/syntax.css' type='text/css' media='all' />
     <link rel='stylesheet' href='/css/toc.css' type='text/css' media='all' />
+    <link rel='stylesheet' href='/css/image.css' type='text/css' media='all' />
     <link rel='stylesheet' href='/css/lettercrap.css' type='text/css' media='all' />
     <script src='js/lettercrap.js'></script>
 </head>
@@ -65,27 +66,23 @@
     <section class="container text-monospace mt-5">
         <div class="container text-center">
             <div class="text-center" data-letter-crap='/img/logo.png' style='width: 100%' data-lettercrap-letters='X3eRo0' data-lettercrap-aspect-ratio='0.3'></div>
-            <h3 id="anim">x3ero0's blog</h3>
         </div>
-        <script src="js/anim.js"></script>
     </section>
   <div class="homepage-content">
-    <div style="float: right; width: 25%; height: 100%;">
-        <h3 class="text-monospace" style="text-align: center;">Hexdump</h3>
-        <h5 class="hexdump" style="text-align: right;">asd</h5>
-        <script src="js/hex.js"></script>
-    </div>
     
 
-    <div style="float: left; width: 75%; height: 100%">
-        <img src="/img/main_post.png" alt="Hyperion - Google CTF Pwn Challenge" style="width:90%; display: block; margin-left: auto; margin-right: auto">
-        <div class="centered">
-            <h3>
-                Hyperion [PWN] - Google CTF 2017 Finals
-            </h3>
+    <h3 class="anim"> I am passionate about Reverse Engineering and Malware analysis. I like to write about my findings and share with everyone. </h5>
+
+
+    <div class="image">
+        <img class="image__img" src="/img/main_post.png" alt="Bricks">
+        <div class="image__overlay image__overlay--blur">
+            <div class="image__title">Pwning Game</div>
+            <p class="image__description">
+                Hyperion Pwn Challenge
+            </p>
         </div>
     </div>
-
     <p>HELLO</p>
 
   </div>
@@ -234,6 +231,12 @@
                 
             
         </ul>
+    </aside>
+
+    <aside class="widget widget_recent_entries">
+        <h3 class="text-monospace" >Hexdump</h3>
+        <h5 class="hexdump">asd</h5>
+        <script src="js/hex.js"></script>
     </aside>
 
 </div>
