@@ -1,11 +1,13 @@
-const text = document.getElementById("anim");
+const text = document.querySelector(".fancy")
 const str_ = text.textContent;
 const chr_ = str_.split("");
 
 text.textContent = ""
 
 for(let i = 0; i < chr_.length; i++){
-    text.innerHTML += "<span>" + chr_[i] + "</span>";
+    var randomColor = '#'+Math.floor(Math.random()*16777215).toString(16);
+    text.innerHTML += '<span style="color: '+ randomColor +'">' + chr_[i] + "</span>";
+
 }
 
 let char = 0;

@@ -36,6 +36,7 @@ html {
  * Remove default margin.
  */
 body {
+  background-color: #282a36;
   margin: 0; }
 
 /* HTML5 display definitions
