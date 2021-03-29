@@ -6,3 +6,34 @@ span {
 span.fade {
 	opacity: 1;
 }
+
+.card {
+  border: 5px solid #292929;
+  outline: 5px solid #e3e3e3;
+  box-shadow: 0 16px 32px 0 rgba(0,0,0,0.4);
+  transition: 0.3s;
+  width: 50%;
+  position: relative;
+  text-align: center;
+  color: #ffffff;
+}
+
+.card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 16px 32px 0 rgba(0,0,0,0.4);
+}
+
+img {
+	filter: blur(1px);
+	-webkit-filter: blur(1px);
+
+}
+
+.card-text {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  padding: 2px 16px;
+}
+
