@@ -98,8 +98,10 @@ function onTick(){
 
     if (opt){
         span.classList.remove('fade');
+        span.classList.add('anim');
     } else {
         span.classList.add('fade');
+        span.classList.remove('anim');
     }
 
     char++;

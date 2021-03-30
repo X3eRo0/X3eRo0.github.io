@@ -26,7 +26,10 @@
     <link rel='stylesheet' href='/css/toc.css' type='text/css' media='all' />
     <link rel='stylesheet' href='/css/image.css' type='text/css' media='all' />
     <link rel='stylesheet' href='/css/lettercrap.css' type='text/css' media='all' />
-    <script src='js/lettercrap.js'></script>
+    <link rel="stylesheet" href='/css/dracula.css'>
+    <script src="/js/highlight.js"></script>
+    <script>hljs.highlightAll();</script>
+    <script src='/js/lettercrap.js'></script>
 </head>
 
     <body class="two-column">
@@ -100,7 +103,7 @@
 <li>Platform : Unix/Linux etc.</li>
 <li>Crackme : <a href="https://crackmes.one/crackme/5bc0fe0033c5d4110a29b296">crackmes.one</a></li>
 </ul>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-plaintext" data-lang="plaintext">Desc: 
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-plaintext" data-lang="plaintext">Desc: 
 
    - x86_64 linux binary (tested on debian 9 and ubuntu 18.04, should run on any distro).
    - Takes one command line argument and outputs &#34;OK!&#34; if it&#39;s correct, &#34;Wrong&#34; if it&#39;s not.
@@ -133,7 +136,7 @@
 <p>So, as we can see the binary takes input using argv
 and throws an error if no argument is passed.</p>
 <p>Lets trace the binary using ltrace and see what it does.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-plaintext" data-lang="plaintext">_ZNSt8ios_base4InitC1Ev(0x55b4f3a8b881, 0x7ffe79e0e7b8, 0x7ffe79e0e7d0, 224) = 0
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-plaintext" data-lang="plaintext">_ZNSt8ios_base4InitC1Ev(0x55b4f3a8b881, 0x7ffe79e0e7b8, 0x7ffe79e0e7d0, 224) = 0
 __cxa_atexit(0x7f06e2a07990, 0x55b4f3a8b881, 0x55b4f3a8b068, 6) = 0
 malloc(8192)                                     = 0x55b4f497feb0
 sigaltstack(0x7ffe79e0e688, 0, 0, 0)             = 0
@@ -213,11 +216,11 @@ A normal program terminates like this</p>
 <br>
 
 <p>In this function <code>init_sigaltstack()</code> the program is allocating 0x2000 Bytes in the heap to use as an alternate stack. Then it initializes a stack_t structure</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#75715e">/* Structure describing a signal stack.  */</span>
-<span style="color:#66d9ef">typedef</span> <span style="color:#66d9ef">struct</span>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#6272a4">/* Structure describing a signal stack.  */</span>
+<span style="color:#ff79c6">typedef</span> <span style="color:#ff79c6">struct</span>
   {
-    <span style="color:#66d9ef">void</span> <span style="color:#f92672">*</span>ss_sp;
-    <span style="color:#66d9ef">int</span> ss_flags;
+    <span style="color:#8be9fd">void</span> <span style="color:#ff79c6">*</span>ss_sp;
+    <span style="color:#8be9fd">int</span> ss_flags;
     size_t ss_size;
   } stack_t;
 </code></pre></div>
@@ -247,14 +250,14 @@ Now lets look at <code>register_sigill_handler()</code>
 <br>
 
 <p>and this is the same function from the actual source</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#66d9ef">bool</span> <span style="color:#a6e22e">register_sigill_handler</span>() {
-    <span style="color:#66d9ef">struct</span> sigaction sa <span style="color:#f92672">=</span> {};
-    sa.sa_sigaction <span style="color:#f92672">=</span> sigill_handler;
-    sa.sa_flags <span style="color:#f92672">=</span> SA_ONSTACK <span style="color:#f92672">|</span> SA_SIGINFO;
-    <span style="color:#66d9ef">if</span> (sigfillset(<span style="color:#f92672">&amp;</span>sa.sa_mask) <span style="color:#f92672">!=</span> <span style="color:#ae81ff">0</span>) {
-        <span style="color:#66d9ef">return</span> false;
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#8be9fd">bool</span> <span style="color:#50fa7b">register_sigill_handler</span>() {
+    <span style="color:#ff79c6">struct</span> sigaction sa <span style="color:#ff79c6">=</span> {};
+    sa.sa_sigaction <span style="color:#ff79c6">=</span> sigill_handler;
+    sa.sa_flags <span style="color:#ff79c6">=</span> SA_ONSTACK <span style="color:#ff79c6">|</span> SA_SIGINFO;
+    <span style="color:#ff79c6">if</span> (sigfillset(<span style="color:#ff79c6">&amp;</span>sa.sa_mask) <span style="color:#ff79c6">!=</span> <span style="color:#bd93f9">0</span>) {
+        <span style="color:#ff79c6">return</span> <span style="color:#8be9fd;font-style:italic">false</span>;
     }
-    <span style="color:#66d9ef">return</span> sigaction(SIGILL, <span style="color:#f92672">&amp;</span>sa, nullptr) <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>;
+    <span style="color:#ff79c6">return</span> sigaction(SIGILL, <span style="color:#ff79c6">&amp;</span>sa, nullptr) <span style="color:#ff79c6">==</span> <span style="color:#bd93f9">0</span>;
 }
 </code></pre></div>
 
@@ -364,7 +367,7 @@ Now lets look at <code>register_sigill_handler()</code>
 <h3 id="instruction-encoding">Instruction Encoding</h3>
 <p>The instructions are encoding in hell86 is actually one simple thing in this challenge.
 Each instruction has an 8 byte immediate value which lies just after the <code>UD2</code>.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-plaintext" data-lang="plaintext">\x0f\x0b   - UD2
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-plaintext" data-lang="plaintext">\x0f\x0b   - UD2
 \x00 * 0x8 - imm64
 \x09       - Opcode
 \x00       - arg1
@@ -375,14 +378,14 @@ Each instruction has an 8 byte immediate value which lies just after the <code>U
 <br>
 
 <p>The structure would look like this :</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#75715e">/* hell86 instructions */</span>
-<span style="color:#66d9ef">typedef</span> <span style="color:#66d9ef">struct</span>{
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#6272a4">/* hell86 instructions */</span>
+<span style="color:#ff79c6">typedef</span> <span style="color:#ff79c6">struct</span>{
    uint16_t ud2;
    int64    imm64;
-   <span style="color:#66d9ef">char</span>     opcode;
-   <span style="color:#66d9ef">char</span>     arg1;
-   <span style="color:#66d9ef">char</span>     arg2;
-   <span style="color:#66d9ef">char</span>     arg3;
+   <span style="color:#8be9fd">char</span>     opcode;
+   <span style="color:#8be9fd">char</span>     arg1;
+   <span style="color:#8be9fd">char</span>     arg2;
+   <span style="color:#8be9fd">char</span>     arg3;
 } hell86_instr;
 </code></pre></div>
 
@@ -423,12 +426,12 @@ Each instruction has an 8 byte immediate value which lies just after the <code>U
 </div>
 
 <br>
-<p>As you can see <code>rsi</code> points on the stack or should i say the new stack. So this is the part which  i am not so sure about. I think whenever a signal is raised the <code>sigcontext</code> structure is pushed on the <code>altstack</code> and its this structure where <code>rsi</code> is pointing at. if we see the <code>sigcontext</code> 
+<p>As you can see <code>rsi</code> points on the stack or should i say the new stack. So this is the part which  i am not so sure about. I think whenever a signal is raised the <code>sigcontext</code> structure is pushed on the <code>altstack</code> and its this structure where <code>rsi</code> is pointing at. if we see the <code>sigcontext</code>
 struct.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#75715e">/*
-</span><span style="color:#75715e"> * The 64-bit signal frame:
-</span><span style="color:#75715e"> */</span>
-<span style="color:#66d9ef">struct</span> sigcontext_64 {
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#6272a4">/*
+</span><span style="color:#6272a4"> * The 64-bit signal frame:
+</span><span style="color:#6272a4"> */</span>
+<span style="color:#ff79c6">struct</span> sigcontext_64 {
   __u64       r8;
   __u64       r9;
   __u64       r10;
@@ -456,15 +459,15 @@ struct.</p>
   __u64       oldmask;
   __u64       cr2;
 
-  <span style="color:#75715e">/*
-</span><span style="color:#75715e">   * fpstate is really (struct _fpstate *) or (struct _xstate *)
-</span><span style="color:#75715e">   * depending on the FP_XSTATE_MAGIC1 encoded in the SW reserved
-</span><span style="color:#75715e">   * bytes of (struct _fpstate) and FP_XSTATE_MAGIC2 present at the end
-</span><span style="color:#75715e">   * of extended memory layout. See comments at the definition of
-</span><span style="color:#75715e">   * (struct _fpx_sw_bytes)
-</span><span style="color:#75715e">   */</span>
-  __u64       fpstate; <span style="color:#75715e">/* Zero when no FPU/extended context */</span>
-  __u64       reserved1[<span style="color:#ae81ff">8</span>];
+  <span style="color:#6272a4">/*
+</span><span style="color:#6272a4">   * fpstate is really (struct _fpstate *) or (struct _xstate *)
+</span><span style="color:#6272a4">   * depending on the FP_XSTATE_MAGIC1 encoded in the SW reserved
+</span><span style="color:#6272a4">   * bytes of (struct _fpstate) and FP_XSTATE_MAGIC2 present at the end
+</span><span style="color:#6272a4">   * of extended memory layout. See comments at the definition of
+</span><span style="color:#6272a4">   * (struct _fpx_sw_bytes)
+</span><span style="color:#6272a4">   */</span>
+  __u64       fpstate; <span style="color:#6272a4">/* Zero when no FPU/extended context */</span>
+  __u64       reserved1[<span style="color:#bd93f9">8</span>];
 };
 </code></pre></div>
 <br>
@@ -494,223 +497,223 @@ using. I didn&rsquo;t implemented the ones which were not used.</p>
 <p>After looking at the instructions which the VM was using, i found out that there were total 50 instructions implemented while only 44 were used.</p>
 <p>Also there were some imm64 values which were used as an operand for <code>jmp</code> and <code>call</code> instructions for example <code>malloc()</code> and <code>free()</code> are one of them. these addresses were placed in the bytecode so i just dumped the bytecode using gdb.</p>
 <p>disass.py</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">from</span> struct <span style="color:#f92672">import</span> unpack
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#ff79c6">from</span> struct <span style="color:#ff79c6">import</span> unpack
 
-MALLOC <span style="color:#f92672">=</span> <span style="color:#ae81ff">0x7ffff7b1c260</span>
-FREE   <span style="color:#f92672">=</span> <span style="color:#ae81ff">0x7ffff7b1c850</span>
+MALLOC <span style="color:#ff79c6">=</span> <span style="color:#bd93f9">0x7ffff7b1c260</span>
+FREE   <span style="color:#ff79c6">=</span> <span style="color:#bd93f9">0x7ffff7b1c850</span>
 
-op_addrs <span style="color:#f92672">=</span> [
-    <span style="color:#ae81ff">0x1a1f</span>,
-    <span style="color:#ae81ff">0x1a20</span>,
-    <span style="color:#ae81ff">0x1a39</span>,
-    <span style="color:#ae81ff">0x1a52</span>,
-    <span style="color:#ae81ff">0x1a6c</span>,
-    <span style="color:#ae81ff">0x1a87</span>,
-    <span style="color:#ae81ff">0x1aa2</span>,
-    <span style="color:#ae81ff">0x1abe</span>,
-    <span style="color:#ae81ff">0x1ae6</span>,
-    <span style="color:#ae81ff">0x1ada</span>,
-    <span style="color:#ae81ff">0x1afa</span>,
-    <span style="color:#ae81ff">0x1b12</span>,
-    <span style="color:#ae81ff">0x1b2b</span>,
-    <span style="color:#ae81ff">0x1b43</span>,
-    <span style="color:#ae81ff">0x1b5c</span>,
-    <span style="color:#ae81ff">0x1b73</span>,
-    <span style="color:#ae81ff">0x1b8b</span>,
-    <span style="color:#ae81ff">0x1ba3</span>,
-    <span style="color:#ae81ff">0x1bba</span>,
-    <span style="color:#ae81ff">0x1bd2</span>,
-    <span style="color:#ae81ff">0x1be9</span>,
-    <span style="color:#ae81ff">0x1c01</span>,
-    <span style="color:#ae81ff">0x1c1a</span>,
-    <span style="color:#ae81ff">0x1c2e</span>,
-    <span style="color:#ae81ff">0x1c43</span>,
-    <span style="color:#ae81ff">0x1c54</span>,
-    <span style="color:#ae81ff">0x1c6d</span>,
-    <span style="color:#ae81ff">0x1c86</span>,
-    <span style="color:#ae81ff">0x1c9f</span>,
-    <span style="color:#ae81ff">0x1cb3</span>,
-    <span style="color:#ae81ff">0x1cd2</span>,
-    <span style="color:#ae81ff">0x1cf1</span>,
-    <span style="color:#ae81ff">0x1d10</span>,
-    <span style="color:#ae81ff">0x1d2f</span>,
-    <span style="color:#ae81ff">0x1d4e</span>,
-    <span style="color:#ae81ff">0x1d6d</span>,
-    <span style="color:#ae81ff">0x1d87</span>,
-    <span style="color:#ae81ff">0x1da1</span>,
-    <span style="color:#ae81ff">0x1db9</span>,
-    <span style="color:#ae81ff">0x1dcf</span>,
-    <span style="color:#ae81ff">0x1de5</span>,
-    <span style="color:#ae81ff">0x1e07</span>,
-    <span style="color:#ae81ff">0x1e9c</span>,
-    <span style="color:#ae81ff">0x1ebe</span>,
-    <span style="color:#ae81ff">0x1e1e</span>,
-    <span style="color:#ae81ff">0x1e32</span>,
-    <span style="color:#ae81ff">0x1e49</span>,
-    <span style="color:#ae81ff">0x1e60</span>,
-    <span style="color:#ae81ff">0x1e74</span>,
-    <span style="color:#ae81ff">0x1e88</span>
+op_addrs <span style="color:#ff79c6">=</span> [
+    <span style="color:#bd93f9">0x1a1f</span>,
+    <span style="color:#bd93f9">0x1a20</span>,
+    <span style="color:#bd93f9">0x1a39</span>,
+    <span style="color:#bd93f9">0x1a52</span>,
+    <span style="color:#bd93f9">0x1a6c</span>,
+    <span style="color:#bd93f9">0x1a87</span>,
+    <span style="color:#bd93f9">0x1aa2</span>,
+    <span style="color:#bd93f9">0x1abe</span>,
+    <span style="color:#bd93f9">0x1ae6</span>,
+    <span style="color:#bd93f9">0x1ada</span>,
+    <span style="color:#bd93f9">0x1afa</span>,
+    <span style="color:#bd93f9">0x1b12</span>,
+    <span style="color:#bd93f9">0x1b2b</span>,
+    <span style="color:#bd93f9">0x1b43</span>,
+    <span style="color:#bd93f9">0x1b5c</span>,
+    <span style="color:#bd93f9">0x1b73</span>,
+    <span style="color:#bd93f9">0x1b8b</span>,
+    <span style="color:#bd93f9">0x1ba3</span>,
+    <span style="color:#bd93f9">0x1bba</span>,
+    <span style="color:#bd93f9">0x1bd2</span>,
+    <span style="color:#bd93f9">0x1be9</span>,
+    <span style="color:#bd93f9">0x1c01</span>,
+    <span style="color:#bd93f9">0x1c1a</span>,
+    <span style="color:#bd93f9">0x1c2e</span>,
+    <span style="color:#bd93f9">0x1c43</span>,
+    <span style="color:#bd93f9">0x1c54</span>,
+    <span style="color:#bd93f9">0x1c6d</span>,
+    <span style="color:#bd93f9">0x1c86</span>,
+    <span style="color:#bd93f9">0x1c9f</span>,
+    <span style="color:#bd93f9">0x1cb3</span>,
+    <span style="color:#bd93f9">0x1cd2</span>,
+    <span style="color:#bd93f9">0x1cf1</span>,
+    <span style="color:#bd93f9">0x1d10</span>,
+    <span style="color:#bd93f9">0x1d2f</span>,
+    <span style="color:#bd93f9">0x1d4e</span>,
+    <span style="color:#bd93f9">0x1d6d</span>,
+    <span style="color:#bd93f9">0x1d87</span>,
+    <span style="color:#bd93f9">0x1da1</span>,
+    <span style="color:#bd93f9">0x1db9</span>,
+    <span style="color:#bd93f9">0x1dcf</span>,
+    <span style="color:#bd93f9">0x1de5</span>,
+    <span style="color:#bd93f9">0x1e07</span>,
+    <span style="color:#bd93f9">0x1e9c</span>,
+    <span style="color:#bd93f9">0x1ebe</span>,
+    <span style="color:#bd93f9">0x1e1e</span>,
+    <span style="color:#bd93f9">0x1e32</span>,
+    <span style="color:#bd93f9">0x1e49</span>,
+    <span style="color:#bd93f9">0x1e60</span>,
+    <span style="color:#bd93f9">0x1e74</span>,
+    <span style="color:#bd93f9">0x1e88</span>
 ]
 
-registers <span style="color:#f92672">=</span> {
-    <span style="color:#ae81ff">0</span> : <span style="color:#e6db74">&#34;r8&#34;</span>,
-    <span style="color:#ae81ff">1</span> : <span style="color:#e6db74">&#34;r9&#34;</span>,
-    <span style="color:#ae81ff">2</span> : <span style="color:#e6db74">&#34;r10&#34;</span>,
-    <span style="color:#ae81ff">3</span> : <span style="color:#e6db74">&#34;r11&#34;</span>,
-    <span style="color:#ae81ff">4</span> : <span style="color:#e6db74">&#34;r12&#34;</span>,
-    <span style="color:#ae81ff">5</span> : <span style="color:#e6db74">&#34;r13&#34;</span>,
-    <span style="color:#ae81ff">6</span> : <span style="color:#e6db74">&#34;r14&#34;</span>,
-    <span style="color:#ae81ff">7</span> : <span style="color:#e6db74">&#34;r15&#34;</span>,
-    <span style="color:#ae81ff">8</span> : <span style="color:#e6db74">&#34;rdi&#34;</span>,
-    <span style="color:#ae81ff">9</span> : <span style="color:#e6db74">&#34;rsi&#34;</span>,
-    <span style="color:#ae81ff">10</span> : <span style="color:#e6db74">&#34;rbp&#34;</span>,
-    <span style="color:#ae81ff">11</span> : <span style="color:#e6db74">&#34;rbx&#34;</span>,
-    <span style="color:#ae81ff">12</span> : <span style="color:#e6db74">&#34;rdx&#34;</span>,
-    <span style="color:#ae81ff">13</span> : <span style="color:#e6db74">&#34;rax&#34;</span>,
-    <span style="color:#ae81ff">14</span> : <span style="color:#e6db74">&#34;rcx&#34;</span>,
-    <span style="color:#ae81ff">15</span> : <span style="color:#e6db74">&#34;sp&#34;</span>,
-    <span style="color:#ae81ff">16</span> : <span style="color:#e6db74">&#34;pc&#34;</span>  
+registers <span style="color:#ff79c6">=</span> {
+    <span style="color:#bd93f9">0</span> : <span style="color:#f1fa8c">&#34;r8&#34;</span>,
+    <span style="color:#bd93f9">1</span> : <span style="color:#f1fa8c">&#34;r9&#34;</span>,
+    <span style="color:#bd93f9">2</span> : <span style="color:#f1fa8c">&#34;r10&#34;</span>,
+    <span style="color:#bd93f9">3</span> : <span style="color:#f1fa8c">&#34;r11&#34;</span>,
+    <span style="color:#bd93f9">4</span> : <span style="color:#f1fa8c">&#34;r12&#34;</span>,
+    <span style="color:#bd93f9">5</span> : <span style="color:#f1fa8c">&#34;r13&#34;</span>,
+    <span style="color:#bd93f9">6</span> : <span style="color:#f1fa8c">&#34;r14&#34;</span>,
+    <span style="color:#bd93f9">7</span> : <span style="color:#f1fa8c">&#34;r15&#34;</span>,
+    <span style="color:#bd93f9">8</span> : <span style="color:#f1fa8c">&#34;rdi&#34;</span>,
+    <span style="color:#bd93f9">9</span> : <span style="color:#f1fa8c">&#34;rsi&#34;</span>,
+    <span style="color:#bd93f9">10</span> : <span style="color:#f1fa8c">&#34;rbp&#34;</span>,
+    <span style="color:#bd93f9">11</span> : <span style="color:#f1fa8c">&#34;rbx&#34;</span>,
+    <span style="color:#bd93f9">12</span> : <span style="color:#f1fa8c">&#34;rdx&#34;</span>,
+    <span style="color:#bd93f9">13</span> : <span style="color:#f1fa8c">&#34;rax&#34;</span>,
+    <span style="color:#bd93f9">14</span> : <span style="color:#f1fa8c">&#34;rcx&#34;</span>,
+    <span style="color:#bd93f9">15</span> : <span style="color:#f1fa8c">&#34;sp&#34;</span>,
+    <span style="color:#bd93f9">16</span> : <span style="color:#f1fa8c">&#34;pc&#34;</span>  
 }
 
 
-bytecode <span style="color:#f92672">=</span> open(<span style="color:#e6db74">&#34;bytecode&#34;</span>, <span style="color:#e6db74">&#34;rb&#34;</span>)<span style="color:#f92672">.</span>read()<span style="color:#75715e">#[0x1190:0x1946]</span>
+bytecode <span style="color:#ff79c6">=</span> <span style="color:#8be9fd;font-style:italic">open</span>(<span style="color:#f1fa8c">&#34;bytecode&#34;</span>, <span style="color:#f1fa8c">&#34;rb&#34;</span>)<span style="color:#ff79c6">.</span>read()<span style="color:#6272a4">#[0x1190:0x1946]</span>
 
-<span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">0</span>, len(bytecode), <span style="color:#ae81ff">0xE</span>):
-    instruction <span style="color:#f92672">=</span> bytecode[i<span style="color:#f92672">+</span><span style="color:#ae81ff">2</span>:i<span style="color:#f92672">+</span><span style="color:#ae81ff">0xe</span>]
-    opcode <span style="color:#f92672">=</span> ord(instruction[<span style="color:#ae81ff">8</span>])
-    arg1   <span style="color:#f92672">=</span> ord(instruction[<span style="color:#ae81ff">9</span>])
-    arg2   <span style="color:#f92672">=</span> ord(instruction[<span style="color:#ae81ff">10</span>])
-    arg3   <span style="color:#f92672">=</span> ord(instruction[<span style="color:#ae81ff">11</span>])
+<span style="color:#ff79c6">for</span> i <span style="color:#ff79c6">in</span> <span style="color:#8be9fd;font-style:italic">range</span>(<span style="color:#bd93f9">0</span>, <span style="color:#8be9fd;font-style:italic">len</span>(bytecode), <span style="color:#bd93f9">0xE</span>):
+    instruction <span style="color:#ff79c6">=</span> bytecode[i<span style="color:#ff79c6">+</span><span style="color:#bd93f9">2</span>:i<span style="color:#ff79c6">+</span><span style="color:#bd93f9">0xe</span>]
+    opcode <span style="color:#ff79c6">=</span> <span style="color:#8be9fd;font-style:italic">ord</span>(instruction[<span style="color:#bd93f9">8</span>])
+    arg1   <span style="color:#ff79c6">=</span> <span style="color:#8be9fd;font-style:italic">ord</span>(instruction[<span style="color:#bd93f9">9</span>])
+    arg2   <span style="color:#ff79c6">=</span> <span style="color:#8be9fd;font-style:italic">ord</span>(instruction[<span style="color:#bd93f9">10</span>])
+    arg3   <span style="color:#ff79c6">=</span> <span style="color:#8be9fd;font-style:italic">ord</span>(instruction[<span style="color:#bd93f9">11</span>])
 
-    imm    <span style="color:#f92672">=</span> unpack(<span style="color:#e6db74">&#34;Q&#34;</span>, instruction[<span style="color:#ae81ff">0</span>: <span style="color:#ae81ff">8</span>])[<span style="color:#ae81ff">0</span>]
-    <span style="color:#75715e">#tmp = &#34;&#34;.join([(&#34;\\x%.2X&#34; % ord(x)) for x in instruction])</span>
-    dis <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;</span><span style="color:#e6db74">%.4i</span><span style="color:#e6db74">: [</span><span style="color:#e6db74">%.2i</span><span style="color:#e6db74">][ </span><span style="color:#e6db74">%.4x</span><span style="color:#e6db74"> ][ </span><span style="color:#e6db74">%.4x</span><span style="color:#e6db74"> ] &#34;</span> <span style="color:#f92672">%</span> (i, opcode, op_addrs[opcode], <span style="color:#ae81ff">0x1190</span> <span style="color:#f92672">+</span> i)
-    <span style="color:#75715e">#dis = &#34;%.4x: [%.4x] %s\t&#34; % (i, 0x1190 + i, tmp)</span>
+    imm    <span style="color:#ff79c6">=</span> unpack(<span style="color:#f1fa8c">&#34;Q&#34;</span>, instruction[<span style="color:#bd93f9">0</span>: <span style="color:#bd93f9">8</span>])[<span style="color:#bd93f9">0</span>]
+    <span style="color:#6272a4">#tmp = &#34;&#34;.join([(&#34;\\x%.2X&#34; % ord(x)) for x in instruction])</span>
+    dis <span style="color:#ff79c6">=</span> <span style="color:#f1fa8c">&#34;</span><span style="color:#f1fa8c">%.4i</span><span style="color:#f1fa8c">: [</span><span style="color:#f1fa8c">%.2i</span><span style="color:#f1fa8c">][ </span><span style="color:#f1fa8c">%.4x</span><span style="color:#f1fa8c"> ][ </span><span style="color:#f1fa8c">%.4x</span><span style="color:#f1fa8c"> ] &#34;</span> <span style="color:#ff79c6">%</span> (i, opcode, op_addrs[opcode], <span style="color:#bd93f9">0x1190</span> <span style="color:#ff79c6">+</span> i)
+    <span style="color:#6272a4">#dis = &#34;%.4x: [%.4x] %s\t&#34; % (i, 0x1190 + i, tmp)</span>
 
-    <span style="color:#66d9ef">if</span>   opcode <span style="color:#f92672">==</span> <span style="color:#ae81ff">9</span>:
-        <span style="color:#66d9ef">if</span> imm <span style="color:#f92672">&amp;</span> <span style="color:#ae81ff">0x555555550000</span>:
-            imm <span style="color:#f92672">=</span> imm <span style="color:#f92672">-</span> <span style="color:#ae81ff">0x555555554000</span>
-        <span style="color:#66d9ef">if</span> registers[arg1] <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;pc&#34;</span>:
-            dis <span style="color:#f92672">+=</span>  <span style="color:#e6db74">&#34;jmp 0x</span><span style="color:#e6db74">%.4x</span><span style="color:#e6db74">&#34;</span> <span style="color:#f92672">%</span> (imm)
-        <span style="color:#66d9ef">else</span>:
-            dis <span style="color:#f92672">+=</span>  <span style="color:#e6db74">&#34;</span><span style="color:#e6db74">%s</span><span style="color:#e6db74"> = 0x</span><span style="color:#e6db74">%.4x</span><span style="color:#e6db74">&#34;</span> <span style="color:#f92672">%</span> (registers[arg1], imm)
-    <span style="color:#66d9ef">elif</span> opcode <span style="color:#f92672">==</span> <span style="color:#ae81ff">36</span>:
-        dis <span style="color:#f92672">+=</span>  <span style="color:#e6db74">&#34;if </span><span style="color:#e6db74">%s</span><span style="color:#e6db74"> != 0x</span><span style="color:#e6db74">%.4x</span><span style="color:#e6db74">: </span><span style="color:#e6db74">%s</span><span style="color:#e6db74"> = 1; else: </span><span style="color:#e6db74">%s</span><span style="color:#e6db74"> = 0;&#34;</span> <span style="color:#f92672">%</span> (registers[arg2], imm, registers[arg1], registers[arg1])
-    <span style="color:#66d9ef">elif</span> opcode <span style="color:#f92672">==</span> <span style="color:#ae81ff">37</span>:
-        dis <span style="color:#f92672">+=</span>  <span style="color:#e6db74">&#34;if </span><span style="color:#e6db74">%s</span><span style="color:#e6db74"> == 0: </span><span style="color:#e6db74">%s</span><span style="color:#e6db74"> = 1;&#34;</span> <span style="color:#f92672">%</span> (registers[arg2], registers[arg1])
-    <span style="color:#66d9ef">elif</span> opcode <span style="color:#f92672">==</span> <span style="color:#ae81ff">1</span>:
-        dis <span style="color:#f92672">+=</span>  <span style="color:#e6db74">&#34;</span><span style="color:#e6db74">%s</span><span style="color:#e6db74"> = </span><span style="color:#e6db74">%s</span><span style="color:#e6db74"> + </span><span style="color:#e6db74">%s</span><span style="color:#e6db74">&#34;</span> <span style="color:#f92672">%</span> (registers[arg1], registers[arg2], registers[arg3])
-    <span style="color:#66d9ef">elif</span> opcode <span style="color:#f92672">==</span> <span style="color:#ae81ff">2</span>:
-        dis <span style="color:#f92672">+=</span>  <span style="color:#e6db74">&#34;</span><span style="color:#e6db74">%s</span><span style="color:#e6db74"> = </span><span style="color:#e6db74">%s</span><span style="color:#e6db74"> - </span><span style="color:#e6db74">%s</span><span style="color:#e6db74">&#34;</span> <span style="color:#f92672">%</span> (registers[arg1], registers[arg2], registers[arg3])
-    <span style="color:#66d9ef">elif</span> opcode <span style="color:#f92672">==</span> <span style="color:#ae81ff">3</span>:
-        dis <span style="color:#f92672">+=</span>  <span style="color:#e6db74">&#34;</span><span style="color:#e6db74">%s</span><span style="color:#e6db74"> = </span><span style="color:#e6db74">%s</span><span style="color:#e6db74"> * </span><span style="color:#e6db74">%s</span><span style="color:#e6db74">&#34;</span> <span style="color:#f92672">%</span> (registers[arg1], registers[arg2], registers[arg3])
-    <span style="color:#66d9ef">elif</span> opcode <span style="color:#f92672">==</span> <span style="color:#ae81ff">4</span> <span style="color:#f92672">or</span> opcode <span style="color:#f92672">==</span> <span style="color:#ae81ff">5</span>:
-        dis <span style="color:#f92672">+=</span>  <span style="color:#e6db74">&#34;</span><span style="color:#e6db74">%s</span><span style="color:#e6db74"> = </span><span style="color:#e6db74">%s</span><span style="color:#e6db74"> / </span><span style="color:#e6db74">%s</span><span style="color:#e6db74">&#34;</span> <span style="color:#f92672">%</span> (registers[arg1], registers[arg2], registers[arg3])
-    <span style="color:#66d9ef">elif</span> opcode <span style="color:#f92672">==</span> <span style="color:#ae81ff">6</span>:
-        dis <span style="color:#f92672">+=</span>  <span style="color:#e6db74">&#34;</span><span style="color:#e6db74">%s</span><span style="color:#e6db74"> = </span><span style="color:#e6db74">%s</span><span style="color:#e6db74"> &gt;&gt; </span><span style="color:#e6db74">%s</span><span style="color:#e6db74">&#34;</span> <span style="color:#f92672">%</span> (registers[arg1], registers[arg2], registers[arg3])
-    <span style="color:#66d9ef">elif</span> opcode <span style="color:#f92672">==</span> <span style="color:#ae81ff">7</span>:
-        dis <span style="color:#f92672">+=</span>  <span style="color:#e6db74">&#34;</span><span style="color:#e6db74">%s</span><span style="color:#e6db74"> = </span><span style="color:#e6db74">%s</span><span style="color:#e6db74"> &lt;&lt; </span><span style="color:#e6db74">%s</span><span style="color:#e6db74">&#34;</span> <span style="color:#f92672">%</span> (registers[arg1], registers[arg2], registers[arg3])
-    <span style="color:#66d9ef">elif</span> opcode <span style="color:#f92672">==</span> <span style="color:#ae81ff">8</span>:
-        dis <span style="color:#f92672">+=</span>  <span style="color:#e6db74">&#34;</span><span style="color:#e6db74">%s</span><span style="color:#e6db74"> = ~</span><span style="color:#e6db74">%s</span><span style="color:#e6db74">&#34;</span> <span style="color:#f92672">%</span> (registers[arg1], registers[arg2])
-    <span style="color:#66d9ef">elif</span> opcode <span style="color:#f92672">==</span> <span style="color:#ae81ff">10</span> <span style="color:#f92672">or</span> opcode <span style="color:#f92672">==</span> <span style="color:#ae81ff">11</span>:
-        dis <span style="color:#f92672">+=</span>  <span style="color:#e6db74">&#34;(WORD)  </span><span style="color:#e6db74">%s</span><span style="color:#e6db74"> = BYTE  [</span><span style="color:#e6db74">%s</span><span style="color:#e6db74"> + 0x</span><span style="color:#e6db74">%.4x</span><span style="color:#e6db74">]&#34;</span> <span style="color:#f92672">%</span> (registers[arg1], registers[arg2], imm)
-    <span style="color:#66d9ef">elif</span> opcode <span style="color:#f92672">==</span> <span style="color:#ae81ff">11</span>:
-        dis <span style="color:#f92672">+=</span>  <span style="color:#e6db74">&#34;(QWORD) </span><span style="color:#e6db74">%s</span><span style="color:#e6db74"> = BYTE  [</span><span style="color:#e6db74">%s</span><span style="color:#e6db74"> + 0x</span><span style="color:#e6db74">%.4x</span><span style="color:#e6db74">]&#34;</span> <span style="color:#f92672">%</span> (registers[arg1], registers[arg2], imm)
-    <span style="color:#66d9ef">elif</span> opcode <span style="color:#f92672">==</span> <span style="color:#ae81ff">12</span>:
-        dis <span style="color:#f92672">+=</span>  <span style="color:#e6db74">&#34;(DWORD) </span><span style="color:#e6db74">%s</span><span style="color:#e6db74"> = WORD  [</span><span style="color:#e6db74">%s</span><span style="color:#e6db74"> + 0x</span><span style="color:#e6db74">%.4x</span><span style="color:#e6db74">]&#34;</span> <span style="color:#f92672">%</span> (registers[arg1], registers[arg2], imm)
-    <span style="color:#66d9ef">elif</span> opcode <span style="color:#f92672">==</span> <span style="color:#ae81ff">13</span>:
-        dis <span style="color:#f92672">+=</span>  <span style="color:#e6db74">&#34;(QWORD) </span><span style="color:#e6db74">%s</span><span style="color:#e6db74"> = WORD  [</span><span style="color:#e6db74">%s</span><span style="color:#e6db74"> + 0x</span><span style="color:#e6db74">%.4x</span><span style="color:#e6db74">]&#34;</span> <span style="color:#f92672">%</span> (registers[arg1], registers[arg2], imm)
-    <span style="color:#66d9ef">elif</span> opcode <span style="color:#f92672">==</span> <span style="color:#ae81ff">14</span>:
-        dis <span style="color:#f92672">+=</span>  <span style="color:#e6db74">&#34;(DWORD) </span><span style="color:#e6db74">%s</span><span style="color:#e6db74"> = QWORD [</span><span style="color:#e6db74">%s</span><span style="color:#e6db74"> + 0x</span><span style="color:#e6db74">%.4x</span><span style="color:#e6db74">]&#34;</span> <span style="color:#f92672">%</span> (registers[arg1], registers[arg2], imm)
-    <span style="color:#66d9ef">elif</span> opcode <span style="color:#f92672">==</span> <span style="color:#ae81ff">15</span>:
-        dis <span style="color:#f92672">+=</span>  <span style="color:#e6db74">&#34;(QWORD) </span><span style="color:#e6db74">%s</span><span style="color:#e6db74"> = DWORD [</span><span style="color:#e6db74">%s</span><span style="color:#e6db74"> + 0x</span><span style="color:#e6db74">%.4x</span><span style="color:#e6db74">]&#34;</span> <span style="color:#f92672">%</span> (registers[arg1], registers[arg2], imm)
-    <span style="color:#66d9ef">elif</span> opcode <span style="color:#f92672">==</span> <span style="color:#ae81ff">16</span>:
-        <span style="color:#66d9ef">if</span> imm <span style="color:#f92672">&amp;</span> <span style="color:#ae81ff">0xffffffffffffff00</span>:
-            imm <span style="color:#f92672">=</span> <span style="color:#ae81ff">0x10000000000000000</span> <span style="color:#f92672">-</span> imm
-            dis <span style="color:#f92672">+=</span>  <span style="color:#e6db74">&#34;(QWORD) </span><span style="color:#e6db74">%s</span><span style="color:#e6db74"> = DWORD [</span><span style="color:#e6db74">%s</span><span style="color:#e6db74"> - 0x</span><span style="color:#e6db74">%.4x</span><span style="color:#e6db74">]&#34;</span> <span style="color:#f92672">%</span> (registers[arg1], registers[arg2], imm)
-        <span style="color:#66d9ef">else</span>:
-            dis <span style="color:#f92672">+=</span>  <span style="color:#e6db74">&#34;(QWORD) </span><span style="color:#e6db74">%s</span><span style="color:#e6db74"> = DWORD [</span><span style="color:#e6db74">%s</span><span style="color:#e6db74"> + 0x</span><span style="color:#e6db74">%.4x</span><span style="color:#e6db74">]&#34;</span> <span style="color:#f92672">%</span> (registers[arg1], registers[arg2], imm)
-    <span style="color:#66d9ef">elif</span> opcode <span style="color:#f92672">==</span> <span style="color:#ae81ff">17</span>:
-        dis <span style="color:#f92672">+=</span>  <span style="color:#e6db74">&#34;[</span><span style="color:#e6db74">%s</span><span style="color:#e6db74"> + 0x</span><span style="color:#e6db74">%.4x</span><span style="color:#e6db74">] = </span><span style="color:#e6db74">%s</span><span style="color:#e6db74"> &amp; 0xff&#34;</span> <span style="color:#f92672">%</span> (registers[arg1], registers[arg2], imm)
-    <span style="color:#66d9ef">elif</span> opcode <span style="color:#f92672">==</span> <span style="color:#ae81ff">18</span>:
-        dis <span style="color:#f92672">+=</span>  <span style="color:#e6db74">&#34;[</span><span style="color:#e6db74">%s</span><span style="color:#e6db74"> + 0x</span><span style="color:#e6db74">%.4x</span><span style="color:#e6db74">] = </span><span style="color:#e6db74">%s</span><span style="color:#e6db74"> &amp; 0xffff&#34;</span> <span style="color:#f92672">%</span> (registers[arg1], registers[arg2], imm)
-    <span style="color:#66d9ef">elif</span> opcode <span style="color:#f92672">==</span> <span style="color:#ae81ff">19</span>:
-        dis <span style="color:#f92672">+=</span>  <span style="color:#e6db74">&#34;[</span><span style="color:#e6db74">%s</span><span style="color:#e6db74"> + 0x</span><span style="color:#e6db74">%.4x</span><span style="color:#e6db74">] = </span><span style="color:#e6db74">%s</span><span style="color:#e6db74"> &amp; 0xffffffff&#34;</span> <span style="color:#f92672">%</span> (registers[arg1], registers[arg2], imm)
-    <span style="color:#66d9ef">elif</span> opcode <span style="color:#f92672">==</span> <span style="color:#ae81ff">20</span>:
-        <span style="color:#66d9ef">if</span> imm <span style="color:#f92672">&amp;</span> <span style="color:#ae81ff">0xffffffffffffff00</span>:
-            imm <span style="color:#f92672">=</span> <span style="color:#ae81ff">0x10000000000000000</span> <span style="color:#f92672">-</span> imm
-            dis <span style="color:#f92672">+=</span>  <span style="color:#e6db74">&#34;[</span><span style="color:#e6db74">%s</span><span style="color:#e6db74"> - 0x</span><span style="color:#e6db74">%.4x</span><span style="color:#e6db74">] = </span><span style="color:#e6db74">%s</span><span style="color:#e6db74">&#34;</span> <span style="color:#f92672">%</span> (registers[arg2], imm, registers[arg3])
-        <span style="color:#66d9ef">else</span>:
-            dis <span style="color:#f92672">+=</span>  <span style="color:#e6db74">&#34;[</span><span style="color:#e6db74">%s</span><span style="color:#e6db74"> + 0x</span><span style="color:#e6db74">%.4x</span><span style="color:#e6db74">] = </span><span style="color:#e6db74">%s</span><span style="color:#e6db74">&#34;</span> <span style="color:#f92672">%</span> (registers[arg2], imm, registers[arg3])
-    <span style="color:#66d9ef">elif</span> opcode <span style="color:#f92672">==</span> <span style="color:#ae81ff">21</span>:
-        dis <span style="color:#f92672">+=</span>  <span style="color:#e6db74">&#34;push </span><span style="color:#e6db74">%s</span><span style="color:#e6db74">&#34;</span> <span style="color:#f92672">%</span> (registers[arg2])
-    <span style="color:#66d9ef">elif</span> opcode <span style="color:#f92672">==</span> <span style="color:#ae81ff">22</span>:
-        dis <span style="color:#f92672">+=</span>  <span style="color:#e6db74">&#34;push 0x</span><span style="color:#e6db74">%.4x</span><span style="color:#e6db74">&#34;</span> <span style="color:#f92672">%</span> (imm)
-    <span style="color:#66d9ef">elif</span> opcode <span style="color:#f92672">==</span> <span style="color:#ae81ff">23</span>:
-        dis <span style="color:#f92672">+=</span>  <span style="color:#e6db74">&#34;pop </span><span style="color:#e6db74">%s</span><span style="color:#e6db74">&#34;</span> <span style="color:#f92672">%</span> (registers[arg1])
-    <span style="color:#66d9ef">elif</span> opcode <span style="color:#f92672">==</span> <span style="color:#ae81ff">24</span>:
-        dis <span style="color:#f92672">+=</span>  <span style="color:#e6db74">&#34;</span><span style="color:#e6db74">%s</span><span style="color:#e6db74"> = </span><span style="color:#e6db74">%s</span><span style="color:#e6db74">&#34;</span> <span style="color:#f92672">%</span> (registers[arg1], registers[arg2])
-    <span style="color:#66d9ef">elif</span> opcode <span style="color:#f92672">==</span> <span style="color:#ae81ff">25</span>:
-        dis <span style="color:#f92672">+=</span>  <span style="color:#e6db74">&#34;</span><span style="color:#e6db74">%s</span><span style="color:#e6db74"> = </span><span style="color:#e6db74">%s</span><span style="color:#e6db74"> | </span><span style="color:#e6db74">%s</span><span style="color:#e6db74">&#34;</span> <span style="color:#f92672">%</span> (registers[arg1], registers[arg2], registers[arg3])
-    <span style="color:#66d9ef">elif</span> opcode <span style="color:#f92672">==</span> <span style="color:#ae81ff">26</span>:
-        dis <span style="color:#f92672">+=</span> <span style="color:#e6db74">&#34;</span><span style="color:#e6db74">%s</span><span style="color:#e6db74"> = </span><span style="color:#e6db74">%s</span><span style="color:#e6db74"> &amp; </span><span style="color:#e6db74">%s</span><span style="color:#e6db74">&#34;</span> <span style="color:#f92672">%</span> (registers[arg1], registers[arg2], registers[arg3])
-    <span style="color:#66d9ef">elif</span> opcode <span style="color:#f92672">==</span> <span style="color:#ae81ff">27</span>:
-        dis <span style="color:#f92672">+=</span> <span style="color:#e6db74">&#34;</span><span style="color:#e6db74">%s</span><span style="color:#e6db74"> = </span><span style="color:#e6db74">%s</span><span style="color:#e6db74"> ^ </span><span style="color:#e6db74">%s</span><span style="color:#e6db74">&#34;</span> <span style="color:#f92672">%</span> (registers[arg1], registers[arg2], registers[arg3])
-    <span style="color:#66d9ef">elif</span> opcode <span style="color:#f92672">==</span> <span style="color:#ae81ff">28</span>:
-        dis <span style="color:#f92672">+=</span> <span style="color:#e6db74">&#34;</span><span style="color:#e6db74">%s</span><span style="color:#e6db74"> = ! </span><span style="color:#e6db74">%s</span><span style="color:#e6db74">&#34;</span> <span style="color:#f92672">%</span> (registers[arg1], registers[arg2])
-    <span style="color:#66d9ef">elif</span> opcode <span style="color:#f92672">==</span> <span style="color:#ae81ff">29</span>:
-        <span style="color:#66d9ef">pass</span>
-    <span style="color:#66d9ef">elif</span> opcode <span style="color:#f92672">==</span> <span style="color:#ae81ff">33</span>:
-        dis <span style="color:#f92672">+=</span> <span style="color:#e6db74">&#34;if </span><span style="color:#e6db74">%s</span><span style="color:#e6db74"> ==  </span><span style="color:#e6db74">%s</span><span style="color:#e6db74">: </span><span style="color:#e6db74">%s</span><span style="color:#e6db74"> = 1&#34;</span> <span style="color:#f92672">%</span> (registers[arg3], registers[arg2], registers[arg1])
-    <span style="color:#66d9ef">elif</span> opcode <span style="color:#f92672">==</span> <span style="color:#ae81ff">38</span>:
-        <span style="color:#66d9ef">if</span> imm <span style="color:#f92672">&amp;</span> <span style="color:#ae81ff">0x555555550000</span>:
-            imm <span style="color:#f92672">=</span> imm <span style="color:#f92672">-</span> <span style="color:#ae81ff">0x555555554000</span>
-        dis <span style="color:#f92672">+=</span> <span style="color:#e6db74">&#34;if </span><span style="color:#e6db74">%s</span><span style="color:#e6db74"> == 0; jmp 0x</span><span style="color:#e6db74">%.4x</span><span style="color:#e6db74">&#34;</span> <span style="color:#f92672">%</span> (registers[arg2], imm)
-    <span style="color:#66d9ef">elif</span> opcode <span style="color:#f92672">==</span> <span style="color:#ae81ff">39</span>:
-        <span style="color:#66d9ef">if</span> imm <span style="color:#f92672">&amp;</span> <span style="color:#ae81ff">0x555555550000</span>:
-            imm <span style="color:#f92672">=</span> imm <span style="color:#f92672">-</span> <span style="color:#ae81ff">0x555555554000</span>
-        dis <span style="color:#f92672">+=</span> <span style="color:#e6db74">&#34;if </span><span style="color:#e6db74">%s</span><span style="color:#e6db74"> != 0; jmp 0x</span><span style="color:#e6db74">%.4x</span><span style="color:#e6db74">&#34;</span> <span style="color:#f92672">%</span> (registers[arg2], imm)
-    <span style="color:#66d9ef">elif</span> opcode <span style="color:#f92672">==</span> <span style="color:#ae81ff">40</span>:
-        <span style="color:#66d9ef">if</span> imm <span style="color:#f92672">==</span> FREE: <span style="color:#75715e"># free</span>
-            dis <span style="color:#f92672">+=</span> <span style="color:#e6db74">&#34;call </span><span style="color:#e6db74">%s</span><span style="color:#e6db74">&#34;</span> <span style="color:#f92672">%</span> (<span style="color:#e6db74">&#34;free&#34;</span>)
-        <span style="color:#66d9ef">elif</span> imm <span style="color:#f92672">==</span> MALLOC: <span style="color:#75715e"># malloc</span>
-            dis <span style="color:#f92672">+=</span> <span style="color:#e6db74">&#34;call </span><span style="color:#e6db74">%s</span><span style="color:#e6db74">&#34;</span> <span style="color:#f92672">%</span> (<span style="color:#e6db74">&#34;malloc&#34;</span>)
-        <span style="color:#66d9ef">else</span>:
-            <span style="color:#66d9ef">if</span> imm <span style="color:#f92672">&amp;</span> <span style="color:#ae81ff">0x555555550000</span>:
-                imm <span style="color:#f92672">=</span> imm <span style="color:#f92672">-</span> <span style="color:#ae81ff">0x555555554000</span>
-            dis <span style="color:#f92672">+=</span> <span style="color:#e6db74">&#34;call 0x</span><span style="color:#e6db74">%.4x</span><span style="color:#e6db74">&#34;</span> <span style="color:#f92672">%</span> (imm)
-    <span style="color:#66d9ef">elif</span> opcode <span style="color:#f92672">==</span> <span style="color:#ae81ff">41</span>:
-        dis <span style="color:#f92672">+=</span> <span style="color:#e6db74">&#34;return&#34;</span>
-    <span style="color:#66d9ef">elif</span> opcode <span style="color:#f92672">==</span> <span style="color:#ae81ff">42</span>:
-        dis <span style="color:#f92672">+=</span>  <span style="color:#e6db74">&#34;if </span><span style="color:#e6db74">%s</span><span style="color:#e6db74"> != 0; return&#34;</span> <span style="color:#f92672">%</span> (registers[arg2])
-    <span style="color:#66d9ef">elif</span> opcode <span style="color:#f92672">==</span> <span style="color:#ae81ff">43</span>:
-        dis <span style="color:#f92672">+=</span> <span style="color:#e6db74">&#34;if </span><span style="color:#e6db74">%s</span><span style="color:#e6db74"> == 0; return&#34;</span> <span style="color:#f92672">%</span> (registers[arg2])
-    <span style="color:#66d9ef">elif</span> opcode <span style="color:#f92672">==</span> <span style="color:#ae81ff">44</span>:
-        <span style="color:#66d9ef">if</span> imm <span style="color:#f92672">&amp;</span> <span style="color:#ae81ff">0xffffffffffffff00</span>:
-            imm <span style="color:#f92672">=</span> <span style="color:#ae81ff">0x10000000000000000</span> <span style="color:#f92672">-</span> imm
-            dis <span style="color:#f92672">+=</span>  <span style="color:#e6db74">&#34;</span><span style="color:#e6db74">%s</span><span style="color:#e6db74"> = </span><span style="color:#e6db74">%s</span><span style="color:#e6db74"> - 0x</span><span style="color:#e6db74">%.4x</span><span style="color:#e6db74">&#34;</span> <span style="color:#f92672">%</span> (registers[arg1], registers[arg2], imm)
-        <span style="color:#66d9ef">else</span>:
-            dis <span style="color:#f92672">+=</span>  <span style="color:#e6db74">&#34;</span><span style="color:#e6db74">%s</span><span style="color:#e6db74"> = </span><span style="color:#e6db74">%s</span><span style="color:#e6db74"> + 0x</span><span style="color:#e6db74">%.4x</span><span style="color:#e6db74">&#34;</span> <span style="color:#f92672">%</span> (registers[arg1], registers[arg2], imm)
-    <span style="color:#66d9ef">elif</span> opcode <span style="color:#f92672">==</span> <span style="color:#ae81ff">45</span>:
-        dis <span style="color:#f92672">+=</span> <span style="color:#e6db74">&#34;</span><span style="color:#e6db74">%s</span><span style="color:#e6db74"> = </span><span style="color:#e6db74">%s</span><span style="color:#e6db74"> &gt;&gt; 0x</span><span style="color:#e6db74">%.4x</span><span style="color:#e6db74">&#34;</span> <span style="color:#f92672">%</span> (registers[arg1], registers[arg2], (imm <span style="color:#f92672">&amp;</span> <span style="color:#ae81ff">0xff</span>))
-    <span style="color:#66d9ef">elif</span> opcode <span style="color:#f92672">==</span> <span style="color:#ae81ff">46</span>:
-        dis <span style="color:#f92672">+=</span> <span style="color:#e6db74">&#34;</span><span style="color:#e6db74">%s</span><span style="color:#e6db74"> = </span><span style="color:#e6db74">%s</span><span style="color:#e6db74"> &lt;&lt; 0x</span><span style="color:#e6db74">%.4x</span><span style="color:#e6db74">&#34;</span> <span style="color:#f92672">%</span> (registers[arg1], registers[arg2], (imm <span style="color:#f92672">&amp;</span> <span style="color:#ae81ff">0xff</span>))
-    <span style="color:#66d9ef">elif</span> opcode <span style="color:#f92672">==</span> <span style="color:#ae81ff">47</span>:
-        dis <span style="color:#f92672">+=</span> <span style="color:#e6db74">&#34;</span><span style="color:#e6db74">%s</span><span style="color:#e6db74"> = </span><span style="color:#e6db74">%s</span><span style="color:#e6db74"> | 0x</span><span style="color:#e6db74">%.4x</span><span style="color:#e6db74">&#34;</span> <span style="color:#f92672">%</span> (registers[arg1], registers[arg2], imm)
-    <span style="color:#66d9ef">elif</span> opcode <span style="color:#f92672">==</span> <span style="color:#ae81ff">48</span>:
-        dis <span style="color:#f92672">+=</span> <span style="color:#e6db74">&#34;</span><span style="color:#e6db74">%s</span><span style="color:#e6db74"> = </span><span style="color:#e6db74">%s</span><span style="color:#e6db74"> &amp; 0x</span><span style="color:#e6db74">%.4x</span><span style="color:#e6db74">&#34;</span> <span style="color:#f92672">%</span> (registers[arg1], registers[arg2], imm)
-    <span style="color:#66d9ef">elif</span> opcode <span style="color:#f92672">==</span> <span style="color:#ae81ff">49</span>:
-        dis <span style="color:#f92672">+=</span> <span style="color:#e6db74">&#34;</span><span style="color:#e6db74">%s</span><span style="color:#e6db74"> = </span><span style="color:#e6db74">%s</span><span style="color:#e6db74"> ^ 0x</span><span style="color:#e6db74">%.4x</span><span style="color:#e6db74">&#34;</span> <span style="color:#f92672">%</span> (registers[arg1], registers[arg2], imm)
-    <span style="color:#66d9ef">else</span>:
-        dis <span style="color:#f92672">+=</span>  <span style="color:#e6db74">&#34;</span><span style="color:#e6db74">%s</span><span style="color:#e6db74">&#34;</span> <span style="color:#f92672">%</span> (<span style="color:#e6db74">&#34;UNKNOWN&#34;</span>)
+    <span style="color:#ff79c6">if</span>   opcode <span style="color:#ff79c6">==</span> <span style="color:#bd93f9">9</span>:
+        <span style="color:#ff79c6">if</span> imm <span style="color:#ff79c6">&amp;</span> <span style="color:#bd93f9">0x555555550000</span>:
+            imm <span style="color:#ff79c6">=</span> imm <span style="color:#ff79c6">-</span> <span style="color:#bd93f9">0x555555554000</span>
+        <span style="color:#ff79c6">if</span> registers[arg1] <span style="color:#ff79c6">==</span> <span style="color:#f1fa8c">&#34;pc&#34;</span>:
+            dis <span style="color:#ff79c6">+=</span>  <span style="color:#f1fa8c">&#34;jmp 0x</span><span style="color:#f1fa8c">%.4x</span><span style="color:#f1fa8c">&#34;</span> <span style="color:#ff79c6">%</span> (imm)
+        <span style="color:#ff79c6">else</span>:
+            dis <span style="color:#ff79c6">+=</span>  <span style="color:#f1fa8c">&#34;</span><span style="color:#f1fa8c">%s</span><span style="color:#f1fa8c"> = 0x</span><span style="color:#f1fa8c">%.4x</span><span style="color:#f1fa8c">&#34;</span> <span style="color:#ff79c6">%</span> (registers[arg1], imm)
+    <span style="color:#ff79c6">elif</span> opcode <span style="color:#ff79c6">==</span> <span style="color:#bd93f9">36</span>:
+        dis <span style="color:#ff79c6">+=</span>  <span style="color:#f1fa8c">&#34;if </span><span style="color:#f1fa8c">%s</span><span style="color:#f1fa8c"> != 0x</span><span style="color:#f1fa8c">%.4x</span><span style="color:#f1fa8c">: </span><span style="color:#f1fa8c">%s</span><span style="color:#f1fa8c"> = 1; else: </span><span style="color:#f1fa8c">%s</span><span style="color:#f1fa8c"> = 0;&#34;</span> <span style="color:#ff79c6">%</span> (registers[arg2], imm, registers[arg1], registers[arg1])
+    <span style="color:#ff79c6">elif</span> opcode <span style="color:#ff79c6">==</span> <span style="color:#bd93f9">37</span>:
+        dis <span style="color:#ff79c6">+=</span>  <span style="color:#f1fa8c">&#34;if </span><span style="color:#f1fa8c">%s</span><span style="color:#f1fa8c"> == 0: </span><span style="color:#f1fa8c">%s</span><span style="color:#f1fa8c"> = 1;&#34;</span> <span style="color:#ff79c6">%</span> (registers[arg2], registers[arg1])
+    <span style="color:#ff79c6">elif</span> opcode <span style="color:#ff79c6">==</span> <span style="color:#bd93f9">1</span>:
+        dis <span style="color:#ff79c6">+=</span>  <span style="color:#f1fa8c">&#34;</span><span style="color:#f1fa8c">%s</span><span style="color:#f1fa8c"> = </span><span style="color:#f1fa8c">%s</span><span style="color:#f1fa8c"> + </span><span style="color:#f1fa8c">%s</span><span style="color:#f1fa8c">&#34;</span> <span style="color:#ff79c6">%</span> (registers[arg1], registers[arg2], registers[arg3])
+    <span style="color:#ff79c6">elif</span> opcode <span style="color:#ff79c6">==</span> <span style="color:#bd93f9">2</span>:
+        dis <span style="color:#ff79c6">+=</span>  <span style="color:#f1fa8c">&#34;</span><span style="color:#f1fa8c">%s</span><span style="color:#f1fa8c"> = </span><span style="color:#f1fa8c">%s</span><span style="color:#f1fa8c"> - </span><span style="color:#f1fa8c">%s</span><span style="color:#f1fa8c">&#34;</span> <span style="color:#ff79c6">%</span> (registers[arg1], registers[arg2], registers[arg3])
+    <span style="color:#ff79c6">elif</span> opcode <span style="color:#ff79c6">==</span> <span style="color:#bd93f9">3</span>:
+        dis <span style="color:#ff79c6">+=</span>  <span style="color:#f1fa8c">&#34;</span><span style="color:#f1fa8c">%s</span><span style="color:#f1fa8c"> = </span><span style="color:#f1fa8c">%s</span><span style="color:#f1fa8c"> * </span><span style="color:#f1fa8c">%s</span><span style="color:#f1fa8c">&#34;</span> <span style="color:#ff79c6">%</span> (registers[arg1], registers[arg2], registers[arg3])
+    <span style="color:#ff79c6">elif</span> opcode <span style="color:#ff79c6">==</span> <span style="color:#bd93f9">4</span> <span style="color:#ff79c6">or</span> opcode <span style="color:#ff79c6">==</span> <span style="color:#bd93f9">5</span>:
+        dis <span style="color:#ff79c6">+=</span>  <span style="color:#f1fa8c">&#34;</span><span style="color:#f1fa8c">%s</span><span style="color:#f1fa8c"> = </span><span style="color:#f1fa8c">%s</span><span style="color:#f1fa8c"> / </span><span style="color:#f1fa8c">%s</span><span style="color:#f1fa8c">&#34;</span> <span style="color:#ff79c6">%</span> (registers[arg1], registers[arg2], registers[arg3])
+    <span style="color:#ff79c6">elif</span> opcode <span style="color:#ff79c6">==</span> <span style="color:#bd93f9">6</span>:
+        dis <span style="color:#ff79c6">+=</span>  <span style="color:#f1fa8c">&#34;</span><span style="color:#f1fa8c">%s</span><span style="color:#f1fa8c"> = </span><span style="color:#f1fa8c">%s</span><span style="color:#f1fa8c"> &gt;&gt; </span><span style="color:#f1fa8c">%s</span><span style="color:#f1fa8c">&#34;</span> <span style="color:#ff79c6">%</span> (registers[arg1], registers[arg2], registers[arg3])
+    <span style="color:#ff79c6">elif</span> opcode <span style="color:#ff79c6">==</span> <span style="color:#bd93f9">7</span>:
+        dis <span style="color:#ff79c6">+=</span>  <span style="color:#f1fa8c">&#34;</span><span style="color:#f1fa8c">%s</span><span style="color:#f1fa8c"> = </span><span style="color:#f1fa8c">%s</span><span style="color:#f1fa8c"> &lt;&lt; </span><span style="color:#f1fa8c">%s</span><span style="color:#f1fa8c">&#34;</span> <span style="color:#ff79c6">%</span> (registers[arg1], registers[arg2], registers[arg3])
+    <span style="color:#ff79c6">elif</span> opcode <span style="color:#ff79c6">==</span> <span style="color:#bd93f9">8</span>:
+        dis <span style="color:#ff79c6">+=</span>  <span style="color:#f1fa8c">&#34;</span><span style="color:#f1fa8c">%s</span><span style="color:#f1fa8c"> = ~</span><span style="color:#f1fa8c">%s</span><span style="color:#f1fa8c">&#34;</span> <span style="color:#ff79c6">%</span> (registers[arg1], registers[arg2])
+    <span style="color:#ff79c6">elif</span> opcode <span style="color:#ff79c6">==</span> <span style="color:#bd93f9">10</span> <span style="color:#ff79c6">or</span> opcode <span style="color:#ff79c6">==</span> <span style="color:#bd93f9">11</span>:
+        dis <span style="color:#ff79c6">+=</span>  <span style="color:#f1fa8c">&#34;(WORD)  </span><span style="color:#f1fa8c">%s</span><span style="color:#f1fa8c"> = BYTE  [</span><span style="color:#f1fa8c">%s</span><span style="color:#f1fa8c"> + 0x</span><span style="color:#f1fa8c">%.4x</span><span style="color:#f1fa8c">]&#34;</span> <span style="color:#ff79c6">%</span> (registers[arg1], registers[arg2], imm)
+    <span style="color:#ff79c6">elif</span> opcode <span style="color:#ff79c6">==</span> <span style="color:#bd93f9">11</span>:
+        dis <span style="color:#ff79c6">+=</span>  <span style="color:#f1fa8c">&#34;(QWORD) </span><span style="color:#f1fa8c">%s</span><span style="color:#f1fa8c"> = BYTE  [</span><span style="color:#f1fa8c">%s</span><span style="color:#f1fa8c"> + 0x</span><span style="color:#f1fa8c">%.4x</span><span style="color:#f1fa8c">]&#34;</span> <span style="color:#ff79c6">%</span> (registers[arg1], registers[arg2], imm)
+    <span style="color:#ff79c6">elif</span> opcode <span style="color:#ff79c6">==</span> <span style="color:#bd93f9">12</span>:
+        dis <span style="color:#ff79c6">+=</span>  <span style="color:#f1fa8c">&#34;(DWORD) </span><span style="color:#f1fa8c">%s</span><span style="color:#f1fa8c"> = WORD  [</span><span style="color:#f1fa8c">%s</span><span style="color:#f1fa8c"> + 0x</span><span style="color:#f1fa8c">%.4x</span><span style="color:#f1fa8c">]&#34;</span> <span style="color:#ff79c6">%</span> (registers[arg1], registers[arg2], imm)
+    <span style="color:#ff79c6">elif</span> opcode <span style="color:#ff79c6">==</span> <span style="color:#bd93f9">13</span>:
+        dis <span style="color:#ff79c6">+=</span>  <span style="color:#f1fa8c">&#34;(QWORD) </span><span style="color:#f1fa8c">%s</span><span style="color:#f1fa8c"> = WORD  [</span><span style="color:#f1fa8c">%s</span><span style="color:#f1fa8c"> + 0x</span><span style="color:#f1fa8c">%.4x</span><span style="color:#f1fa8c">]&#34;</span> <span style="color:#ff79c6">%</span> (registers[arg1], registers[arg2], imm)
+    <span style="color:#ff79c6">elif</span> opcode <span style="color:#ff79c6">==</span> <span style="color:#bd93f9">14</span>:
+        dis <span style="color:#ff79c6">+=</span>  <span style="color:#f1fa8c">&#34;(DWORD) </span><span style="color:#f1fa8c">%s</span><span style="color:#f1fa8c"> = QWORD [</span><span style="color:#f1fa8c">%s</span><span style="color:#f1fa8c"> + 0x</span><span style="color:#f1fa8c">%.4x</span><span style="color:#f1fa8c">]&#34;</span> <span style="color:#ff79c6">%</span> (registers[arg1], registers[arg2], imm)
+    <span style="color:#ff79c6">elif</span> opcode <span style="color:#ff79c6">==</span> <span style="color:#bd93f9">15</span>:
+        dis <span style="color:#ff79c6">+=</span>  <span style="color:#f1fa8c">&#34;(QWORD) </span><span style="color:#f1fa8c">%s</span><span style="color:#f1fa8c"> = DWORD [</span><span style="color:#f1fa8c">%s</span><span style="color:#f1fa8c"> + 0x</span><span style="color:#f1fa8c">%.4x</span><span style="color:#f1fa8c">]&#34;</span> <span style="color:#ff79c6">%</span> (registers[arg1], registers[arg2], imm)
+    <span style="color:#ff79c6">elif</span> opcode <span style="color:#ff79c6">==</span> <span style="color:#bd93f9">16</span>:
+        <span style="color:#ff79c6">if</span> imm <span style="color:#ff79c6">&amp;</span> <span style="color:#bd93f9">0xffffffffffffff00</span>:
+            imm <span style="color:#ff79c6">=</span> <span style="color:#bd93f9">0x10000000000000000</span> <span style="color:#ff79c6">-</span> imm
+            dis <span style="color:#ff79c6">+=</span>  <span style="color:#f1fa8c">&#34;(QWORD) </span><span style="color:#f1fa8c">%s</span><span style="color:#f1fa8c"> = DWORD [</span><span style="color:#f1fa8c">%s</span><span style="color:#f1fa8c"> - 0x</span><span style="color:#f1fa8c">%.4x</span><span style="color:#f1fa8c">]&#34;</span> <span style="color:#ff79c6">%</span> (registers[arg1], registers[arg2], imm)
+        <span style="color:#ff79c6">else</span>:
+            dis <span style="color:#ff79c6">+=</span>  <span style="color:#f1fa8c">&#34;(QWORD) </span><span style="color:#f1fa8c">%s</span><span style="color:#f1fa8c"> = DWORD [</span><span style="color:#f1fa8c">%s</span><span style="color:#f1fa8c"> + 0x</span><span style="color:#f1fa8c">%.4x</span><span style="color:#f1fa8c">]&#34;</span> <span style="color:#ff79c6">%</span> (registers[arg1], registers[arg2], imm)
+    <span style="color:#ff79c6">elif</span> opcode <span style="color:#ff79c6">==</span> <span style="color:#bd93f9">17</span>:
+        dis <span style="color:#ff79c6">+=</span>  <span style="color:#f1fa8c">&#34;[</span><span style="color:#f1fa8c">%s</span><span style="color:#f1fa8c"> + 0x</span><span style="color:#f1fa8c">%.4x</span><span style="color:#f1fa8c">] = </span><span style="color:#f1fa8c">%s</span><span style="color:#f1fa8c"> &amp; 0xff&#34;</span> <span style="color:#ff79c6">%</span> (registers[arg1], registers[arg2], imm)
+    <span style="color:#ff79c6">elif</span> opcode <span style="color:#ff79c6">==</span> <span style="color:#bd93f9">18</span>:
+        dis <span style="color:#ff79c6">+=</span>  <span style="color:#f1fa8c">&#34;[</span><span style="color:#f1fa8c">%s</span><span style="color:#f1fa8c"> + 0x</span><span style="color:#f1fa8c">%.4x</span><span style="color:#f1fa8c">] = </span><span style="color:#f1fa8c">%s</span><span style="color:#f1fa8c"> &amp; 0xffff&#34;</span> <span style="color:#ff79c6">%</span> (registers[arg1], registers[arg2], imm)
+    <span style="color:#ff79c6">elif</span> opcode <span style="color:#ff79c6">==</span> <span style="color:#bd93f9">19</span>:
+        dis <span style="color:#ff79c6">+=</span>  <span style="color:#f1fa8c">&#34;[</span><span style="color:#f1fa8c">%s</span><span style="color:#f1fa8c"> + 0x</span><span style="color:#f1fa8c">%.4x</span><span style="color:#f1fa8c">] = </span><span style="color:#f1fa8c">%s</span><span style="color:#f1fa8c"> &amp; 0xffffffff&#34;</span> <span style="color:#ff79c6">%</span> (registers[arg1], registers[arg2], imm)
+    <span style="color:#ff79c6">elif</span> opcode <span style="color:#ff79c6">==</span> <span style="color:#bd93f9">20</span>:
+        <span style="color:#ff79c6">if</span> imm <span style="color:#ff79c6">&amp;</span> <span style="color:#bd93f9">0xffffffffffffff00</span>:
+            imm <span style="color:#ff79c6">=</span> <span style="color:#bd93f9">0x10000000000000000</span> <span style="color:#ff79c6">-</span> imm
+            dis <span style="color:#ff79c6">+=</span>  <span style="color:#f1fa8c">&#34;[</span><span style="color:#f1fa8c">%s</span><span style="color:#f1fa8c"> - 0x</span><span style="color:#f1fa8c">%.4x</span><span style="color:#f1fa8c">] = </span><span style="color:#f1fa8c">%s</span><span style="color:#f1fa8c">&#34;</span> <span style="color:#ff79c6">%</span> (registers[arg2], imm, registers[arg3])
+        <span style="color:#ff79c6">else</span>:
+            dis <span style="color:#ff79c6">+=</span>  <span style="color:#f1fa8c">&#34;[</span><span style="color:#f1fa8c">%s</span><span style="color:#f1fa8c"> + 0x</span><span style="color:#f1fa8c">%.4x</span><span style="color:#f1fa8c">] = </span><span style="color:#f1fa8c">%s</span><span style="color:#f1fa8c">&#34;</span> <span style="color:#ff79c6">%</span> (registers[arg2], imm, registers[arg3])
+    <span style="color:#ff79c6">elif</span> opcode <span style="color:#ff79c6">==</span> <span style="color:#bd93f9">21</span>:
+        dis <span style="color:#ff79c6">+=</span>  <span style="color:#f1fa8c">&#34;push </span><span style="color:#f1fa8c">%s</span><span style="color:#f1fa8c">&#34;</span> <span style="color:#ff79c6">%</span> (registers[arg2])
+    <span style="color:#ff79c6">elif</span> opcode <span style="color:#ff79c6">==</span> <span style="color:#bd93f9">22</span>:
+        dis <span style="color:#ff79c6">+=</span>  <span style="color:#f1fa8c">&#34;push 0x</span><span style="color:#f1fa8c">%.4x</span><span style="color:#f1fa8c">&#34;</span> <span style="color:#ff79c6">%</span> (imm)
+    <span style="color:#ff79c6">elif</span> opcode <span style="color:#ff79c6">==</span> <span style="color:#bd93f9">23</span>:
+        dis <span style="color:#ff79c6">+=</span>  <span style="color:#f1fa8c">&#34;pop </span><span style="color:#f1fa8c">%s</span><span style="color:#f1fa8c">&#34;</span> <span style="color:#ff79c6">%</span> (registers[arg1])
+    <span style="color:#ff79c6">elif</span> opcode <span style="color:#ff79c6">==</span> <span style="color:#bd93f9">24</span>:
+        dis <span style="color:#ff79c6">+=</span>  <span style="color:#f1fa8c">&#34;</span><span style="color:#f1fa8c">%s</span><span style="color:#f1fa8c"> = </span><span style="color:#f1fa8c">%s</span><span style="color:#f1fa8c">&#34;</span> <span style="color:#ff79c6">%</span> (registers[arg1], registers[arg2])
+    <span style="color:#ff79c6">elif</span> opcode <span style="color:#ff79c6">==</span> <span style="color:#bd93f9">25</span>:
+        dis <span style="color:#ff79c6">+=</span>  <span style="color:#f1fa8c">&#34;</span><span style="color:#f1fa8c">%s</span><span style="color:#f1fa8c"> = </span><span style="color:#f1fa8c">%s</span><span style="color:#f1fa8c"> | </span><span style="color:#f1fa8c">%s</span><span style="color:#f1fa8c">&#34;</span> <span style="color:#ff79c6">%</span> (registers[arg1], registers[arg2], registers[arg3])
+    <span style="color:#ff79c6">elif</span> opcode <span style="color:#ff79c6">==</span> <span style="color:#bd93f9">26</span>:
+        dis <span style="color:#ff79c6">+=</span> <span style="color:#f1fa8c">&#34;</span><span style="color:#f1fa8c">%s</span><span style="color:#f1fa8c"> = </span><span style="color:#f1fa8c">%s</span><span style="color:#f1fa8c"> &amp; </span><span style="color:#f1fa8c">%s</span><span style="color:#f1fa8c">&#34;</span> <span style="color:#ff79c6">%</span> (registers[arg1], registers[arg2], registers[arg3])
+    <span style="color:#ff79c6">elif</span> opcode <span style="color:#ff79c6">==</span> <span style="color:#bd93f9">27</span>:
+        dis <span style="color:#ff79c6">+=</span> <span style="color:#f1fa8c">&#34;</span><span style="color:#f1fa8c">%s</span><span style="color:#f1fa8c"> = </span><span style="color:#f1fa8c">%s</span><span style="color:#f1fa8c"> ^ </span><span style="color:#f1fa8c">%s</span><span style="color:#f1fa8c">&#34;</span> <span style="color:#ff79c6">%</span> (registers[arg1], registers[arg2], registers[arg3])
+    <span style="color:#ff79c6">elif</span> opcode <span style="color:#ff79c6">==</span> <span style="color:#bd93f9">28</span>:
+        dis <span style="color:#ff79c6">+=</span> <span style="color:#f1fa8c">&#34;</span><span style="color:#f1fa8c">%s</span><span style="color:#f1fa8c"> = ! </span><span style="color:#f1fa8c">%s</span><span style="color:#f1fa8c">&#34;</span> <span style="color:#ff79c6">%</span> (registers[arg1], registers[arg2])
+    <span style="color:#ff79c6">elif</span> opcode <span style="color:#ff79c6">==</span> <span style="color:#bd93f9">29</span>:
+        <span style="color:#ff79c6">pass</span>
+    <span style="color:#ff79c6">elif</span> opcode <span style="color:#ff79c6">==</span> <span style="color:#bd93f9">33</span>:
+        dis <span style="color:#ff79c6">+=</span> <span style="color:#f1fa8c">&#34;if </span><span style="color:#f1fa8c">%s</span><span style="color:#f1fa8c"> ==  </span><span style="color:#f1fa8c">%s</span><span style="color:#f1fa8c">: </span><span style="color:#f1fa8c">%s</span><span style="color:#f1fa8c"> = 1&#34;</span> <span style="color:#ff79c6">%</span> (registers[arg3], registers[arg2], registers[arg1])
+    <span style="color:#ff79c6">elif</span> opcode <span style="color:#ff79c6">==</span> <span style="color:#bd93f9">38</span>:
+        <span style="color:#ff79c6">if</span> imm <span style="color:#ff79c6">&amp;</span> <span style="color:#bd93f9">0x555555550000</span>:
+            imm <span style="color:#ff79c6">=</span> imm <span style="color:#ff79c6">-</span> <span style="color:#bd93f9">0x555555554000</span>
+        dis <span style="color:#ff79c6">+=</span> <span style="color:#f1fa8c">&#34;if </span><span style="color:#f1fa8c">%s</span><span style="color:#f1fa8c"> == 0; jmp 0x</span><span style="color:#f1fa8c">%.4x</span><span style="color:#f1fa8c">&#34;</span> <span style="color:#ff79c6">%</span> (registers[arg2], imm)
+    <span style="color:#ff79c6">elif</span> opcode <span style="color:#ff79c6">==</span> <span style="color:#bd93f9">39</span>:
+        <span style="color:#ff79c6">if</span> imm <span style="color:#ff79c6">&amp;</span> <span style="color:#bd93f9">0x555555550000</span>:
+            imm <span style="color:#ff79c6">=</span> imm <span style="color:#ff79c6">-</span> <span style="color:#bd93f9">0x555555554000</span>
+        dis <span style="color:#ff79c6">+=</span> <span style="color:#f1fa8c">&#34;if </span><span style="color:#f1fa8c">%s</span><span style="color:#f1fa8c"> != 0; jmp 0x</span><span style="color:#f1fa8c">%.4x</span><span style="color:#f1fa8c">&#34;</span> <span style="color:#ff79c6">%</span> (registers[arg2], imm)
+    <span style="color:#ff79c6">elif</span> opcode <span style="color:#ff79c6">==</span> <span style="color:#bd93f9">40</span>:
+        <span style="color:#ff79c6">if</span> imm <span style="color:#ff79c6">==</span> FREE: <span style="color:#6272a4"># free</span>
+            dis <span style="color:#ff79c6">+=</span> <span style="color:#f1fa8c">&#34;call </span><span style="color:#f1fa8c">%s</span><span style="color:#f1fa8c">&#34;</span> <span style="color:#ff79c6">%</span> (<span style="color:#f1fa8c">&#34;free&#34;</span>)
+        <span style="color:#ff79c6">elif</span> imm <span style="color:#ff79c6">==</span> MALLOC: <span style="color:#6272a4"># malloc</span>
+            dis <span style="color:#ff79c6">+=</span> <span style="color:#f1fa8c">&#34;call </span><span style="color:#f1fa8c">%s</span><span style="color:#f1fa8c">&#34;</span> <span style="color:#ff79c6">%</span> (<span style="color:#f1fa8c">&#34;malloc&#34;</span>)
+        <span style="color:#ff79c6">else</span>:
+            <span style="color:#ff79c6">if</span> imm <span style="color:#ff79c6">&amp;</span> <span style="color:#bd93f9">0x555555550000</span>:
+                imm <span style="color:#ff79c6">=</span> imm <span style="color:#ff79c6">-</span> <span style="color:#bd93f9">0x555555554000</span>
+            dis <span style="color:#ff79c6">+=</span> <span style="color:#f1fa8c">&#34;call 0x</span><span style="color:#f1fa8c">%.4x</span><span style="color:#f1fa8c">&#34;</span> <span style="color:#ff79c6">%</span> (imm)
+    <span style="color:#ff79c6">elif</span> opcode <span style="color:#ff79c6">==</span> <span style="color:#bd93f9">41</span>:
+        dis <span style="color:#ff79c6">+=</span> <span style="color:#f1fa8c">&#34;return&#34;</span>
+    <span style="color:#ff79c6">elif</span> opcode <span style="color:#ff79c6">==</span> <span style="color:#bd93f9">42</span>:
+        dis <span style="color:#ff79c6">+=</span>  <span style="color:#f1fa8c">&#34;if </span><span style="color:#f1fa8c">%s</span><span style="color:#f1fa8c"> != 0; return&#34;</span> <span style="color:#ff79c6">%</span> (registers[arg2])
+    <span style="color:#ff79c6">elif</span> opcode <span style="color:#ff79c6">==</span> <span style="color:#bd93f9">43</span>:
+        dis <span style="color:#ff79c6">+=</span> <span style="color:#f1fa8c">&#34;if </span><span style="color:#f1fa8c">%s</span><span style="color:#f1fa8c"> == 0; return&#34;</span> <span style="color:#ff79c6">%</span> (registers[arg2])
+    <span style="color:#ff79c6">elif</span> opcode <span style="color:#ff79c6">==</span> <span style="color:#bd93f9">44</span>:
+        <span style="color:#ff79c6">if</span> imm <span style="color:#ff79c6">&amp;</span> <span style="color:#bd93f9">0xffffffffffffff00</span>:
+            imm <span style="color:#ff79c6">=</span> <span style="color:#bd93f9">0x10000000000000000</span> <span style="color:#ff79c6">-</span> imm
+            dis <span style="color:#ff79c6">+=</span>  <span style="color:#f1fa8c">&#34;</span><span style="color:#f1fa8c">%s</span><span style="color:#f1fa8c"> = </span><span style="color:#f1fa8c">%s</span><span style="color:#f1fa8c"> - 0x</span><span style="color:#f1fa8c">%.4x</span><span style="color:#f1fa8c">&#34;</span> <span style="color:#ff79c6">%</span> (registers[arg1], registers[arg2], imm)
+        <span style="color:#ff79c6">else</span>:
+            dis <span style="color:#ff79c6">+=</span>  <span style="color:#f1fa8c">&#34;</span><span style="color:#f1fa8c">%s</span><span style="color:#f1fa8c"> = </span><span style="color:#f1fa8c">%s</span><span style="color:#f1fa8c"> + 0x</span><span style="color:#f1fa8c">%.4x</span><span style="color:#f1fa8c">&#34;</span> <span style="color:#ff79c6">%</span> (registers[arg1], registers[arg2], imm)
+    <span style="color:#ff79c6">elif</span> opcode <span style="color:#ff79c6">==</span> <span style="color:#bd93f9">45</span>:
+        dis <span style="color:#ff79c6">+=</span> <span style="color:#f1fa8c">&#34;</span><span style="color:#f1fa8c">%s</span><span style="color:#f1fa8c"> = </span><span style="color:#f1fa8c">%s</span><span style="color:#f1fa8c"> &gt;&gt; 0x</span><span style="color:#f1fa8c">%.4x</span><span style="color:#f1fa8c">&#34;</span> <span style="color:#ff79c6">%</span> (registers[arg1], registers[arg2], (imm <span style="color:#ff79c6">&amp;</span> <span style="color:#bd93f9">0xff</span>))
+    <span style="color:#ff79c6">elif</span> opcode <span style="color:#ff79c6">==</span> <span style="color:#bd93f9">46</span>:
+        dis <span style="color:#ff79c6">+=</span> <span style="color:#f1fa8c">&#34;</span><span style="color:#f1fa8c">%s</span><span style="color:#f1fa8c"> = </span><span style="color:#f1fa8c">%s</span><span style="color:#f1fa8c"> &lt;&lt; 0x</span><span style="color:#f1fa8c">%.4x</span><span style="color:#f1fa8c">&#34;</span> <span style="color:#ff79c6">%</span> (registers[arg1], registers[arg2], (imm <span style="color:#ff79c6">&amp;</span> <span style="color:#bd93f9">0xff</span>))
+    <span style="color:#ff79c6">elif</span> opcode <span style="color:#ff79c6">==</span> <span style="color:#bd93f9">47</span>:
+        dis <span style="color:#ff79c6">+=</span> <span style="color:#f1fa8c">&#34;</span><span style="color:#f1fa8c">%s</span><span style="color:#f1fa8c"> = </span><span style="color:#f1fa8c">%s</span><span style="color:#f1fa8c"> | 0x</span><span style="color:#f1fa8c">%.4x</span><span style="color:#f1fa8c">&#34;</span> <span style="color:#ff79c6">%</span> (registers[arg1], registers[arg2], imm)
+    <span style="color:#ff79c6">elif</span> opcode <span style="color:#ff79c6">==</span> <span style="color:#bd93f9">48</span>:
+        dis <span style="color:#ff79c6">+=</span> <span style="color:#f1fa8c">&#34;</span><span style="color:#f1fa8c">%s</span><span style="color:#f1fa8c"> = </span><span style="color:#f1fa8c">%s</span><span style="color:#f1fa8c"> &amp; 0x</span><span style="color:#f1fa8c">%.4x</span><span style="color:#f1fa8c">&#34;</span> <span style="color:#ff79c6">%</span> (registers[arg1], registers[arg2], imm)
+    <span style="color:#ff79c6">elif</span> opcode <span style="color:#ff79c6">==</span> <span style="color:#bd93f9">49</span>:
+        dis <span style="color:#ff79c6">+=</span> <span style="color:#f1fa8c">&#34;</span><span style="color:#f1fa8c">%s</span><span style="color:#f1fa8c"> = </span><span style="color:#f1fa8c">%s</span><span style="color:#f1fa8c"> ^ 0x</span><span style="color:#f1fa8c">%.4x</span><span style="color:#f1fa8c">&#34;</span> <span style="color:#ff79c6">%</span> (registers[arg1], registers[arg2], imm)
+    <span style="color:#ff79c6">else</span>:
+        dis <span style="color:#ff79c6">+=</span>  <span style="color:#f1fa8c">&#34;</span><span style="color:#f1fa8c">%s</span><span style="color:#f1fa8c">&#34;</span> <span style="color:#ff79c6">%</span> (<span style="color:#f1fa8c">&#34;UNKNOWN&#34;</span>)
 
-    <span style="color:#66d9ef">print</span> dis
+    <span style="color:#ff79c6">print</span> dis
 </code></pre></div>
  <br> 
 <p>After running this you will get this disassembly</p>
 
 <br>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-plaintext" data-lang="plaintext">0000: [09][ 1ada ][ 1190 ] rax = 0x0002                                
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-plaintext" data-lang="plaintext">0000: [09][ 1ada ][ 1190 ] rax = 0x0002                                
 0014: [36][ 1d87 ][ 119e ] if rdi != 0x0002: r8 = 1; else: r8 = 0;     
 0028: [42][ 1e9c ][ 11ac ] if r8 != 0; return                          
 0042: [44][ 1e1e ][ 11ba ] rsi = rsi + 0x0008                          
@@ -865,7 +868,7 @@ bytecode <span style="color:#f92672">=</span> open(<span style="color:#e6db74">&
 <li>if argv[1][5] != &ldquo;x&rdquo;; return</li>
 <li>if len(argv[1][5:-1]) != 0x1e; return</li>
 </ol>
-<p>Now this is where it gets interesting. it calls <code>malloc()</code> to create an array of size 0x1e 
+<p>Now this is where it gets interesting. it calls <code>malloc()</code> to create an array of size 0x1e
 and then it loops through our input.
 For each character in our input it calculates the index of the character in a global string at 0x20A0 &ndash; <code>abdfgehikmanoqrstucvwlxyz-01h23p456u78j9-_.+</code> and then stores that index into the malloc&rsquo;d array.</p>
 <p>As of Now our flag should look like this
@@ -873,93 +876,93 @@ For each character in our input it calculates the index of the character in a gl
 <p>Now it performs this operation on our index array:
 
 <br></p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">0x1d</span>):
-  r8 <span style="color:#f92672">=</span> input[i<span style="color:#f92672">+</span><span style="color:#ae81ff">0</span>]
-  r9 <span style="color:#f92672">=</span> input[i<span style="color:#f92672">+</span><span style="color:#ae81ff">1</span>]
-  r8 <span style="color:#f92672">=</span> r9 <span style="color:#f92672">-</span> r8
-  r8 <span style="color:#f92672">=</span> r8 <span style="color:#f92672">^</span> (<span style="color:#ae81ff">0x1d</span> <span style="color:#f92672">-</span> i)
-  r8 <span style="color:#f92672">=</span> r8 <span style="color:#f92672">*</span> r8 <span style="color:#f92672">*</span> r8
-  input[i] <span style="color:#f92672">=</span> r8
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#ff79c6">for</span> i <span style="color:#ff79c6">in</span> <span style="color:#8be9fd;font-style:italic">range</span>(<span style="color:#bd93f9">0x1d</span>):
+  r8 <span style="color:#ff79c6">=</span> <span style="color:#8be9fd;font-style:italic">input</span>[i<span style="color:#ff79c6">+</span><span style="color:#bd93f9">0</span>]
+  r9 <span style="color:#ff79c6">=</span> <span style="color:#8be9fd;font-style:italic">input</span>[i<span style="color:#ff79c6">+</span><span style="color:#bd93f9">1</span>]
+  r8 <span style="color:#ff79c6">=</span> r9 <span style="color:#ff79c6">-</span> r8
+  r8 <span style="color:#ff79c6">=</span> r8 <span style="color:#ff79c6">^</span> (<span style="color:#bd93f9">0x1d</span> <span style="color:#ff79c6">-</span> i)
+  r8 <span style="color:#ff79c6">=</span> r8 <span style="color:#ff79c6">*</span> r8 <span style="color:#ff79c6">*</span> r8
+  <span style="color:#8be9fd;font-style:italic">input</span>[i] <span style="color:#ff79c6">=</span> r8
 </code></pre></div><p>
 <br>
 And after this the binary was checking the modified input index array with another array at 0x1FA0.
 Without wasting time i put together a quick z3 script to print the flag and it worked in like first try. This challenge is my favourite until i solve another amazing crackme. Thanks ttlhacker for this amazing challange here is the script in action.</p>
 <p>solve.py</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">from</span> z3 <span style="color:#f92672">import</span> <span style="color:#f92672">*</span>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#ff79c6">from</span> z3 <span style="color:#ff79c6">import</span> <span style="color:#ff79c6">*</span>
 
-chrset <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;abdfgehikmanoqrstucvwlxyz-01h23p456u78j9-_.+&#34;</span>
-inpt <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;FLAG{xbbbbbbbbbbbbbbbbbbbbbbbbbbbbb}&#34;</span>
+chrset <span style="color:#ff79c6">=</span> <span style="color:#f1fa8c">&#34;abdfgehikmanoqrstucvwlxyz-01h23p456u78j9-_.+&#34;</span>
+inpt <span style="color:#ff79c6">=</span> <span style="color:#f1fa8c">&#34;FLAG{xbbbbbbbbbbbbbbbbbbbbbbbbbbbbb}&#34;</span>
 
-enc <span style="color:#f92672">=</span> [
-    <span style="color:#ae81ff">0x16C8</span>,
-    <span style="color:#ae81ff">0x0FFFFFFFFFFFF8BA1</span>,
-    <span style="color:#ae81ff">0x0FFFFFFFFFFFFE0C0</span>,
-    <span style="color:#ae81ff">0x3600</span>,
-    <span style="color:#ae81ff">0x0FFFFFFFFFFFFE535</span>,
-    <span style="color:#ae81ff">0x16C8</span>,
-    <span style="color:#ae81ff">0x0FFFFFFFFFFFF8BA1</span>,
-    <span style="color:#ae81ff">0x5F45</span>,
-    <span style="color:#ae81ff">0x0FFFFFFFFFFFFD668</span>,
-    <span style="color:#ae81ff">0x0FFFFFFFFFFFFFFF8</span>,
-    <span style="color:#ae81ff">0x5F45</span>,
-    <span style="color:#ae81ff">0x0FFFFFFFFFFFFCA00</span>,
-    <span style="color:#ae81ff">0x0FFFFFFFFFFFFBB58</span>,
-    <span style="color:#ae81ff">0x0AB8</span>,
-    <span style="color:#ae81ff">0x0FFFFFFFFFFFFBB58</span>,
-    <span style="color:#ae81ff">0x4CE3</span>,
-    <span style="color:#ae81ff">0x0FFFFFFFFFFFF8000</span>,
-    <span style="color:#ae81ff">0x2D9</span>,
-    <span style="color:#ae81ff">0x4CE3</span>,
-    <span style="color:#ae81ff">0x0FFFFFFFFFFFFFFFF</span>,
-    <span style="color:#ae81ff">0x2D9</span>,
-    <span style="color:#ae81ff">0x3E8</span>,
-    <span style="color:#ae81ff">0x7D</span>,
-    <span style="color:#ae81ff">0x0FFFFFFFFFFFFE938</span>,
-    <span style="color:#ae81ff">0x200</span>,
-    <span style="color:#ae81ff">0x200</span>,
-    <span style="color:#ae81ff">0x0FFFFFFFFFFFFE535</span>,
-    <span style="color:#ae81ff">0x1F40</span>,
-    <span style="color:#ae81ff">0x0FFFFFFFFFFFFE0C0</span>,
+enc <span style="color:#ff79c6">=</span> [
+    <span style="color:#bd93f9">0x16C8</span>,
+    <span style="color:#bd93f9">0x0FFFFFFFFFFFF8BA1</span>,
+    <span style="color:#bd93f9">0x0FFFFFFFFFFFFE0C0</span>,
+    <span style="color:#bd93f9">0x3600</span>,
+    <span style="color:#bd93f9">0x0FFFFFFFFFFFFE535</span>,
+    <span style="color:#bd93f9">0x16C8</span>,
+    <span style="color:#bd93f9">0x0FFFFFFFFFFFF8BA1</span>,
+    <span style="color:#bd93f9">0x5F45</span>,
+    <span style="color:#bd93f9">0x0FFFFFFFFFFFFD668</span>,
+    <span style="color:#bd93f9">0x0FFFFFFFFFFFFFFF8</span>,
+    <span style="color:#bd93f9">0x5F45</span>,
+    <span style="color:#bd93f9">0x0FFFFFFFFFFFFCA00</span>,
+    <span style="color:#bd93f9">0x0FFFFFFFFFFFFBB58</span>,
+    <span style="color:#bd93f9">0x0AB8</span>,
+    <span style="color:#bd93f9">0x0FFFFFFFFFFFFBB58</span>,
+    <span style="color:#bd93f9">0x4CE3</span>,
+    <span style="color:#bd93f9">0x0FFFFFFFFFFFF8000</span>,
+    <span style="color:#bd93f9">0x2D9</span>,
+    <span style="color:#bd93f9">0x4CE3</span>,
+    <span style="color:#bd93f9">0x0FFFFFFFFFFFFFFFF</span>,
+    <span style="color:#bd93f9">0x2D9</span>,
+    <span style="color:#bd93f9">0x3E8</span>,
+    <span style="color:#bd93f9">0x7D</span>,
+    <span style="color:#bd93f9">0x0FFFFFFFFFFFFE938</span>,
+    <span style="color:#bd93f9">0x200</span>,
+    <span style="color:#bd93f9">0x200</span>,
+    <span style="color:#bd93f9">0x0FFFFFFFFFFFFE535</span>,
+    <span style="color:#bd93f9">0x1F40</span>,
+    <span style="color:#bd93f9">0x0FFFFFFFFFFFFE0C0</span>,
 ]
 
-flag <span style="color:#f92672">=</span> [BitVec(<span style="color:#e6db74">&#34;flag_</span><span style="color:#e6db74">%i</span><span style="color:#e6db74">&#34;</span> <span style="color:#f92672">%</span> i, <span style="color:#ae81ff">64</span>) <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">0x1e</span>)]
+flag <span style="color:#ff79c6">=</span> [BitVec(<span style="color:#f1fa8c">&#34;flag_</span><span style="color:#f1fa8c">%i</span><span style="color:#f1fa8c">&#34;</span> <span style="color:#ff79c6">%</span> i, <span style="color:#bd93f9">64</span>) <span style="color:#ff79c6">for</span> i <span style="color:#ff79c6">in</span> <span style="color:#8be9fd;font-style:italic">range</span>(<span style="color:#bd93f9">0x1e</span>)]
 
 
-s <span style="color:#f92672">=</span> Solver()
-s<span style="color:#f92672">.</span>add(flag[<span style="color:#ae81ff">0</span>] <span style="color:#f92672">==</span> <span style="color:#ae81ff">0x16</span>)
+s <span style="color:#ff79c6">=</span> Solver()
+s<span style="color:#ff79c6">.</span>add(flag[<span style="color:#bd93f9">0</span>] <span style="color:#ff79c6">==</span> <span style="color:#bd93f9">0x16</span>)
 
-enc_f <span style="color:#f92672">=</span> []
+enc_f <span style="color:#ff79c6">=</span> []
 
-i <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>
-<span style="color:#66d9ef">while</span> i <span style="color:#f92672">!=</span> <span style="color:#ae81ff">0x1d</span>:
-    a <span style="color:#f92672">=</span> flag[i]
-    b <span style="color:#f92672">=</span> flag[i<span style="color:#f92672">+</span><span style="color:#ae81ff">1</span>]
-    a <span style="color:#f92672">=</span> b <span style="color:#f92672">-</span> a
-    a <span style="color:#f92672">=</span> a <span style="color:#f92672">^</span> (<span style="color:#ae81ff">0x1d</span> <span style="color:#f92672">-</span> i)
-    b <span style="color:#f92672">=</span> a <span style="color:#f92672">*</span> a
-    a <span style="color:#f92672">=</span> b <span style="color:#f92672">*</span> a
-    enc_f<span style="color:#f92672">.</span>append(a)
-    i <span style="color:#f92672">+=</span> <span style="color:#ae81ff">1</span>
+i <span style="color:#ff79c6">=</span> <span style="color:#bd93f9">0</span>
+<span style="color:#ff79c6">while</span> i <span style="color:#ff79c6">!=</span> <span style="color:#bd93f9">0x1d</span>:
+    a <span style="color:#ff79c6">=</span> flag[i]
+    b <span style="color:#ff79c6">=</span> flag[i<span style="color:#ff79c6">+</span><span style="color:#bd93f9">1</span>]
+    a <span style="color:#ff79c6">=</span> b <span style="color:#ff79c6">-</span> a
+    a <span style="color:#ff79c6">=</span> a <span style="color:#ff79c6">^</span> (<span style="color:#bd93f9">0x1d</span> <span style="color:#ff79c6">-</span> i)
+    b <span style="color:#ff79c6">=</span> a <span style="color:#ff79c6">*</span> a
+    a <span style="color:#ff79c6">=</span> b <span style="color:#ff79c6">*</span> a
+    enc_f<span style="color:#ff79c6">.</span>append(a)
+    i <span style="color:#ff79c6">+=</span> <span style="color:#bd93f9">1</span>
 
-<span style="color:#75715e">#print len(enc_f), len(enc)</span>
-<span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">0x1d</span>):
-    s<span style="color:#f92672">.</span>add(enc_f[i] <span style="color:#f92672">==</span> enc[i])
+<span style="color:#6272a4">#print len(enc_f), len(enc)</span>
+<span style="color:#ff79c6">for</span> i <span style="color:#ff79c6">in</span> <span style="color:#8be9fd;font-style:italic">range</span>(<span style="color:#bd93f9">0x1d</span>):
+    s<span style="color:#ff79c6">.</span>add(enc_f[i] <span style="color:#ff79c6">==</span> enc[i])
 
-<span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">0x1e</span>, <span style="color:#ae81ff">1</span>):
-    s<span style="color:#f92672">.</span>add(flag[i] <span style="color:#f92672">&lt;</span> len(chrset))
-    s<span style="color:#f92672">.</span>add(flag[i] <span style="color:#f92672">&gt;=</span> <span style="color:#ae81ff">0</span>)
+<span style="color:#ff79c6">for</span> i <span style="color:#ff79c6">in</span> <span style="color:#8be9fd;font-style:italic">range</span>(<span style="color:#bd93f9">1</span>, <span style="color:#bd93f9">0x1e</span>, <span style="color:#bd93f9">1</span>):
+    s<span style="color:#ff79c6">.</span>add(flag[i] <span style="color:#ff79c6">&lt;</span> <span style="color:#8be9fd;font-style:italic">len</span>(chrset))
+    s<span style="color:#ff79c6">.</span>add(flag[i] <span style="color:#ff79c6">&gt;=</span> <span style="color:#bd93f9">0</span>)
 
-<span style="color:#66d9ef">if</span> s<span style="color:#f92672">.</span>check() <span style="color:#f92672">!=</span> <span style="color:#e6db74">&#34;unsat&#34;</span>:
-    m <span style="color:#f92672">=</span> s<span style="color:#f92672">.</span>model()
+<span style="color:#ff79c6">if</span> s<span style="color:#ff79c6">.</span>check() <span style="color:#ff79c6">!=</span> <span style="color:#f1fa8c">&#34;unsat&#34;</span>:
+    m <span style="color:#ff79c6">=</span> s<span style="color:#ff79c6">.</span>model()
 
-    solved <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;FLAG{&#34;</span>
-    <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">0x1e</span>):
-        obj <span style="color:#f92672">=</span> flag[i]
-        solved <span style="color:#f92672">+=</span> chrset[m[obj]<span style="color:#f92672">.</span>as_long()]
+    solved <span style="color:#ff79c6">=</span> <span style="color:#f1fa8c">&#34;FLAG{&#34;</span>
+    <span style="color:#ff79c6">for</span> i <span style="color:#ff79c6">in</span> <span style="color:#8be9fd;font-style:italic">range</span>(<span style="color:#bd93f9">0x1e</span>):
+        obj <span style="color:#ff79c6">=</span> flag[i]
+        solved <span style="color:#ff79c6">+=</span> chrset[m[obj]<span style="color:#ff79c6">.</span>as_long()]
 
-    <span style="color:#66d9ef">print</span> solved <span style="color:#f92672">+</span> <span style="color:#e6db74">&#34;}&#34;</span>
-<span style="color:#66d9ef">else</span>:
-    <span style="color:#66d9ef">print</span> <span style="color:#e6db74">&#34;unsat&#34;</span>
+    <span style="color:#ff79c6">print</span> solved <span style="color:#ff79c6">+</span> <span style="color:#f1fa8c">&#34;}&#34;</span>
+<span style="color:#ff79c6">else</span>:
+    <span style="color:#ff79c6">print</span> <span style="color:#f1fa8c">&#34;unsat&#34;</span>
 </code></pre></div><p>
 <br>
 The solving script in action:
@@ -1139,7 +1142,7 @@ The solving script in action:
     <aside class="widget widget_recent_entries"  style="min-width: 320px; text-align: center;">
         <h3 class="text-monospace" >Hexdump</h3>
         <h5 class="hexdump" style="font-size: 1.4vh;"></h5>
-        <script src="js/hex.js"></script>
+        <script src="/js/hex.js"></script>
     </aside>
 
 </div>

@@ -26,7 +26,10 @@
     <link rel='stylesheet' href='/css/toc.css' type='text/css' media='all' />
     <link rel='stylesheet' href='/css/image.css' type='text/css' media='all' />
     <link rel='stylesheet' href='/css/lettercrap.css' type='text/css' media='all' />
-    <script src='js/lettercrap.js'></script>
+    <link rel="stylesheet" href='/css/dracula.css'>
+    <script src="/js/highlight.js"></script>
+    <script>hljs.highlightAll();</script>
+    <script src='/js/lettercrap.js'></script>
 </head>
 
     <body class="two-column">
@@ -113,7 +116,7 @@
 <h3 id="writeup">Writeup</h3>
 <p>Hey there!
 Another day, another crackme. This time we have a fl04t crackme. Lets start by doing the initial recon.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-plaintext" data-lang="plaintext">--------------------------------------------------------------------------------------------------------------------------------------
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-plaintext" data-lang="plaintext">--------------------------------------------------------------------------------------------------------------------------------------
 /c/Users/X3eRo0/Desktop/asm/fl04t_x3ero0 » ls -las                                                                       x3ero0@x3ero0
 total 16
  0 drwxrwx--- 1 root vboxsf    0 Jun  7 05:56 .
@@ -130,7 +133,7 @@ As you can see the binary just around 2KB.
 
 <br>
 </p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-plaintext" data-lang="plaintext">--------------------------------------------------------------------------------------------------------------------------------------
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-plaintext" data-lang="plaintext">--------------------------------------------------------------------------------------------------------------------------------------
 /c/Users/X3eRo0/Desktop/asm/fl04t_x3ero0 » ./fl04t                                                                      x3ero0@x3ero0
 +---------=[ X3eRo0 ]=---------+
 [+] input length must be 20
@@ -203,7 +206,7 @@ Lets look at check_flag()
 
 <br>
 </p>
-<p>Ghidra recognized the argument to the function as a pointer to float10. If we see the assembly its actually 
+<p>Ghidra recognized the argument to the function as a pointer to float10. If we see the assembly its actually
 tword (10 Bytes) or in C a long double.
 
 
@@ -219,7 +222,7 @@ We know that x86 has a completely different set of registers and cpu for floats,
 
 <br>
 </p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-plaintext" data-lang="plaintext">FLD:
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-plaintext" data-lang="plaintext">FLD:
     &gt; Loads the given tword in st(0) floating point register.
 </code></pre></div><p>
 
@@ -246,7 +249,7 @@ then fcos instruction is executed.</p>
 
 <br>
 
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-plaintext" data-lang="plaintext">FCOS:
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-plaintext" data-lang="plaintext">FCOS:
     &gt; Calculates the approximate cosine value of st(0) and puts the result back in st(0).
     &gt; If the value is st(0) is outside the acceptable range (−2^63 to +2^63) a special flag (C2 flag) in the FPUStatusWord is set. This flag is the 10th bit in the FPUStatusWord.
     &gt; In case C2 flag is set the st(0) remains unchanged.
@@ -254,12 +257,12 @@ then fcos instruction is executed.</p>
 
 <br>
 
-Then <code>fstsw ax</code>  is executed. 
+Then <code>fstsw ax</code>  is executed.
 
 
 <br>
 </p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-plaintext" data-lang="plaintext">FSTSW ax:
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-plaintext" data-lang="plaintext">FSTSW ax:
      &gt; Store FPU status word in AX register after
        checking for pending unmasked floating-point
        exceptions.
@@ -267,14 +270,14 @@ Then <code>fstsw ax</code>  is executed.
 
 <br>
 
-<p>So the binary shifts this FPUStatusWord right by 10 bits and checks if C2 flag is set. If it is set that means the input is out of valid range. 
+<p>So the binary shifts this FPUStatusWord right by 10 bits and checks if C2 flag is set. If it is set that means the input is out of valid range.
 The check_flag() function checks if the input tword is in the valid range or not. if its not then it returns 0.
 other wise it again loads the input in the register stack, this time the value will be in st(1) as st(0) is already occupied. Finally <code>fucomi st, st(1)</code> is executed.</p>
 
 
 <br>
 
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-plaintext" data-lang="plaintext">FUCOM:
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-plaintext" data-lang="plaintext">FUCOM:
    &gt; Compare ST(0) with ST(1).
 </code></pre></div><p>
 
@@ -322,74 +325,74 @@ So basically, the cosine of our input is calculated and then checked if its equa
 
 <br>
 
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;stdio.h&gt;</span><span style="color:#75715e">
-</span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;math.h&gt;</span><span style="color:#75715e">
-</span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;string.h&gt;</span><span style="color:#75715e">
-</span><span style="color:#75715e"></span>
-<span style="color:#66d9ef">void</span> <span style="color:#a6e22e">print_mem</span>(<span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span>mem, <span style="color:#66d9ef">int</span> len){
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#ff79c6">#include</span> <span style="color:#ff79c6">&lt;stdio.h&gt;</span><span style="color:#ff79c6">
+</span><span style="color:#ff79c6">#include</span> <span style="color:#ff79c6">&lt;math.h&gt;</span><span style="color:#ff79c6">
+</span><span style="color:#ff79c6">#include</span> <span style="color:#ff79c6">&lt;string.h&gt;</span><span style="color:#ff79c6">
+</span><span style="color:#ff79c6"></span>
+<span style="color:#8be9fd">void</span> <span style="color:#50fa7b">print_mem</span>(<span style="color:#8be9fd">char</span> <span style="color:#ff79c6">*</span>mem, <span style="color:#8be9fd">int</span> len){
 
-    <span style="color:#66d9ef">for</span> (<span style="color:#66d9ef">int</span> i <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>; i <span style="color:#f92672">&lt;</span> len; i<span style="color:#f92672">++</span>){
-        printf(<span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\\</span><span style="color:#e6db74">x%.2X&#34;</span>, <span style="color:#f92672">*</span>(<span style="color:#66d9ef">unsigned</span> <span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span>)(mem <span style="color:#f92672">+</span> i));
+    <span style="color:#ff79c6">for</span> (<span style="color:#8be9fd">int</span> i <span style="color:#ff79c6">=</span> <span style="color:#bd93f9">0</span>; i <span style="color:#ff79c6">&lt;</span> len; i<span style="color:#ff79c6">++</span>){
+        printf(<span style="color:#f1fa8c">&#34;</span><span style="color:#f1fa8c">\\</span><span style="color:#f1fa8c">x%.2X&#34;</span>, <span style="color:#ff79c6">*</span>(<span style="color:#8be9fd">unsigned</span> <span style="color:#8be9fd">char</span> <span style="color:#ff79c6">*</span>)(mem <span style="color:#ff79c6">+</span> i));
     }
-    printf(<span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>);
+    printf(<span style="color:#f1fa8c">&#34;</span><span style="color:#f1fa8c">\n</span><span style="color:#f1fa8c">&#34;</span>);
 
 }
 
-<span style="color:#66d9ef">int</span> <span style="color:#a6e22e">main</span>(){
+<span style="color:#8be9fd">int</span> <span style="color:#50fa7b">main</span>(){
 
-    <span style="color:#66d9ef">long</span> <span style="color:#66d9ef">double</span> right <span style="color:#f92672">=</span> <span style="color:#ae81ff">1.5707963267948966</span>;
-    <span style="color:#66d9ef">long</span> <span style="color:#66d9ef">double</span> left  <span style="color:#f92672">=</span> <span style="color:#ae81ff">0.00000</span>;
-    <span style="color:#66d9ef">long</span> <span style="color:#66d9ef">double</span> midd  <span style="color:#f92672">=</span> (left <span style="color:#f92672">+</span> right)<span style="color:#f92672">/</span> <span style="color:#ae81ff">2</span>;
-    <span style="color:#66d9ef">long</span> <span style="color:#66d9ef">double</span> ress  <span style="color:#f92672">=</span> cosl(midd);
-    <span style="color:#66d9ef">int</span> i <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>;
-    printf(<span style="color:#e6db74">&#34;midd: %Lf</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>, midd);
-    printf(<span style="color:#e6db74">&#34;numm: %Lf</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>, number);
-    <span style="color:#66d9ef">while</span>(memcmp((<span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span>)<span style="color:#f92672">&amp;</span>ress, (<span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span>)<span style="color:#f92672">&amp;</span>midd, <span style="color:#ae81ff">10</span>) <span style="color:#f92672">!=</span> <span style="color:#ae81ff">0</span>){
+    <span style="color:#8be9fd">long</span> <span style="color:#8be9fd">double</span> right <span style="color:#ff79c6">=</span> <span style="color:#bd93f9">1.5707963267948966</span>;
+    <span style="color:#8be9fd">long</span> <span style="color:#8be9fd">double</span> left  <span style="color:#ff79c6">=</span> <span style="color:#bd93f9">0.00000</span>;
+    <span style="color:#8be9fd">long</span> <span style="color:#8be9fd">double</span> midd  <span style="color:#ff79c6">=</span> (left <span style="color:#ff79c6">+</span> right)<span style="color:#ff79c6">/</span> <span style="color:#bd93f9">2</span>;
+    <span style="color:#8be9fd">long</span> <span style="color:#8be9fd">double</span> ress  <span style="color:#ff79c6">=</span> cosl(midd);
+    <span style="color:#8be9fd">int</span> i <span style="color:#ff79c6">=</span> <span style="color:#bd93f9">0</span>;
+    printf(<span style="color:#f1fa8c">&#34;midd: %Lf</span><span style="color:#f1fa8c">\n</span><span style="color:#f1fa8c">&#34;</span>, midd);
+    printf(<span style="color:#f1fa8c">&#34;numm: %Lf</span><span style="color:#f1fa8c">\n</span><span style="color:#f1fa8c">&#34;</span>, number);
+    <span style="color:#ff79c6">while</span>(memcmp((<span style="color:#8be9fd">char</span> <span style="color:#ff79c6">*</span>)<span style="color:#ff79c6">&amp;</span>ress, (<span style="color:#8be9fd">char</span> <span style="color:#ff79c6">*</span>)<span style="color:#ff79c6">&amp;</span>midd, <span style="color:#bd93f9">10</span>) <span style="color:#ff79c6">!=</span> <span style="color:#bd93f9">0</span>){
 
-        <span style="color:#66d9ef">if</span>(midd <span style="color:#f92672">&gt;</span> ress){
-            right  <span style="color:#f92672">=</span> midd;
+        <span style="color:#ff79c6">if</span>(midd <span style="color:#ff79c6">&gt;</span> ress){
+            right  <span style="color:#ff79c6">=</span> midd;
         }
-        <span style="color:#66d9ef">if</span>(midd <span style="color:#f92672">&lt;</span> ress){
-            left <span style="color:#f92672">=</span> midd;
+        <span style="color:#ff79c6">if</span>(midd <span style="color:#ff79c6">&lt;</span> ress){
+            left <span style="color:#ff79c6">=</span> midd;
         }
-        midd <span style="color:#f92672">=</span> (left <span style="color:#f92672">+</span> right) <span style="color:#f92672">/</span> <span style="color:#ae81ff">2</span>;
-        ress <span style="color:#f92672">=</span> cosl(midd);
+        midd <span style="color:#ff79c6">=</span> (left <span style="color:#ff79c6">+</span> right) <span style="color:#ff79c6">/</span> <span style="color:#bd93f9">2</span>;
+        ress <span style="color:#ff79c6">=</span> cosl(midd);
 
     }
 
-    printf(<span style="color:#e6db74">&#34;midd: %Lf</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>, midd);
-    print_mem((<span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span>)<span style="color:#f92672">&amp;</span>midd, <span style="color:#ae81ff">10</span>);
-    printf(<span style="color:#e6db74">&#34;ress: %Lf</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>, ress);
-    print_mem((<span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span>)<span style="color:#f92672">&amp;</span>ress, <span style="color:#ae81ff">10</span>);
+    printf(<span style="color:#f1fa8c">&#34;midd: %Lf</span><span style="color:#f1fa8c">\n</span><span style="color:#f1fa8c">&#34;</span>, midd);
+    print_mem((<span style="color:#8be9fd">char</span> <span style="color:#ff79c6">*</span>)<span style="color:#ff79c6">&amp;</span>midd, <span style="color:#bd93f9">10</span>);
+    printf(<span style="color:#f1fa8c">&#34;ress: %Lf</span><span style="color:#f1fa8c">\n</span><span style="color:#f1fa8c">&#34;</span>, ress);
+    print_mem((<span style="color:#8be9fd">char</span> <span style="color:#ff79c6">*</span>)<span style="color:#ff79c6">&amp;</span>ress, <span style="color:#bd93f9">10</span>);
 
 }
 </code></pre></div><p>
 
 <br>
 
-This gives the exact 10 Byte value of the solution. 
+This gives the exact 10 Byte value of the solution.
 
 
 <br>
 </p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#f92672">---------------------------------------------------------------------------------------------</span>
-<span style="color:#f92672">/</span>c<span style="color:#f92672">/</span>Users<span style="color:#f92672">/</span>X3eRo0<span style="color:#f92672">/</span>Desktop<span style="color:#f92672">/</span><span style="color:#66d9ef">asm</span> <span style="color:#960050;background-color:#1e0010">»</span> .<span style="color:#f92672">/</span>a.out                                          x3ero0<span style="color:#960050;background-color:#1e0010">@</span>x3ero0 
-midd: <span style="color:#ae81ff">0.739085</span>
-<span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\xCB\x6D\x71\x1E\xEC\xAE\x34\xBD\xFE\x3F</span><span style="color:#e6db74">&#34;</span>
-ress: <span style="color:#ae81ff">0.739085</span>
-<span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\xCB\x6D\x71\x1E\xEC\xAE\x34\xBD\xFE\x3F</span><span style="color:#e6db74">&#34;</span>
-<span style="color:#f92672">---------------------------------------------------------------------------------------------</span>
-<span style="color:#f92672">/</span>c<span style="color:#f92672">/</span>Users<span style="color:#f92672">/</span>X3eRo0<span style="color:#f92672">/</span>Desktop<span style="color:#f92672">/</span><span style="color:#66d9ef">asm</span> <span style="color:#960050;background-color:#1e0010">»</span>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-plaintext" data-lang="plaintext">---------------------------------------------------------------------------------------------
+/c/Users/X3eRo0/Desktop/asm » ./a.out                                          x3ero0@x3ero0 
+midd: 0.739085
+&#34;\xCB\x6D\x71\x1E\xEC\xAE\x34\xBD\xFE\x3F&#34;
+ress: 0.739085
+&#34;\xCB\x6D\x71\x1E\xEC\xAE\x34\xBD\xFE\x3F&#34;
+---------------------------------------------------------------------------------------------
+/c/Users/X3eRo0/Desktop/asm »
 </code></pre></div><p>
 
 <br>
 
-The Decimal values are useless to us because 
+The Decimal values are useless to us because
 
 
 <br>
 </p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-plaintext" data-lang="plaintext">float lesson number 06: 
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-plaintext" data-lang="plaintext">float lesson number 06: 
             never ever use decimal representation for floats
             if you need a precise float value :) that&#39;s because
             floats are binary; and in fractional numbers decimals
@@ -407,26 +410,26 @@ to get the flag.</p>
 
 <br>
 
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">solution  <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\xCB\x6D\x71\x1E\xEC\xAE\x34\xBD\xFE\x3F</span><span style="color:#e6db74">&#34;</span>
-enc_bytes <span style="color:#f92672">=</span> [
-    <span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\xAD\x1F\x41\x73\xB3\xC8\x58\x8D\xCA\x4B</span><span style="color:#e6db74">&#34;</span>,
-    <span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\xB8\x32\x40\x73\x9C\x9E\x46\xC9\xA1\x15</span><span style="color:#e6db74">&#34;</span>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">solution  <span style="color:#ff79c6">=</span> <span style="color:#f1fa8c">&#34;</span><span style="color:#f1fa8c">\xCB\x6D\x71\x1E\xEC\xAE\x34\xBD\xFE\x3F</span><span style="color:#f1fa8c">&#34;</span>
+enc_bytes <span style="color:#ff79c6">=</span> [
+    <span style="color:#f1fa8c">&#34;</span><span style="color:#f1fa8c">\xAD\x1F\x41\x73\xB3\xC8\x58\x8D\xCA\x4B</span><span style="color:#f1fa8c">&#34;</span>,
+    <span style="color:#f1fa8c">&#34;</span><span style="color:#f1fa8c">\xB8\x32\x40\x73\x9C\x9E\x46\xC9\xA1\x15</span><span style="color:#f1fa8c">&#34;</span>
 ]
 
-<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">xor</span>(data, key):
-    res <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;&#34;</span>
-    <span style="color:#66d9ef">if</span> len(data) <span style="color:#f92672">!=</span> len(key):
-        <span style="color:#66d9ef">return</span> res
-    <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">10</span>):
-        res <span style="color:#f92672">+=</span> chr(ord(data[i]) <span style="color:#f92672">^</span> ord(key[i]))
-    <span style="color:#66d9ef">return</span> res
+<span style="color:#ff79c6">def</span> <span style="color:#50fa7b">xor</span>(data, key):
+    res <span style="color:#ff79c6">=</span> <span style="color:#f1fa8c">&#34;&#34;</span>
+    <span style="color:#ff79c6">if</span> <span style="color:#8be9fd;font-style:italic">len</span>(data) <span style="color:#ff79c6">!=</span> <span style="color:#8be9fd;font-style:italic">len</span>(key):
+        <span style="color:#ff79c6">return</span> res
+    <span style="color:#ff79c6">for</span> i <span style="color:#ff79c6">in</span> <span style="color:#8be9fd;font-style:italic">range</span>(<span style="color:#bd93f9">10</span>):
+        res <span style="color:#ff79c6">+=</span> <span style="color:#8be9fd;font-style:italic">chr</span>(<span style="color:#8be9fd;font-style:italic">ord</span>(data[i]) <span style="color:#ff79c6">^</span> <span style="color:#8be9fd;font-style:italic">ord</span>(key[i]))
+    <span style="color:#ff79c6">return</span> res
 
-flag <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;&#34;</span>
+flag <span style="color:#ff79c6">=</span> <span style="color:#f1fa8c">&#34;&#34;</span>
 
-<span style="color:#66d9ef">for</span> enc_byte <span style="color:#f92672">in</span> enc_bytes:
-    flag <span style="color:#f92672">+=</span> xor(enc_byte, solution)
+<span style="color:#ff79c6">for</span> enc_byte <span style="color:#ff79c6">in</span> enc_bytes:
+    flag <span style="color:#ff79c6">+=</span> xor(enc_byte, solution)
 
-<span style="color:#66d9ef">print</span>(flag)
+<span style="color:#ff79c6">print</span>(flag)
 </code></pre></div><p>
 
 <br>
@@ -600,7 +603,7 @@ This gives us the flag <code>fr0m_fl04ts_1mp0rt_*</code></p>
     <aside class="widget widget_recent_entries"  style="min-width: 320px; text-align: center;">
         <h3 class="text-monospace" >Hexdump</h3>
         <h5 class="hexdump" style="font-size: 1.4vh;"></h5>
-        <script src="js/hex.js"></script>
+        <script src="/js/hex.js"></script>
     </aside>
 
 </div>
