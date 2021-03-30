@@ -8,12 +8,14 @@ span.fade {
 }
 
 .card {
+  margin: 10px;
+  float: left;
   margin-bottom: 20px;
   border: 5px solid #292929;
   outline: 5px solid #e3e3e3;
   box-shadow: 0 16px 32px 0 rgba(0,0,0,0.4);
   transition: 0.3s;
-  width: 50%;
+  width: 46%;
   position: relative;
   text-align: center;
   color: #ffffff;
@@ -25,12 +27,13 @@ span.fade {
 }
 
 img {
-	filter: blur(3px);
-	-webkit-filter: blur(3px);
+	filter: blur(2px);
+	-webkit-filter: blur(2px);
 
 }
 
 .card-text {
+  font-size: 1.2vh;
   position: absolute;
   left: 50%;
   top: 50%;
