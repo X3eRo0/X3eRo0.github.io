@@ -152,7 +152,7 @@ once we have that dictionary we resubstitute the charecters in the key given to 
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">23
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#ff79c6">from</span> pwn <span style="color:#ff79c6">import</span> <span style="color:#ff79c6">*</span>
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python3" data-lang="python3"><span style="color:#ff79c6">from</span> pwn <span style="color:#ff79c6">import</span> <span style="color:#ff79c6">*</span>
 <span style="color:#ff79c6">import</span> string
 context<span style="color:#ff79c6">.</span>log_level <span style="color:#ff79c6">=</span> <span style="color:#f1fa8c">&#34;critical&#34;</span>
 
@@ -174,7 +174,7 @@ flag <span style="color:#ff79c6">=</span> <span style="color:#f1fa8c">&#34;&#34;
 <span style="color:#ff79c6">for</span> ch <span style="color:#ff79c6">in</span> flag_license:
     flag <span style="color:#ff79c6">+=</span> chars[ch]
 
-<span style="color:#ff79c6">print</span> flag</code></pre></td></tr></table>
+<span style="color:#8be9fd;font-style:italic">print</span> flag</code></pre></td></tr></table>
 </div>
 </div></p>
 <p>running this script gives us partial flag</p>
