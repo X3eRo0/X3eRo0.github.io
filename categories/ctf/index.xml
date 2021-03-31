@@ -18,8 +18,12 @@
       <pubDate>Fri, 27 Mar 2020 09:54:19 +0000</pubDate>
       
       <guid>https://x3ero0.github.io/posts/plaintext_attack_on_zip_legacy_crypto/</guid>
-      <description>hljs.initHighlightingOnLoad(); The Vulnerability The PKZIP program is one of the more widely used archive/compression programs on personal computers. PKZIP provides a stream cipher which allows users to scramble files with variable length keys ( passwords ). We can find the internal representation of the key within a few hours on a PC using a few bytes of known plaintext. This Stream cipher was designed by Roger Schlafly.
-We will take a look at the Forensics 3 challenge from RiftCTF2020, But first lets understand the weakness.</description>
+      <description>&lt;link rel=&#34;stylesheet&#34; href=&#34;https://x3ero0.github.io/css/styles/atelier-forest-dark.css&#34;&gt;
+&lt;script src=&#34;https://x3ero0.github.io/js/highlight.pack.js&#34;&gt;&lt;/script&gt;
+&lt;script&gt;hljs.initHighlightingOnLoad();&lt;/script&gt;
+
+&lt;h3 id=&#34;the-vulnerability&#34;&gt;The Vulnerability&lt;/h3&gt;
+&lt;p&gt;The PKZIP program is one of the more widely used archive/compression programs on personal computers. PKZIP provides a stream cipher which allows users to scramble files with variable length keys ( passwords ). We can find the internal representation of the key within a few hours on a PC using a few bytes of known plaintext. This Stream cipher was designed by Roger Schlafly.&lt;/p&gt;</description>
     </item>
     
   </channel>

@@ -36,9 +36,12 @@
       <pubDate>Tue, 14 Apr 2020 17:51:27 +0000</pubDate>
       
       <guid>https://x3ero0.github.io/posts/reversing_a_malware_in_disguise/</guid>
-      <description>hljs.initHighlightingOnLoad(); My Friend recommended this Super Awesome game The_Elder_Scrolls_V_Skyrim.zip and obviously it was downloaded from a random website from the internet ( some ripoff of the OceanOfGames.com ). The contents of the The_Elder_Scrolls_V_Skyrim.zip are as follows : -
- The setup file was very much suspicious because
- the size was only 506KB Windows Defender was preventing it from extracting in the VM. the icon was also acting weird when view of the file explorer was changed (i don&amp;rsquo;t really know whats up with that) but a well made setup for game wont go crazy like this.</description>
+      <description>&lt;link rel=&#34;stylesheet&#34; href=&#34;https://x3ero0.github.io/css/styles/atelier-forest-dark.css&#34;&gt;
+&lt;script src=&#34;https://x3ero0.github.io/js/highlight.pack.js&#34;&gt;&lt;/script&gt;
+&lt;script&gt;hljs.initHighlightingOnLoad();&lt;/script&gt;
+
+&lt;p&gt;My Friend recommended this Super Awesome game &lt;em&gt;The_Elder_Scrolls_V_Skyrim.zip&lt;/em&gt; and obviously it was downloaded from a random website from the internet ( some ripoff of the OceanOfGames.com ).
+The contents of the &lt;em&gt;The_Elder_Scrolls_V_Skyrim.zip&lt;/em&gt; are as follows : -&lt;/p&gt;</description>
     </item>
     
     <item>
@@ -47,9 +50,18 @@
       <pubDate>Fri, 10 Apr 2020 20:20:07 +0000</pubDate>
       
       <guid>https://x3ero0.github.io/posts/watevr_repyc/</guid>
-      <description>hljs.initHighlightingOnLoad(); Challenge: REPYC [REV] - 147 Points Challenge Description:
- woo thi chal sooo repyc! file: 3nohtyp.pyc Difficulty estimate: Easy  We are given a pyc file and running file on this pyc reveals that its a python 3.6 compiled python bytecode.
-1 2  [~]$ file 3nohtyp.pyc 3nohtyp.pyc: python 3.6 byte-compiled   so i went with the usuall approach to a python pyc challenge, where the first part is to decompile the bytecode.</description>
+      <description>&lt;link rel=&#34;stylesheet&#34; href=&#34;https://x3ero0.github.io/css/styles/atelier-forest-dark.css&#34;&gt;
+&lt;script src=&#34;https://x3ero0.github.io/js/highlight.pack.js&#34;&gt;&lt;/script&gt;
+&lt;script&gt;hljs.initHighlightingOnLoad();&lt;/script&gt;
+
+&lt;h3 id=&#34;challenge-repyc-rev---147-points&#34;&gt;Challenge: REPYC [REV] - 147 Points&lt;/h3&gt;
+&lt;p&gt;Challenge Description:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;woo thi chal sooo repyc!&lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;file&lt;/strong&gt;: &lt;a href=&#34;https://github.com/X3eRo0/Crackmes/blob/master/watevrctf/3nohtyp.pyc?raw=true&#34;&gt;3nohtyp.pyc&lt;/a&gt;&lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Difficulty estimate&lt;/strong&gt;: Easy&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;We are given a pyc file and running file on this pyc reveals that its a python 3.6 compiled python bytecode.&lt;/p&gt;</description>
     </item>
     
     <item>
@@ -58,8 +70,39 @@
       <pubDate>Fri, 10 Apr 2020 20:06:26 +0000</pubDate>
       
       <guid>https://x3ero0.github.io/posts/hsctf-license/</guid>
-      <description>Challenge: License [ 298(DYN) RE ] Challenge Description:
-1 2 3 4 5 6 7 8 9 10 11  Written by: ItzSomebody Description: Keith made a cool license-checking program but he forgot the flag he used to create the key! To make matters worse, he lost the source code and stripped the binary for his license-generator program. Can you help Keith recover his flag? All he knows is: • The license key is 4-EZF2M-7O5F4-V9P7O-EVFDP-E4VDO-O • He put his name (in the form of &amp;#39;k3ith&amp;#39;) as the first part of the flag • There are 3 underscores • The flag is in the format hsctf{} • The flag doesn&amp;#39;t have random character sequences (you should be able to read the entire flag easily).</description>
+      <description>&lt;link href=&#34;https://x3ero0.github.io/css/prism.css&#34; rel=&#34;stylesheet&#34; /&gt;
+&lt;script src=&#34;https://x3ero0.github.io/js/prism.js&#34;&gt;&lt;/script&gt;
+
+&lt;h3 id=&#34;challenge-license--298dyn-re-&#34;&gt;Challenge: License [ 298(DYN) RE ]&lt;/h3&gt;
+&lt;p&gt;Challenge Description:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div style=&#34;color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;
+&lt;table style=&#34;border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;&#34;&gt;&lt;tr&gt;&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;&#34;&gt;
+&lt;pre style=&#34;color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 1
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 2
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 3
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 4
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 5
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 6
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 7
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 8
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 9
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;10
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;11
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;;width:100%&#34;&gt;
+&lt;pre style=&#34;color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-plaintext&#34; data-lang=&#34;plaintext&#34;&gt;Written by: ItzSomebody
+
+Description: 
+Keith made a cool license-checking program but he forgot the flag he used to create the key! To make matters worse, he lost the source code and stripped the binary for his license-generator program. Can you help Keith recover his flag? All he knows is:
+• The license key is 4-EZF2M-7O5F4-V9P7O-EVFDP-E4VDO-O
+• He put his name (in the form of &amp;#39;k3ith&amp;#39;) as the first part of the flag
+• There are 3 underscores
+• The flag is in the format hsctf{}
+• The flag doesn&amp;#39;t have random character sequences (you should be able to read the entire flag easily).
+• The flag only contains lowercase English letters and numbers.
+• The generator might produce the same keys for different inputs because Keith was too lazy to write the algorithm properly.&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;</description>
     </item>
     
   </channel>

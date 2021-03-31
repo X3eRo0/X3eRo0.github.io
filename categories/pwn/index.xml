@@ -18,7 +18,23 @@
       <pubDate>Fri, 26 Mar 2021 12:13:38 +0530</pubDate>
       
       <guid>https://x3ero0.github.io/posts/hyperion/</guid>
-      <description>Pwning Pocket Tanks - Hyperion [Google CTF 2017 Finals]  Author : Gynvael Coldwind Language : C/C++ Upload : May 9th, 2018 Level : I will rate it 8/10 Platform : Server: Linux | Client: Windows/Linux etc. Files : change the link hyperion  Desc: - It&amp;#39;s 2017, so even single-player games require Internet connection.  Hyperion was one of the pwn challenges from Google CTF 2017 Finals. One day I randomly asked Gynvael (who is the author of this challenge) to give me some CTF challenges.</description>
+      <description>&lt;h1 id=&#34;pwning-pocket-tanks---hyperion-google-ctf-2017-finals&#34;&gt;Pwning Pocket Tanks - Hyperion [Google CTF 2017 Finals]&lt;/h1&gt;
+&lt;ul&gt;
+&lt;li&gt;Author : &lt;a href=&#34;https://gynvael.coldwind.pl/&#34;&gt;Gynvael Coldwind&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Language : C/C++&lt;/li&gt;
+&lt;li&gt;Upload : May 9th, 2018&lt;/li&gt;
+&lt;li&gt;Level : I will rate it 8/10&lt;/li&gt;
+&lt;li&gt;Platform : Server: Linux | Client: Windows/Linux etc.&lt;/li&gt;
+&lt;li&gt;Files : &lt;a href=&#34;https://crackmes.one/crackme/5bc0fe0033c5d4110a29b296&#34;&gt;change the link hyperion&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-plaintext&#34; data-lang=&#34;plaintext&#34;&gt;Desc:
+  - It&amp;#39;s 2017, so even single-player games require Internet connection.
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;hr&gt;
+
+
+&lt;br&gt;
+
+&lt;p&gt;Hyperion was one of the pwn challenges from Google CTF 2017 Finals. One day I randomly asked Gynvael (who is the author of this challenge) to give me some CTF challenges. He gave me 3 Revs and 1 Pwn challenges. In the end i solved 2 Revs and 1 Pwn.  I received these challenges in June 2019, but being a noob i was not able to solve any of them. I solved the 2 Revs (the 3rd Rev is still unsolved and i still have no clue XD) sometime in 2020 but this Pwn (Hyperion) was still remaining. Just recently i decided that i will take a look and i will solve it finally.&lt;/p&gt;</description>
     </item>
     
   </channel>

@@ -18,7 +18,23 @@
       <pubDate>Fri, 26 Mar 2021 12:13:38 +0530</pubDate>
       
       <guid>https://x3ero0.github.io/posts/hyperion/</guid>
-      <description>Pwning Pocket Tanks - Hyperion [Google CTF 2017 Finals]  Author : Gynvael Coldwind Language : C/C++ Upload : May 9th, 2018 Level : I will rate it 8/10 Platform : Server: Linux | Client: Windows/Linux etc. Files : change the link hyperion  Desc: - It&amp;#39;s 2017, so even single-player games require Internet connection.  Hyperion was one of the pwn challenges from Google CTF 2017 Finals. One day I randomly asked Gynvael (who is the author of this challenge) to give me some CTF challenges.</description>
+      <description>&lt;h1 id=&#34;pwning-pocket-tanks---hyperion-google-ctf-2017-finals&#34;&gt;Pwning Pocket Tanks - Hyperion [Google CTF 2017 Finals]&lt;/h1&gt;
+&lt;ul&gt;
+&lt;li&gt;Author : &lt;a href=&#34;https://gynvael.coldwind.pl/&#34;&gt;Gynvael Coldwind&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Language : C/C++&lt;/li&gt;
+&lt;li&gt;Upload : May 9th, 2018&lt;/li&gt;
+&lt;li&gt;Level : I will rate it 8/10&lt;/li&gt;
+&lt;li&gt;Platform : Server: Linux | Client: Windows/Linux etc.&lt;/li&gt;
+&lt;li&gt;Files : &lt;a href=&#34;https://crackmes.one/crackme/5bc0fe0033c5d4110a29b296&#34;&gt;change the link hyperion&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-plaintext&#34; data-lang=&#34;plaintext&#34;&gt;Desc:
+  - It&amp;#39;s 2017, so even single-player games require Internet connection.
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;hr&gt;
+
+
+&lt;br&gt;
+
+&lt;p&gt;Hyperion was one of the pwn challenges from Google CTF 2017 Finals. One day I randomly asked Gynvael (who is the author of this challenge) to give me some CTF challenges. He gave me 3 Revs and 1 Pwn challenges. In the end i solved 2 Revs and 1 Pwn.  I received these challenges in June 2019, but being a noob i was not able to solve any of them. I solved the 2 Revs (the 3rd Rev is still unsolved and i still have no clue XD) sometime in 2020 but this Pwn (Hyperion) was still remaining. Just recently i decided that i will take a look and i will solve it finally.&lt;/p&gt;</description>
     </item>
     
     <item>
@@ -56,9 +72,12 @@ Can you Crack the fl04ts? Can you Defeat ME? FLAG DOESNT FOLLOW ANY FLAG FORMAT
       <pubDate>Tue, 14 Apr 2020 17:51:27 +0000</pubDate>
       
       <guid>https://x3ero0.github.io/posts/reversing_a_malware_in_disguise/</guid>
-      <description>hljs.initHighlightingOnLoad(); My Friend recommended this Super Awesome game The_Elder_Scrolls_V_Skyrim.zip and obviously it was downloaded from a random website from the internet ( some ripoff of the OceanOfGames.com ). The contents of the The_Elder_Scrolls_V_Skyrim.zip are as follows : -
- The setup file was very much suspicious because
- the size was only 506KB Windows Defender was preventing it from extracting in the VM. the icon was also acting weird when view of the file explorer was changed (i don&amp;rsquo;t really know whats up with that) but a well made setup for game wont go crazy like this.</description>
+      <description>&lt;link rel=&#34;stylesheet&#34; href=&#34;https://x3ero0.github.io/css/styles/atelier-forest-dark.css&#34;&gt;
+&lt;script src=&#34;https://x3ero0.github.io/js/highlight.pack.js&#34;&gt;&lt;/script&gt;
+&lt;script&gt;hljs.initHighlightingOnLoad();&lt;/script&gt;
+
+&lt;p&gt;My Friend recommended this Super Awesome game &lt;em&gt;The_Elder_Scrolls_V_Skyrim.zip&lt;/em&gt; and obviously it was downloaded from a random website from the internet ( some ripoff of the OceanOfGames.com ).
+The contents of the &lt;em&gt;The_Elder_Scrolls_V_Skyrim.zip&lt;/em&gt; are as follows : -&lt;/p&gt;</description>
     </item>
     
     <item>
@@ -67,9 +86,18 @@ Can you Crack the fl04ts? Can you Defeat ME? FLAG DOESNT FOLLOW ANY FLAG FORMAT
       <pubDate>Fri, 10 Apr 2020 20:20:07 +0000</pubDate>
       
       <guid>https://x3ero0.github.io/posts/watevr_repyc/</guid>
-      <description>hljs.initHighlightingOnLoad(); Challenge: REPYC [REV] - 147 Points Challenge Description:
- woo thi chal sooo repyc! file: 3nohtyp.pyc Difficulty estimate: Easy  We are given a pyc file and running file on this pyc reveals that its a python 3.6 compiled python bytecode.
-1 2  [~]$ file 3nohtyp.pyc 3nohtyp.pyc: python 3.6 byte-compiled   so i went with the usuall approach to a python pyc challenge, where the first part is to decompile the bytecode.</description>
+      <description>&lt;link rel=&#34;stylesheet&#34; href=&#34;https://x3ero0.github.io/css/styles/atelier-forest-dark.css&#34;&gt;
+&lt;script src=&#34;https://x3ero0.github.io/js/highlight.pack.js&#34;&gt;&lt;/script&gt;
+&lt;script&gt;hljs.initHighlightingOnLoad();&lt;/script&gt;
+
+&lt;h3 id=&#34;challenge-repyc-rev---147-points&#34;&gt;Challenge: REPYC [REV] - 147 Points&lt;/h3&gt;
+&lt;p&gt;Challenge Description:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;woo thi chal sooo repyc!&lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;file&lt;/strong&gt;: &lt;a href=&#34;https://github.com/X3eRo0/Crackmes/blob/master/watevrctf/3nohtyp.pyc?raw=true&#34;&gt;3nohtyp.pyc&lt;/a&gt;&lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Difficulty estimate&lt;/strong&gt;: Easy&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;We are given a pyc file and running file on this pyc reveals that its a python 3.6 compiled python bytecode.&lt;/p&gt;</description>
     </item>
     
     <item>
@@ -107,8 +135,39 @@ Can you Crack the fl04ts? Can you Defeat ME? FLAG DOESNT FOLLOW ANY FLAG FORMAT
       <pubDate>Fri, 10 Apr 2020 20:06:26 +0000</pubDate>
       
       <guid>https://x3ero0.github.io/posts/hsctf-license/</guid>
-      <description>Challenge: License [ 298(DYN) RE ] Challenge Description:
-1 2 3 4 5 6 7 8 9 10 11  Written by: ItzSomebody Description: Keith made a cool license-checking program but he forgot the flag he used to create the key! To make matters worse, he lost the source code and stripped the binary for his license-generator program. Can you help Keith recover his flag? All he knows is: • The license key is 4-EZF2M-7O5F4-V9P7O-EVFDP-E4VDO-O • He put his name (in the form of &amp;#39;k3ith&amp;#39;) as the first part of the flag • There are 3 underscores • The flag is in the format hsctf{} • The flag doesn&amp;#39;t have random character sequences (you should be able to read the entire flag easily).</description>
+      <description>&lt;link href=&#34;https://x3ero0.github.io/css/prism.css&#34; rel=&#34;stylesheet&#34; /&gt;
+&lt;script src=&#34;https://x3ero0.github.io/js/prism.js&#34;&gt;&lt;/script&gt;
+
+&lt;h3 id=&#34;challenge-license--298dyn-re-&#34;&gt;Challenge: License [ 298(DYN) RE ]&lt;/h3&gt;
+&lt;p&gt;Challenge Description:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div style=&#34;color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;
+&lt;table style=&#34;border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;&#34;&gt;&lt;tr&gt;&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;&#34;&gt;
+&lt;pre style=&#34;color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 1
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 2
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 3
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 4
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 5
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 6
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 7
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 8
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 9
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;10
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;11
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;;width:100%&#34;&gt;
+&lt;pre style=&#34;color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-plaintext&#34; data-lang=&#34;plaintext&#34;&gt;Written by: ItzSomebody
+
+Description: 
+Keith made a cool license-checking program but he forgot the flag he used to create the key! To make matters worse, he lost the source code and stripped the binary for his license-generator program. Can you help Keith recover his flag? All he knows is:
+• The license key is 4-EZF2M-7O5F4-V9P7O-EVFDP-E4VDO-O
+• He put his name (in the form of &amp;#39;k3ith&amp;#39;) as the first part of the flag
+• There are 3 underscores
+• The flag is in the format hsctf{}
+• The flag doesn&amp;#39;t have random character sequences (you should be able to read the entire flag easily).
+• The flag only contains lowercase English letters and numbers.
+• The generator might produce the same keys for different inputs because Keith was too lazy to write the algorithm properly.&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;</description>
     </item>
     
     <item>
@@ -128,8 +187,12 @@ Flag format riftCTF{.*}
       <pubDate>Fri, 27 Mar 2020 09:54:19 +0000</pubDate>
       
       <guid>https://x3ero0.github.io/posts/plaintext_attack_on_zip_legacy_crypto/</guid>
-      <description>hljs.initHighlightingOnLoad(); The Vulnerability The PKZIP program is one of the more widely used archive/compression programs on personal computers. PKZIP provides a stream cipher which allows users to scramble files with variable length keys ( passwords ). We can find the internal representation of the key within a few hours on a PC using a few bytes of known plaintext. This Stream cipher was designed by Roger Schlafly.
-We will take a look at the Forensics 3 challenge from RiftCTF2020, But first lets understand the weakness.</description>
+      <description>&lt;link rel=&#34;stylesheet&#34; href=&#34;https://x3ero0.github.io/css/styles/atelier-forest-dark.css&#34;&gt;
+&lt;script src=&#34;https://x3ero0.github.io/js/highlight.pack.js&#34;&gt;&lt;/script&gt;
+&lt;script&gt;hljs.initHighlightingOnLoad();&lt;/script&gt;
+
+&lt;h3 id=&#34;the-vulnerability&#34;&gt;The Vulnerability&lt;/h3&gt;
+&lt;p&gt;The PKZIP program is one of the more widely used archive/compression programs on personal computers. PKZIP provides a stream cipher which allows users to scramble files with variable length keys ( passwords ). We can find the internal representation of the key within a few hours on a PC using a few bytes of known plaintext. This Stream cipher was designed by Roger Schlafly.&lt;/p&gt;</description>
     </item>
     
     <item>
@@ -138,8 +201,18 @@ We will take a look at the Forensics 3 challenge from RiftCTF2020, But first let
       <pubDate>Sat, 08 Feb 2020 18:04:11 +0000</pubDate>
       
       <guid>https://x3ero0.github.io/posts/year3000/</guid>
-      <description>hljs.initHighlightingOnLoad(); Year3000 [RE - Nullcon Hackim2020 CTF] Description
- One day when I came home at lunchtime I heard a funny noise Went out to the back yard to find out If it was one of those rowdy boys Stood there was my neighbor called Peter And a flux capacitor I guess there must be quite some entropy in a flux capacitor... Netcat Link : nc re.ctf.nullcon.net 1234</description>
+      <description>&lt;link rel=&#34;stylesheet&#34; href=&#34;https://x3ero0.github.io/css/styles/atelier-forest-dark.css&#34;&gt;
+&lt;script src=&#34;https://x3ero0.github.io/js/highlight.pack.js&#34;&gt;&lt;/script&gt;
+&lt;script&gt;hljs.initHighlightingOnLoad();&lt;/script&gt;
+
+&lt;h2 id=&#34;year3000-re---nullcon-hackim2020-ctf&#34;&gt;Year3000 [RE - Nullcon Hackim2020 CTF]&lt;/h2&gt;
+&lt;p&gt;&lt;strong&gt;Description&lt;/strong&gt;&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;code&gt;One day when I came home at lunchtime I heard a funny noise Went out to the back yard to find out If it was one of those rowdy boys Stood there was my neighbor called Peter And a flux capacitor I guess there must be quite some entropy in a flux capacitor... 
+&lt;br&gt;
+&lt;br&gt; Netcat Link : nc re.ctf.nullcon.net 1234&lt;/code&gt;&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;we were given 3000 stripped ELF binaries some 64bit binaries and 32bit binaries. the description of the challenge did&amp;rsquo;nt explained what exactly the task was, so i tried to connect to the given netcat link.&lt;/p&gt;</description>
     </item>
     
     <item>
@@ -158,10 +231,23 @@ the task is from RootersCTF2019 and story goes like this... your client was infe
       <pubDate>Wed, 05 Feb 2020 06:34:52 +0000</pubDate>
       
       <guid>https://x3ero0.github.io/posts/obfuscation-techniques/</guid>
-      <description>hljs.initHighlightingOnLoad();   Recently I was watching GynvaelEN&amp;rsquo;s Old Stream about ELF Packers, and I thought why not make a PE Packer. I decided that I will write a python script to Parse PE Headers from scratch, I was able to parse some headers and then I got stuck and decided that I will use PEFILE.
-──────▄▌▐▀▀▀▀▀▀▀▀▀▀▀▀▀​▀▀▀▀▀▀▌
-───▄▄██▌█ BEEP BEEP ▄▄▄▌▐██▌█ POOR SCRIPT AHEAD
-███████▌█▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▌ ▀(@)▀▀▀▀▀▀▀(@)(@)▀▀▀▀▀▀▀▀(@)▀ so I made a poor packer which is available here packer.</description>
+      <description>&lt;link rel=&#34;stylesheet&#34; href=&#34;https://x3ero0.github.io/css/styles/atelier-forest-dark.css&#34;&gt;
+&lt;script src=&#34;https://x3ero0.github.io/js/highlight.pack.js&#34;&gt;&lt;/script&gt;
+&lt;script&gt;hljs.initHighlightingOnLoad();&lt;/script&gt;
+
+
+
+
+&lt;div class=&#34;center&#34;&gt;
+  &lt;img
+    class=&#34;responsive&#34;
+    src=&#34;https://x3ero0.github.io/img/Obfuscation_Techniques/Cover.jpg&#34;
+    alt=&#34;BeingDebugged under IDA Pro&#34;
+    decoding=&#34;async&#34;
+  /&gt;
+&lt;/div&gt;
+&lt;hr&gt;
+&lt;p&gt;Recently I was watching &lt;a href=&#34;https://www.youtube.com/user/GynvaelEN&#34;&gt;GynvaelEN&amp;rsquo;s&lt;/a&gt; Old &lt;a href=&#34;https://www.youtube.com/watch?v=5RK7sYTOeNk&#34;&gt;Stream&lt;/a&gt; about ELF Packers, and I thought why not make a PE Packer. I decided that I will write a python script to Parse PE Headers from scratch, I was able to parse some headers and then I got stuck and decided that I will use &lt;a href=&#34;https://github.com/erocarrera/pefile&#34;&gt;PEFILE&lt;/a&gt;.&lt;/p&gt;</description>
     </item>
     
     <item>

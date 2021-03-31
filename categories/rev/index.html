@@ -153,9 +153,12 @@
 		</header>
 
 		<div class="post-excerpt"><p>
-			hljs.initHighlightingOnLoad(); My Friend recommended this Super Awesome game The_Elder_Scrolls_V_Skyrim.zip and obviously it was downloaded from a random website from the internet ( some ripoff of the OceanOfGames.com ). The contents of the The_Elder_Scrolls_V_Skyrim.zip are as follows : -
- The setup file was very much suspicious because
- the size was only 506KB Windows Defender was preventing it from extracting in the VM. the icon was also acting weird when view of the file explorer was changed (i don&rsquo;t really know whats up with that) but a well made setup for game wont go crazy like this.
+			<link rel="stylesheet" href="/css/styles/atelier-forest-dark.css">
+<script src="/js/highlight.pack.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
+<p>My Friend recommended this Super Awesome game <em>The_Elder_Scrolls_V_Skyrim.zip</em> and obviously it was downloaded from a random website from the internet ( some ripoff of the OceanOfGames.com ).
+The contents of the <em>The_Elder_Scrolls_V_Skyrim.zip</em> are as follows : -</p>
 			<a href="/posts/reversing_a_malware_in_disguise/" class="more-link">Read more</a>
 		</p></div>
 	</div>
@@ -196,9 +199,18 @@
 		</header>
 
 		<div class="post-excerpt"><p>
-			hljs.initHighlightingOnLoad(); Challenge: REPYC [REV] - 147 Points Challenge Description:
- woo thi chal sooo repyc! file: 3nohtyp.pyc Difficulty estimate: Easy  We are given a pyc file and running file on this pyc reveals that its a python 3.6 compiled python bytecode.
-1 2  [~]$ file 3nohtyp.pyc 3nohtyp.pyc: python 3.6 byte-compiled   so i went with the usuall approach to a python pyc challenge, where the first part is to decompile the bytecode.
+			<link rel="stylesheet" href="/css/styles/atelier-forest-dark.css">
+<script src="/js/highlight.pack.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
+<h3 id="challenge-repyc-rev---147-points">Challenge: REPYC [REV] - 147 Points</h3>
+<p>Challenge Description:</p>
+<ul>
+<li>woo thi chal sooo repyc!<!-- raw HTML omitted --></li>
+<li><strong>file</strong>: <a href="https://github.com/X3eRo0/Crackmes/blob/master/watevrctf/3nohtyp.pyc?raw=true">3nohtyp.pyc</a><!-- raw HTML omitted --></li>
+<li><strong>Difficulty estimate</strong>: Easy</li>
+</ul>
+<p>We are given a pyc file and running file on this pyc reveals that its a python 3.6 compiled python bytecode.</p>
 			<a href="/posts/watevr_repyc/" class="more-link">Read more</a>
 		</p></div>
 	</div>
@@ -232,8 +244,39 @@
 		</header>
 
 		<div class="post-excerpt"><p>
-			Challenge: License [ 298(DYN) RE ] Challenge Description:
-1 2 3 4 5 6 7 8 9 10 11  Written by: ItzSomebody Description: Keith made a cool license-checking program but he forgot the flag he used to create the key! To make matters worse, he lost the source code and stripped the binary for his license-generator program. Can you help Keith recover his flag? All he knows is: • The license key is 4-EZF2M-7O5F4-V9P7O-EVFDP-E4VDO-O • He put his name (in the form of &#39;k3ith&#39;) as the first part of the flag • There are 3 underscores • The flag is in the format hsctf{} • The flag doesn&#39;t have random character sequences (you should be able to read the entire flag easily).
+			<link href="/css/prism.css" rel="stylesheet" />
+<script src="/js/prism.js"></script>
+
+<h3 id="challenge-license--298dyn-re-">Challenge: License [ 298(DYN) RE ]</h3>
+<p>Challenge Description:</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-plaintext" data-lang="plaintext">Written by: ItzSomebody
+
+Description: 
+Keith made a cool license-checking program but he forgot the flag he used to create the key! To make matters worse, he lost the source code and stripped the binary for his license-generator program. Can you help Keith recover his flag? All he knows is:
+• The license key is 4-EZF2M-7O5F4-V9P7O-EVFDP-E4VDO-O
+• He put his name (in the form of &#39;k3ith&#39;) as the first part of the flag
+• There are 3 underscores
+• The flag is in the format hsctf{}
+• The flag doesn&#39;t have random character sequences (you should be able to read the entire flag easily).
+• The flag only contains lowercase English letters and numbers.
+• The generator might produce the same keys for different inputs because Keith was too lazy to write the algorithm properly.</code></pre></td></tr></table>
+</div>
+</div>
 			<a href="/posts/hsctf-license/" class="more-link">Read more</a>
 		</p></div>
 	</div>
