@@ -19,6 +19,20 @@ Webcomic: 4.3
  * should create a child theme.
  * =============================================================================
  */
+
+@font-face {
+  font-family: 'awesome';
+  font-style: normal;
+  font-weight: normal;
+  src: url("https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/fonts/fontawesome-webfont.eot");
+  src: url("https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/fonts/fontawesome-webfont.eot?#iefix") format("embedded-opentype"), url("https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/fonts/fontawesome-webfont.woff") format("woff"), url("https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/fonts/fontawesome-webfont.ttf") format("truetype"), url("https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/fonts/fontawesome-webfont.svg#fontawesomeregular") format("svg"); }
+/*! normalize.css v3.0.2 | MIT License | git.io/normalize */
+/**
+ * 1. Set default font family to sans-serif.
+ * 2. Prevent iOS text size adjust after orientation change, without disabling
+ *    user zoom.
+ */
+
 @font-face {
   font-family: 'Fira Code';
   src: url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@500&display=swap');
@@ -36,7 +50,7 @@ html {
  * Remove default margin.
  */
 body {
-  background-color: #282a36;
+  background-color: #44475a;
   margin: 0; }
 
 /* HTML5 display definitions
@@ -208,7 +222,8 @@ kbd,
 pre,
 samp {
   font-family: "Fira Code", monospace;
-  font-size: 1em; }
+  width: 100%;
+  font-size: 1.5vh; }
 
 /* Forms
    ========================================================================== */
@@ -381,9 +396,9 @@ html {
   font: 100%/1.4 'Fira Code', monospace; }
 
 body {
-  background: #fff;
+  background: #44475a;
   box-sizing: border-box;
-  color: #000;
+  color: #f8f8f2;
   padding: 1rem;
   text-rendering: optimizeLegibility; }
 
@@ -537,7 +552,7 @@ label[for] {
   cursor: pointer; }
 
 input {
-  background: #fff;
+  background: #f8f8f2;
   border: thin solid #767676;
   -moz-box-sizing: border-box;
   -webkit-box-sizing: border-box;
@@ -571,7 +586,7 @@ select {
     outline-offset: .1rem; }
 
 textarea {
-  background: #fff;
+  background: #f8f8f2;
   border: thin solid #767676;
   -moz-box-sizing: border-box;
   -webkit-box-sizing: border-box;
@@ -597,7 +612,7 @@ input[type="button"] {
   border: 0;
   border-radius: .3rem;
   background: #000;
-  color: #fff;
+  color: #f8f8f2;
   display: inline-block;
   line-height: 1.8;
   padding: 0 .5rem;
@@ -648,15 +663,15 @@ body > a[href="#content"] {
   margin: auto; }
 
 .wrapper {
-  background: #fff;
+  background: #282a36;
   box-shadow: 0 0 1rem rgba(0, 0, 0, 0.2);
   margin: auto;
   padding: 1px;
   position: relative; }
   .wrapper a {
-    color: #767676; }
+    color: #8080b9; }
     .wrapper a:focus, .wrapper a:hover {
-      color: #000; }
+      color: #bd93f9; }
 
 .content {
   display: -moz-flex;
@@ -765,13 +780,13 @@ main {
 .banner {
   position: relative; }
   .banner > a {
-    color: #000;
+    color: #f8f8f2;
     display: block;
     line-height: 1.4;
     padding: 0;
     white-space: normal; }
     .banner > a:focus, .banner > a:hover {
-      color: #000;
+      color: #bd93f9;
       opacity: 0.8; }
     .banner > a:active {
       opacity: 0.4; }
@@ -784,8 +799,8 @@ main {
     margin: 0;
     padding: 0 1rem 1rem 1rem; }
   .banner nav {
-    background: #000;
-    color: #fff;
+    background: #6272a4;
+    color: #f8f8f2;
     position: relative; }
     .banner nav:before, .banner nav:after {
       content: ' ';
@@ -803,20 +818,20 @@ main {
       right: 1rem;
       top: 0; }
     .banner nav a {
-      color: #767676;
+      color: #f8f8f2;
       display: block;
       line-height: 2.4;
       padding: 0 1rem;
       white-space: pre; }
       .banner nav a:focus, .banner nav a:hover {
-        color: #fff; }
+        color: #f8f8f2; }
   .banner ul {
     list-style: none;
     transition: opacity .2s, visibility .2s; }
     .banner ul ul {
       background: #000;
       box-shadow: 0 0 1rem rgba(0, 0, 0, 0.2);
-      color: #fff;
+      color: #f8f8f2;
       opacity: 0;
       position: absolute;
       visibility: hidden;
@@ -831,7 +846,7 @@ main {
       opacity: 1;
       visibility: visible; }
     .banner li:focus > a, .banner li:hover > a, .banner li.current-menu-item > a, .banner li.current_page_item > a, .banner li.current_page_ancestor > a, .banner li.current-menu-ancestor > a {
-      color: #fff; }
+      color: #f8f8f2; }
   .banner .menu-item-has-children > a:after,
   .banner .page_item_has_children > a:after {
     font: 100%/1 awesome;
@@ -853,20 +868,20 @@ main {
     background: #000;
     border: 0;
     border-radius: 0;
-    color: #fff;
+    color: #f8f8f2;
     cursor: pointer;
     line-height: 2.4;
     padding: 0 1rem; }
 
 .contentinfo {
   background: #000;
-  color: #fff;
+  color: #f8f8f2;
   line-height: 1;
   padding: 1rem; }
   .contentinfo a {
     color: #767676; }
     .contentinfo a:focus, .contentinfo a:hover {
-      color: #fff; }
+      color: #f8f8f2; }
 
 form.search input {
   width: 100%; }
@@ -917,7 +932,7 @@ form.search input {
   width: 100%; }
   .post-webcomic nav {
     background: #000;
-    color: #fff;
+    color: #f8f8f2;
     text-align: center; }
     .post-webcomic nav.above {
       margin: 1px 0 0; }
@@ -925,7 +940,7 @@ form.search input {
       color: #767676;
       font-size: 200%; }
       .post-webcomic nav a:focus, .post-webcomic nav a:hover {
-        color: #fff; }
+        color: #f8f8f2; }
       .post-webcomic nav a.current-webcomic {
         opacity: 0.2; }
   .post-webcomic .webcomic-image {

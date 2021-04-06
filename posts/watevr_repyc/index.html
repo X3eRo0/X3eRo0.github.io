@@ -98,8 +98,8 @@
 <p>Challenge Description:</p>
 <ul>
 <li>woo thi chal sooo repyc!<!-- raw HTML omitted --></li>
-<li><strong>file</strong>: <a href="https://github.com/X3eRo0/Crackmes/blob/master/watevrctf/3nohtyp.pyc?raw=true">3nohtyp.pyc</a><!-- raw HTML omitted --></li>
-<li><strong>Difficulty estimate</strong>: Easy</li>
+<li>File: <a href="https://github.com/X3eRo0/Crackmes/blob/master/watevrctf/3nohtyp.pyc?raw=true">3nohtyp.pyc</a><!-- raw HTML omitted --></li>
+<li>Difficulty estimate: Easy</li>
 </ul>
 <p>We are given a pyc file and running file on this pyc reveals that its a python 3.6 compiled python bytecode.</p>
 <div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
@@ -143,10 +143,10 @@ translated first 3 lines like this</p>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
 <pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-plaintext" data-lang="plaintext">佤 = 0     
 侰 = ~佤 * ~佤
-俴 = 侰 + 侰      </code></pre></td></tr></table>
+俴 = 侰 + 侰      
+</code></pre></td></tr></table>
 </div>
-</div>
-<p>translated to</p>
+</div><p>translated to</p>
 <div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
 <table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
@@ -156,10 +156,10 @@ translated first 3 lines like this</p>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
 <pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-plaintext" data-lang="plaintext">A = 0
 B = ~A * ~A
-C = B + B</code></pre></td></tr></table>
+C = B + B
+</code></pre></td></tr></table>
 </div>
-</div>
-<p>and finally</p>
+</div><p>and finally</p>
 <div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
 <table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
@@ -169,26 +169,26 @@ C = B + B</code></pre></td></tr></table>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
 <pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-plaintext" data-lang="plaintext">A = 0
 B = 1
-C = 2</code></pre></td></tr></table>
+C = 2
+</code></pre></td></tr></table>
 </div>
-</div>
-<p>And later in the code instead of just using 1, 2 and 3 they use A, B and C so i replaced all the A, B and Cs with their respective values</p>
+</div><p>And later in the code instead of just using 1, 2 and 3 they use A, B and C so i replaced all the A, B and Cs with their respective values</p>
 <p>then comes this function</p>
 <div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
 <table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-plaintext" data-lang="plaintext">def 䯂(䵦):</code></pre></td></tr></table>
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-plaintext" data-lang="plaintext">def 䯂(䵦):
+</code></pre></td></tr></table>
 </div>
-</div>
-<p>At this point i already guessed it was a VM so i named this function VM(byte)</p>
+</div><p>At this point i already guessed it was a VM so i named this function VM(byte)</p>
 <p>next we see some more declarations which turns out to be registers and memory and stack and stuff
 for example</p>
 <p><code>괠 = [A] * C ** (C * C)</code> translates to <code>reg = [0]  * 16</code>
 and <code>궓 = [A] * 100</code> translates to <code>mem = [0] * 100</code>
 and after reading the rest of the code turns out <code>괣 = []</code> was the stack</p>
-<p>so this part looks like this now
+<p>so this part looks like this now</p>
 <div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
 <table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
@@ -212,10 +212,10 @@ C <span style="color:#ff79c6">=</span> <span style="color:#bd93f9">2</span>
     var2 <span style="color:#ff79c6">=</span> <span style="color:#bd93f9">0</span>
     reg  <span style="color:#ff79c6">=</span> [<span style="color:#bd93f9">0</span>] <span style="color:#ff79c6">*</span> <span style="color:#bd93f9">16</span> <span style="color:#6272a4"># array of registers</span>
     mem <span style="color:#ff79c6">=</span> [<span style="color:#bd93f9">0</span>] <span style="color:#ff79c6">*</span> <span style="color:#bd93f9">100</span> <span style="color:#6272a4"># contains our input</span>
-    stack <span style="color:#ff79c6">=</span> []</code></pre></td></tr></table>
+    stack <span style="color:#ff79c6">=</span> []
+</code></pre></td></tr></table>
 </div>
-</div></p>
-<p>then there is a while loop <div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+</div><p>then there is a while loop <div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
 <table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
 </span></code></pre></td>
@@ -239,10 +239,10 @@ so it was clear that &lsquo;듃&rsquo; is the hlt instruction as soon as it enco
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
 <pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">굸 <span style="color:#ff79c6">=</span> 䵦[굴][A]<span style="color:#ff79c6">.</span>lower()
-亀 <span style="color:#ff79c6">=</span> 䵦[굴][B:]</code></pre></td></tr></table>
+亀 <span style="color:#ff79c6">=</span> 䵦[굴][B:]
+</code></pre></td></tr></table>
 </div>
-</div>
-<p>translated to
+</div><p>translated to</p>
 <div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
 <table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
@@ -250,10 +250,10 @@ so it was clear that &lsquo;듃&rsquo; is the hlt instruction as soon as it enco
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
 <pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">opcode <span style="color:#ff79c6">=</span> byte[var1][<span style="color:#bd93f9">0</span>]<span style="color:#ff79c6">.</span>lower()
-_arg_ <span style="color:#ff79c6">=</span> byte[var1][<span style="color:#bd93f9">1</span>:]</code></pre></td></tr></table>
+_arg_ <span style="color:#ff79c6">=</span> byte[var1][<span style="color:#bd93f9">1</span>:]
+</code></pre></td></tr></table>
 </div>
-</div></p>
-<p>and at this point it was time to analyse all the opcodes, so i used my big brain and only analysed the ones which were actually executed. when you see the call to the VM() function the arguments passed is a list of instructions for sat down and started to do find and replace on all the instructions.
+</div><p>and at this point it was time to analyse all the opcodes, so i used my big brain and only analysed the ones which were actually executed. when you see the call to the VM() function the arguments passed is a list of instructions for sat down and started to do find and replace on all the instructions.
 but then i noticed that the instructions in the bottom were not correctly indented so i fixed that and i ended up with this</p>
 
 
@@ -319,10 +319,10 @@ and i ended up with this VM Bytecode</p>
  [<span style="color:#f1fa8c">&#39;print_reg&#39;</span>, <span style="color:#bd93f9">1</span>],
  [<span style="color:#f1fa8c">&#39;mov&#39;</span>, <span style="color:#bd93f9">1</span>, <span style="color:#f1fa8c">&#39;Access denied!&#39;</span>],
  [<span style="color:#f1fa8c">&#39;print_reg&#39;</span>, <span style="color:#bd93f9">1</span>],
- [<span style="color:#f1fa8c">&#39;hlt&#39;</span>]])</code></pre></td></tr></table>
+ [<span style="color:#f1fa8c">&#39;hlt&#39;</span>]])
+</code></pre></td></tr></table>
 </div>
-</div>
-<p>clearly it loads this huge string into r6 and then xors it with 135 and then subtract 15 from each charecter and then compares with our input so i quicly wrote a decrypt function</p>
+</div><p>clearly it loads this huge string into r6 and then xors it with 135 and then subtract 15 from each charecter and then compares with our input so i quicly wrote a decrypt function</p>
 <div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
 <table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
@@ -352,10 +352,10 @@ and i ended up with this VM Bytecode</p>
     <span style="color:#ff79c6">for</span> i <span style="color:#ff79c6">in</span> <span style="color:#8be9fd;font-style:italic">range</span>(<span style="color:#8be9fd;font-style:italic">len</span>(a)):
         temp <span style="color:#ff79c6">+=</span> <span style="color:#8be9fd;font-style:italic">chr</span>(<span style="color:#8be9fd;font-style:italic">ord</span>(a[i]) <span style="color:#ff79c6">^</span> <span style="color:#bd93f9">135</span>)
 
-    <span style="color:#ff79c6">print</span>(temp)</code></pre></td></tr></table>
+    <span style="color:#ff79c6">print</span>(temp)
+</code></pre></td></tr></table>
 </div>
-</div>
-<p>and just after that i got the flag</p>
+</div><p>and just after that i got the flag</p>
 <div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
 <table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
@@ -363,10 +363,10 @@ and i ended up with this VM Bytecode</p>
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
 <pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-plaintext" data-lang="plaintext">[~]$ python3 solution.py                                                                           
-watevr{this_must_be_the_best_encryption_method_evr_henceforth_this_is_the_new_Advanced_Encryption_Standard_anyways_i_dont_really_have_a_good_vid_but_i_really_enjoy_this_song_i_hope_you_will_enjoy_it_aswell!_youtube.com/watch?v=E5yFcdPAGv0}</code></pre></td></tr></table>
+watevr{this_must_be_the_best_encryption_method_evr_henceforth_this_is_the_new_Advanced_Encryption_Standard_anyways_i_dont_really_have_a_good_vid_but_i_really_enjoy_this_song_i_hope_you_will_enjoy_it_aswell!_youtube.com/watch?v=E5yFcdPAGv0}
+</code></pre></td></tr></table>
 </div>
-</div>
-<p>damn that flag is huge and i also wonder whats up with these youtube links?</p>
+</div><p>damn that flag is huge and i also wonder whats up with these youtube links?</p>
         </div>
 
 
@@ -531,13 +531,6 @@ watevr{this_must_be_the_best_encryption_method_evr_henceforth_this_is_the_new_Ad
             
         </ul>
     </aside>
-
-    <aside class="widget widget_recent_entries"  style="min-width: 320px; text-align: center;">
-        <h3 class="text-monospace" >Hexdump</h3>
-        <h5 class="hexdump" style="font-size: 1.4vh;"></h5>
-        <script src="/js/hex.js"></script>
-    </aside>
-
 </div>
         </div>
         </div>

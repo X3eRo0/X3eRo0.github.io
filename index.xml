@@ -27,10 +27,17 @@
 &lt;li&gt;Platform : Server: Linux | Client: Windows/Linux etc.&lt;/li&gt;
 &lt;li&gt;Files : &lt;a href=&#34;https://crackmes.one/crackme/5bc0fe0033c5d4110a29b296&#34;&gt;change the link hyperion&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-plaintext&#34; data-lang=&#34;plaintext&#34;&gt;Desc:
+&lt;div class=&#34;highlight&#34;&gt;&lt;div style=&#34;color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;
+&lt;table style=&#34;border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;&#34;&gt;&lt;tr&gt;&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;&#34;&gt;
+&lt;pre style=&#34;color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;1
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;2
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;;width:100%&#34;&gt;
+&lt;pre style=&#34;color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-plaintext&#34; data-lang=&#34;plaintext&#34;&gt;Desc:
   - It&amp;#39;s 2017, so even single-player games require Internet connection.
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;hr&gt;
-
+&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;
 
 &lt;br&gt;
 
@@ -63,7 +70,7 @@ Can you Crack the fl04ts? Can you Defeat ME? FLAG DOESNT FOLLOW ANY FLAG FORMAT
       <pubDate>Mon, 18 May 2020 13:03:48 +0000</pubDate>
       
       <guid>https://x3ero0.github.io/posts/hell86_from_ttlhacker/</guid>
-      <description>Hell86   Author : ttlhacker Language : Assembler Upload : 8:03 PM 10/12/2018 Level : 3 Platform : Unix/Linux etc. Crackme : crackmes.one  Desc: - x86_64 linux binary (tested on debian 9 and ubuntu 18.04, should run on any distro). - Takes one command line argument and outputs &amp;#34;OK!&amp;#34; if it&amp;#39;s correct, &amp;#34;Wrong&amp;#34; if it&amp;#39;s not. - Partially written in C, actual verification routine is assembly. - Don&amp;#39;t patch the binary, of course - find the correct input.</description>
+      <description>Hell86  Author : ttlhacker Language : Assembler Upload : 8:03 PM 10/12/2018 Level : 3 Platform : Unix/Linux etc. Crackme : crackmes.one  1 2 3 4 5 6 7 8  Desc: - x86_64 linux binary (tested on debian 9 and ubuntu 18.04, should run on any distro). - Takes one command line argument and outputs &amp;#34;OK!&amp;#34; if it&amp;#39;s correct, &amp;#34;Wrong&amp;#34; if it&amp;#39;s not. - Partially written in C, actual verification routine is assembly.</description>
     </item>
     
     <item>
@@ -76,8 +83,8 @@ Can you Crack the fl04ts? Can you Defeat ME? FLAG DOESNT FOLLOW ANY FLAG FORMAT
 &lt;script src=&#34;https://x3ero0.github.io/js/highlight.pack.js&#34;&gt;&lt;/script&gt;
 &lt;script&gt;hljs.initHighlightingOnLoad();&lt;/script&gt;
 
-&lt;p&gt;My Friend recommended this Super Awesome game &lt;em&gt;The_Elder_Scrolls_V_Skyrim.zip&lt;/em&gt; and obviously it was downloaded from a random website from the internet ( some ripoff of the OceanOfGames.com ).
-The contents of the &lt;em&gt;The_Elder_Scrolls_V_Skyrim.zip&lt;/em&gt; are as follows : -&lt;/p&gt;</description>
+&lt;p&gt;My Friend recommended this Super Awesome game &lt;strong&gt;The_Elder_Scrolls_V_Skyrim.zip&lt;/strong&gt; and obviously it was downloaded from a random website from the internet ( some ripoff of the OceanOfGames.com ).
+The contents of the &lt;strong&gt;The_Elder_Scrolls_V_Skyrim.zip&lt;/strong&gt; are as follows : -&lt;/p&gt;</description>
     </item>
     
     <item>
@@ -94,8 +101,8 @@ The contents of the &lt;em&gt;The_Elder_Scrolls_V_Skyrim.zip&lt;/em&gt; are as f
 &lt;p&gt;Challenge Description:&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;woo thi chal sooo repyc!&lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;file&lt;/strong&gt;: &lt;a href=&#34;https://github.com/X3eRo0/Crackmes/blob/master/watevrctf/3nohtyp.pyc?raw=true&#34;&gt;3nohtyp.pyc&lt;/a&gt;&lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Difficulty estimate&lt;/strong&gt;: Easy&lt;/li&gt;
+&lt;li&gt;File: &lt;a href=&#34;https://github.com/X3eRo0/Crackmes/blob/master/watevrctf/3nohtyp.pyc?raw=true&#34;&gt;3nohtyp.pyc&lt;/a&gt;&lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;li&gt;Difficulty estimate: Easy&lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;We are given a pyc file and running file on this pyc reveals that its a python 3.6 compiled python bytecode.&lt;/p&gt;</description>
     </item>
@@ -140,18 +147,43 @@ The contents of the &lt;em&gt;The_Elder_Scrolls_V_Skyrim.zip&lt;/em&gt; are as f
 
 &lt;h3 id=&#34;challenge-license--298dyn-re-&#34;&gt;Challenge: License [ 298(DYN) RE ]&lt;/h3&gt;
 &lt;p&gt;Challenge Description:&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-plaintext&#34; data-lang=&#34;plaintext&#34;&gt;Written by: ItzSomebody
+&lt;div class=&#34;highlight&#34;&gt;&lt;div style=&#34;color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;
+&lt;table style=&#34;border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;&#34;&gt;&lt;tr&gt;&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;&#34;&gt;
+&lt;pre style=&#34;color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 1
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 2
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 3
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 4
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 5
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 6
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 7
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 8
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 9
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;10
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;11
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;12
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;13
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;14
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;15
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;;width:100%&#34;&gt;
+&lt;pre style=&#34;color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-plaintext&#34; data-lang=&#34;plaintext&#34;&gt;Written by: ItzSomebody
 
 Description: 
-Keith made a cool license-checking program but he forgot the flag he used to create the key! To make matters worse, he lost the source code and stripped the binary for his license-generator program. Can you help Keith recover his flag? All he knows is:
+Keith made a cool license-checking program but he forgot the flag he used to create the key!
+To make matters worse, he lost the source code and stripped the binary for his
+license-generator program. Can you help Keith recover his flag? All he knows is:
 • The license key is 4-EZF2M-7O5F4-V9P7O-EVFDP-E4VDO-O
 • He put his name (in the form of &amp;#39;k3ith&amp;#39;) as the first part of the flag
 • There are 3 underscores
 • The flag is in the format hsctf{}
-• The flag doesn&amp;#39;t have random character sequences (you should be able to read the entire flag easily).
+• The flag doesn&amp;#39;t have random character sequences (you should be able to read the
+	entire flag easily).
 • The flag only contains lowercase English letters and numbers.
-• The generator might produce the same keys for different inputs because Keith was too lazy to write the algorithm properly.
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
+• The generator might produce the same keys for different inputs because
+ Keith was too lazy to write the algorithm properly.
+&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;</description>
     </item>
     
     <item>
@@ -190,13 +222,26 @@ Flag format riftCTF{.*}
 &lt;script&gt;hljs.initHighlightingOnLoad();&lt;/script&gt;
 
 &lt;h2 id=&#34;year3000-re---nullcon-hackim2020-ctf&#34;&gt;Year3000 [RE - Nullcon Hackim2020 CTF]&lt;/h2&gt;
-&lt;p&gt;&lt;strong&gt;Description&lt;/strong&gt;&lt;/p&gt;
-&lt;hr&gt;
-&lt;p&gt;&lt;code&gt;One day when I came home at lunchtime I heard a funny noise Went out to the back yard to find out If it was one of those rowdy boys Stood there was my neighbor called Peter And a flux capacitor I guess there must be quite some entropy in a flux capacitor... 
-&lt;br&gt;
-&lt;br&gt; Netcat Link : nc re.ctf.nullcon.net 1234&lt;/code&gt;&lt;/p&gt;
-&lt;hr&gt;
-&lt;p&gt;we were given 3000 stripped ELF binaries some 64bit binaries and 32bit binaries. the description of the challenge did&amp;rsquo;nt explained what exactly the task was, so i tried to connect to the given netcat link.&lt;/p&gt;</description>
+&lt;p&gt;Description&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div style=&#34;color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;
+&lt;table style=&#34;border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;&#34;&gt;&lt;tr&gt;&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;&#34;&gt;
+&lt;pre style=&#34;color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;1
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;2
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;3
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;4
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;5
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;6
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;;width:100%&#34;&gt;
+&lt;pre style=&#34;color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-plaintext&#34; data-lang=&#34;plaintext&#34;&gt;One day when I came home at lunchtime I heard a funny noise Went out to the
+back yard to find out If it was one of those rowdy boys Stood there was my
+neighbor called Peter And a flux capacitor. I guess there must be quite some
+entropy in a flux capacitor...
+
+Netcat Link : nc re.ctf.nullcon.net 1234
+&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;we were given 3000 stripped ELF binaries some 64bit binaries and 32bit binaries. the description of the challenge did&amp;rsquo;nt explained what exactly the task was, so i tried to connect to the given netcat link.&lt;/p&gt;</description>
     </item>
     
     <item>

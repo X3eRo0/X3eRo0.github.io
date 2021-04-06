@@ -118,7 +118,7 @@ Now the question comes that what are some anti-debugging techniques in windows l
 <p>I looked around on the internet and found some techniques. I will keep updating this post as I find more techniques</p>
 <hr>
 <h2 id="windows">Windows</h2>
-<p><strong>1. BeingDebugged in PEB</strong>:
+<p><strong>1. BeingDebugged in PEB</strong>:</p>
 <div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
 <table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
@@ -148,11 +148,11 @@ Now the question comes that what are some anti-debugging techniques in windows l
 </span><span style="color:#6272a4">    */</span>
     <span style="color:#bd93f9">0x204</span> <span style="color:#8be9fd">void</span><span style="color:#ff79c6">*</span> SystemAssemblyStorageMap;
     <span style="color:#bd93f9">0x208</span> DWORD MinimumStackCommit;
-};</code></pre></td></tr></table>
+};
+</code></pre></td></tr></table>
 </div>
-</div></p>
-<p>you can access the Process Environment Block in assembly using &ldquo;fs&rdquo;.
-the following inline assembly code fetches the value of BeingDebugged
+</div><p>you can access the Process Environment Block in assembly using &ldquo;fs&rdquo;.
+the following inline assembly code fetches the value of BeingDebugged</p>
 <div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
 <table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
@@ -184,10 +184,10 @@ __asm__(
 	printf(<span style="color:#f1fa8c">&#34;YES</span><span style="color:#f1fa8c">\n</span><span style="color:#f1fa8c">&#34;</span>);
 } <span style="color:#ff79c6">else</span> {
 	printf(<span style="color:#f1fa8c">&#34;NO</span><span style="color:#f1fa8c">\n</span><span style="color:#f1fa8c">&#34;</span>);
-}</code></pre></td></tr></table>
+}
+</code></pre></td></tr></table>
 </div>
-</div>
-<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+</div><div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
 <table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
@@ -204,6 +204,7 @@ __asm__(
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
 <pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#6272a4">/* VISUALC++ */</span>
@@ -220,10 +221,11 @@ _asm
 	printf(<span style="color:#f1fa8c">&#34;YES</span><span style="color:#f1fa8c">\n</span><span style="color:#f1fa8c">&#34;</span>);
 } <span style="color:#ff79c6">else</span> {
 	printf(<span style="color:#f1fa8c">&#34;NO</span><span style="color:#f1fa8c">\n</span><span style="color:#f1fa8c">&#34;</span>);
-}</code></pre></td></tr></table>
+}
+
+</code></pre></td></tr></table>
 </div>
-</div></p>
-<p><strong>2. Detecting Breakpoints :</strong>
+</div><p><strong>2. Detecting Breakpoints :</strong></p>
 <div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
 <table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
@@ -261,12 +263,11 @@ _asm
 	} <span style="color:#ff79c6">else</span> {
 		printf(<span style="color:#f1fa8c">&#34;GOOD</span><span style="color:#f1fa8c">\n</span><span style="color:#f1fa8c">&#34;</span>);
 	}
-}</code></pre></td></tr></table>
+}
+</code></pre></td></tr></table>
 </div>
-</div></p>
-<p><strong>3. Erase PE Headers From Memory:</strong></p>
-<blockquote>
-<p>This trick helps in ruining any attempt of dumping unpacked binary from memory
+</div><p><strong>3. Erase PE Headers From Memory:</strong></p>
+<p>This trick helps in ruining any attempt of dumping unpacked binary from memory</p>
 <div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
 <table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
@@ -284,6 +285,7 @@ _asm
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
 <pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#6272a4">// from AntiRE.h
@@ -300,14 +302,12 @@ _asm
 
 	<span style="color:#6272a4">// Erase the header
 </span><span style="color:#6272a4"></span>	ZeroMemory(pBaseAddr, <span style="color:#bd93f9">4096</span>);
-}</code></pre></td></tr></table>
+}
+
+</code></pre></td></tr></table>
 </div>
-</div>
-<strong>4. OutputDebugString() :</strong></p>
-</blockquote>
-<blockquote>
+</div><p><strong>4. OutputDebugString() :</strong></p>
 <p>CheckOutputDebugString checks whether OutputDebugString causes an error to occur or not .if the error does occur then we know there&rsquo;s no debugger, otherwise if there IS a debugger no error will occur</p>
-</blockquote>
 <div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
 <table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
@@ -327,12 +327,13 @@ _asm
 		<span style="color:#ff79c6">return</span> <span style="color:#8be9fd;font-style:italic">true</span>;
 	<span style="color:#ff79c6">else</span>
 		<span style="color:#ff79c6">return</span> <span style="color:#8be9fd;font-style:italic">false</span>;
-}</code></pre></td></tr></table>
+}
+</code></pre></td></tr></table>
 </div>
-</div>
-<h2 id="linux">LINUX</h2>
+</div><h2 id="linux">LINUX</h2>
 <ol>
-<li><strong>Ptrace :</strong>
+<li><strong>Ptrace :</strong></li>
+</ol>
 <div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
 <table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
@@ -372,11 +373,10 @@ _asm
  <span style="color:#ff79c6">if</span>(fd <span style="color:#ff79c6">==</span> <span style="color:#8be9fd;font-style:italic">NULL</span>) <span style="color:#ff79c6">return</span>;
  <span style="color:#ff79c6">else</span> printf(<span style="color:#f1fa8c">&#34;file opend</span><span style="color:#f1fa8c">\n</span><span style="color:#f1fa8c">&#34;</span>);
  exit(<span style="color:#ff79c6">-</span><span style="color:#bd93f9">1</span>);
-}</code></pre></td></tr></table>
+}
+</code></pre></td></tr></table>
 </div>
-</div></li>
-</ol>
-<p><strong>2. You Tell :</strong></p>
+</div><p><strong>2. You Tell :</strong></p>
         </div>
 
 
@@ -536,13 +536,6 @@ _asm
             
         </ul>
     </aside>
-
-    <aside class="widget widget_recent_entries"  style="min-width: 320px; text-align: center;">
-        <h3 class="text-monospace" >Hexdump</h3>
-        <h5 class="hexdump" style="font-size: 1.4vh;"></h5>
-        <script src="/js/hex.js"></script>
-    </aside>
-
 </div>
         </div>
         </div>

@@ -91,7 +91,6 @@
 
         <div class="post-content">
             <h3 id="hell86">Hell86</h3>
-<hr>
 <ul>
 <li>Author : <a href="https://crackmes.one/user/ttlhacker">ttlhacker</a></li>
 <li>Language : Assembler</li>
@@ -100,7 +99,19 @@
 <li>Platform : Unix/Linux etc.</li>
 <li>Crackme : <a href="https://crackmes.one/crackme/5bc0fe0033c5d4110a29b296">crackmes.one</a></li>
 </ul>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-plaintext" data-lang="plaintext">Desc: 
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">8
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-plaintext" data-lang="plaintext">Desc: 
 
    - x86_64 linux binary (tested on debian 9 and ubuntu 18.04, should run on any distro).
    - Takes one command line argument and outputs &#34;OK!&#34; if it&#39;s correct, &#34;Wrong&#34; if it&#39;s not.
@@ -108,8 +119,9 @@
    - Don&#39;t patch the binary, of course - find the correct input.
 
   SHA256: 134b53b78fe74d477bf381ebfd965f92d270f8314886518d451ec3aca29156fa hell86
-</code></pre></div><hr>
-
+</code></pre></td></tr></table>
+</div>
+</div>
 
 <br>
 
@@ -133,7 +145,30 @@
 <p>So, as we can see the binary takes input using argv
 and throws an error if no argument is passed.</p>
 <p>Lets trace the binary using ltrace and see what it does.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-plaintext" data-lang="plaintext">_ZNSt8ios_base4InitC1Ev(0x55b4f3a8b881, 0x7ffe79e0e7b8, 0x7ffe79e0e7d0, 224) = 0
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-plaintext" data-lang="plaintext">_ZNSt8ios_base4InitC1Ev(0x55b4f3a8b881, 0x7ffe79e0e7b8, 0x7ffe79e0e7d0, 224) = 0
 __cxa_atexit(0x7f06e2a07990, 0x55b4f3a8b881, 0x55b4f3a8b068, 6) = 0
 malloc(8192)                                     = 0x55b4f497feb0
 sigaltstack(0x7ffe79e0e688, 0, 0, 0)             = 0
@@ -152,7 +187,9 @@ puts(&#34;Wrong&#34;)                                    = 6
 Wrong
 +++ exited (status 0) +++
 
-</code></pre></div>
+</code></pre></td></tr></table>
+</div>
+</div>
 
 <br>
 
@@ -349,7 +386,6 @@ Now lets look at <code>register_sigill_handler()</code>
 
 <br>
 </p>
-<hr>
 <h3 id="the-bytecode">The Bytecode</h3>
 
 
@@ -388,17 +424,28 @@ Now lets look at <code>register_sigill_handler()</code>
 
 <br>
 
-<hr>
 <h3 id="instruction-encoding">Instruction Encoding</h3>
 <p>The instructions are encoding in hell86 is actually one simple thing in this challenge.
 Each instruction has an 8 byte immediate value which lies just after the <code>UD2</code>.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-plaintext" data-lang="plaintext">\x0f\x0b   - UD2
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-plaintext" data-lang="plaintext">\x0f\x0b   - UD2
 \x00 * 0x8 - imm64
 \x09       - Opcode
 \x00       - arg1
 \x00       - arg2
 \x00       - arg3 
-</code></pre></div>
+</code></pre></td></tr></table>
+</div>
+</div>
 
 <br>
 
@@ -431,7 +478,6 @@ Each instruction has an 8 byte immediate value which lies just after the <code>U
 
 <br>
 
-<hr>
 <h3 id="vm-instructions">VM Instructions</h3>
 <p>Lets hop back to IDA and look at the switch case in text view and figure out where are the VM registers, i haven&rsquo;t seen any mention of VM registers or stack or even ROM.</p>
 <p>Lets start with case 9 as its the first case that the VM executes in IDA.
@@ -576,7 +622,6 @@ struct.</p>
 <br>
 <p>You know what this means? this VM doesnt even uses virtual registers. IT USES
 ACTUAL x86_64 register <code>BRUH MOMENT</code></p>
-<hr>
 <h3 id="the-disassembler">The Disassembler</h3>
 <p>Okay, Now that we understand everything (almost), lets get the disassmbler working.
 The following disassembler is just to disassemble the instructions which the VM was
@@ -1161,7 +1206,6 @@ bytecode <span style="color:#ff79c6">=</span> <span style="color:#8be9fd;font-st
 
 </code></pre></div>
 <br>
-<hr>
 <h3 id="flag-checking">Flag Checking</h3>
 <p>After analyzing the whole disassembly i managed to understand how its all working.</p>
 <p>At the entry point of our bytecode, <code>argv</code> and <code>argc</code> are in <code>rsi</code> and <code>rdi</code> respectively.</p>
@@ -1537,13 +1581,6 @@ The solving script in action:
             
         </ul>
     </aside>
-
-    <aside class="widget widget_recent_entries"  style="min-width: 320px; text-align: center;">
-        <h3 class="text-monospace" >Hexdump</h3>
-        <h5 class="hexdump" style="font-size: 1.4vh;"></h5>
-        <script src="/js/hex.js"></script>
-    </aside>
-
 </div>
         </div>
         </div>
