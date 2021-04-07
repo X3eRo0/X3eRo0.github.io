@@ -247,268 +247,130 @@
 <p>Now let&rsquo;s take a look at the main handler function which handles everything.</p>
 <div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
 <table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">  1
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">  2
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">  3
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">  4
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">  5
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">  6
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">  7
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">  8
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">  9
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 10
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 11
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 12
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 13
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 14
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 15
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 16
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 17
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 18
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 19
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 20
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 21
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 22
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 23
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 24
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 25
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 26
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 27
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 28
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 29
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 30
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 31
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 32
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 33
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 34
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 35
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 36
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 37
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 38
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 39
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 40
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 41
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 42
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 43
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 44
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 45
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 46
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 47
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 48
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 49
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 50
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 51
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 52
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 53
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 54
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 55
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 56
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 57
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 58
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 59
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 60
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 61
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 62
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 63
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 64
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 65
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 66
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 67
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 68
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 69
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 70
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 71
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 72
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 73
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 74
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 75
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 76
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 77
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 78
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 79
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 80
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 81
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 82
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 83
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 84
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 85
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 86
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 87
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 88
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 89
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 90
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 91
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 92
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 93
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 94
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 95
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 96
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 97
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 98
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 99
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">100
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">101
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">102
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">103
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">104
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">105
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">106
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">107
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">108
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">109
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">110
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">111
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">112
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">113
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">114
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">115
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">116
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">117
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">118
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">119
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">120
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">121
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">122
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">123
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">124
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">125
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">126
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">127
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">128
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="display:block;width:100%;background-color:#3d3f4a"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span></span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
+</span><span style="display:block;width:100%;background-color:#3d3f4a"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20
+</span></span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
 <pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#ff79c6">__int64</span> <span style="color:#ff79c6">__fastcall</span> <span style="color:#50fa7b">Game</span>(Netsock <span style="color:#ff79c6">*</span>c, <span style="color:#ff79c6">__int64</span> some_number, <span style="color:#8be9fd">int</span> a3, <span style="color:#8be9fd">int</span> a4, <span style="color:#8be9fd">int</span> a5, <span style="color:#8be9fd">int</span> a6)
 {
-  <span style="color:#8be9fd">int</span> v7; <span style="color:#6272a4">// ecx
-</span><span style="color:#6272a4"></span>  <span style="color:#8be9fd">int</span> v8; <span style="color:#6272a4">// er8
-</span><span style="color:#6272a4"></span>  <span style="color:#8be9fd">int</span> v9; <span style="color:#6272a4">// er9
-</span><span style="color:#6272a4"></span>  <span style="color:#ff79c6">__int64</span> v10; <span style="color:#6272a4">// rdx
-</span><span style="color:#6272a4"></span>  <span style="color:#ff79c6">const</span> <span style="color:#8be9fd">char</span> <span style="color:#ff79c6">*</span>Message_; <span style="color:#6272a4">// rdx
-</span><span style="color:#6272a4"></span>  <span style="color:#ff79c6">const</span> <span style="color:#8be9fd">char</span> <span style="color:#ff79c6">*</span>Tank_1; <span style="color:#6272a4">// rax
-</span><span style="color:#6272a4"></span>  <span style="color:#ff79c6">const</span> <span style="color:#8be9fd">char</span> <span style="color:#ff79c6">*</span>Tank; <span style="color:#6272a4">// rax
-</span><span style="color:#6272a4"></span>  <span style="color:#ff79c6">const</span> <span style="color:#8be9fd">char</span> <span style="color:#ff79c6">*</span>v14; <span style="color:#6272a4">// rax
-</span><span style="color:#6272a4"></span>  <span style="color:#8be9fd">char</span> map[<span style="color:#bd93f9">38400</span>]; <span style="color:#6272a4">// [rsp+10h] [rbp-9608h] BYREF
-</span><span style="color:#6272a4"></span>
-  <span style="color:#ff79c6">if</span> ( <span style="color:#ff79c6">!</span>SendText(c, <span style="color:#f1fa8c">&#34;Welcome to Hyperion Tank Game!&#34;</span>) )
-	<span style="color:#ff79c6">return</span> <span style="color:#bd93f9">1LL</span>;
-  memset(map, <span style="color:#bd93f9">0</span>, <span style="color:#ff79c6">sizeof</span>(map));
-  generate_map(map);
-<span style="color:#8be9fd;font-style:italic">LABEL_4</span>:
-  AdjustTankPosition(tanks, map);
-  AdjustTankPosition(<span style="color:#ff79c6">&amp;</span>tanks[<span style="color:#bd93f9">1</span>], map);
-  <span style="color:#ff79c6">if</span> ( <span style="color:#ff79c6">!</span>send_map(c, map) <span style="color:#ff79c6">||</span> <span style="color:#ff79c6">!</span>send_tank(c, tanks) )
-	exit(<span style="color:#bd93f9">0</span>);
-  <span style="color:#ff79c6">if</span> ( <span style="color:#ff79c6">!</span>unk_208098 )
-  {
-	cplusplus_string_init(<span style="color:#ff79c6">&amp;</span>command_received_by_client);
-	unk_208098 <span style="color:#ff79c6">=</span> <span style="color:#bd93f9">1</span>;
-	_cxa_atexit(func, <span style="color:#ff79c6">&amp;</span>command_received_by_client, <span style="color:#ff79c6">&amp;</span>dso_handle);
-  }
-  <span style="color:#ff79c6">if</span> ( <span style="color:#ff79c6">!</span>RecvClientCommand(c, <span style="color:#ff79c6">&amp;</span>command_received_by_client) )
-	<span style="color:#ff79c6">return</span> <span style="color:#bd93f9">2LL</span>;
-  <span style="color:#ff79c6">if</span> ( not_cplusplus_string_compare(<span style="color:#ff79c6">&amp;</span>command_received_by_client, <span style="color:#f1fa8c">&#34;FIRE&#34;</span>) )
-	<span style="color:#ff79c6">return</span> <span style="color:#bd93f9">3LL</span>;
-  <span style="color:#ff79c6">if</span> ( tanks[<span style="color:#bd93f9">0</span>].hp <span style="color:#ff79c6">&lt;=</span> <span style="color:#bd93f9">0</span> )
-  {
-	SendText(c, <span style="color:#f1fa8c">&#34;Bye.&#34;</span>);
-	<span style="color:#ff79c6">return</span> <span style="color:#bd93f9">0LL</span>;
-  }
-  t <span style="color:#ff79c6">=</span> <span style="color:#ff79c6">*</span>array_access_operator(command_received_by_client.data, <span style="color:#bd93f9">0LL</span>);
-  <span style="color:#ff79c6">if</span> ( t.Weapon <span style="color:#ff79c6">!=</span> <span style="color:#bd93f9">1</span> <span style="color:#ff79c6">&amp;&amp;</span> t.Weapon <span style="color:#ff79c6">!=</span> <span style="color:#bd93f9">2</span> <span style="color:#ff79c6">&amp;&amp;</span> t.Weapon <span style="color:#ff79c6">!=</span> <span style="color:#bd93f9">3</span> )
-	<span style="color:#ff79c6">return</span> <span style="color:#bd93f9">4LL</span>;
-  <span style="color:#ff79c6">if</span> ( t.Power <span style="color:#ff79c6">&lt;</span> <span style="color:#bd93f9">10.0</span> <span style="color:#ff79c6">||</span> t.Power <span style="color:#ff79c6">&gt;</span> <span style="color:#bd93f9">100.0</span> )
-	<span style="color:#ff79c6">return</span> <span style="color:#bd93f9">5LL</span>;
-  <span style="color:#ff79c6">if</span> ( t.Angle <span style="color:#ff79c6">&gt;=</span> <span style="color:#bd93f9">0.0</span> <span style="color:#ff79c6">&amp;&amp;</span> t.Angle <span style="color:#ff79c6">&lt;=</span> <span style="color:#bd93f9">180.0</span> )
-  {
-	<span style="color:#ff79c6">for</span> ( i <span style="color:#ff79c6">=</span> <span style="color:#bd93f9">0</span>; ; <span style="color:#ff79c6">++</span>i )
-	{
-	  <span style="color:#ff79c6">if</span> ( i <span style="color:#ff79c6">&gt;</span> <span style="color:#bd93f9">1</span> )
-		<span style="color:#ff79c6">goto</span> LABEL_4;
-	  <span style="color:#ff79c6">if</span> ( <span style="color:#ff79c6">!</span>unk_2080D8 )
-	  {
-		sub_2DBA(<span style="color:#ff79c6">&amp;</span>bullet_event);
-		unk_2080D8 <span style="color:#ff79c6">=</span> <span style="color:#bd93f9">1</span>;
-		_cxa_atexit(sub_2DD6, <span style="color:#ff79c6">&amp;</span>bullet_event, <span style="color:#ff79c6">&amp;</span>dso_handle);
-	  }
-	  <span style="color:#ff79c6">if</span> ( i <span style="color:#ff79c6">||</span> tanks[<span style="color:#bd93f9">0</span>].hp <span style="color:#ff79c6">&lt;=</span> <span style="color:#bd93f9">0</span> )
-	  {
-		<span style="color:#ff79c6">if</span> ( i <span style="color:#ff79c6">!=</span> <span style="color:#bd93f9">1</span> <span style="color:#ff79c6">||</span> tanks[<span style="color:#bd93f9">1</span>].hp <span style="color:#ff79c6">&lt;=</span> <span style="color:#bd93f9">0</span> )
-		  <span style="color:#ff79c6">continue</span>;
-		expl <span style="color:#ff79c6">=</span> FireTankGunAndCheatHard(map, <span style="color:#ff79c6">&amp;</span>bullet_event, <span style="color:#ff79c6">&amp;</span>dword_0 <span style="color:#ff79c6">+</span> <span style="color:#bd93f9">1</span>, v7, v8, v9);
-	  }
-	  <span style="color:#ff79c6">else</span>
-	  {
-		<span style="color:#ff79c6">*&amp;</span>expl.exploded <span style="color:#ff79c6">=</span> FireTankGun(map, <span style="color:#ff79c6">&amp;</span>bullet_event, <span style="color:#ff79c6">&amp;</span>t, v7, v8);
-		<span style="color:#ff79c6">*&amp;</span>expl.y <span style="color:#ff79c6">=</span> v10;
-	  }
-	  <span style="color:#ff79c6">if</span> ( SendBullet(c, <span style="color:#ff79c6">&amp;</span>bullet_event) <span style="color:#ff79c6">!=</span> <span style="color:#bd93f9">1</span> )
-		<span style="color:#ff79c6">goto</span> LABEL_4;
-	  tank_hit <span style="color:#ff79c6">=</span> <span style="color:#bd93f9">0</span>;
-	  <span style="color:#ff79c6">if</span> ( LOBYTE(expl.exploded) )
-	  {
-		<span style="color:#ff79c6">for</span> ( j <span style="color:#ff79c6">=</span> <span style="color:#bd93f9">0</span>; j <span style="color:#ff79c6">&lt;=</span> <span style="color:#bd93f9">1</span>; <span style="color:#ff79c6">++</span>j )
-		{
-		  <span style="color:#ff79c6">if</span> ( tanks[j].hp <span style="color:#ff79c6">&gt;</span> <span style="color:#bd93f9">0</span> )
-		  {
-			dx_ <span style="color:#ff79c6">=</span> expl.x <span style="color:#ff79c6">-</span> tanks[j].x;
-			dy_ <span style="color:#ff79c6">=</span> expl.y <span style="color:#ff79c6">-</span> tanks[j].y;
-			v7 <span style="color:#ff79c6">=</span> dy_;
-			dist_sq <span style="color:#ff79c6">=</span> dx_ <span style="color:#ff79c6">*</span> dx_ <span style="color:#ff79c6">+</span> dy_ <span style="color:#ff79c6">*</span> dy_;
-			radius <span style="color:#ff79c6">=</span> WEAPON_EXPLOSION_RADIUS[expl.weapon];
-			radius_sq <span style="color:#ff79c6">=</span> radius <span style="color:#ff79c6">*</span> radius;
-			<span style="color:#ff79c6">if</span> ( dx_ <span style="color:#ff79c6">*</span> dx_ <span style="color:#ff79c6">+</span> dy_ <span style="color:#ff79c6">*</span> dy_ <span style="color:#ff79c6">&lt;=</span> radius <span style="color:#ff79c6">*</span> radius )
-			{
-			  tank_hit <span style="color:#ff79c6">=</span> <span style="color:#bd93f9">1</span>;
-			  r_half <span style="color:#ff79c6">=</span> radius <span style="color:#ff79c6">/</span> <span style="color:#bd93f9">2</span>;
-			  r_half_sq <span style="color:#ff79c6">=</span> radius <span style="color:#ff79c6">/</span> <span style="color:#bd93f9">2</span> <span style="color:#ff79c6">*</span> (radius <span style="color:#ff79c6">/</span> <span style="color:#bd93f9">2</span>);
-			  damage <span style="color:#ff79c6">=</span> WEAPON_EXPLOSION_DMG[expl.weapon];
-			  <span style="color:#ff79c6">if</span> ( dist_sq <span style="color:#ff79c6">&gt;</span> radius <span style="color:#ff79c6">/</span> <span style="color:#bd93f9">2</span> <span style="color:#ff79c6">*</span> (radius <span style="color:#ff79c6">/</span> <span style="color:#bd93f9">2</span>) )
-				damage <span style="color:#ff79c6">/=</span> <span style="color:#bd93f9">2</span>;
-			  tanks[j].hp <span style="color:#ff79c6">-=</span> damage;
-			  <span style="color:#ff79c6">if</span> ( tanks[j].hp <span style="color:#ff79c6">&gt;</span> <span style="color:#bd93f9">0</span> )
-			  {
-				<span style="color:#ff79c6">if</span> ( j )
-				  Tank <span style="color:#ff79c6">=</span> <span style="color:#f1fa8c">&#34;RED&#34;</span>;
-				<span style="color:#ff79c6">else</span>
-				  Tank <span style="color:#ff79c6">=</span> <span style="color:#f1fa8c">&#34;GREEN&#34;</span>;
-				sprintf(Message, <span style="color:#f1fa8c">&#34;%s tank hit for %i damage.&#34;</span>, Tank, damage);
-				SendText(c, Message);
-			  }
-			  <span style="color:#ff79c6">else</span>
-			  {
-				tanks[j].hp <span style="color:#ff79c6">=</span> <span style="color:#bd93f9">0</span>;
-				<span style="color:#ff79c6">if</span> ( j )
-				  Message_ <span style="color:#ff79c6">=</span> <span style="color:#f1fa8c">&#34; Stay &amp; practice :)&#34;</span>;
-				<span style="color:#ff79c6">else</span>
-				  Message_ <span style="color:#ff79c6">=</span> <span style="color:#f1fa8c">&#34; Game Over.&#34;</span>;
-				<span style="color:#ff79c6">if</span> ( j )
-				  Tank_1 <span style="color:#ff79c6">=</span> <span style="color:#f1fa8c">&#34;RED&#34;</span>;
-				<span style="color:#ff79c6">else</span>
-				  Tank_1 <span style="color:#ff79c6">=</span> <span style="color:#f1fa8c">&#34;GREEN&#34;</span>;
-				sprintf(s, <span style="color:#f1fa8c">&#34;%s tank destroyed.%s&#34;</span>, Tank_1, Message_);
-				SendText(c, s);
-			  }
-			}
-		  }
-		}
-	  }
-	  <span style="color:#ff79c6">if</span> ( tank_hit <span style="color:#ff79c6">!=</span> <span style="color:#bd93f9">1</span> )
-	  {
-		<span style="color:#ff79c6">if</span> ( i )
-		  v14 <span style="color:#ff79c6">=</span> <span style="color:#f1fa8c">&#34;RED&#34;</span>;
-		<span style="color:#ff79c6">else</span>
-		  v14 <span style="color:#ff79c6">=</span> <span style="color:#f1fa8c">&#34;GREEN&#34;</span>;
-		sprintf(Message__, <span style="color:#f1fa8c">&#34;%s tank missed.&#34;</span>, v14);
-		SendText(c, Message__);
-	  }
-	}
-  }
-  <span style="color:#ff79c6">return</span> <span style="color:#bd93f9">6LL</span>;
-}
+    <span style="color:#8be9fd">int</span> v7; <span style="color:#6272a4">// ecx
+</span><span style="color:#6272a4"></span>    <span style="color:#8be9fd">int</span> v8; <span style="color:#6272a4">// er8
+</span><span style="color:#6272a4"></span>    <span style="color:#8be9fd">int</span> v9; <span style="color:#6272a4">// er9
+</span><span style="color:#6272a4"></span>    <span style="color:#ff79c6">__int64</span> v10; <span style="color:#6272a4">// rdx
+</span><span style="color:#6272a4"></span>    <span style="color:#ff79c6">const</span> <span style="color:#8be9fd">char</span> <span style="color:#ff79c6">*</span>Message_; <span style="color:#6272a4">// rdx
+</span><span style="color:#6272a4"></span>    <span style="color:#ff79c6">const</span> <span style="color:#8be9fd">char</span> <span style="color:#ff79c6">*</span>Tank_1; <span style="color:#6272a4">// rax
+</span><span style="color:#6272a4"></span>    <span style="color:#ff79c6">const</span> <span style="color:#8be9fd">char</span> <span style="color:#ff79c6">*</span>Tank; <span style="color:#6272a4">// rax
+</span><span style="color:#6272a4"></span>    <span style="color:#ff79c6">const</span> <span style="color:#8be9fd">char</span> <span style="color:#ff79c6">*</span>v14; <span style="color:#6272a4">// rax
+</span><span style="display:block;width:100%;background-color:#3d3f4a"><span style="color:#6272a4"></span>    <span style="color:#8be9fd">char</span> map[<span style="color:#bd93f9">38400</span>]; <span style="color:#6272a4">// [rsp+10h] [rbp-9608h] BYREF
+</span></span><span style="color:#6272a4"></span>
+    <span style="color:#ff79c6">if</span> ( <span style="color:#ff79c6">!</span>SendText(c, <span style="color:#f1fa8c">&#34;Welcome to Hyperion Tank Game!&#34;</span>) )
+        <span style="color:#ff79c6">return</span> <span style="color:#bd93f9">1LL</span>;
+    memset(map, <span style="color:#bd93f9">0</span>, <span style="color:#ff79c6">sizeof</span>(map));
+    GenerateMap(map);
+    <span style="color:#8be9fd;font-style:italic">LABEL_4</span>:
+    AdjustTankPosition(tanks, map);
+    AdjustTankPosition(<span style="color:#ff79c6">&amp;</span>tanks[<span style="color:#bd93f9">1</span>], map);
+<span style="display:block;width:100%;background-color:#3d3f4a">    <span style="color:#ff79c6">if</span> ( <span style="color:#ff79c6">!</span>SendMap(c, map) <span style="color:#ff79c6">||</span> <span style="color:#ff79c6">!</span>SendTank(c, tanks) )
+</span>        exit(<span style="color:#bd93f9">0</span>);
 </code></pre></td></tr></table>
 </div>
 </div><p>Let&rsquo;s disect this into multiple peices that we can go through one by one.</p>
-<p>So, first we will look at line</p>
+<p>So, first we will look at line 11 we see that the map has been allocated
+on the stack with 38400 ((640 * 480) / 8) bytes of size. It first sends the
+welcome text then it generates the map using some random numbers and after that
+it Adjusts Tank coordinates onto the map, now it sends the map and the tank
+structure to the client. So, let&rsquo;s take a look at the SendMap function.</p>
+<p>Before we look at the IDA&rsquo;s decompiled code, i want to mention the networking
+code of this game.</p>
+<p>The game sends packets of this structure</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#ff79c6">struct</span> Packet {
+  std<span style="color:#ff79c6">::</span>string type;  <span style="color:#6272a4">// Use only 4-byte values.
+</span><span style="color:#6272a4"></span>  std<span style="color:#ff79c6">::</span>vector<span style="color:#ff79c6">&lt;</span>uint8_t<span style="color:#ff79c6">&gt;</span> data;
+};
+</code></pre></td></tr></table>
+</div>
+</div><p>the <strong>type</strong> string contains the header for identification of what kind of
+data are we sending and receiving. OK, on to the <strong>SendMap</strong> function, i have included comments from the source code.</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">22
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">23
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c">_BOOL8 <span style="color:#ff79c6">__fastcall</span> <span style="color:#50fa7b">SendMap</span>(Netsock <span style="color:#ff79c6">*</span>socket_stuff, <span style="color:#ff79c6">const</span> <span style="color:#8be9fd">void</span> <span style="color:#ff79c6">*</span>map)
+{
+    <span style="color:#8be9fd">void</span> <span style="color:#ff79c6">*</span>v2; <span style="color:#6272a4">// rax
+</span><span style="color:#6272a4"></span>    _BOOL4 v3; <span style="color:#6272a4">// ebx
+</span><span style="color:#6272a4"></span>    <span style="color:#6272a4">/*Packet p; */</span>
+    Packet MapPacket; <span style="color:#6272a4">// [rsp+10h] [rbp-48h] BYREF
+</span><span style="color:#6272a4"></span>    <span style="color:#ff79c6">__int64</span> v6; <span style="color:#6272a4">// [rsp+48h] [rbp-10h]
+</span><span style="color:#6272a4"></span>
+    <span style="color:#6272a4">/* const size_t data_sz = (MAP_W * (MAP_H + 1)) / 8; */</span>
+    v6 <span style="color:#ff79c6">=</span> <span style="color:#bd93f9">38480LL</span>;
+    <span style="color:#6272a4">/*p.type = &#34;GMAP&#34;;*/</span>
+    cplusplus_string_init(<span style="color:#ff79c6">&amp;</span>MapPacket);
+    std<span style="color:#ff79c6">::</span>__cxx11<span style="color:#ff79c6">::</span> ... <span style="color:#ff79c6">::</span>operator<span style="color:#ff79c6">=</span>(<span style="color:#ff79c6">&amp;</span>MapPacket, <span style="color:#f1fa8c">&#34;GMAP&#34;</span>); <span style="color:#6272a4">// c++ garbage redacted
+</span><span style="color:#6272a4"></span>
+    <span style="color:#6272a4">/* p.data.resize(data_sz); */</span>
+    resize(MapPacket.data, <span style="color:#bd93f9">0x9650uLL</span>);
+    v_first_element <span style="color:#ff79c6">=</span> vector_access_operator(MapPacket.data, <span style="color:#bd93f9">0LL</span>);
+    memcpy(v_first_element, map, <span style="color:#bd93f9">38480uLL</span>);
+    v3 <span style="color:#ff79c6">=</span> SendPacket(socket_stuff, <span style="color:#ff79c6">&amp;</span>MapPacket);
+    <span style="color:#6272a4">/* destructor */</span>
+    func(<span style="color:#ff79c6">&amp;</span>MapPacket);
+    <span style="color:#ff79c6">return</span> v3;
+}
+</code></pre></td></tr></table>
+</div>
+</div>
         </div>
 
 
