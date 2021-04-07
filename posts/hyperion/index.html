@@ -111,7 +111,7 @@
 
 <br>
 
-<p>Hyperion was one of the pwn challenges from Google CTF 2017 Finals. One day I randomly asked Gynvael (who is the author of this challenge) to give me some CTF challenges. He gave me 3 Revs and 1 Pwn challenges. In the end i solved 2 Revs and 1 Pwn.  I received these challenges in June 2019, but being a noob i was not able to solve any of them. I solved the 2 Revs (the 3rd Rev is still unsolved and i still have no clue XD) sometime in 2020 but this Pwn (Hyperion) was still remaining. Just recently i decided that i will take a look and i will solve it finally.</p>
+<p>Hyperion was one of the pwn challenges from Google CTF 2017 Finals. One day I randomly asked Gynvael (who is the author of this challenge) to give me some CTF challenges. He gave me 3 Revs and 1 Pwn challenges. In the end i solved 2 Revs and 1 Pwn.  I received these challenges in June 2019, I solved the 2 Revs (the 3rd Rev is still unsolved and I still have no clue XD) sometime in 2020 but this Pwn (Hyperion) was still remaining. Just recently i decided that I will take a look and i will solve it finally.</p>
 <h3 id="first-look">First Look</h3>
 
 
@@ -128,7 +128,7 @@
 
 <br>
 
-<p>Hyperion is a single player clone of Pocket Tanks, except that it requires internet connection even when playing againts a bot. We are given a server binary that runs on Linux and 2 Version of client, one for windows and one for linux. The client binaries requires SDL2 because the game uses SDL for graphics and controls.</p>
+<p>Hyperion is a single player clone of Pocket Tanks, except that it requires internet connection even when playing againts a bot. We are given a server binary that runs on Linux and 2 Version of client, one for windows and one for linux. The client binaries requires SDL2 because the game uses <a href="https://www.libsdl.org/">SDL2 Library</a> for graphics and controls.</p>
 <p>The Goal of this challenge is to not only defeat the bot, but to also get a shell on the server. I immediately opened the server binary in IDA Pro.</p>
 
 
@@ -151,10 +151,24 @@
 
 <p>The challenge pops shell if its running in DEBUG environment with &ldquo;HYPERION_ENV_TEST&rdquo; environment variable set. Game also supports fork server mode and single run mode.</p>
 <p>I used the single run mode so that i can the interaction happens through <code>STDIN</code> and <code>STDOUT</code>.</p>
-<p><code>socat TCP-LISTEN:1337,reuseaddr,fork exec:./hyperion_server</code></p>
-<p>Now we can connect to the challenge server with <code>localhost</code> as IP.</p>
-<p><code>./hyperion_client localhost</code></p>
-<h3 id="hyperion---lets-play-by-x3ero0">Hyperion - Let&rsquo;s Play by X3eRo0</h3>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-plaintext" data-lang="plaintext">socat TCP-LISTEN:1337,reuseaddr,fork exec:./hyperion_server
+</code></pre></td></tr></table>
+</div>
+</div><p>Now we can connect to the challenge server with <code>localhost</code> as IP.</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-plaintext" data-lang="plaintext">./hyperion_client localhost
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="hyperion---lets-play-by-x3ero0">Hyperion - Let&rsquo;s Play by X3eRo0</h3>
 
 
 
@@ -172,9 +186,9 @@
 
 <p>The game has a map of 640x480 pixels or 38400 bytes. Dirt is represented by <code>1</code> and Air is represented by <code>0</code>. We control the Green Tank and Red Tank is the enemy but Red Tank never misses. We have 3 Weapons as described in the above image.</p>
 <ul>
-<li>18 Damage, 10 Radius Explosion</li>
-<li>0 Damage, 15 Radius Dirt Ball</li>
-<li>8 Damage, 20 Radius Explosion (Deletes Dirt in its radius)</li>
+<li>1 - 0x12 Damage, 10 Radius Explosion</li>
+<li>2 - 0x00 Damage, 15 Radius Dirt Ball</li>
+<li>3 - 0x08 Damage, 20 Radius Explosion</li>
 </ul>
 <p>Here is a small and very bad gameplay.
 
@@ -238,12 +252,12 @@
 
 <br>
 
-<p>So, from the above 2 images its clear that the server sends the whole map and TANK information to the client and the client renders the MAP and the 2 Tanks based on what information the server sent. The client then sends the bullet information to the server which contains information about weapon, angle and power that the player used to fire at the enemy tank. The server then calculates where this bullet should hit using some basic math and deducts health points and Dirt from the map due to the explosion.</p>
+<p>So, from the above 2 images its clear that the server sends the whole MAP and TANK information to the client and the client renders the MAP and the 2 Tanks based on what information the server sent. The client then sends the bullet information to the server which contains information about weapon, angle and power that the player used to fire at the enemy tank. The server then calculates where this bullet should hit using some basic math and deducts health points and Dirt from the MAP due to the explosion.</p>
 <p>So, now we can start reverse engineering the server binary and look for bugs that we can exploit.</p>
 <p>First let&rsquo;s take a look at some functions which the binary uses more frequently than others, these mainly include network functions to send and receive data.</p>
 <p>BTW this challenge uses <a href="https://github.com/gynvael/NetSock">NetSock</a> which is a C++ Network Library for both Windows and Linux.</p>
-<p>The server binary has <code>SendText</code>, <code>SendMap</code>, <code>SendTank</code>, <code>SendBullet</code> and <code>SendPacket</code> functions, out these SendPacket Wraps the Data to be sent in a C++ string and sends it along with the 32 bit length of the data. So, it first sends the 4 byte header which contains the length of the data to be received by the other party.</p>
-<p><code>SendText</code>, <code>SendMap</code>, <code>SendTank</code> and <code>SendBullet</code> just sends their respective data structures to the client socket.</p>
+<p>The server binary has <em><strong>SendText</strong></em>, <em><strong>SendMap</strong></em>, <em><strong>SendTank</strong></em>, <em><strong>SendBullet</strong></em> and <em><strong>SendPacket</strong></em> functions, out these SendPacket Wraps the Data to be sent in a C++ string and sends it along with the 32 bit length of the data. So, it first sends the 4 byte header which contains the length of the data to be received by the other party.</p>
+<p><em><strong>SendText</strong></em>, <em><strong>SendMap</strong></em>, <em><strong>SendTank</strong></em> and <em><strong>SendBullet</strong></em> just sends their respective data structures to the client socket.</p>
 <p>Now let&rsquo;s take a look at the main handler function which handles everything.</p>
 <div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
 <table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
@@ -317,7 +331,7 @@ code of this game.</p>
 </code></pre></td></tr></table>
 </div>
 </div><p>the <strong>type</strong> string contains the header for identification of what kind of
-data are we sending and receiving. OK, on to the <strong>SendMap</strong> function, i have included comments from the source code.</p>
+data are we sending and receiving. Now let&rsquo;s analyse the <strong>SendMap</strong> function, i have included comments from the source code.</p>
 <div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
 <table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
@@ -329,17 +343,17 @@ data are we sending and receiving. OK, on to the <strong>SendMap</strong> functi
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="display:block;width:100%;background-color:#3d3f4a"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span></span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20
+</span><span style="display:block;width:100%;background-color:#3d3f4a"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
+</span></span><span style="display:block;width:100%;background-color:#3d3f4a"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
+</span></span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">22
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">23
@@ -354,20 +368,62 @@ data are we sending and receiving. OK, on to the <strong>SendMap</strong> functi
 </span><span style="color:#6272a4"></span>    <span style="color:#ff79c6">__int64</span> v6; <span style="color:#6272a4">// [rsp+48h] [rbp-10h]
 </span><span style="color:#6272a4"></span>
     <span style="color:#6272a4">/* const size_t data_sz = (MAP_W * (MAP_H + 1)) / 8; */</span>
-    v6 <span style="color:#ff79c6">=</span> <span style="color:#bd93f9">38480LL</span>;
-    <span style="color:#6272a4">/*p.type = &#34;GMAP&#34;;*/</span>
+<span style="display:block;width:100%;background-color:#3d3f4a">    v6 <span style="color:#ff79c6">=</span> <span style="color:#bd93f9">38480LL</span>;
+</span>    <span style="color:#6272a4">/*p.type = &#34;GMAP&#34;;*/</span>
     cplusplus_string_init(<span style="color:#ff79c6">&amp;</span>MapPacket);
     std<span style="color:#ff79c6">::</span>__cxx11<span style="color:#ff79c6">::</span> ... <span style="color:#ff79c6">::</span>operator<span style="color:#ff79c6">=</span>(<span style="color:#ff79c6">&amp;</span>MapPacket, <span style="color:#f1fa8c">&#34;GMAP&#34;</span>); <span style="color:#6272a4">// c++ garbage redacted
 </span><span style="color:#6272a4"></span>
     <span style="color:#6272a4">/* p.data.resize(data_sz); */</span>
     resize(MapPacket.data, <span style="color:#bd93f9">0x9650uLL</span>);
     v_first_element <span style="color:#ff79c6">=</span> vector_access_operator(MapPacket.data, <span style="color:#bd93f9">0LL</span>);
-    memcpy(v_first_element, map, <span style="color:#bd93f9">38480uLL</span>);
-    v3 <span style="color:#ff79c6">=</span> SendPacket(socket_stuff, <span style="color:#ff79c6">&amp;</span>MapPacket);
-    <span style="color:#6272a4">/* destructor */</span>
+<span style="display:block;width:100%;background-color:#3d3f4a">    memcpy(v_first_element, map, <span style="color:#bd93f9">38480uLL</span>);
+</span><span style="display:block;width:100%;background-color:#3d3f4a">    v3 <span style="color:#ff79c6">=</span> SendPacket(socket_stuff, <span style="color:#ff79c6">&amp;</span>MapPacket);
+</span>    <span style="color:#6272a4">/* destructor */</span>
     func(<span style="color:#ff79c6">&amp;</span>MapPacket);
     <span style="color:#ff79c6">return</span> v3;
 }
+</code></pre></td></tr></table>
+</div>
+</div><p>The vulnerability here is that the <strong>data_sz</strong> is calculated incorrectly because the correct size should be
+(MAP_W * MAP_H) / 8. This function is just giving out all the sensitive pointers on the stack to all the
+clients connecting. The leak includes <strong>stack</strong> pointers, <strong>libc</strong> pointers, and <strong>binary</strong> pointers.</p>
+
+
+
+<div class="center">
+  <img
+    class="responsive"
+    src="/img/hyperion/leak.png"
+    alt="leaks"
+    decoding="async"
+  />
+</div>
+<p>The data contained PIE leak, in fact it&rsquo;s the return address of binary +0x2874, at this point we have all the
+information that we need for exploitation but we still haven&rsquo;t found an exploitable vulnerability aside from
+this memory leak.</p>
+<p>Let&rsquo;s analyse next block of code.</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">28
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">29
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">30
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">31
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">32
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">33
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">34
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">35
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">36
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c">    <span style="color:#ff79c6">if</span> ( <span style="color:#ff79c6">!</span>RecvClientCommand(c, <span style="color:#ff79c6">&amp;</span>command_received_by_client) )
+        <span style="color:#ff79c6">return</span> <span style="color:#bd93f9">2LL</span>;
+    <span style="color:#ff79c6">if</span> ( not_cplusplus_string_compare(<span style="color:#ff79c6">&amp;</span>command_received_by_client, <span style="color:#f1fa8c">&#34;FIRE&#34;</span>) )
+        <span style="color:#ff79c6">return</span> <span style="color:#bd93f9">3LL</span>;
+    <span style="color:#ff79c6">if</span> ( tanks[<span style="color:#bd93f9">0</span>].hp <span style="color:#ff79c6">&lt;=</span> <span style="color:#bd93f9">0</span> )
+    {
+        SendText(c, <span style="color:#f1fa8c">&#34;Bye.&#34;</span>);
+        <span style="color:#ff79c6">return</span> <span style="color:#bd93f9">0LL</span>;
+    }
 </code></pre></td></tr></table>
 </div>
 </div>
