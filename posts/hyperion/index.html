@@ -413,6 +413,12 @@ this memory leak.</p>
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">34
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">35
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">36
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">37
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">38
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">39
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">40
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">41
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">42
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
 <pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c">    <span style="color:#ff79c6">if</span> ( <span style="color:#ff79c6">!</span>RecvClientCommand(c, <span style="color:#ff79c6">&amp;</span>command_received_by_client) )
@@ -424,9 +430,204 @@ this memory leak.</p>
         SendText(c, <span style="color:#f1fa8c">&#34;Bye.&#34;</span>);
         <span style="color:#ff79c6">return</span> <span style="color:#bd93f9">0LL</span>;
     }
+
+    t <span style="color:#ff79c6">=</span> <span style="color:#ff79c6">*</span>array_access_operator(command_received_by_client.data, <span style="color:#bd93f9">0LL</span>);
+    <span style="color:#ff79c6">if</span> ( t.Weapon <span style="color:#ff79c6">!=</span> <span style="color:#bd93f9">1</span> <span style="color:#ff79c6">&amp;&amp;</span> t.Weapon <span style="color:#ff79c6">!=</span> <span style="color:#bd93f9">2</span> <span style="color:#ff79c6">&amp;&amp;</span> t.Weapon <span style="color:#ff79c6">!=</span> <span style="color:#bd93f9">3</span> )
+        <span style="color:#ff79c6">return</span> <span style="color:#bd93f9">4LL</span>;
+    <span style="color:#ff79c6">if</span> ( t.Power <span style="color:#ff79c6">&lt;</span> <span style="color:#bd93f9">10.0</span> <span style="color:#ff79c6">||</span> t.Power <span style="color:#ff79c6">&gt;</span> <span style="color:#bd93f9">100.0</span> )
+        <span style="color:#ff79c6">return</span> <span style="color:#bd93f9">5LL</span>;
 </code></pre></td></tr></table>
 </div>
-</div><p>Here it receives a packet from the client and checks if its a <strong>FIRE</strong> command</p>
+</div><p>Here it receives a packet from the client and checks if its a <strong>FIRE</strong> command, because this
+is the only input that we can send to the server as client. Whenever a client fires a bullet
+it sends a <strong>FIRE</strong> Packet and a <strong>Bullet</strong> Packet. Then it checks if <strong>Weapon</strong> is a valid
+<strong>Weapon</strong> value and if the <strong>Power</strong> and <strong>Angle</strong> are also valid or not.</p>
+<p>Now we will look at the Game loop</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">42
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">43
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">44
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">45
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">46
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">47
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">48
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">49
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">50
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">51
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">52
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">53
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">54
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">55
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">56
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">57
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">58
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">59
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">60
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">61
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">62
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">63
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">64
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">65
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">66
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">67
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">68
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">69
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">70
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">71
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">72
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">73
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">74
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">75
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">76
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">77
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">78
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">79
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">80
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">81
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">82
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">83
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">84
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">85
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">86
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">87
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">88
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">89
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">90
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">91
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">92
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">93
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">94
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">95
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">96
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">97
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">98
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">99
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">100
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">101
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">102
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">103
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">104
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">105
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">106
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">107
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">108
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">109
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">110
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">111
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">112
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">113
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">114
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">115
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">116
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">117
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">118
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">119
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">120
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">121
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">122
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">123
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">124
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">125
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">126
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">127
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">128
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">129
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">130
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#ff79c6">if</span> ( t.Angle <span style="color:#ff79c6">&gt;=</span> <span style="color:#bd93f9">0.0</span> <span style="color:#ff79c6">&amp;&amp;</span> t.Angle <span style="color:#ff79c6">&lt;=</span> <span style="color:#bd93f9">180.0</span> )
+{
+    <span style="color:#ff79c6">for</span> ( i <span style="color:#ff79c6">=</span> <span style="color:#bd93f9">0</span>; ; <span style="color:#ff79c6">++</span>i )
+    {
+        <span style="color:#ff79c6">if</span> ( i <span style="color:#ff79c6">&gt;</span> <span style="color:#bd93f9">1</span> )
+            <span style="color:#ff79c6">goto</span> LABEL_4;
+        <span style="color:#ff79c6">if</span> ( <span style="color:#ff79c6">!</span>unk_2080D8 )
+        {
+            sub_2DBA(<span style="color:#ff79c6">&amp;</span>bullet_event);
+            unk_2080D8 <span style="color:#ff79c6">=</span> <span style="color:#bd93f9">1</span>;
+            _cxa_atexit(sub_2DD6, <span style="color:#ff79c6">&amp;</span>bullet_event, <span style="color:#ff79c6">&amp;</span>dso_handle);
+        }
+        <span style="color:#ff79c6">if</span> ( i <span style="color:#ff79c6">||</span> tanks[<span style="color:#bd93f9">0</span>].hp <span style="color:#ff79c6">&lt;=</span> <span style="color:#bd93f9">0</span> )
+        {
+            <span style="color:#ff79c6">if</span> ( i <span style="color:#ff79c6">!=</span> <span style="color:#bd93f9">1</span> <span style="color:#ff79c6">||</span> tanks[<span style="color:#bd93f9">1</span>].hp <span style="color:#ff79c6">&lt;=</span> <span style="color:#bd93f9">0</span> )
+                <span style="color:#ff79c6">continue</span>;
+            expl <span style="color:#ff79c6">=</span> FireTankGunAndCheatHard(map, <span style="color:#ff79c6">&amp;</span>bullet_event, <span style="color:#ff79c6">&amp;</span>dword_0 <span style="color:#ff79c6">+</span> <span style="color:#bd93f9">1</span>, v7, v8, v9);
+        }
+        <span style="color:#ff79c6">else</span>
+        {
+            <span style="color:#ff79c6">*&amp;</span>expl.exploded <span style="color:#ff79c6">=</span> FireTankGun(map, <span style="color:#ff79c6">&amp;</span>bullet_event, <span style="color:#ff79c6">&amp;</span>t, v7, v8);
+            <span style="color:#ff79c6">*&amp;</span>expl.y <span style="color:#ff79c6">=</span> v10;
+        }
+        <span style="color:#ff79c6">if</span> ( SendBullet(c, <span style="color:#ff79c6">&amp;</span>bullet_event) <span style="color:#ff79c6">!=</span> <span style="color:#bd93f9">1</span> )
+            <span style="color:#ff79c6">goto</span> LABEL_4;
+
+        tank_hit <span style="color:#ff79c6">=</span> <span style="color:#bd93f9">0</span>;
+        <span style="color:#ff79c6">if</span> ( LOBYTE(expl.exploded) )
+        {
+            <span style="color:#ff79c6">for</span> ( j <span style="color:#ff79c6">=</span> <span style="color:#bd93f9">0</span>; j <span style="color:#ff79c6">&lt;=</span> <span style="color:#bd93f9">1</span>; <span style="color:#ff79c6">++</span>j )
+            {
+                <span style="color:#ff79c6">if</span> ( tanks[j].hp <span style="color:#ff79c6">&gt;</span> <span style="color:#bd93f9">0</span> )
+                {
+                    dx_ <span style="color:#ff79c6">=</span> expl.x <span style="color:#ff79c6">-</span> tanks[j].x;
+                    dy_ <span style="color:#ff79c6">=</span> expl.y <span style="color:#ff79c6">-</span> tanks[j].y;
+                    v7 <span style="color:#ff79c6">=</span> dy_;
+                    dist_sq <span style="color:#ff79c6">=</span> dx_ <span style="color:#ff79c6">*</span> dx_ <span style="color:#ff79c6">+</span> dy_ <span style="color:#ff79c6">*</span> dy_;
+                    radius <span style="color:#ff79c6">=</span> WEAPON_EXPLOSION_RADIUS[expl.weapon];
+                    radius_sq <span style="color:#ff79c6">=</span> radius <span style="color:#ff79c6">*</span> radius;
+                    <span style="color:#ff79c6">if</span> ( dx_ <span style="color:#ff79c6">*</span> dx_ <span style="color:#ff79c6">+</span> dy_ <span style="color:#ff79c6">*</span> dy_ <span style="color:#ff79c6">&lt;=</span> radius <span style="color:#ff79c6">*</span> radius )
+                    {
+                        tank_hit <span style="color:#ff79c6">=</span> <span style="color:#bd93f9">1</span>;
+                        r_half <span style="color:#ff79c6">=</span> radius <span style="color:#ff79c6">/</span> <span style="color:#bd93f9">2</span>;
+                        r_half_sq <span style="color:#ff79c6">=</span> radius <span style="color:#ff79c6">/</span> <span style="color:#bd93f9">2</span> <span style="color:#ff79c6">*</span> (radius <span style="color:#ff79c6">/</span> <span style="color:#bd93f9">2</span>);
+                        damage <span style="color:#ff79c6">=</span> WEAPON_EXPLOSION_DMG[expl.weapon];
+                        
+                        <span style="color:#ff79c6">if</span> ( dist_sq <span style="color:#ff79c6">&gt;</span> radius <span style="color:#ff79c6">/</span> <span style="color:#bd93f9">2</span> <span style="color:#ff79c6">*</span> (radius <span style="color:#ff79c6">/</span> <span style="color:#bd93f9">2</span>) )
+                            damage <span style="color:#ff79c6">/=</span> <span style="color:#bd93f9">2</span>;
+                        tanks[j].hp <span style="color:#ff79c6">-=</span> damage;
+
+                        <span style="color:#ff79c6">if</span> ( tanks[j].hp <span style="color:#ff79c6">&gt;</span> <span style="color:#bd93f9">0</span> )
+                        {
+                            <span style="color:#ff79c6">if</span> ( j )
+                                Tank <span style="color:#ff79c6">=</span> <span style="color:#f1fa8c">&#34;RED&#34;</span>;
+                            <span style="color:#ff79c6">else</span>
+                                Tank <span style="color:#ff79c6">=</span> <span style="color:#f1fa8c">&#34;GREEN&#34;</span>;
+
+                            sprintf(Message, <span style="color:#f1fa8c">&#34;%s tank hit for %i damage.&#34;</span>, Tank, damage);
+                            SendText(c, Message);
+                        }
+                        <span style="color:#ff79c6">else</span>
+                        {
+                            tanks[j].hp <span style="color:#ff79c6">=</span> <span style="color:#bd93f9">0</span>;
+                            <span style="color:#ff79c6">if</span> ( j )
+                                Message_ <span style="color:#ff79c6">=</span> <span style="color:#f1fa8c">&#34; Stay &amp; practice :)&#34;</span>;
+                            <span style="color:#ff79c6">else</span>
+                                Message_ <span style="color:#ff79c6">=</span> <span style="color:#f1fa8c">&#34; Game Over.&#34;</span>;
+                            <span style="color:#ff79c6">if</span> ( j )
+                                Tank_1 <span style="color:#ff79c6">=</span> <span style="color:#f1fa8c">&#34;RED&#34;</span>;
+                            <span style="color:#ff79c6">else</span>
+                                Tank_1 <span style="color:#ff79c6">=</span> <span style="color:#f1fa8c">&#34;GREEN&#34;</span>;
+                            sprintf(s, <span style="color:#f1fa8c">&#34;%s tank destroyed.%s&#34;</span>, Tank_1, Message_);
+                            SendText(c, s);
+                        }
+                    }
+                }
+            }
+        }
+        <span style="color:#ff79c6">if</span> ( tank_hit <span style="color:#ff79c6">!=</span> <span style="color:#bd93f9">1</span> )
+        {
+            <span style="color:#ff79c6">if</span> ( i )
+                v14 <span style="color:#ff79c6">=</span> <span style="color:#f1fa8c">&#34;RED&#34;</span>;
+            <span style="color:#ff79c6">else</span>
+                v14 <span style="color:#ff79c6">=</span> <span style="color:#f1fa8c">&#34;GREEN&#34;</span>;
+            sprintf(Message__, <span style="color:#f1fa8c">&#34;%s tank missed.&#34;</span>, v14);
+            SendText(c, Message__);
+        }
+    }
+}
+</code></pre></td></tr></table>
+</div>
+</div>
         </div>
 
 
