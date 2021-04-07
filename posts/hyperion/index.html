@@ -111,7 +111,7 @@
 
 <br>
 
-<p>Hyperion was one of the pwn challenges from Google CTF 2017 Finals. One day I randomly asked Gynvael (who is the author of this challenge) to give me some CTF challenges. He gave me 3 Revs and 1 Pwn challenges. In the end i solved 2 Revs and 1 Pwn.  I received these challenges in June 2019, I solved the 2 Revs (the 3rd Rev is still unsolved and I still have no clue XD) sometime in 2020 but this Pwn (Hyperion) was still remaining. Just recently I decided that I will take a look and I will solve it finally.</p>
+<p>Hyperion was one of the pwn challenges from Google CTF 2017 Finals. One day I randomly asked Gynvael (who is the author of this challenge) to give me some CTF challenges. He gave me 3 Revs and 1 Pwn challenges. In the end I solved 2 Revs and 1 Pwn.  I received these challenges in June 2019, I solved the 2 Revs (the 3rd Rev is still unsolved and I still have no clue XD) sometime in 2020 but this Pwn (Hyperion) was still remaining. Just recently I decided that I will take a look and I will solve it finally.</p>
 <h3 id="first-look">First Look</h3>
 
 
@@ -417,7 +417,7 @@ this memory leak.</p>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
 <pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c">    <span style="color:#ff79c6">if</span> ( <span style="color:#ff79c6">!</span>RecvClientCommand(c, <span style="color:#ff79c6">&amp;</span>command_received_by_client) )
         <span style="color:#ff79c6">return</span> <span style="color:#bd93f9">2LL</span>;
-    <span style="color:#ff79c6">if</span> ( not_cplusplus_string_compare(<span style="color:#ff79c6">&amp;</span>command_received_by_client, <span style="color:#f1fa8c">&#34;FIRE&#34;</span>) )
+    <span style="color:#ff79c6">if</span> ( cplusplus_string_compare(<span style="color:#ff79c6">&amp;</span>command_received_by_client, <span style="color:#f1fa8c">&#34;FIRE&#34;</span>) )
         <span style="color:#ff79c6">return</span> <span style="color:#bd93f9">3LL</span>;
     <span style="color:#ff79c6">if</span> ( tanks[<span style="color:#bd93f9">0</span>].hp <span style="color:#ff79c6">&lt;=</span> <span style="color:#bd93f9">0</span> )
     {
@@ -426,7 +426,7 @@ this memory leak.</p>
     }
 </code></pre></td></tr></table>
 </div>
-</div>
+</div><p>Here it receives a packet from the client and checks if its a <strong>FIRE</strong> command</p>
         </div>
 
 

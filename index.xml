@@ -41,7 +41,7 @@
 
 &lt;br&gt;
 
-&lt;p&gt;Hyperion was one of the pwn challenges from Google CTF 2017 Finals. One day I randomly asked Gynvael (who is the author of this challenge) to give me some CTF challenges. He gave me 3 Revs and 1 Pwn challenges. In the end i solved 2 Revs and 1 Pwn.  I received these challenges in June 2019, I solved the 2 Revs (the 3rd Rev is still unsolved and I still have no clue XD) sometime in 2020 but this Pwn (Hyperion) was still remaining. Just recently I decided that I will take a look and I will solve it finally.&lt;/p&gt;</description>
+&lt;p&gt;Hyperion was one of the pwn challenges from Google CTF 2017 Finals. One day I randomly asked Gynvael (who is the author of this challenge) to give me some CTF challenges. He gave me 3 Revs and 1 Pwn challenges. In the end I solved 2 Revs and 1 Pwn.  I received these challenges in June 2019, I solved the 2 Revs (the 3rd Rev is still unsolved and I still have no clue XD) sometime in 2020 but this Pwn (Hyperion) was still remaining. Just recently I decided that I will take a look and I will solve it finally.&lt;/p&gt;</description>
     </item>
     
     <item>
@@ -142,10 +142,7 @@ The contents of the &lt;strong&gt;The_Elder_Scrolls_V_Skyrim.zip&lt;/strong&gt; 
       <pubDate>Fri, 10 Apr 2020 20:06:26 +0000</pubDate>
       
       <guid>https://x3ero0.github.io/posts/hsctf-license/</guid>
-      <description>&lt;link href=&#34;https://x3ero0.github.io/css/prism.css&#34; rel=&#34;stylesheet&#34; /&gt;
-&lt;script src=&#34;https://x3ero0.github.io/js/prism.js&#34;&gt;&lt;/script&gt;
-
-&lt;h3 id=&#34;challenge-license--298dyn-re-&#34;&gt;Challenge: License [ 298(DYN) RE ]&lt;/h3&gt;
+      <description>&lt;h3 id=&#34;challenge-license--298dyn-re-&#34;&gt;Challenge: License [ 298(DYN) RE ]&lt;/h3&gt;
 &lt;p&gt;Challenge Description:&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;div style=&#34;color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;
 &lt;table style=&#34;border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;&#34;&gt;&lt;tr&gt;&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;&#34;&gt;
