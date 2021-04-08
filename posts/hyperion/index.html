@@ -505,8 +505,8 @@ it sends a <strong>FIRE</strong> Packet and a <strong>Bullet</strong> Packet. Th
 Here IDA&rsquo;s decompiled code made it a bit hard to realise whats happening.
 The highlighted <strong>for-loop</strong> on line <strong>45-47</strong> iterates from <strong>0-1</strong> and
 that is because it is iterating over the two tanks for shooting, if <strong>i</strong>
-is 0 then <strong>FireTankGunAndCheatHard</strong> function is called because <strong>Tank0</strong>
-is the enemy tank but if <strong>i</strong> is 1, then <strong>FireTankGun</strong> function is called.</p>
+is 1 then <strong>FireTankGunAndCheatHard</strong> function is called because <strong>Red Tank</strong>
+is the enemy tank but if <strong>i</strong> is 0, then <strong>FireTankGun</strong> function is called.</p>
 <p>Let&rsquo;s see both of these functions, i am using the challenge source code here</p>
 <h1 id="1-firetankgun">1. FireTankGun</h1>
 <div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
@@ -591,9 +591,7 @@ is the enemy tank but if <strong>i</strong> is 1, then <strong>FireTankGun</stro
 }
 </code></pre></td></tr></table>
 </div>
-</div><p>This function is responsible for projectile shooting of <strong>Tank1</strong> (Green Tank which we control).
-The trajectory of bullet is effected by <strong>Gravity</strong> (line 23), <strong>Angle</strong> and <strong>Power</strong> (line 11-12).
-After calculating the correct coordinate of the Explosion, the explosion effect is applied to the <strong>MAP</strong> (line 34).</p>
+</div><p>This function is responsible for projectile shooting of <strong>Green Tank</strong>. The trajectory of bullet is effected by <strong>Gravity</strong> (line 23), <strong>Angle</strong> and <strong>Power</strong> (line 11-12). After calculating the correct coordinate of the Explosion, the explosion effect is applied to the <strong>MAP</strong> (line 34).</p>
 <h1 id="2-firetankgunandcheathard">2. FireTankGunAndCheatHard</h1>
 <div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
 <table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
@@ -685,7 +683,7 @@ After calculating the correct coordinate of the Explosion, the explosion effect 
 }
 </code></pre></td></tr></table>
 </div>
-</div><p>This function is responsible for <strong>NON-PROJECTILE AIMBOT</strong> shooting of <strong>Tank0</strong> (Red Tank which we want to destroy). The trajectory of bullet shot by <strong>Tank0</strong> is always fixed on <strong>Tank1</strong>. The Bullet never misses because it falls straight on <strong>Tank1</strong>. After calculating the correct coordinate of the Explosion, the explosion effect is applied to the <strong>MAP</strong> (line 36).</p>
+</div><p>This function is responsible for <strong>NON-PROJECTILE AIMBOT</strong> shooting of <strong>Red Tank</strong>. The trajectory of bullet shot by <strong>Red Tank</strong> is always fixed on <strong>Green Tank</strong>. The Bullet never misses because it falls straight on <strong>Green Tank</strong>. After calculating the correct coordinate of the Explosion, the explosion effect is applied to the <strong>MAP</strong> (line 36).</p>
 <p>Looking at the above functions we know that the <strong>Red Tank</strong> is going to punish us if we miss any of our shots.</p>
 <h3 id="the-vulnerability">The Vulnerability</h3>
 <div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
