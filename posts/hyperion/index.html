@@ -888,6 +888,138 @@ given by,</p>
     decoding="async"
   />
 </div>
+<p>Using the above expression for the initial velocity we can try a bunch of angles in the
+range of 0-90 degrees for which we get initial velocity under 100 because that is our
+limit for <strong>Power</strong>.</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">22
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">23
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">24
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">25
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">26
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">27
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">28
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">29
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">30
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">31
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">32
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">33
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">34
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">35
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">36
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">37
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">38
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">39
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#ff79c6">from</span> math <span style="color:#ff79c6">import</span> sqrt, sin, cos, radians <span style="color:#ff79c6">as</span> rd, degrees <span style="color:#ff79c6">as</span> dg
+
+<span style="color:#ff79c6">def</span> <span style="color:#50fa7b">GetAim</span>(d, h):
+    g <span style="color:#ff79c6">=</span> <span style="color:#bd93f9">9.8</span>
+
+    <span style="color:#ff79c6">for</span> angle <span style="color:#ff79c6">in</span> <span style="color:#8be9fd;font-style:italic">range</span>(<span style="color:#bd93f9">90</span>, <span style="color:#bd93f9">0</span>, <span style="color:#ff79c6">-</span><span style="color:#bd93f9">1</span>):
+        root <span style="color:#ff79c6">=</span> ((g <span style="color:#ff79c6">*</span> d <span style="color:#ff79c6">*</span> d)<span style="color:#ff79c6">/</span><span style="color:#bd93f9">2</span>)
+        root <span style="color:#ff79c6">/=</span> (d <span style="color:#ff79c6">*</span> <span style="color:#8be9fd;font-style:italic">abs</span>(sin(rd(angle))) <span style="color:#ff79c6">*</span> cos(rd(angle)) <span style="color:#ff79c6">-</span> h <span style="color:#ff79c6">*</span> (cos(rd(angle)) <span style="color:#ff79c6">**</span> <span style="color:#bd93f9">2</span>))
+        power <span style="color:#ff79c6">=</span> sqrt(root)
+        angle <span style="color:#ff79c6">=</span> <span style="color:#bd93f9">180</span> <span style="color:#ff79c6">-</span> angle
+        <span style="color:#ff79c6">if</span> power <span style="color:#ff79c6">&lt;=</span> <span style="color:#bd93f9">100.0</span> <span style="color:#ff79c6">and</span> power <span style="color:#ff79c6">&gt;=</span> <span style="color:#bd93f9">10.0</span>:
+            <span style="color:#ff79c6">return</span> power, angle
+
+<span style="color:#ff79c6">def</span> <span style="color:#50fa7b">CreateAimbotPacket</span>(tanks):
+    xa <span style="color:#ff79c6">=</span> tanks<span style="color:#ff79c6">.</span>tank1<span style="color:#ff79c6">.</span>x
+    xb <span style="color:#ff79c6">=</span> tanks<span style="color:#ff79c6">.</span>tank2<span style="color:#ff79c6">.</span>x
+    ya <span style="color:#ff79c6">=</span> tanks<span style="color:#ff79c6">.</span>tank1<span style="color:#ff79c6">.</span>y
+    yb <span style="color:#ff79c6">=</span> tanks<span style="color:#ff79c6">.</span>tank2<span style="color:#ff79c6">.</span>y
+    d <span style="color:#ff79c6">=</span> <span style="color:#8be9fd;font-style:italic">abs</span>(xa <span style="color:#ff79c6">-</span> xb)
+    h <span style="color:#ff79c6">=</span> <span style="color:#8be9fd;font-style:italic">abs</span>(ya <span style="color:#ff79c6">-</span> yb)
+    power, angle <span style="color:#ff79c6">=</span> GetAim(d, h)
+    <span style="color:#ff79c6">print</span>(<span style="color:#f1fa8c">&#34;AIM at (</span><span style="color:#f1fa8c">%d</span><span style="color:#f1fa8c">, </span><span style="color:#f1fa8c">%d</span><span style="color:#f1fa8c">)&#34;</span> <span style="color:#ff79c6">%</span> (xb, yb))
+    <span style="color:#ff79c6">print</span>(<span style="color:#f1fa8c">&#34;angle: </span><span style="color:#f1fa8c">%f</span><span style="color:#f1fa8c">&#34;</span> <span style="color:#ff79c6">%</span> angle)
+    <span style="color:#ff79c6">print</span>(<span style="color:#f1fa8c">&#34;power: </span><span style="color:#f1fa8c">%f</span><span style="color:#f1fa8c">&#34;</span> <span style="color:#ff79c6">%</span> power)
+    <span style="color:#ff79c6">return</span> CreatePacket(<span style="color:#bd93f9">1</span>, power, angle)
+
+<span style="color:#ff79c6">def</span> <span style="color:#50fa7b">FireAt</span>(weapon, x, y, tanks, debug):
+    xa <span style="color:#ff79c6">=</span> tanks<span style="color:#ff79c6">.</span>tank1<span style="color:#ff79c6">.</span>x
+    xb <span style="color:#ff79c6">=</span> x
+    ya <span style="color:#ff79c6">=</span> tanks<span style="color:#ff79c6">.</span>tank1<span style="color:#ff79c6">.</span>y
+    yb <span style="color:#ff79c6">=</span> y
+    d  <span style="color:#ff79c6">=</span> <span style="color:#8be9fd;font-style:italic">abs</span>(xa <span style="color:#ff79c6">-</span> xb)
+    h  <span style="color:#ff79c6">=</span> <span style="color:#8be9fd;font-style:italic">abs</span>(ya <span style="color:#ff79c6">-</span> yb)
+    P,A<span style="color:#ff79c6">=</span> GetAim(d, h)
+    <span style="color:#ff79c6">if</span> debug:
+        <span style="color:#ff79c6">print</span>(<span style="color:#f1fa8c">&#34;AIM at (</span><span style="color:#f1fa8c">%d</span><span style="color:#f1fa8c">, </span><span style="color:#f1fa8c">%d</span><span style="color:#f1fa8c">)&#34;</span> <span style="color:#ff79c6">%</span> (x, y))
+        <span style="color:#ff79c6">print</span>(<span style="color:#f1fa8c">&#34;angle: </span><span style="color:#f1fa8c">%f</span><span style="color:#f1fa8c">&#34;</span> <span style="color:#ff79c6">%</span> A)
+        <span style="color:#ff79c6">print</span>(<span style="color:#f1fa8c">&#34;power: </span><span style="color:#f1fa8c">%f</span><span style="color:#f1fa8c">&#34;</span> <span style="color:#ff79c6">%</span> P)
+    <span style="color:#ff79c6">return</span> CreatePacket(weapon, P, A)
+</code></pre></td></tr></table>
+</div>
+</div><p>These functions were working fine but eventually we would miss our shot and the other tank hits a bullseye, in this situation we can never kill him because the <strong>MAP</strong> was generated in a way that when we hit him once, he falls in the hole created by the explosion and when we adjust our aim, our bullet collides with a mountain peak instead of colliding with the <strong>Red Tank</strong>. We don&rsquo;t account for any obstruction on the trajectory of the bullet. Sometimes our bullet is obstructed by a mountain or maybe we cannot hit him because of our terrible spawn location, sometimes we spawn at a very steep slope so its not possible to aim at the <strong>Red Tank</strong>. He will keep hitting us and we will always die before him no matter what. So, if we miss even once, we loose the battle andwe have to start from scratch and this is what makes this exploit a little unreliable.</p>
+<h3 id="the-exploit">The Exploit</h3>
+<p>The exploitation is easy now, we have to build a primitive to do manipulate bits arbitrarily on the stack. Using this primitive we can overwrite the return address and redirect code execution. We already have a call to <strong>system(&quot;/bin/sh&rdquo;)</strong> in the executable itself and we also have the <strong>PIE</strong> base address. Using these two values we can get the address where will jump to get code execution.</p>
+<p>If we take a look at the code where it checks if the <strong>Red Tank</strong> is alive or dead? we can see that if we defeat the <strong>Red Tank</strong>, then the <strong>MAP</strong> is ours to play with. We can do anything on the <strong>MAP</strong>.</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">100
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">101
+</span><span style="display:block;width:100%;background-color:#3d3f4a"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">102
+</span></span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">103
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">104
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">105
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">106
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">107
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">108
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">109
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">110
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c">		tanks[j].hp <span style="color:#ff79c6">=</span> <span style="color:#bd93f9">0</span>;
+		<span style="color:#ff79c6">if</span> ( j )
+<span style="display:block;width:100%;background-color:#3d3f4a">		  Message_ <span style="color:#ff79c6">=</span> <span style="color:#f1fa8c">&#34; Stay &amp; practice :)&#34;</span>;
+</span>		<span style="color:#ff79c6">else</span>
+		  Message_ <span style="color:#ff79c6">=</span> <span style="color:#f1fa8c">&#34; Game Over.&#34;</span>;
+		<span style="color:#ff79c6">if</span> ( j )
+		  Tank_1 <span style="color:#ff79c6">=</span> <span style="color:#f1fa8c">&#34;RED&#34;</span>;
+		<span style="color:#ff79c6">else</span>
+		  Tank_1 <span style="color:#ff79c6">=</span> <span style="color:#f1fa8c">&#34;GREEN&#34;</span>;
+		sprintf(s, <span style="color:#f1fa8c">&#34;%s tank destroyed.%s&#34;</span>, Tank_1, Message_);
+		SendText(c, s);
+</code></pre></td></tr></table>
+</div>
+</div><p>Steps to Get the <strong>SHELL</strong>:</p>
+<ol>
+<li>Use the aimbot to kill <strong>Red Tank</strong></li>
+<li>Clear the Ground (clear all the bits on the stack)</li>
+<li>Fire Dirt ball and bombs carefully so that we can write bits of the return address</li>
+</ol>
+<p>But how do we write arbitrary bits with explosions?
+We can easily do that by carefully using the <strong>Dirtball</strong> and the <strong>bomb</strong>, for writing a bit <strong>1</strong> at (630, 479) we must fire the <strong>Dirtball</strong> at 630 - dirtball.radius and then we will fire a explosive bomb such that only 1 set bit remains at 630. We can skip writting bit <strong>0</strong> because the <strong>MAP</strong> is already cleared and the bits at that position are already 0.</p>
+<h3 id="exploit">Exploit</h3>
+<p>The exploit is available <a href="https://gist.github.com/X3eRo0/dfbb43660c616cbb03002d83c79c647b">here</a>.</p>
+
+
+<script id="asciicast-Kjqb3kQTHGzmWUutJl1Txm1LY" src="https://asciinema.org/a/Kjqb3kQTHGzmWUutJl1Txm1LY.js" async></script>
         </div>
 
 
