@@ -13,19 +13,18 @@
     
     
     <item>
-      <title>Hyperion</title>
+      <title>Hyperion [Google CTF 2017 Finals]</title>
       <link>https://x3ero0.github.io/posts/hyperion/</link>
       <pubDate>Fri, 26 Mar 2021 12:13:38 +0530</pubDate>
       
       <guid>https://x3ero0.github.io/posts/hyperion/</guid>
-      <description>&lt;h1 id=&#34;pwning-pocket-tanks---hyperion-google-ctf-2017-finals&#34;&gt;Pwning Pocket Tanks - Hyperion [Google CTF 2017 Finals]&lt;/h1&gt;
-&lt;ul&gt;
+      <description>&lt;ul&gt;
 &lt;li&gt;Author : &lt;a href=&#34;https://gynvael.coldwind.pl/&#34;&gt;Gynvael Coldwind&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;Language : C/C++&lt;/li&gt;
 &lt;li&gt;Upload : May 9th, 2018&lt;/li&gt;
 &lt;li&gt;Level : I will rate it 8/10&lt;/li&gt;
 &lt;li&gt;Platform : Server: Linux | Client: Windows/Linux etc.&lt;/li&gt;
-&lt;li&gt;Files : &lt;a href=&#34;https://crackmes.one/crackme/5bc0fe0033c5d4110a29b296&#34;&gt;change the link hyperion&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Files : &lt;a href=&#34;https://github.com/google/google-ctf/tree/master/2017/finals/2017-finals-pwn-hyperion/&#34;&gt;hyperion&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;div style=&#34;color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;
 &lt;table style=&#34;border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;&#34;&gt;&lt;tr&gt;&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;&#34;&gt;

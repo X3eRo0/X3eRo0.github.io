@@ -3,7 +3,7 @@
     <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1">
-    <title>Hyperion - X3eRo0&#39;s Blog about Reverse Engineering</title>
+    <title>Hyperion [Google CTF 2017 Finals] - X3eRo0&#39;s Blog about Reverse Engineering</title>
 
     <style type="text/css">
         img.wp-smiley,
@@ -63,7 +63,7 @@
 <main role="main">
     <article role="article" class="post type-post format-standard hentry">
         <header class="post-header">
-            <h1>Hyperion</h1>
+            <h1>Hyperion [Google CTF 2017 Finals]</h1>
             <div class="post-details">
                 <a rel="bookmark">
                     <time datetime="2021-03-26T326:1213:386">2021-03-26</time>
@@ -78,7 +78,7 @@
         <a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3a%2f%2fx3ero0.github.io%2fposts%2fhyperion%2f" class="fb-xfbml-parse-ignore">Share</a>
     </div>
     &nbsp;
-    <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" data-text="Hyperion" data-url="https://x3ero0.github.io/posts/hyperion/" data-show-count="false">Tweet</a>
+    <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" data-text="Hyperion [Google CTF 2017 Finals]" data-url="https://x3ero0.github.io/posts/hyperion/" data-show-count="false">Tweet</a>
     <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
     &nbsp;
     
@@ -88,14 +88,13 @@
         </header>
 
         <div class="post-content">
-            <h1 id="pwning-pocket-tanks---hyperion-google-ctf-2017-finals">Pwning Pocket Tanks - Hyperion [Google CTF 2017 Finals]</h1>
-<ul>
+            <ul>
 <li>Author : <a href="https://gynvael.coldwind.pl/">Gynvael Coldwind</a></li>
 <li>Language : C/C++</li>
 <li>Upload : May 9th, 2018</li>
 <li>Level : I will rate it 8/10</li>
 <li>Platform : Server: Linux | Client: Windows/Linux etc.</li>
-<li>Files : <a href="https://crackmes.one/crackme/5bc0fe0033c5d4110a29b296">change the link hyperion</a></li>
+<li>Files : <a href="https://github.com/google/google-ctf/tree/master/2017/finals/2017-finals-pwn-hyperion/">hyperion</a></li>
 </ul>
 <div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
 <table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
@@ -128,7 +127,7 @@
 
 <br>
 
-<p>Hyperion is a single player clone of Pocket Tanks, except that it requires internet connection even when playing againts a bot. We are given a server binary that runs on Linux and 2 Version of client, one for windows and one for linux. The client binaries requires SDL2 because the game uses <a href="https://www.libsdl.org/">SDL2 Library</a> for graphics and controls.</p>
+<p>Hyperion is a single player clone of Scorched Tanks, except that it requires internet connection even when playing againts a bot. We are given a server binary that runs on Linux and 2 versions of client, one for windows and one for linux. The client binaries requires SDL2 because the game uses <a href="https://www.libsdl.org/">SDL2 Library</a> for graphics and controls.</p>
 <p>The Goal of this challenge is to not only defeat the bot, but to also get a shell on the server. I immediately opened the server binary in IDA Pro.</p>
 
 
@@ -150,7 +149,7 @@
 <br>
 
 <p>The challenge pops shell if its running in DEBUG environment with &ldquo;HYPERION_ENV_TEST&rdquo; environment variable set. Game also supports fork server mode and single run mode.</p>
-<p>I used the single run mode so that i can the interaction happens through <code>STDIN</code> and <code>STDOUT</code>.</p>
+<p>I used the single run mode so that I can the interaction happens through <code>STDIN</code> and <code>STDOUT</code>.</p>
 <div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
 <table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
@@ -211,7 +210,7 @@
 <br>
 
 <h3 id="the-reverse-engineering-starts">The Reverse Engineering Starts</h3>
-<p>Before starting reversing the code i wanted to look at the network traffic, for that i used wireshark and followed the TCP stream for the packet i found related to the challenge.</p>
+<p>Before starting reversing the code I wanted to look at the network traffic, for that I used wireshark and followed the TCP stream for the packet I found related to the challenge.</p>
 <p>This is what the server was sending the client upon receiving the connection</p>
 
 
@@ -313,7 +312,7 @@ on the stack with 38400 ((640 * 480) / 8) bytes of size. It first sends the
 welcome text then it generates the map using some random numbers and after that
 it Adjusts Tank coordinates onto the map, now it sends the map and the tank
 structure to the client. So, let&rsquo;s take a look at the SendMap function.</p>
-<p>Before we look at the IDA&rsquo;s decompiled code, i want to mention the networking
+<p>Before we look at the IDA&rsquo;s decompiled code, I want to mention the networking
 code of this game.</p>
 <p>The game sends packets of this structure</p>
 <div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
@@ -331,7 +330,7 @@ code of this game.</p>
 </code></pre></td></tr></table>
 </div>
 </div><p>the <strong>type</strong> string contains the header for identification of what kind of
-data are we sending and receiving. Now let&rsquo;s analyse the <strong>SendMap</strong> function, i have included comments from the source code.</p>
+data are we sending and receiving. Now let&rsquo;s analyse the <strong>SendMap</strong> function, I have included comments from the source code.</p>
 <div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
 <table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
@@ -438,7 +437,7 @@ this memory leak.</p>
         <span style="color:#ff79c6">return</span> <span style="color:#bd93f9">5LL</span>;
 </code></pre></td></tr></table>
 </div>
-</div><p>Here it receives a packet from the client and checks if its a <strong>FIRE</strong> command, because this
+</div><p>Here it receives a packet from the client and checks if it&rsquo;s a <strong>FIRE</strong> command, because this
 is the only input that we can send to the server as client. Whenever a client fires a bullet
 it sends a <strong>FIRE</strong> Packet and a <strong>Bullet</strong> Packet. Then it checks if <strong>Weapon</strong> is a valid
 <strong>Weapon</strong> value and if the <strong>Power</strong> and <strong>Angle</strong> are also valid or not.</p>
@@ -507,7 +506,7 @@ The highlighted <strong>for-loop</strong> on line <strong>45-47</strong> iterate
 that is because it is iterating over the two tanks for shooting, if <strong>i</strong>
 is 1 then <strong>FireTankGunAndCheatHard</strong> function is called because <strong>Red Tank</strong>
 is the enemy tank but if <strong>i</strong> is 0, then <strong>FireTankGun</strong> function is called.</p>
-<p>Let&rsquo;s see both of these functions, i am using the challenge source code here</p>
+<p>Let&rsquo;s see both of these functions, I am using the challenge source code here</p>
 <h1 id="1-firetankgun">1. FireTankGun</h1>
 <div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
 <table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
@@ -804,7 +803,7 @@ half of the circle will corrupt the values which lies after the MAP.</p>
 <p>This vulnerability allows us to create explosion effect outside of the MAP, which
 means we can manipulate bits outside of the MAP. We know there are important pointers
 just after the MAP on the stack, if we can corrupt them we can redirect code execution.</p>
-<p>I tried to destroy the ground until i reach the bottom of the <strong>MAP</strong> and now if we
+<p>I tried to destroy the ground until I reach the bottom of the <strong>MAP</strong> and now if we
 look at the GMAPP leak we will see a lot <strong>NULL</strong> bytes including the part where
 we got the return address from, which means we were able to modify the return address
 by just exploding the ground.</p>
@@ -1079,7 +1078,7 @@ We can easily do that by carefully using the <strong>Dirtball</strong> and the <
             
                 
                     <li>
-                        <a href="https://x3ero0.github.io/posts/hyperion/">Hyperion</a>
+                        <a href="https://x3ero0.github.io/posts/hyperion/">Hyperion [Google CTF 2017 Finals]</a>
                     </li>
                 
             
@@ -1134,7 +1133,7 @@ We can easily do that by carefully using the <strong>Dirtball</strong> and the <
             
                 
                     <li>
-                        <a href="https://x3ero0.github.io/posts/hyperion/">Hyperion</a>
+                        <a href="https://x3ero0.github.io/posts/hyperion/">Hyperion [Google CTF 2017 Finals]</a>
                     </li>
                 
             
