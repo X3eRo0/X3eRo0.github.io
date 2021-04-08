@@ -821,6 +821,73 @@ by just exploding the ground.</p>
     decoding="async"
   />
 </div>
+<h3 id="triggering-the-vulnerability">Triggering The Vulnerability</h3>
+<p>Okay, we know that we can manipulate the return address just by doing different kinds
+of explosions. Explosion with weapon 1 will remove the dirt in the radius of the explosion
+which basically means it will unset the bits in the range of its radius and if we fire
+a weapon 2 which is the dirt ball then we will set all the bits in the range of the weapon 2.</p>
+<p>Using this primitive we can overwrite the return address with any arbitrary value just by
+exploding different weapons, but its not as easy as it sounds. If we start destroying the
+ground instead of shooting at the <strong>Red Tank</strong> then the <strong>Red Tank</strong> will immedieatly destroy
+us and we won&rsquo;t be able to do anything. We need to figure out a way to defeat the <strong>Red Tank</strong>.</p>
+<h3 id="2d-projectile-aimbot">2D Projectile AIMBOT</h3>
+<p>Making an aimbot for hyperion was fairly easy because the tanks don&rsquo;t move horizontally.
+It&rsquo;s like solving a physics problem to find the correct initial velocity and angle to
+hit the target. Since the <strong>Tanks</strong> could be at different height level we can&rsquo;t just use
+the basic projectile motion formulas, we need to take account of the height difference.</p>
+
+
+
+<div class="center">
+  <img
+    class="responsive"
+    src="/img/hyperion/projectile.png"
+    alt="Projectile"
+    decoding="async"
+  />
+</div>
+<p>Let&rsquo;s call the difference of height between both the <strong>Tanks</strong> as <strong>H</strong>, the displacement
+between both the <strong>Tanks</strong> as <strong>D</strong>, initial velocity at which the projectile is launched
+or in our case the <strong>Power</strong> as <strong>u</strong>, Gravitaional acceleration as <strong>g</strong> and initial launch
+angle as <strong>θ</strong> (Theta) then the height of a projectile at any time (t) is given by,</p>
+
+
+
+<div class="center">
+  <img
+    class="responsive"
+    src="/img/hyperion/height_eq.png"
+    alt="equation of height"
+    decoding="async"
+  />
+</div>
+<p>We want the projectile to hit the <strong>Red Tank</strong> which is at displacement <strong>D</strong> from the
+<strong>Green Tank</strong>. So, the time <strong>t</strong> when the projectile reaches the <strong>Red Tank</strong> will be
+given by,</p>
+
+
+
+<div class="center">
+  <img
+    class="responsive"
+    src="/img/hyperion/time_eq.png"
+    alt="Time at the end"
+    decoding="async"
+  />
+</div>
+<p>Using both the equations we can derive the expression for initial velocity of launch or
+<strong>Power</strong>.</p>
+
+
+
+<div class="center">
+  <img
+    class="responsive"
+    src="/img/hyperion/derivation.png"
+    alt="Derivation of initial Velocity"
+    decoding="async"
+  />
+</div>
         </div>
 
 
