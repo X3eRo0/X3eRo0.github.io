@@ -741,11 +741,9 @@ After calculating the correct coordinate of the Explosion, the explosion effect 
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">49
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">50
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">51
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">52
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c">
-<span style="color:#ff79c6">__int64</span> <span style="color:#ff79c6">__fastcall</span> <span style="color:#50fa7b">ApplyExplosionToMap</span>(
+<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#ff79c6">__int64</span> <span style="color:#ff79c6">__fastcall</span> <span style="color:#50fa7b">ApplyExplosionToMap</span>(
 	<span style="color:#8be9fd">char</span> <span style="color:#ff79c6">*</span>map,
 	<span style="color:#8be9fd">int</span> x,
 	<span style="color:#8be9fd">int</span> y,
@@ -763,13 +761,13 @@ After calculating the correct coordinate of the Explosion, the explosion effect 
 	<span style="color:#ff79c6">for</span> ( i <span style="color:#ff79c6">=</span> y <span style="color:#ff79c6">-</span> r; y <span style="color:#ff79c6">+</span> r <span style="color:#ff79c6">&gt;=</span> i; <span style="color:#ff79c6">++</span>i )
 	{
 		<span style="color:#ff79c6">for</span> ( j <span style="color:#ff79c6">=</span> x <span style="color:#ff79c6">-</span> r; x <span style="color:#ff79c6">+</span> r <span style="color:#ff79c6">&gt;=</span> j; <span style="color:#ff79c6">++</span>j )
-<span style="display:block;width:100%;background-color:#3d3f4a">		{
-</span>			<span style="color:#ff79c6">if</span> ( (i <span style="color:#ff79c6">&gt;=</span> <span style="color:#bd93f9">0</span> <span style="color:#ff79c6">&amp;&amp;</span> i <span style="color:#ff79c6">&lt;=</span> <span style="color:#bd93f9">480</span>) <span style="color:#ff79c6">&amp;&amp;</span> <span style="color:#6272a4">// Vulnerability
-</span><span style="color:#6272a4"></span>				 (j <span style="color:#ff79c6">&gt;=</span> <span style="color:#bd93f9">0</span> <span style="color:#ff79c6">&amp;&amp;</span> j <span style="color:#ff79c6">&lt;=</span> <span style="color:#bd93f9">639</span>) <span style="color:#ff79c6">&amp;&amp;</span>
+		{
+<span style="display:block;width:100%;background-color:#3d3f4a">			<span style="color:#ff79c6">if</span> ( (i <span style="color:#ff79c6">&gt;=</span> <span style="color:#bd93f9">0</span> <span style="color:#ff79c6">&amp;&amp;</span> i <span style="color:#ff79c6">&lt;=</span> <span style="color:#bd93f9">480</span>) <span style="color:#ff79c6">&amp;&amp;</span> <span style="color:#6272a4">// Vulnerability
+</span></span><span style="color:#6272a4"></span>				 (j <span style="color:#ff79c6">&gt;=</span> <span style="color:#bd93f9">0</span> <span style="color:#ff79c6">&amp;&amp;</span> j <span style="color:#ff79c6">&lt;=</span> <span style="color:#bd93f9">639</span>) <span style="color:#ff79c6">&amp;&amp;</span>
 				 ((j <span style="color:#ff79c6">-</span> x) <span style="color:#ff79c6">*</span> (j <span style="color:#ff79c6">-</span> x) <span style="color:#ff79c6">+</span> (i <span style="color:#ff79c6">-</span> y) <span style="color:#ff79c6">*</span> (i <span style="color:#ff79c6">-</span> y) <span style="color:#ff79c6">&lt;=</span> r <span style="color:#ff79c6">*</span> r )
-<span style="display:block;width:100%;background-color:#3d3f4a">			   ){
-</span>				PutPixel(map, j, i, effect);
-			}
+			   ){
+<span style="display:block;width:100%;background-color:#3d3f4a">				PutPixel(map, j, i, effect);
+</span>			}
 		}
 	}
 	<span style="color:#ff79c6">return</span> ApplyGravitationToMap(map, (x <span style="color:#ff79c6">-</span> r), (r <span style="color:#ff79c6">+</span> x));
@@ -799,6 +797,30 @@ After calculating the correct coordinate of the Explosion, the explosion effect 
 </code></pre></td></tr></table>
 </div>
 </div><p>Did you spot the Vulnerability?</p>
+<p>The vulnerability here is in the <strong>ApplyExplosionToMap()</strong>. If you see line 20
+We can see that the boundary check for <strong>i</strong> is done incorrectly. The boundary
+for <strong>i</strong> should&rsquo;ve been <strong>i &gt;= 0 &amp;&amp; i &lt;= 479</strong>, instead it is <strong>i &gt;= 0 &amp;&amp; i &lt;= 480</strong>.</p>
+<p>What if an explosion happens at the bottom of the <strong>MAP</strong>?. The explosion will create
+an empty circle of Air in the MAP and half of this circle will lie inside the MAP and
+half of the circle will corrupt the values which lies after the MAP.</p>
+<p>This vulnerability allows us to create explosion effect outside of the MAP, which
+means we can manipulate bits outside of the MAP. We know there are important pointers
+just after the MAP on the stack, if we can corrupt them we can redirect code execution.</p>
+<p>I tried to destroy the ground until i reach the bottom of the <strong>MAP</strong> and now if we
+look at the GMAPP leak we will see a lot <strong>NULL</strong> bytes including the part where
+we got the return address from, which means we were able to modify the return address
+by just exploding the ground.</p>
+
+
+
+<div class="center">
+  <img
+    class="responsive"
+    src="/img/hyperion/hexdump.png"
+    alt="Leak after exploding ground"
+    decoding="async"
+  />
+</div>
         </div>
 
 
