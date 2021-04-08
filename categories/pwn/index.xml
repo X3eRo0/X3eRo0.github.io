@@ -25,18 +25,9 @@
 &lt;li&gt;Level : I will rate it 8/10&lt;/li&gt;
 &lt;li&gt;Platform : Server: Linux | Client: Windows/Linux etc.&lt;/li&gt;
 &lt;li&gt;Files : &lt;a href=&#34;https://github.com/google/google-ctf/tree/master/2017/finals/2017-finals-pwn-hyperion/&#34;&gt;hyperion&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Desc: It&amp;rsquo;s 2017, so even single-player games require Internet connection.&lt;/li&gt;
 &lt;/ul&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;div style=&#34;color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;
-&lt;table style=&#34;border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;&#34;&gt;&lt;tr&gt;&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;&#34;&gt;
-&lt;pre style=&#34;color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;1
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;2
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
-&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;;width:100%&#34;&gt;
-&lt;pre style=&#34;color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-plaintext&#34; data-lang=&#34;plaintext&#34;&gt;Desc:
-  - It&amp;#39;s 2017, so even single-player games require Internet connection.
-&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
-&lt;/div&gt;
-&lt;/div&gt;
+
 
 &lt;br&gt;
 
