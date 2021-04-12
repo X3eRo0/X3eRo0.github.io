@@ -33,11 +33,6 @@ Webcomic: 4.3
  *    user zoom.
  */
 
-@font-face {
-  font-family: 'Fira Code';
-  src: url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@500&display=swap');
-}
-
 html {
   font-family: 'Fira Code', monospace;
   /* 1 */

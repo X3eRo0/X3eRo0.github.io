@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>X3eRo0&#39;s Blog about Reverse Engineering</title>
+    <title>x3ero0&#39;s blog</title>
     <link>https://x3ero0.github.io/</link>
-    <description>Recent content on X3eRo0&#39;s Blog about Reverse Engineering</description>
+    <description>Recent content on x3ero0&#39;s blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>Copyright © 2008–2021</copyright>
@@ -13,7 +13,7 @@
     
     
     <item>
-      <title>Hyperion Pwn Writeup [Google CTF 2017 Finals]</title>
+      <title>Hyperion Writeup</title>
       <link>https://x3ero0.github.io/posts/hyperion/</link>
       <pubDate>Fri, 26 Mar 2021 12:13:38 +0530</pubDate>
       

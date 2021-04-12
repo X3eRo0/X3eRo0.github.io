@@ -1,35 +1,97 @@
+@media only screen and (max-width: 767px) {
+
+  .cardleft {
+    display: flex;
+    width: 100%;
+    outline: 5px solid #bd93f9;
+    outline-offset: 2px;
+    margin-bottom: 15px;
+    margin-top: 15px;
+    box-shadow: 0 16px 32px 0 rgba(0,0,0,0.4);
+    position: relative;
+    text-align: center;
+    color: #f8f8f2;
+  }
+
+  .cardright {
+    display: flex;
+    width: 100%;
+    outline: 5px solid #bd93f9;
+    outline-offset: 2px;
+    margin-bottom: 15px;
+    margin-top: 15px;
+    box-shadow: 0 16px 32px 0 rgba(0,0,0,0.4);
+    position: relative;
+    text-align: center;
+    color: #f8f8f2;
+  }
+
+}
+
+@media only screen and (min-width: 768px) {
+  .cardleft {
+    display: flex;
+    float: left;
+    width: 49%;
+    outline: 5px solid #bd93f9;
+    outline-offset: 2px;
+    margin-bottom: 15px;
+    margin-top: 15px;
+    box-shadow: 0 16px 32px 0 rgba(0,0,0,0.4);
+    transition: 0.3s;
+    position: relative;
+    text-align: center;
+    color: #f8f8f2;
+  }
+
+  .cardright {
+    display: flex;
+    float: right;
+    width: 49%;
+    outline: 5px solid #bd93f9;
+    outline-offset: 2px;
+    margin-bottom: 15px;
+    margin-top: 15px;
+    box-shadow: 0 16px 32px 0 rgba(0,0,0,0.4);
+    transition: 0.3s;
+    position: relative;
+    text-align: center;
+    color: #f8f8f2;
+  }
+
+  .cardleft:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 16px 32px 0 rgba(0,0,0,4.0);
+  }
+
+  .cardright:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 16px 32px 0 rgba(0,0,0,4.0);
+  }
+
+}
+
 span.anim {
-   opacity: 0;
-   transition: all 0.4s ease;
+  opacity: 0;
+  transition: all 0.4s ease;
 }
 
 span.fade {
-	opacity: 1;
+  opacity: 1;
+  transition: all 0.4s ease;
 }
 
-.card {
-  margin: 10px;
-  float: left;
-  margin-bottom: 20px;
-  border: 5px solid #292929;
-  outline: 5px solid #e3e3e3;
-  box-shadow: 0 16px 32px 0 rgba(0,0,0,0.4);
-  transition: 0.3s;
-  width: 44%;
-  position: relative;
+.crackme {
+  color: #ff79c6;
+  background: #282a36;
+  font-family: 'Fira Code', monospace;
+  font-size: 12vw;
   text-align: center;
-  color: #ffffff;
-}
-
-.card:hover {
-  transform: translateY(-10px);
-  box-shadow: 0 16px 32px 0 rgba(0,0,0,0.4);
 }
 
 .blur {
-	filter: blur(2px);
-	-webkit-filter: blur(2px);
-
+  filter: blur(8px);
+  -webkit-filter: blur(8px);
 }
 
 .card-text {
@@ -48,9 +110,9 @@ span.fade {
 }
 
 .responsive{
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-    max-width: 100%;
-    height: auto;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 100%;
+  height: auto;
 }
