@@ -10,18 +10,17 @@ function crackme(){
     var passbytes = new Uint8Array(password.length);
 
     for (var i = 0; i < password.length; i++){
-        passbytes[i] = password[i].charCodeAt(i);
+        passbytes[i] = password.charCodeAt(i);
     }
 
 
-    WebAssembly.instantiateStreaming(fetch('/test.wasm'))
+    WebAssembly.instantiateStreaming(fetch('/crackme.wasm'))
     .then(obj => {
-        // Call an exported function:
-        console.log(password);
         for (var i = 0; i < password.length; i++){
             obj.instance.exports.set(passbytes[i], i);
         }
-        if (obj.instance.exports.check() == 0){
+        var c = obj.instance.exports.check();
+        if (c == 1){
             changeText("CORRECT!", true);
         } else {
             changeText("WRONG!", false);
