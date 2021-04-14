@@ -68,9 +68,18 @@
     
 
     
-    <div style="min-height: 30%; outline: 5px solid #bd93f9; outline-offset: 2px; margin-left: 0px; margin-bottom: 20px; border-color: #bd93f9;">
-        <iframe src="crackme.html" frameBorder="0" style="width: 100%; min-height: 400px;">
-        </iframe>
+    <div class="crackmediv">
+        <div class="crackme">
+            <p class="anim">x3ero0</p>
+            <br>
+            <br>
+            <br>
+            <input id="password" class="pswd" type="password" autocomplete="off">
+            <button onclick="crackme()" class="subm">Enter</button>
+            <script src="/js/crackme.js"></script>
+        </div>
+        <script src="/js/anim.js"></script>
+        <script>var stop_anim=false; var textanim = Animate();</script>
     </div>
     <div class="col">
         
