@@ -7,10 +7,21 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>Copyright © 2008–2021</copyright>
-    <lastBuildDate>Fri, 26 Mar 2021 12:13:38 +0530</lastBuildDate>
+    <lastBuildDate>Fri, 04 Jun 2021 04:17:14 +0530</lastBuildDate>
     
 	<atom:link href="https://x3ero0.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Sabloom License</title>
+      <link>https://x3ero0.github.io/posts/sabloom-license/</link>
+      <pubDate>Fri, 04 Jun 2021 04:17:14 +0530</pubDate>
+      
+      <guid>https://x3ero0.github.io/posts/sabloom-license/</guid>
+      <description>Text Editing, Done Right The first stable release of Sabloom Text 6 has finally arrived! We&amp;rsquo;ve worked hard on providing no improvements at all and also losing our focus on what makes Sabloom Text great. There are no new major features that we hope will significantly improve your workflow and a countless number of major bugs across the board.
+But is it better than Notepad?
+Features  it works. no syntax highlighting at all.</description>
+    </item>
     
     <item>
       <title>Hyperion Writeup</title>
