@@ -7,20 +7,16 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>Copyright © 2008–2021</copyright>
-    <lastBuildDate>Fri, 10 Apr 2020 20:06:26 +0000</lastBuildDate>
-    
-	<atom:link href="https://x3ero0.github.io/index.xml" rel="self" type="application/rss+xml" />
-    
-    
+    <lastBuildDate>Sun, 14 Nov 2021 16:13:20 +0530</lastBuildDate><atom:link href="https://x3ero0.github.io/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>Sabloom License</title>
-      <link>https://x3ero0.github.io/posts/sabloom-license/</link>
-      <pubDate>Fri, 04 Jun 2021 04:17:14 +0530</pubDate>
+      <title>Easy_Kernel Writeup from K3RN3LCTF 2021</title>
+      <link>https://x3ero0.github.io/posts/easy_kernel_exploitation/</link>
+      <pubDate>Sun, 14 Nov 2021 16:13:20 +0530</pubDate>
       
-      <guid>https://x3ero0.github.io/posts/sabloom-license/</guid>
-      <description>Text Editing, Done Right The first stable release of Sabloom Text 6 has finally arrived! We&amp;rsquo;ve worked hard on providing no improvements at all and also losing our focus on what makes Sabloom Text great. There are no new major features that we hope will significantly improve your workflow and a countless number of major bugs across the board.
-But is it better than Notepad?
-Features  it works. no syntax highlighting at all.</description>
+      <guid>https://x3ero0.github.io/posts/easy_kernel_exploitation/</guid>
+      <description>Author : Seal Twitter CTF : K3RN3LCTF Platform : Linux Kernel 5.4.0 (KASLR, SMEP, SMAP, KPTI)  It&amp;rsquo;s been a while, huh?
+Today, we will dive into the basics of Linux Kernel Exploitation. I am not very experienced when it comes to Linux Kernel Exploitaion and I am still learning. So, I am writing about the challenge I solved this weekend in K3RN3LCTF 2021.
+First Look  We have a bunch of files to work with.</description>
     </item>
     
     <item>
@@ -147,7 +143,7 @@ The contents of the &lt;strong&gt;The_Elder_Scrolls_V_Skyrim.zip&lt;/strong&gt; 
 &lt;p&gt;Challenge Description:&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;div style=&#34;color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;
 &lt;table style=&#34;border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;&#34;&gt;&lt;tr&gt;&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;&#34;&gt;
-&lt;pre style=&#34;color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 1
+&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 1
 &lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 2
 &lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 3
 &lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 4
@@ -164,7 +160,7 @@ The contents of the &lt;strong&gt;The_Elder_Scrolls_V_Skyrim.zip&lt;/strong&gt; 
 &lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;15
 &lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
 &lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;;width:100%&#34;&gt;
-&lt;pre style=&#34;color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-plaintext&#34; data-lang=&#34;plaintext&#34;&gt;Written by: ItzSomebody
+&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-plaintext&#34; data-lang=&#34;plaintext&#34;&gt;Written by: ItzSomebody
 
 Description: 
 Keith made a cool license-checking program but he forgot the flag he used to create the key!
@@ -223,7 +219,7 @@ Flag format riftCTF{.*}
 &lt;p&gt;Description&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;div style=&#34;color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;
 &lt;table style=&#34;border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;&#34;&gt;&lt;tr&gt;&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;&#34;&gt;
-&lt;pre style=&#34;color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;1
+&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;1
 &lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;2
 &lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;3
 &lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;4
@@ -231,7 +227,7 @@ Flag format riftCTF{.*}
 &lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;6
 &lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
 &lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;;width:100%&#34;&gt;
-&lt;pre style=&#34;color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-plaintext&#34; data-lang=&#34;plaintext&#34;&gt;One day when I came home at lunchtime I heard a funny noise Went out to the
+&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-plaintext&#34; data-lang=&#34;plaintext&#34;&gt;One day when I came home at lunchtime I heard a funny noise Went out to the
 back yard to find out If it was one of those rowdy boys Stood there was my
 neighbor called Peter And a flux capacitor. I guess there must be quite some
 entropy in a flux capacitor...

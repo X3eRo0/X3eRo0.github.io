@@ -96,7 +96,7 @@
 <p>Description</p>
 <div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
 <table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+<pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
@@ -104,7 +104,7 @@
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-plaintext" data-lang="plaintext">One day when I came home at lunchtime I heard a funny noise Went out to the
+<pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-plaintext" data-lang="plaintext">One day when I came home at lunchtime I heard a funny noise Went out to the
 back yard to find out If it was one of those rowdy boys Stood there was my
 neighbor called Peter And a flux capacitor. I guess there must be quite some
 entropy in a flux capacitor...
@@ -115,17 +115,17 @@ Netcat Link : nc re.ctf.nullcon.net 1234
 </div><p>we were given 3000 stripped ELF binaries some 64bit binaries and 32bit binaries. the description of the challenge did&rsquo;nt explained what exactly the task was, so i tried to connect to the given netcat link.</p>
 <div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
 <table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+<pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-plaintext" data-lang="plaintext">x3ero0 :: year3000 » nc re.ctf.nullcon.net 1234
+<pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-plaintext" data-lang="plaintext">x3ero0 :: year3000 » nc re.ctf.nullcon.net 1234
 1252.bin
 </code></pre></td></tr></table>
 </div>
 </div><p>so it was clear that for each binary we need to send the correct password of the binary.
 lets reverse engineer one of the binaries.</p>
-<pre><code class="language-x86asm" data-lang="x86asm">public start
+<pre tabindex="0"><code class="language-x86asm" data-lang="x86asm">public start
 start proc near
 xor     ebp, ebp
 pop     esi
@@ -147,7 +147,7 @@ call    ___libc_start_main
 hlt
 start endp
 </code></pre><p>i calculated the offset of main function through gdb and it was sub_6D0</p>
-<pre><code class="language-x86asm" data-lang="x86asm">.text:000006D0
+<pre tabindex="0"><code class="language-x86asm" data-lang="x86asm">.text:000006D0
 .text:000006D0 ; =============== S U B R O U T I N E =======================================
 .text:000006D0
 .text:000006D0 ; Attributes: bp-based frame fuzzy-sp
@@ -241,7 +241,7 @@ start endp
 .text:000007A2 sub_6D0         endp
 .text:000007A2
 </code></pre><p>lets look at sub_64D</p>
-<pre><code class="language-x86asm" data-lang="x86asm">.text:0000064D ; =============== S U B R O U T I N E =======================================
+<pre tabindex="0"><code class="language-x86asm" data-lang="x86asm">.text:0000064D ; =============== S U B R O U T I N E =======================================
 .text:0000064D
 .text:0000064D ; Attributes: bp-based frame
 .text:0000064D
@@ -312,16 +312,16 @@ start endp
 .text:000006CF sub_64D         endp
 .text:000006CF
 </code></pre><p>if you see this function and notice that at 0x0000065e a number is loaded into dword [local_ch] and at 0x00000665 a character is loaded into byte [local_15h].</p>
-<pre><code class="language-x86asm" data-lang="x86asm">.text:0000065E                 mov     [ebp+var_C], 54h ; 'T'
+<pre tabindex="0"><code class="language-x86asm" data-lang="x86asm">.text:0000065E                 mov     [ebp+var_C], 54h ; 'T'
 .text:00000665                 mov     [ebp+var_15], 63h ; 'c'
 </code></pre><p>the following loop after this simply checks if the user input is &lsquo;c&rsquo; *0x54
 then comes a memcmp at 0x6b5. now to statically analyse the arguments passed to memcmp we need to figure out whats going at 0x6b0</p>
-<pre><code class="language-x86asm" data-lang="x86asm">.text:000006AB                 lea     edx, (unk_2008 - 1FC0h)[eax]
+<pre tabindex="0"><code class="language-x86asm" data-lang="x86asm">.text:000006AB                 lea     edx, (unk_2008 - 1FC0h)[eax]
 </code></pre><p>now lets see what exactly is the value of eax at this instruction. we scroll a little bit up</p>
-<pre><code class="language-x86asm" data-lang="x86asm">.text:00000654                 call    sub_7A3
+<pre tabindex="0"><code class="language-x86asm" data-lang="x86asm">.text:00000654                 call    sub_7A3
 .text:00000659                 add     eax, 1967h
 </code></pre><p>lets see what this function is at 0x7a3</p>
-<pre><code class="language-x86asm" data-lang="x86asm">.text:000007A3 sub_7A3         proc near               ; CODE XREF: sub_64D+7↑p
+<pre tabindex="0"><code class="language-x86asm" data-lang="x86asm">.text:000007A3 sub_7A3         proc near               ; CODE XREF: sub_64D+7↑p
 .text:000007A3 ; __unwind {
 .text:000007A3                 mov     eax, [esp+0]
 .text:000007A6                 retn
@@ -332,15 +332,15 @@ then comes a memcmp at 0x6b5. now to statically analyse the arguments passed to 
 basically eax = address_of_next_instruction_after_call_0x7a3, so eax = 0x00000659
 and then eax += 0x1967, so eax = 0x1fc0.
 okay now lets look at the instruction at 0x000006ab again</p>
-<pre><code class="language-x86asm" data-lang="x86asm">; from radare2
+<pre tabindex="0"><code class="language-x86asm" data-lang="x86asm">; from radare2
 0x000006ab     lea     edx, dword [eax + 0x48] 
 </code></pre><p>so it becomes</p>
-<pre><code class="language-x86asm" data-lang="x86asm">; from radare2
+<pre tabindex="0"><code class="language-x86asm" data-lang="x86asm">; from radare2
 0x000006ab     lea     edx, dword [0x1fc0 + 0x48] ; 0x2008
 </code></pre><p>and you can actually see that ida already calculated the offset for us.
 so memcmp checks that the bytes after &lsquo;c&rsquo; * 0x54 with the dword value at 0x2008
 which is</p>
-<pre><code class="language-x86asm" data-lang="x86asm">.data:00002008 dword_2008      dd 0A7C6D169h
+<pre tabindex="0"><code class="language-x86asm" data-lang="x86asm">.data:00002008 dword_2008      dd 0A7C6D169h
 </code></pre>
 
 
@@ -355,24 +355,24 @@ which is</p>
 <p>also one more thing to point out is that this value is always stored at the end of .data section. so the correct password for 3.bin is</p>
 <div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
 <table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+<pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#ff79c6">import</span> struct
-<span style="color:#ff79c6">print</span> c <span style="color:#ff79c6">*</span> <span style="color:#bd93f9">0x54</span> <span style="color:#ff79c6">+</span> struct<span style="color:#ff79c6">.</span>pack(<span style="color:#ff79c6">&lt;</span>I, <span style="color:#bd93f9">0xA7C6D169</span>)
+<pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#ff79c6">import</span> struct
+<span style="color:#8be9fd;font-style:italic">print</span> c <span style="color:#ff79c6">*</span> <span style="color:#bd93f9">0x54</span> <span style="color:#ff79c6">+</span> struct<span style="color:#ff79c6">.</span>pack(<span style="color:#ff79c6">&lt;</span>I, <span style="color:#bd93f9">0xA7C6D169</span>)
 
 </code></pre></td></tr></table>
 </div>
 </div><p>output -&gt;</p>
 <div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
 <table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+<pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-plaintext" data-lang="plaintext">x3ero0 :: year3000 » python solve_3.py | ./3.bin
+<pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-plaintext" data-lang="plaintext">x3ero0 :: year3000 » python solve_3.py | ./3.bin
 Well done
 </code></pre></td></tr></table>
 </div>
@@ -380,7 +380,7 @@ Well done
 <p>exploit script &ndash;&gt;</p>
 <div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
 <table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+<pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
@@ -481,7 +481,7 @@ Well done
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">99
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#ff79c6">from</span> pwn <span style="color:#ff79c6">import</span> <span style="color:#ff79c6">*</span>
+<pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#ff79c6">from</span> pwn <span style="color:#ff79c6">import</span> <span style="color:#ff79c6">*</span>
 <span style="color:#ff79c6">import</span> base64
 
 
@@ -489,7 +489,7 @@ context<span style="color:#ff79c6">.</span>log_level <span style="color:#ff79c6"
 
 <span style="color:#ff79c6">def</span> <span style="color:#50fa7b">solve</span>(filename):
 
-	<span style="color:#8be9fd;font-style:italic">file</span> <span style="color:#ff79c6">=</span> <span style="color:#8be9fd;font-style:italic">open</span>(filename, <span style="color:#f1fa8c">&#34;rb&#34;</span>)<span style="color:#ff79c6">.</span>read()
+	file <span style="color:#ff79c6">=</span> <span style="color:#8be9fd;font-style:italic">open</span>(filename, <span style="color:#f1fa8c">&#34;rb&#34;</span>)<span style="color:#ff79c6">.</span>read()
 	
 	ELF64_Coun <span style="color:#ff79c6">=</span> <span style="color:#bd93f9">0x816</span>
 	ELF64_Valu <span style="color:#ff79c6">=</span> <span style="color:#bd93f9">0x81d</span>
@@ -502,13 +502,13 @@ context<span style="color:#ff79c6">.</span>log_level <span style="color:#ff79c6"
 	ELF32_Addr <span style="color:#ff79c6">=</span> <span style="color:#bd93f9">0x1008</span>
 
 	
-	Format <span style="color:#ff79c6">=</span> <span style="color:#8be9fd;font-style:italic">ord</span>(<span style="color:#8be9fd;font-style:italic">file</span>[<span style="color:#bd93f9">0x04</span>])
+	Format <span style="color:#ff79c6">=</span> <span style="color:#8be9fd;font-style:italic">ord</span>(file[<span style="color:#bd93f9">0x04</span>])
 	<span style="color:#ff79c6">if</span> (Format <span style="color:#ff79c6">==</span> <span style="color:#bd93f9">2</span>):
 
 		context<span style="color:#ff79c6">.</span>update(arch<span style="color:#ff79c6">=</span><span style="color:#f1fa8c">&#39;amd64&#39;</span>, os<span style="color:#ff79c6">=</span><span style="color:#f1fa8c">&#39;linux&#39;</span>)
 
-		code_count <span style="color:#ff79c6">=</span> <span style="color:#8be9fd;font-style:italic">file</span>[ELF64_Coun : ELF64_Coun<span style="color:#ff79c6">+</span><span style="color:#bd93f9">7</span>]
-		code_value <span style="color:#ff79c6">=</span> <span style="color:#8be9fd;font-style:italic">file</span>[ELF64_Valu : ELF64_Valu<span style="color:#ff79c6">+</span><span style="color:#bd93f9">4</span>]
+		code_count <span style="color:#ff79c6">=</span> file[ELF64_Coun : ELF64_Coun<span style="color:#ff79c6">+</span><span style="color:#bd93f9">7</span>]
+		code_value <span style="color:#ff79c6">=</span> file[ELF64_Valu : ELF64_Valu<span style="color:#ff79c6">+</span><span style="color:#bd93f9">4</span>]
 
 		disa_count <span style="color:#ff79c6">=</span> disasm(code_count)
 		disa_value <span style="color:#ff79c6">=</span> disasm(code_value)
@@ -517,7 +517,7 @@ context<span style="color:#ff79c6">.</span>log_level <span style="color:#ff79c6"
 		code_value <span style="color:#ff79c6">=</span> <span style="color:#8be9fd;font-style:italic">chr</span>(<span style="color:#8be9fd;font-style:italic">int</span>(disa_value<span style="color:#ff79c6">.</span>split(<span style="color:#f1fa8c">&#39;0x&#39;</span>)[<span style="color:#ff79c6">-</span><span style="color:#bd93f9">1</span>], <span style="color:#bd93f9">16</span>))
 
 		<span style="color:#6272a4">#value = u64(file[ELF64_Addr : ELF64_Addr+8])</span>
-		value <span style="color:#ff79c6">=</span> <span style="color:#8be9fd;font-style:italic">file</span>[ELF64_Addr : ELF64_Addr<span style="color:#ff79c6">+</span><span style="color:#bd93f9">8</span>]
+		value <span style="color:#ff79c6">=</span> file[ELF64_Addr : ELF64_Addr<span style="color:#ff79c6">+</span><span style="color:#bd93f9">8</span>]
 		value_n <span style="color:#ff79c6">=</span> u64(value)
 
 		flag <span style="color:#ff79c6">=</span> code_value <span style="color:#ff79c6">*</span> code_count <span style="color:#ff79c6">+</span> value
@@ -526,8 +526,8 @@ context<span style="color:#ff79c6">.</span>log_level <span style="color:#ff79c6"
 
 		context<span style="color:#ff79c6">.</span>update(arch<span style="color:#ff79c6">=</span><span style="color:#f1fa8c">&#39;i386&#39;</span>, os<span style="color:#ff79c6">=</span><span style="color:#f1fa8c">&#39;linux&#39;</span>)
 
-		code_count <span style="color:#ff79c6">=</span> <span style="color:#8be9fd;font-style:italic">file</span>[ELF32_Coun : ELF32_Coun<span style="color:#ff79c6">+</span><span style="color:#bd93f9">7</span>]
-		code_value <span style="color:#ff79c6">=</span> <span style="color:#8be9fd;font-style:italic">file</span>[ELF32_Valu : ELF32_Valu<span style="color:#ff79c6">+</span><span style="color:#bd93f9">4</span>]
+		code_count <span style="color:#ff79c6">=</span> file[ELF32_Coun : ELF32_Coun<span style="color:#ff79c6">+</span><span style="color:#bd93f9">7</span>]
+		code_value <span style="color:#ff79c6">=</span> file[ELF32_Valu : ELF32_Valu<span style="color:#ff79c6">+</span><span style="color:#bd93f9">4</span>]
 
 		disa_count <span style="color:#ff79c6">=</span> disasm(code_count)
 		disa_value <span style="color:#ff79c6">=</span> disasm(code_value)
@@ -536,7 +536,7 @@ context<span style="color:#ff79c6">.</span>log_level <span style="color:#ff79c6"
 		code_value <span style="color:#ff79c6">=</span> <span style="color:#8be9fd;font-style:italic">chr</span>(<span style="color:#8be9fd;font-style:italic">int</span>(disa_value<span style="color:#ff79c6">.</span>split(<span style="color:#f1fa8c">&#39;0x&#39;</span>)[<span style="color:#ff79c6">-</span><span style="color:#bd93f9">1</span>], <span style="color:#bd93f9">16</span>))
 
 		<span style="color:#6272a4">#value = u32(file[ELF32_Addr:ELF32_Addr+4])</span>
-		value <span style="color:#ff79c6">=</span> <span style="color:#8be9fd;font-style:italic">file</span>[ELF32_Addr:ELF32_Addr<span style="color:#ff79c6">+</span><span style="color:#bd93f9">4</span>]
+		value <span style="color:#ff79c6">=</span> file[ELF32_Addr:ELF32_Addr<span style="color:#ff79c6">+</span><span style="color:#bd93f9">4</span>]
 		value_n <span style="color:#ff79c6">=</span> u32(value)
 		flag <span style="color:#ff79c6">=</span> code_value <span style="color:#ff79c6">*</span> code_count <span style="color:#ff79c6">+</span> value
 	
@@ -560,22 +560,22 @@ context<span style="color:#ff79c6">.</span>log_level <span style="color:#ff79c6"
 
 		<span style="color:#6272a4"># i noticed that only 10 files were asked</span>
 		<span style="color:#ff79c6">if</span>(i<span style="color:#ff79c6">==</span><span style="color:#bd93f9">10</span>):
-			<span style="color:#ff79c6">print</span> <span style="color:#f1fa8c">&#34;Flag: &#34;</span> <span style="color:#ff79c6">+</span> p<span style="color:#ff79c6">.</span>recvline()
+			<span style="color:#8be9fd;font-style:italic">print</span> <span style="color:#f1fa8c">&#34;Flag: &#34;</span> <span style="color:#ff79c6">+</span> p<span style="color:#ff79c6">.</span>recvline()
 			p<span style="color:#ff79c6">.</span>close()
-			<span style="color:#8be9fd;font-style:italic">exit</span>()
-		<span style="color:#8be9fd;font-style:italic">file</span> <span style="color:#ff79c6">=</span> p<span style="color:#ff79c6">.</span>recvline()<span style="color:#ff79c6">.</span>strip()
+			exit()
+		file <span style="color:#ff79c6">=</span> p<span style="color:#ff79c6">.</span>recvline()<span style="color:#ff79c6">.</span>strip()
 
 		a <span style="color:#ff79c6">=</span> p<span style="color:#ff79c6">.</span>recvuntil(<span style="color:#f1fa8c">&#34;&gt; &#34;</span>)
-		solver <span style="color:#ff79c6">=</span> solve(<span style="color:#8be9fd;font-style:italic">file</span>)
+		solver <span style="color:#ff79c6">=</span> solve(file)
 		<span style="color:#6272a4"># .encode(&#39;base64&#39;) doesnt work with bytes </span>
 		p<span style="color:#ff79c6">.</span>sendline(base64<span style="color:#ff79c6">.</span>b64encode(solver))
 		<span style="color:#6272a4">#print str(solver).encode(&#39;base64&#39;)</span>
 		temp <span style="color:#ff79c6">=</span> p<span style="color:#ff79c6">.</span>recvline()
 		<span style="color:#ff79c6">if</span>(<span style="color:#f1fa8c">&#34;Well done&#34;</span> <span style="color:#ff79c6">in</span> temp):
-			<span style="color:#ff79c6">print</span> <span style="color:#f1fa8c">&#34;[0x</span><span style="color:#f1fa8c">%.4x</span><span style="color:#f1fa8c">]</span><span style="color:#f1fa8c">\t</span><span style="color:#f1fa8c">&#34;</span> <span style="color:#ff79c6">%</span> i<span style="color:#ff79c6">+</span> <span style="color:#8be9fd;font-style:italic">file</span> <span style="color:#ff79c6">+</span> <span style="color:#f1fa8c">&#39;</span><span style="color:#f1fa8c">\t</span><span style="color:#f1fa8c">: Well Done&#39;</span>
+			<span style="color:#8be9fd;font-style:italic">print</span> <span style="color:#f1fa8c">&#34;[0x</span><span style="color:#f1fa8c">%.4x</span><span style="color:#f1fa8c">]</span><span style="color:#f1fa8c">\t</span><span style="color:#f1fa8c">&#34;</span> <span style="color:#ff79c6">%</span> i<span style="color:#ff79c6">+</span> file <span style="color:#ff79c6">+</span> <span style="color:#f1fa8c">&#39;</span><span style="color:#f1fa8c">\t</span><span style="color:#f1fa8c">: Well Done&#39;</span>
 		<span style="color:#ff79c6">else</span>:
-			<span style="color:#ff79c6">print</span> <span style="color:#f1fa8c">&#34;[+] Failed:</span><span style="color:#f1fa8c">\t</span><span style="color:#f1fa8c">&#34;</span> <span style="color:#ff79c6">+</span> <span style="color:#8be9fd;font-style:italic">file</span> <span style="color:#ff79c6">+</span> <span style="color:#f1fa8c">&#34;</span><span style="color:#f1fa8c">\t</span><span style="color:#f1fa8c">dumping recieved data&#34;</span>
-			<span style="color:#8be9fd;font-style:italic">exit</span>()
+			<span style="color:#8be9fd;font-style:italic">print</span> <span style="color:#f1fa8c">&#34;[+] Failed:</span><span style="color:#f1fa8c">\t</span><span style="color:#f1fa8c">&#34;</span> <span style="color:#ff79c6">+</span> file <span style="color:#ff79c6">+</span> <span style="color:#f1fa8c">&#34;</span><span style="color:#f1fa8c">\t</span><span style="color:#f1fa8c">dumping recieved data&#34;</span>
+			exit()
 		i <span style="color:#ff79c6">+=</span> <span style="color:#bd93f9">1</span>
 
 <span style="color:#ff79c6">if</span> __name__ <span style="color:#ff79c6">==</span> <span style="color:#f1fa8c">&#34;__main__&#34;</span>:
@@ -646,7 +646,7 @@ context<span style="color:#ff79c6">.</span>log_level <span style="color:#ff79c6"
             </li><li class="cat-item cat-item-2">
                 <a href="https://x3ero0.github.io/categories/ctf/">CTF (1)</a>
             </li><li class="cat-item cat-item-2">
-                <a href="https://x3ero0.github.io/categories/pwn/">Pwn (1)</a>
+                <a href="https://x3ero0.github.io/categories/pwn/">Pwn (2)</a>
             </li><li class="cat-item cat-item-2">
                 <a href="https://x3ero0.github.io/categories/rev/">Rev (5)</a>
             </li>
@@ -659,7 +659,7 @@ context<span style="color:#ff79c6">.</span>log_level <span style="color:#ff79c6"
             
                 
                     <li>
-                        <a href="https://x3ero0.github.io/posts/sabloom-license/">Sabloom License</a>
+                        <a href="https://x3ero0.github.io/posts/easy_kernel_exploitation/">Easy_Kernel Writeup from K3RN3LCTF 2021</a>
                     </li>
                 
             
@@ -714,7 +714,7 @@ context<span style="color:#ff79c6">.</span>log_level <span style="color:#ff79c6"
             
                 
                     <li>
-                        <a href="https://x3ero0.github.io/posts/sabloom-license/">Sabloom License</a>
+                        <a href="https://x3ero0.github.io/posts/easy_kernel_exploitation/">Easy_Kernel Writeup from K3RN3LCTF 2021</a>
                     </li>
                 
             

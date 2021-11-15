@@ -99,7 +99,7 @@
 </ul>
 <div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
 <table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+<pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
@@ -109,7 +109,7 @@
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">8
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-plaintext" data-lang="plaintext">Desc: 
+<pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-plaintext" data-lang="plaintext">Desc: 
 
    - x86_64 linux binary (tested on debian 9 and ubuntu 18.04, should run on any distro).
    - Takes one command line argument and outputs &#34;OK!&#34; if it&#39;s correct, &#34;Wrong&#34; if it&#39;s not.
@@ -145,7 +145,7 @@ and throws an error if no argument is passed.</p>
 <p>Lets trace the binary using ltrace and see what it does.</p>
 <div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
 <table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+<pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
@@ -166,7 +166,7 @@ and throws an error if no argument is passed.</p>
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-plaintext" data-lang="plaintext">_ZNSt8ios_base4InitC1Ev(0x55b4f3a8b881, 0x7ffe79e0e7b8, 0x7ffe79e0e7d0, 224) = 0
+<pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-plaintext" data-lang="plaintext">_ZNSt8ios_base4InitC1Ev(0x55b4f3a8b881, 0x7ffe79e0e7b8, 0x7ffe79e0e7d0, 224) = 0
 __cxa_atexit(0x7f06e2a07990, 0x55b4f3a8b881, 0x55b4f3a8b068, 6) = 0
 malloc(8192)                                     = 0x55b4f497feb0
 sigaltstack(0x7ffe79e0e688, 0, 0, 0)             = 0
@@ -250,7 +250,7 @@ A normal program terminates like this</p>
 <p>In this function <code>init_sigaltstack()</code> the program is allocating 0x2000 Bytes in the heap to use as an alternate stack. Then it initializes a stack_t structure</p>
 <p><div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
 <table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+<pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
@@ -259,7 +259,7 @@ A normal program terminates like this</p>
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">7
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#6272a4">/* Structure describing a signal stack.  */</span>
+<pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#6272a4">/* Structure describing a signal stack.  */</span>
 <span style="color:#ff79c6">typedef</span> <span style="color:#ff79c6">struct</span>
   {
     <span style="color:#8be9fd">void</span> <span style="color:#ff79c6">*</span>ss_sp;
@@ -297,7 +297,7 @@ Now lets look at <code>register_sigill_handler()</code>
 <p>and this is the same function from the actual source</p>
 <div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
 <table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+<pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
@@ -308,7 +308,7 @@ Now lets look at <code>register_sigill_handler()</code>
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">9
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#8be9fd">bool</span> <span style="color:#50fa7b">register_sigill_handler</span>() {
+<pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#8be9fd">bool</span> <span style="color:#50fa7b">register_sigill_handler</span>() {
     <span style="color:#ff79c6">struct</span> sigaction sa <span style="color:#ff79c6">=</span> {};
     sa.sa_sigaction <span style="color:#ff79c6">=</span> sigill_handler;
     sa.sa_flags <span style="color:#ff79c6">=</span> SA_ONSTACK <span style="color:#ff79c6">|</span> SA_SIGINFO;
@@ -427,7 +427,7 @@ Now lets look at <code>register_sigill_handler()</code>
 Each instruction has an 8 byte immediate value which lies just after the <code>UD2</code>.</p>
 <div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
 <table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+<pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
@@ -435,7 +435,7 @@ Each instruction has an 8 byte immediate value which lies just after the <code>U
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-plaintext" data-lang="plaintext">\x0f\x0b   - UD2
+<pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-plaintext" data-lang="plaintext">\x0f\x0b   - UD2
 \x00 * 0x8 - imm64
 \x09       - Opcode
 \x00       - arg1
@@ -450,7 +450,7 @@ Each instruction has an 8 byte immediate value which lies just after the <code>U
 <p>The structure would look like this :</p>
 <div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
 <table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+<pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
@@ -461,9 +461,9 @@ Each instruction has an 8 byte immediate value which lies just after the <code>U
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">9
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#6272a4">/* hell86 instructions */</span>
+<pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#6272a4">/* hell86 instructions */</span>
 <span style="color:#ff79c6">typedef</span> <span style="color:#ff79c6">struct</span>{
-   uint16_t ud2;
+   <span style="color:#8be9fd">uint16_t</span> ud2;
    int64    imm64;
    <span style="color:#8be9fd">char</span>     opcode;
    <span style="color:#8be9fd">char</span>     arg1;
@@ -514,7 +514,7 @@ Each instruction has an 8 byte immediate value which lies just after the <code>U
 struct.</p>
 <p><div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
 <table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+<pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
@@ -557,7 +557,7 @@ struct.</p>
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">41
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#6272a4">/*
+<pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#6272a4">/*
 </span><span style="color:#6272a4"> * The 64-bit signal frame:
 </span><span style="color:#6272a4"> */</span>
 <span style="color:#ff79c6">struct</span> sigcontext_64 {
@@ -629,7 +629,7 @@ using. I didn&rsquo;t implemented the ones which were not used.</p>
 <p>disass.py</p>
 <div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
 <table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">  1
+<pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">  1
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">  2
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">  3
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">  4
@@ -842,7 +842,7 @@ using. I didn&rsquo;t implemented the ones which were not used.</p>
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">211
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#ff79c6">from</span> struct <span style="color:#ff79c6">import</span> unpack
+<pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#ff79c6">from</span> struct <span style="color:#ff79c6">import</span> unpack
 
 MALLOC <span style="color:#ff79c6">=</span> <span style="color:#bd93f9">0x7ffff7b1c260</span>
 FREE   <span style="color:#ff79c6">=</span> <span style="color:#bd93f9">0x7ffff7b1c850</span>
@@ -1052,7 +1052,7 @@ bytecode <span style="color:#ff79c6">=</span> <span style="color:#8be9fd;font-st
     <span style="color:#ff79c6">else</span>:
         dis <span style="color:#ff79c6">+=</span>  <span style="color:#f1fa8c">&#34;</span><span style="color:#f1fa8c">%s</span><span style="color:#f1fa8c">&#34;</span> <span style="color:#ff79c6">%</span> (<span style="color:#f1fa8c">&#34;UNKNOWN&#34;</span>)
 
-    <span style="color:#ff79c6">print</span> dis</code></pre></td></tr></table>
+    <span style="color:#8be9fd;font-style:italic">print</span> dis</code></pre></td></tr></table>
 </div>
 </div>
 
@@ -1060,7 +1060,7 @@ bytecode <span style="color:#ff79c6">=</span> <span style="color:#8be9fd;font-st
 <p>After running this you will get this disassembly</p>
 
 <br>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-plaintext" data-lang="plaintext">0000: [09][ 1ada ][ 1190 ] rax = 0x0002                                
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-plaintext" data-lang="plaintext">0000: [09][ 1ada ][ 1190 ] rax = 0x0002                                
 0014: [36][ 1d87 ][ 119e ] if rdi != 0x0002: r8 = 1; else: r8 = 0;     
 0028: [42][ 1e9c ][ 11ac ] if r8 != 0; return                          
 0042: [44][ 1e1e ][ 11ba ] rsi = rsi + 0x0008                          
@@ -1225,7 +1225,7 @@ For each character in our input it calculates the index of the character in a gl
 <br>
 <div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
 <table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+<pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
@@ -1234,7 +1234,7 @@ For each character in our input it calculates the index of the character in a gl
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">7
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#ff79c6">for</span> i <span style="color:#ff79c6">in</span> <span style="color:#8be9fd;font-style:italic">range</span>(<span style="color:#bd93f9">0x1d</span>):
+<pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#ff79c6">for</span> i <span style="color:#ff79c6">in</span> <span style="color:#8be9fd;font-style:italic">range</span>(<span style="color:#bd93f9">0x1d</span>):
   r8 <span style="color:#ff79c6">=</span> <span style="color:#8be9fd;font-style:italic">input</span>[i<span style="color:#ff79c6">+</span><span style="color:#bd93f9">0</span>]
   r9 <span style="color:#ff79c6">=</span> <span style="color:#8be9fd;font-style:italic">input</span>[i<span style="color:#ff79c6">+</span><span style="color:#bd93f9">1</span>]
   r8 <span style="color:#ff79c6">=</span> r9 <span style="color:#ff79c6">-</span> r8
@@ -1250,7 +1250,7 @@ Without wasting time i put together a quick z3 script to print the flag and it w
 <p>solve.py
 <div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
 <table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+<pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
@@ -1327,10 +1327,10 @@ Without wasting time i put together a quick z3 script to print the flag and it w
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">75
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#ff79c6">from</span> z3 <span style="color:#ff79c6">import</span> <span style="color:#ff79c6">*</span>
+<pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#ff79c6">from</span> z3 <span style="color:#ff79c6">import</span> <span style="color:#ff79c6">*</span>
 
 chrset <span style="color:#ff79c6">=</span> <span style="color:#f1fa8c">&#34;abdfgehikmanoqrstucvwlxyz-01h23p456u78j9-_.+&#34;</span>
-inpt <span style="color:#ff79c6">=</span> <span style="color:#f1fa8c">&#34;FLAG{xbbbbbbbbbbbbbbbbbbbbbbbbbbbbb}&#34;</span>
+inpt <span style="color:#ff79c6">=</span> <span style="color:#f1fa8c">&#34;FLAG</span><span style="color:#f1fa8c">{xbbbbbbbbbbbbbbbbbbbbbbbbbbbbb}</span><span style="color:#f1fa8c">&#34;</span>
 
 enc <span style="color:#ff79c6">=</span> [
     <span style="color:#bd93f9">0x16C8</span>,
@@ -1399,9 +1399,9 @@ i <span style="color:#ff79c6">=</span> <span style="color:#bd93f9">0</span>
         obj <span style="color:#ff79c6">=</span> flag[i]
         solved <span style="color:#ff79c6">+=</span> chrset[m[obj]<span style="color:#ff79c6">.</span>as_long()]
 
-    <span style="color:#ff79c6">print</span> solved <span style="color:#ff79c6">+</span> <span style="color:#f1fa8c">&#34;}&#34;</span>
+    <span style="color:#8be9fd;font-style:italic">print</span> solved <span style="color:#ff79c6">+</span> <span style="color:#f1fa8c">&#34;}&#34;</span>
 <span style="color:#ff79c6">else</span>:
-    <span style="color:#ff79c6">print</span> <span style="color:#f1fa8c">&#34;unsat&#34;</span></code></pre></td></tr></table>
+    <span style="color:#8be9fd;font-style:italic">print</span> <span style="color:#f1fa8c">&#34;unsat&#34;</span></code></pre></td></tr></table>
 </div>
 </div>
 
@@ -1463,7 +1463,7 @@ The solving script in action:
             </li><li class="cat-item cat-item-2">
                 <a href="https://x3ero0.github.io/categories/ctf/">CTF (1)</a>
             </li><li class="cat-item cat-item-2">
-                <a href="https://x3ero0.github.io/categories/pwn/">Pwn (1)</a>
+                <a href="https://x3ero0.github.io/categories/pwn/">Pwn (2)</a>
             </li><li class="cat-item cat-item-2">
                 <a href="https://x3ero0.github.io/categories/rev/">Rev (5)</a>
             </li>
@@ -1476,7 +1476,7 @@ The solving script in action:
             
                 
                     <li>
-                        <a href="https://x3ero0.github.io/posts/sabloom-license/">Sabloom License</a>
+                        <a href="https://x3ero0.github.io/posts/easy_kernel_exploitation/">Easy_Kernel Writeup from K3RN3LCTF 2021</a>
                     </li>
                 
             
@@ -1531,7 +1531,7 @@ The solving script in action:
             
                 
                     <li>
-                        <a href="https://x3ero0.github.io/posts/sabloom-license/">Sabloom License</a>
+                        <a href="https://x3ero0.github.io/posts/easy_kernel_exploitation/">Easy_Kernel Writeup from K3RN3LCTF 2021</a>
                     </li>
                 
             

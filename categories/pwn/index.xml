@@ -7,10 +7,17 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>Copyright © 2008–2021</copyright>
-    <lastBuildDate>Fri, 26 Mar 2021 12:13:38 +0530</lastBuildDate>
-    
-	<atom:link href="https://x3ero0.github.io/categories/pwn/index.xml" rel="self" type="application/rss+xml" />
-    
+    <lastBuildDate>Sun, 14 Nov 2021 16:13:20 +0530</lastBuildDate><atom:link href="https://x3ero0.github.io/categories/pwn/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Easy_Kernel Writeup from K3RN3LCTF 2021</title>
+      <link>https://x3ero0.github.io/posts/easy_kernel_exploitation/</link>
+      <pubDate>Sun, 14 Nov 2021 16:13:20 +0530</pubDate>
+      
+      <guid>https://x3ero0.github.io/posts/easy_kernel_exploitation/</guid>
+      <description>Author : Seal Twitter CTF : K3RN3LCTF Platform : Linux Kernel 5.4.0 (KASLR, SMEP, SMAP, KPTI)  It&amp;rsquo;s been a while, huh?
+Today, we will dive into the basics of Linux Kernel Exploitation. I am not very experienced when it comes to Linux Kernel Exploitaion and I am still learning. So, I am writing about the challenge I solved this weekend in K3RN3LCTF 2021.
+First Look  We have a bunch of files to work with.</description>
+    </item>
     
     <item>
       <title>Hyperion Writeup</title>

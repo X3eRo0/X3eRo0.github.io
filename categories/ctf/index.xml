@@ -7,11 +7,7 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>Copyright © 2008–2021</copyright>
-    <lastBuildDate>Fri, 27 Mar 2020 09:54:19 +0000</lastBuildDate>
-    
-	<atom:link href="https://x3ero0.github.io/categories/ctf/index.xml" rel="self" type="application/rss+xml" />
-    
-    
+    <lastBuildDate>Fri, 27 Mar 2020 09:54:19 +0000</lastBuildDate><atom:link href="https://x3ero0.github.io/categories/ctf/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Plaintext Attack on Zip</title>
       <link>https://x3ero0.github.io/posts/plaintext_attack_on_zip_legacy_crypto/</link>

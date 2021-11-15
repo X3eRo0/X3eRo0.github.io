@@ -6,10 +6,6 @@
     <description>Recent content in Archives on x3ero0&#39;s blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <copyright>Copyright © 2008–2021</copyright>
-    
-	<atom:link href="https://x3ero0.github.io/archives/index.xml" rel="self" type="application/rss+xml" />
-    
-    
+    <copyright>Copyright © 2008–2021</copyright><atom:link href="https://x3ero0.github.io/archives/index.xml" rel="self" type="application/rss+xml" />
   </channel>
 </rss>
