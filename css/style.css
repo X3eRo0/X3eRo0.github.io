@@ -606,8 +606,8 @@ input[type="submit"],
 input[type="button"] {
   border: 0;
   border-radius: .3rem;
-  background: #000;
-  color: #f8f8f2;
+  background: #f8f8f8;
+  color: #44475a;
   display: inline-block;
   line-height: 1.8;
   padding: 0 .5rem;
@@ -661,7 +661,7 @@ body > a[href="#content"] {
   background: #282a36;
   box-shadow: 0 0 1rem rgba(0, 0, 0, 0.2);
   margin: auto;
-  padding: 1px;
+  padding: 8px;
   position: relative; }
   .wrapper a {
     color: #8080b9; }
@@ -824,7 +824,7 @@ main {
     list-style: none;
     transition: opacity .2s, visibility .2s; }
     .banner ul ul {
-      background: #000;
+      background: #bd93f9;
       box-shadow: 0 0 1rem rgba(0, 0, 0, 0.2);
       color: #f8f8f2;
       opacity: 0;
@@ -860,7 +860,7 @@ main {
     -o-appearance: none;
     -webkit-appearance: none;
     appearance: none;
-    background: #000;
+    background: #6272a4;
     border: 0;
     border-radius: 0;
     color: #f8f8f2;
@@ -869,7 +869,7 @@ main {
     padding: 0 1rem; }
 
 .contentinfo {
-  background: #000;
+  background: #bd93f9;
   color: #f8f8f2;
   line-height: 1;
   padding: 1rem; }
@@ -926,7 +926,7 @@ form.search input {
 .post-webcomic {
   width: 100%; }
   .post-webcomic nav {
-    background: #000;
+    background: #bd93f9;
     color: #f8f8f2;
     text-align: center; }
     .post-webcomic nav.above {

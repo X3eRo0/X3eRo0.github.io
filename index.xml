@@ -56,9 +56,76 @@ First Look  We have a bunch of files to work with.</description>
       <pubDate>Fri, 29 May 2020 05:09:29 +0000</pubDate>
       
       <guid>https://x3ero0.github.io/crackmes/fl04t/</guid>
-      <description> [fl04t]  Download Files    body{ color : #000000; } p { color: #000000; font-family: Inconsolata Bold,monospace; font-size: 17px; line-height: 1em; text-align: justify; text-justify: inter-word; } li { margin: 0; padding: 0.2em; }  
-Can you Crack the fl04ts? Can you Defeat ME? FLAG DOESNT FOLLOW ANY FLAG FORMAT
-  Crackme : fl04t   Difficulty : Medium   Platform : Linux   Points : 5/10    Date : Fri, 29 May 2020 05:09:29 &amp;#43;0000    Objective : Find the correct password which prints Correct Password      </description>
+      <description>&lt;div class=wrapper&gt;
+    &lt;div class=&#34;row flex-header&#34;&gt;
+
+
+
+
+
+&lt;div class=flex-header-buttons&gt;
+    &lt;button class=&#34;btn btn-secondary btn-highlight btn-sm tippyme&#34; data-tippy-content=&#34;Download Files&#34; onclick=&#34;location=&amp;#34;https://github.com/X3eRo0/Crackmes/blob/master/Crackmes/X3eRo0/fl04t/fl04t?raw=true&amp;#34;&#34;&gt;
+        &lt;i class=&#34;fas fa-fire&#34;&gt;&lt;/i&gt;
+        Download Files
+    &lt;/button&gt;
+&lt;/div&gt;
+
+
+
+
+
+
+
+
+
+&lt;style&gt;
+	body{
+		color : #fffff0;
+	}
+	p { 
+	    color: #fffff0;
+	    font-family: Inconsolata Bold,monospace;
+	    font-size: 17px;
+	    line-height: 1em;
+
+	    text-align: justify;
+	    text-justify: inter-word; 
+	}
+	li {
+	    margin: 0;
+	    padding: 0.2em;
+	}
+&lt;/style&gt;
+
+
+&lt;div class=column&gt;
+	&lt;p&gt;&lt;/p&gt;
+    &lt;p&gt;Can you Crack the fl04ts? Can you Defeat ME? FLAG DOESNT FOLLOW ANY FLAG FORMAT&lt;/p&gt;
+
+    &lt;ul&gt;
+        &lt;li&gt;
+            Crackme : &lt;b&gt;fl04t&lt;/b&gt;
+        &lt;/li&gt;
+        &lt;li&gt;
+        	Difficulty : &lt;b&gt;Medium&lt;/b&gt;
+        &lt;/li&gt;
+        &lt;li&gt;
+        	Platform : &lt;b&gt;Linux&lt;/b&gt;
+        &lt;/li&gt;
+        &lt;li&gt;
+            Points : &lt;b&gt;5/10 &lt;/b&gt;
+        &lt;/li&gt;
+        &lt;li&gt;
+        	Date : &lt;b&gt;Fri, 29 May 2020 05:09:29 &amp;#43;0000 &lt;/b&gt;
+        &lt;/li&gt;
+        &lt;li&gt;
+        	Objective : &lt;b&gt;Find the correct password which prints Correct Password&lt;/b&gt;
+        &lt;/li&gt;
+    &lt;/ul&gt;
+
+
+
+&lt;/div&gt;</description>
     </item>
     
     <item>
@@ -186,9 +253,76 @@ license-generator program. Can you help Keith recover his flag? All he knows is:
       <pubDate>Mon, 06 Apr 2020 19:51:01 +0000</pubDate>
       
       <guid>https://x3ero0.github.io/crackmes/real_web_cr4kme/</guid>
-      <description> [WEB cr4kme]  Download Files    body{ color : #000000; } p { color: #000000; font-family: Inconsolata Bold,monospace; font-size: 17px; line-height: 1em; text-align: justify; text-justify: inter-word; } li { margin: 0; padding: 0.2em; }  
-Flag format riftCTF{.*}
-  Crackme : WEB cr4kme   Difficulty : Medium   Platform : WEB   Points : 5/10    Date : Mon, 06 Apr 2020 19:51:01 &amp;#43;0000    Objective : Find the flag which prints &amp;#39;Correct Password&amp;#39;      </description>
+      <description>&lt;div class=wrapper&gt;
+    &lt;div class=&#34;row flex-header&#34;&gt;
+
+
+
+
+
+&lt;div class=flex-header-buttons&gt;
+    &lt;button class=&#34;btn btn-secondary btn-highlight btn-sm tippyme&#34; data-tippy-content=&#34;Download Files&#34; onclick=&#34;location=&amp;#34;crackme.html&amp;#34;&#34;&gt;
+        &lt;i class=&#34;fas fa-fire&#34;&gt;&lt;/i&gt;
+        Download Files
+    &lt;/button&gt;
+&lt;/div&gt;
+
+
+
+
+
+
+
+
+
+&lt;style&gt;
+	body{
+		color : #fffff0;
+	}
+	p { 
+	    color: #fffff0;
+	    font-family: Inconsolata Bold,monospace;
+	    font-size: 17px;
+	    line-height: 1em;
+
+	    text-align: justify;
+	    text-justify: inter-word; 
+	}
+	li {
+	    margin: 0;
+	    padding: 0.2em;
+	}
+&lt;/style&gt;
+
+
+&lt;div class=column&gt;
+	&lt;p&gt;&lt;/p&gt;
+    &lt;p&gt;Flag format riftCTF{.*}&lt;/p&gt;
+
+    &lt;ul&gt;
+        &lt;li&gt;
+            Crackme : &lt;b&gt;WEB cr4kme&lt;/b&gt;
+        &lt;/li&gt;
+        &lt;li&gt;
+        	Difficulty : &lt;b&gt;Medium&lt;/b&gt;
+        &lt;/li&gt;
+        &lt;li&gt;
+        	Platform : &lt;b&gt;WEB&lt;/b&gt;
+        &lt;/li&gt;
+        &lt;li&gt;
+            Points : &lt;b&gt;5/10 &lt;/b&gt;
+        &lt;/li&gt;
+        &lt;li&gt;
+        	Date : &lt;b&gt;Mon, 06 Apr 2020 19:51:01 &amp;#43;0000 &lt;/b&gt;
+        &lt;/li&gt;
+        &lt;li&gt;
+        	Objective : &lt;b&gt;Find the flag which prints &amp;#39;Correct Password&amp;#39;&lt;/b&gt;
+        &lt;/li&gt;
+    &lt;/ul&gt;
+
+
+
+&lt;/div&gt;</description>
     </item>
     
     <item>
@@ -244,8 +378,76 @@ Netcat Link : nc re.ctf.nullcon.net 1234
       <pubDate>Wed, 05 Feb 2020 15:13:50 +0000</pubDate>
       
       <guid>https://x3ero0.github.io/crackmes/hackme/</guid>
-      <description>[hackme]  Download Files    body{ color : #000000; } p { color: #000000; font-family: Inconsolata Bold,monospace; font-size: 17px; line-height: 1em; text-align: justify; text-justify: inter-word; } li { margin: 0; padding: 0.2em; }  
-the task is from RootersCTF2019 and story goes like this... your client was infected by a really nasty malware and you found some peices of the original malware hidden in the /tmp/dupedive folder.</description>
+      <description>&lt;div class=wrapper&gt;
+    &lt;div class=&#34;row flex-header&#34;&gt;
+
+
+
+
+
+&lt;div class=flex-header-buttons&gt;
+    &lt;button class=&#34;btn btn-secondary btn-highlight btn-sm tippyme&#34; data-tippy-content=&#34;Download Files&#34; onclick=&#34;location=&amp;#34;https://github.com/X3eRo0/Crackmes/raw/master/Crackmes/X3eRo0/hackme/hackme_dump.bin&amp;#34;&#34;&gt;
+        &lt;i class=&#34;fas fa-fire&#34;&gt;&lt;/i&gt;
+        Download Files
+    &lt;/button&gt;
+&lt;/div&gt;
+
+
+
+
+
+
+
+
+
+&lt;style&gt;
+	body{
+		color : #fffff0;
+	}
+	p { 
+	    color: #fffff0;
+	    font-family: Inconsolata Bold,monospace;
+	    font-size: 17px;
+	    line-height: 1em;
+
+	    text-align: justify;
+	    text-justify: inter-word; 
+	}
+	li {
+	    margin: 0;
+	    padding: 0.2em;
+	}
+&lt;/style&gt;
+
+
+&lt;div class=column&gt;
+	&lt;p&gt;&lt;/p&gt;
+    &lt;p&gt;the task is from RootersCTF2019 and story goes like this... your client was infected by a really nasty malware and you found some peices of the original malware hidden in the /tmp/dupedive folder. find what this malware left behind ...&lt;/p&gt;
+
+    &lt;ul&gt;
+        &lt;li&gt;
+            Crackme : &lt;b&gt;hackme&lt;/b&gt;
+        &lt;/li&gt;
+        &lt;li&gt;
+        	Difficulty : &lt;b&gt;Medium&lt;/b&gt;
+        &lt;/li&gt;
+        &lt;li&gt;
+        	Platform : &lt;b&gt;Linux&lt;/b&gt;
+        &lt;/li&gt;
+        &lt;li&gt;
+            Points : &lt;b&gt;6/10 &lt;/b&gt;
+        &lt;/li&gt;
+        &lt;li&gt;
+        	Date : &lt;b&gt;Wed, 05 Feb 2020 15:13:50 &amp;#43;0000 &lt;/b&gt;
+        &lt;/li&gt;
+        &lt;li&gt;
+        	Objective : &lt;b&gt;Find the hidden flag&lt;/b&gt;
+        &lt;/li&gt;
+    &lt;/ul&gt;
+
+
+
+&lt;/div&gt;</description>
     </item>
     
     <item>
@@ -279,8 +481,76 @@ the task is from RootersCTF2019 and story goes like this... your client was infe
       <pubDate>Wed, 05 Feb 2020 05:06:29 +0000</pubDate>
       
       <guid>https://x3ero0.github.io/crackmes/p41d_s0ftw43/</guid>
-      <description>[p4id_s0ftw4r3]  Download Files    body{ color : #000000; } p { color: #000000; font-family: Inconsolata Bold,monospace; font-size: 17px; line-height: 1em; text-align: justify; text-justify: inter-word; } li { margin: 0; padding: 0.2em; }  
-X3eRo0 recently released a Paid Software at a price of $31337. Now we Know its very Costly for a software that does nothing (LOL), but you decided to make it free for other people to use.</description>
+      <description>&lt;div class=wrapper&gt;
+    &lt;div class=&#34;row flex-header&#34;&gt;
+
+
+
+
+
+&lt;div class=flex-header-buttons&gt;
+    &lt;button class=&#34;btn btn-secondary btn-highlight btn-sm tippyme&#34; data-tippy-content=&#34;Download Files&#34; onclick=&#34;location=&amp;#34;https://github.com/X3eRo0/Crackmes/raw/master/Crackmes/X3eRo0/p41d_s0ftw4r3/crackme04.zip&amp;#34;&#34;&gt;
+        &lt;i class=&#34;fas fa-fire&#34;&gt;&lt;/i&gt;
+        Download Files
+    &lt;/button&gt;
+&lt;/div&gt;
+
+
+
+
+
+
+
+
+
+&lt;style&gt;
+	body{
+		color : #fffff0;
+	}
+	p { 
+	    color: #fffff0;
+	    font-family: Inconsolata Bold,monospace;
+	    font-size: 17px;
+	    line-height: 1em;
+
+	    text-align: justify;
+	    text-justify: inter-word; 
+	}
+	li {
+	    margin: 0;
+	    padding: 0.2em;
+	}
+&lt;/style&gt;
+
+
+&lt;div class=column&gt;
+	&lt;p&gt;&lt;/p&gt;
+    &lt;p&gt;X3eRo0 recently released a Paid Software at a price of $31337. Now we Know its very Costly for a software that does nothing (LOL), but you decided to make it free for other people to use.&lt;/p&gt;
+
+    &lt;ul&gt;
+        &lt;li&gt;
+            Crackme : &lt;b&gt;p4id_s0ftw43&lt;/b&gt;
+        &lt;/li&gt;
+        &lt;li&gt;
+        	Difficulty : &lt;b&gt;Easy&lt;/b&gt;
+        &lt;/li&gt;
+        &lt;li&gt;
+        	Platform : &lt;b&gt;Win32&lt;/b&gt;
+        &lt;/li&gt;
+        &lt;li&gt;
+            Points : &lt;b&gt;3/10 &lt;/b&gt;
+        &lt;/li&gt;
+        &lt;li&gt;
+        	Date : &lt;b&gt;2020-02-02 &lt;/b&gt;
+        &lt;/li&gt;
+        &lt;li&gt;
+        	Objective : &lt;b&gt;Find the Correct Password which pops a &amp;#39;Registered!!!&amp;#39; Message Box&lt;/b&gt;
+        &lt;/li&gt;
+    &lt;/ul&gt;
+
+
+
+&lt;/div&gt;</description>
     </item>
     
     <item>
@@ -289,8 +559,76 @@ X3eRo0 recently released a Paid Software at a price of $31337. Now we Know its v
       <pubDate>Wed, 05 Feb 2020 05:06:29 +0000</pubDate>
       
       <guid>https://x3ero0.github.io/crackmes/xvm_001/</guid>
-      <description>[xvm_001]  Download Files    body{ color : #000000; } p { color: #000000; font-family: Inconsolata Bold,monospace; font-size: 17px; line-height: 1em; text-align: justify; text-justify: inter-word; } li { margin: 0; padding: 0.2em; }  
-X3eRo0 recently learned about Virtual-Machine Based protection so he made a little Crackme challenge for you. this VM only has simple opcodes like mov, and, xor. NO JMPs or CALLS. The bytecode literally contains the hint.</description>
+      <description>&lt;div class=wrapper&gt;
+    &lt;div class=&#34;row flex-header&#34;&gt;
+
+
+
+
+
+&lt;div class=flex-header-buttons&gt;
+    &lt;button class=&#34;btn btn-secondary btn-highlight btn-sm tippyme&#34; data-tippy-content=&#34;Download Files&#34; onclick=&#34;location=&amp;#34;https://github.com/X3eRo0/Crackmes/raw/master/Crackmes/X3eRo0/xvm_001/xvm_001.zip&amp;#34;&#34;&gt;
+        &lt;i class=&#34;fas fa-fire&#34;&gt;&lt;/i&gt;
+        Download Files
+    &lt;/button&gt;
+&lt;/div&gt;
+
+
+
+
+
+
+
+
+
+&lt;style&gt;
+	body{
+		color : #fffff0;
+	}
+	p { 
+	    color: #fffff0;
+	    font-family: Inconsolata Bold,monospace;
+	    font-size: 17px;
+	    line-height: 1em;
+
+	    text-align: justify;
+	    text-justify: inter-word; 
+	}
+	li {
+	    margin: 0;
+	    padding: 0.2em;
+	}
+&lt;/style&gt;
+
+
+&lt;div class=column&gt;
+	&lt;p&gt;&lt;/p&gt;
+    &lt;p&gt;X3eRo0 recently learned about Virtual-Machine Based protection so he made a little Crackme challenge for you. this VM only has simple opcodes like mov, and, xor. NO JMPs or CALLS. The bytecode literally contains the hint.&lt;/p&gt;
+
+    &lt;ul&gt;
+        &lt;li&gt;
+            Crackme : &lt;b&gt;xvm_001&lt;/b&gt;
+        &lt;/li&gt;
+        &lt;li&gt;
+        	Difficulty : &lt;b&gt;Easy&lt;/b&gt;
+        &lt;/li&gt;
+        &lt;li&gt;
+        	Platform : &lt;b&gt;Linux&lt;/b&gt;
+        &lt;/li&gt;
+        &lt;li&gt;
+            Points : &lt;b&gt;4/10 &lt;/b&gt;
+        &lt;/li&gt;
+        &lt;li&gt;
+        	Date : &lt;b&gt;2020-02-02 &lt;/b&gt;
+        &lt;/li&gt;
+        &lt;li&gt;
+        	Objective : &lt;b&gt;Find the Correct password which gives a &amp;#39;[!] flag decrypted&amp;#39; Message Box&lt;/b&gt;
+        &lt;/li&gt;
+    &lt;/ul&gt;
+
+
+
+&lt;/div&gt;</description>
     </item>
     
     <item>
@@ -299,9 +637,76 @@ X3eRo0 recently learned about Virtual-Machine Based protection so he made a litt
       <pubDate>Wed, 05 Feb 2020 05:06:29 +0000</pubDate>
       
       <guid>https://x3ero0.github.io/crackmes/not_so_good_encryption/</guid>
-      <description> [Not So Good Encryption]  Download Files    body{ color : #000000; } p { color: #000000; font-family: Inconsolata Bold,monospace; font-size: 17px; line-height: 1em; text-align: justify; text-justify: inter-word; } li { margin: 0; padding: 0.2em; }  
-Very Simple Crackme :)
-  Crackme : Not So Good Encryption   Difficulty : Easy   Platform : Linux   Points : 3/10    Date : 2020-02-02    Objective : Find the Correct password which gives a &amp;#39;Correct Password&amp;#39; Message      </description>
+      <description>&lt;div class=wrapper&gt;
+    &lt;div class=&#34;row flex-header&#34;&gt;
+
+
+
+
+
+&lt;div class=flex-header-buttons&gt;
+    &lt;button class=&#34;btn btn-secondary btn-highlight btn-sm tippyme&#34; data-tippy-content=&#34;Download Files&#34; onclick=&#34;location=&amp;#34;https://github.com/X3eRo0/Crackmes/raw/master/Crackmes/X3eRo0/Not_So_Good_Encryption/nsge.zip&amp;#34;&#34;&gt;
+        &lt;i class=&#34;fas fa-fire&#34;&gt;&lt;/i&gt;
+        Download Files
+    &lt;/button&gt;
+&lt;/div&gt;
+
+
+
+
+
+
+
+
+
+&lt;style&gt;
+	body{
+		color : #fffff0;
+	}
+	p { 
+	    color: #fffff0;
+	    font-family: Inconsolata Bold,monospace;
+	    font-size: 17px;
+	    line-height: 1em;
+
+	    text-align: justify;
+	    text-justify: inter-word; 
+	}
+	li {
+	    margin: 0;
+	    padding: 0.2em;
+	}
+&lt;/style&gt;
+
+
+&lt;div class=column&gt;
+	&lt;p&gt;&lt;/p&gt;
+    &lt;p&gt;Very Simple Crackme :)&lt;/p&gt;
+
+    &lt;ul&gt;
+        &lt;li&gt;
+            Crackme : &lt;b&gt;Not So Good Encryption&lt;/b&gt;
+        &lt;/li&gt;
+        &lt;li&gt;
+        	Difficulty : &lt;b&gt;Easy&lt;/b&gt;
+        &lt;/li&gt;
+        &lt;li&gt;
+        	Platform : &lt;b&gt;Linux&lt;/b&gt;
+        &lt;/li&gt;
+        &lt;li&gt;
+            Points : &lt;b&gt;3/10 &lt;/b&gt;
+        &lt;/li&gt;
+        &lt;li&gt;
+        	Date : &lt;b&gt;2020-02-02 &lt;/b&gt;
+        &lt;/li&gt;
+        &lt;li&gt;
+        	Objective : &lt;b&gt;Find the Correct password which gives a &amp;#39;Correct Password&amp;#39; Message&lt;/b&gt;
+        &lt;/li&gt;
+    &lt;/ul&gt;
+
+
+
+&lt;/div&gt;</description>
     </item>
     
     <item>
@@ -310,9 +715,76 @@ Very Simple Crackme :)
       <pubDate>Wed, 05 Feb 2020 05:06:29 +0000</pubDate>
       
       <guid>https://x3ero0.github.io/crackmes/easy_licensing/</guid>
-      <description>[Easy Licensing]  Download Files    body{ color : #000000; } p { color: #000000; font-family: Inconsolata Bold,monospace; font-size: 17px; line-height: 1em; text-align: justify; text-justify: inter-word; } li { margin: 0; padding: 0.2em; }  
-Another Shitty Password Checking
-  Crackme : Easy Licensing   Difficulty : Easy   Platform : Linux   Points : 3/10    Date : 2020-02-02    Objective : Find the Correct password which gives a &amp;#39;Correct Password!</description>
+      <description>&lt;div class=wrapper&gt;
+    &lt;div class=&#34;row flex-header&#34;&gt;
+
+
+
+
+
+&lt;div class=flex-header-buttons&gt;
+    &lt;button class=&#34;btn btn-secondary btn-highlight btn-sm tippyme&#34; data-tippy-content=&#34;Download Files&#34; onclick=&#34;location=&amp;#34;https://github.com/X3eRo0/Crackmes/raw/master/Crackmes/X3eRo0/Easy_Licensing/revme&amp;#34;&#34;&gt;
+        &lt;i class=&#34;fas fa-fire&#34;&gt;&lt;/i&gt;
+        Download Files
+    &lt;/button&gt;
+&lt;/div&gt;
+
+
+
+
+
+
+
+
+
+&lt;style&gt;
+	body{
+		color : #fffff0;
+	}
+	p { 
+	    color: #fffff0;
+	    font-family: Inconsolata Bold,monospace;
+	    font-size: 17px;
+	    line-height: 1em;
+
+	    text-align: justify;
+	    text-justify: inter-word; 
+	}
+	li {
+	    margin: 0;
+	    padding: 0.2em;
+	}
+&lt;/style&gt;
+
+
+&lt;div class=column&gt;
+	&lt;p&gt;&lt;/p&gt;
+    &lt;p&gt;Another Shitty Password Checking&lt;/p&gt;
+
+    &lt;ul&gt;
+        &lt;li&gt;
+            Crackme : &lt;b&gt;Easy Licensing&lt;/b&gt;
+        &lt;/li&gt;
+        &lt;li&gt;
+        	Difficulty : &lt;b&gt;Easy&lt;/b&gt;
+        &lt;/li&gt;
+        &lt;li&gt;
+        	Platform : &lt;b&gt;Linux&lt;/b&gt;
+        &lt;/li&gt;
+        &lt;li&gt;
+            Points : &lt;b&gt;3/10 &lt;/b&gt;
+        &lt;/li&gt;
+        &lt;li&gt;
+        	Date : &lt;b&gt;2020-02-02 &lt;/b&gt;
+        &lt;/li&gt;
+        &lt;li&gt;
+        	Objective : &lt;b&gt;Find the Correct password which gives a &amp;#39;Correct Password!!!!!!!&amp;#39; Message&lt;/b&gt;
+        &lt;/li&gt;
+    &lt;/ul&gt;
+
+
+
+&lt;/div&gt;</description>
     </item>
     
   </channel>
