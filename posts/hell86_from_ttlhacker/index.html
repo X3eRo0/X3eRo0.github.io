@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1">
     <title>Hell86 - ttlhacker - x3ero0&#39;s blog</title>
-
+    <link rel="shortcut icon" href="/img/favicon.ico">
     <style type="text/css">
         img.wp-smiley,
         img.emoji {
@@ -97,7 +97,7 @@
 <li>Platform : Unix/Linux etc.</li>
 <li>Crackme : <a href="https://crackmes.one/crackme/5bc0fe0033c5d4110a29b296">crackmes.one</a></li>
 </ul>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-plaintext" data-lang="plaintext"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1</span>Desc: 
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-plaintext" data-lang="plaintext"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1</span>Desc: 
 <span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2</span>
 <span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3</span>   - x86_64 linux binary (tested on debian 9 and ubuntu 18.04, should run on any distro).
 <span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4</span>   - Takes one command line argument and outputs &#34;OK!&#34; if it&#39;s correct, &#34;Wrong&#34; if it&#39;s not.
@@ -129,7 +129,7 @@
 <p>So, as we can see the binary takes input using argv
 and throws an error if no argument is passed.</p>
 <p>Lets trace the binary using ltrace and see what it does.</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-plaintext" data-lang="plaintext"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1</span>_ZNSt8ios_base4InitC1Ev(0x55b4f3a8b881, 0x7ffe79e0e7b8, 0x7ffe79e0e7d0, 224) = 0
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-plaintext" data-lang="plaintext"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1</span>_ZNSt8ios_base4InitC1Ev(0x55b4f3a8b881, 0x7ffe79e0e7b8, 0x7ffe79e0e7d0, 224) = 0
 <span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2</span>__cxa_atexit(0x7f06e2a07990, 0x55b4f3a8b881, 0x55b4f3a8b068, 6) = 0
 <span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3</span>malloc(8192)                                     = 0x55b4f497feb0
 <span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4</span>sigaltstack(0x7ffe79e0e688, 0, 0, 0)             = 0
@@ -209,7 +209,7 @@ A normal program terminates like this</p>
 <br>
 
 <p>In this function <code>init_sigaltstack()</code> the program is allocating 0x2000 Bytes in the heap to use as an alternate stack. Then it initializes a stack_t structure</p>
-<p><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1</span><span style="color:#6272a4">/* Structure describing a signal stack.  */</span>
+<p><div class="highlight"><pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1</span><span style="color:#6272a4">/* Structure describing a signal stack.  */</span>
 <span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2</span><span style="color:#ff79c6">typedef</span> <span style="color:#ff79c6">struct</span>
 <span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3</span>  {
 <span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4</span>    <span style="color:#8be9fd">void</span> <span style="color:#ff79c6">*</span>ss_sp;
@@ -243,7 +243,7 @@ Now lets look at <code>register_sigill_handler()</code>
 <br>
 
 <p>and this is the same function from the actual source</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1</span><span style="color:#8be9fd">bool</span> <span style="color:#50fa7b">register_sigill_handler</span>() {
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1</span><span style="color:#8be9fd">bool</span> <span style="color:#50fa7b">register_sigill_handler</span>() {
 <span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2</span>    <span style="color:#ff79c6">struct</span> sigaction sa <span style="color:#ff79c6">=</span> {};
 <span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3</span>    sa.sa_sigaction <span style="color:#ff79c6">=</span> sigill_handler;
 <span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4</span>    sa.sa_flags <span style="color:#ff79c6">=</span> SA_ONSTACK <span style="color:#ff79c6">|</span> SA_SIGINFO;
@@ -358,7 +358,7 @@ Now lets look at <code>register_sigill_handler()</code>
 <h3 id="instruction-encoding">Instruction Encoding</h3>
 <p>The instructions are encoding in hell86 is actually one simple thing in this challenge.
 Each instruction has an 8 byte immediate value which lies just after the <code>UD2</code>.</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-plaintext" data-lang="plaintext"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1</span>\x0f\x0b   - UD2
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-plaintext" data-lang="plaintext"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1</span>\x0f\x0b   - UD2
 <span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2</span>\x00 * 0x8 - imm64
 <span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3</span>\x09       - Opcode
 <span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4</span>\x00       - arg1
@@ -369,9 +369,9 @@ Each instruction has an 8 byte immediate value which lies just after the <code>U
 <br>
 
 <p>The structure would look like this :</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1</span><span style="color:#6272a4">/* hell86 instructions */</span>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1</span><span style="color:#6272a4">/* hell86 instructions */</span>
 <span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2</span><span style="color:#ff79c6">typedef</span> <span style="color:#ff79c6">struct</span>{
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3</span>   <span style="color:#8be9fd">uint16_t</span> ud2;
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3</span>   uint16_t ud2;
 <span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4</span>   int64    imm64;
 <span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5</span>   <span style="color:#8be9fd">char</span>     opcode;
 <span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6</span>   <span style="color:#8be9fd">char</span>     arg1;
@@ -418,7 +418,7 @@ Each instruction has an 8 byte immediate value which lies just after the <code>U
 <br>
 <p>As you can see <code>rsi</code> points on the stack or should i say the new stack. So this is the part which  i am not so sure about. I think whenever a signal is raised the <code>sigcontext</code> structure is pushed on the <code>altstack</code> and its this structure where <code>rsi</code> is pointing at. if we see the <code>sigcontext</code>
 struct.</p>
-<p><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1</span><span style="color:#6272a4">/*
+<p><div class="highlight"><pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1</span><span style="color:#6272a4">/*
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2</span><span style="color:#6272a4"> * The 64-bit signal frame:
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3</span><span style="color:#6272a4"> */</span>
 <span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4</span><span style="color:#ff79c6">struct</span> sigcontext_64 {
@@ -486,7 +486,7 @@ using. I didn&rsquo;t implemented the ones which were not used.</p>
 <p>After looking at the instructions which the VM was using, i found out that there were total 50 instructions implemented while only 44 were used.</p>
 <p>Also there were some imm64 values which were used as an operand for <code>jmp</code> and <code>call</code> instructions for example <code>malloc()</code> and <code>free()</code> are one of them. these addresses were placed in the bytecode so i just dumped the bytecode using gdb.</p>
 <p>disass.py</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">  1</span><span style="color:#ff79c6">from</span> struct <span style="color:#ff79c6">import</span> unpack
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">  1</span><span style="color:#ff79c6">from</span> struct <span style="color:#ff79c6">import</span> unpack
 <span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">  2</span>
 <span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">  3</span>MALLOC <span style="color:#ff79c6">=</span> <span style="color:#bd93f9">0x7ffff7b1c260</span>
 <span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">  4</span>FREE   <span style="color:#ff79c6">=</span> <span style="color:#bd93f9">0x7ffff7b1c850</span>
@@ -696,13 +696,13 @@ using. I didn&rsquo;t implemented the ones which were not used.</p>
 <span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">208</span>    <span style="color:#ff79c6">else</span>:
 <span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">209</span>        dis <span style="color:#ff79c6">+=</span>  <span style="color:#f1fa8c">&#34;</span><span style="color:#f1fa8c">%s</span><span style="color:#f1fa8c">&#34;</span> <span style="color:#ff79c6">%</span> (<span style="color:#f1fa8c">&#34;UNKNOWN&#34;</span>)
 <span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">210</span>
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">211</span>    <span style="color:#8be9fd;font-style:italic">print</span> dis</code></pre></div>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">211</span>    <span style="color:#ff79c6">print</span> dis</code></pre></div>
 
  <br> 
 <p>After running this you will get this disassembly</p>
 
 <br>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-plaintext" data-lang="plaintext">0000: [09][ 1ada ][ 1190 ] rax = 0x0002                                
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-plaintext" data-lang="plaintext">0000: [09][ 1ada ][ 1190 ] rax = 0x0002                                
 0014: [36][ 1d87 ][ 119e ] if rdi != 0x0002: r8 = 1; else: r8 = 0;     
 0028: [42][ 1e9c ][ 11ac ] if r8 != 0; return                          
 0042: [44][ 1e1e ][ 11ba ] rsi = rsi + 0x0008                          
@@ -865,7 +865,7 @@ For each character in our input it calculates the index of the character in a gl
 <p>Now it performs this operation on our index array:
 
 <br>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1</span><span style="color:#ff79c6">for</span> i <span style="color:#ff79c6">in</span> <span style="color:#8be9fd;font-style:italic">range</span>(<span style="color:#bd93f9">0x1d</span>):
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1</span><span style="color:#ff79c6">for</span> i <span style="color:#ff79c6">in</span> <span style="color:#8be9fd;font-style:italic">range</span>(<span style="color:#bd93f9">0x1d</span>):
 <span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2</span>  r8 <span style="color:#ff79c6">=</span> <span style="color:#8be9fd;font-style:italic">input</span>[i<span style="color:#ff79c6">+</span><span style="color:#bd93f9">0</span>]
 <span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3</span>  r9 <span style="color:#ff79c6">=</span> <span style="color:#8be9fd;font-style:italic">input</span>[i<span style="color:#ff79c6">+</span><span style="color:#bd93f9">1</span>]
 <span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4</span>  r8 <span style="color:#ff79c6">=</span> r9 <span style="color:#ff79c6">-</span> r8
@@ -877,10 +877,10 @@ For each character in our input it calculates the index of the character in a gl
 And after this the binary was checking the modified input index array with another array at 0x1FA0.
 Without wasting time i put together a quick z3 script to print the flag and it worked in like first try. This challenge is my favourite until i solve another amazing crackme. Thanks ttlhacker for this amazing challange here is the script in action.</p>
 <p>solve.py
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1</span><span style="color:#ff79c6">from</span> z3 <span style="color:#ff79c6">import</span> <span style="color:#ff79c6">*</span>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1</span><span style="color:#ff79c6">from</span> z3 <span style="color:#ff79c6">import</span> <span style="color:#ff79c6">*</span>
 <span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2</span>
 <span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3</span>chrset <span style="color:#ff79c6">=</span> <span style="color:#f1fa8c">&#34;abdfgehikmanoqrstucvwlxyz-01h23p456u78j9-_.+&#34;</span>
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4</span>inpt <span style="color:#ff79c6">=</span> <span style="color:#f1fa8c">&#34;FLAG</span><span style="color:#f1fa8c">{xbbbbbbbbbbbbbbbbbbbbbbbbbbbbb}</span><span style="color:#f1fa8c">&#34;</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4</span>inpt <span style="color:#ff79c6">=</span> <span style="color:#f1fa8c">&#34;FLAG{xbbbbbbbbbbbbbbbbbbbbbbbbbbbbb}&#34;</span>
 <span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5</span>
 <span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6</span>enc <span style="color:#ff79c6">=</span> [
 <span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7</span>    <span style="color:#bd93f9">0x16C8</span>,
@@ -949,9 +949,9 @@ Without wasting time i put together a quick z3 script to print the flag and it w
 <span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">70</span>        obj <span style="color:#ff79c6">=</span> flag[i]
 <span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">71</span>        solved <span style="color:#ff79c6">+=</span> chrset[m[obj]<span style="color:#ff79c6">.</span>as_long()]
 <span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">72</span>
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">73</span>    <span style="color:#8be9fd;font-style:italic">print</span> solved <span style="color:#ff79c6">+</span> <span style="color:#f1fa8c">&#34;}&#34;</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">73</span>    <span style="color:#ff79c6">print</span> solved <span style="color:#ff79c6">+</span> <span style="color:#f1fa8c">&#34;}&#34;</span>
 <span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">74</span><span style="color:#ff79c6">else</span>:
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">75</span>    <span style="color:#8be9fd;font-style:italic">print</span> <span style="color:#f1fa8c">&#34;unsat&#34;</span></code></pre></div>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">75</span>    <span style="color:#ff79c6">print</span> <span style="color:#f1fa8c">&#34;unsat&#34;</span></code></pre></div>
 
 <br>
 The solving script in action:

