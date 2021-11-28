@@ -3,7 +3,6 @@
 main {
   display: block;
   margin: 1rem;
-  padding: 1rem;
   width : 95%;
 }
 
@@ -242,7 +241,6 @@ span.fade {
 
 .center {
   margin: auto;
-  width: 100%;
   padding: 10px;
 }
 
