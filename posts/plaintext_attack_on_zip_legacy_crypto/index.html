@@ -20,8 +20,8 @@
         }
     </style>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
-    <link rel='stylesheet' href='/css/style.css' type='text/css' media='all' />
     <link rel='stylesheet' href='/css/custom.css' type='text/css' media='all' />
+    <link rel='stylesheet' href='/css/style.css' type='text/css' media='all' />
     <link rel='stylesheet' href='/css/syntax.css' type='text/css' media='all' />
     <link rel='stylesheet' href='/css/general.css' type='text/css' media='all' />
     <link rel='stylesheet' href='/css/toc.css' type='text/css' media='all' />
@@ -101,29 +101,15 @@ The attack primarily finds the 96-bit internal representation of the key, which 
 You can fuck with the zip files by changing these headers, for example you can modify the bit which tells whether the zip is encrypted or not, by doing so you can confuse the extracting software into asking password for an unencrypted zip file ;).</p>
 <p>The cipher is byte-oriented, encrypting under variable length keys. It has a 96-bit internal memory, divided into three 32-bit words called key0, key1, and key2. An 8-bit variable key3 (not part of the internal memory) is derived from key2. The key initializes the memory: each key has an equivalent internal representation as three 32-bit words. The plaintext bytes update the memory during encryption.</p>
 <p>The main function of the cipher is called update_keys, and is used to update the internal memory and to derive the variable key3, for each given input (usually plaintext) byte:</p>
-<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
-<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">7
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">8
-</span></code></pre></td>
-<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-plaintext" data-lang="plaintext">update_keys(char):
-    local unsigned short temp
-    key0 &lt;-- crc32(key0, char)
-    key1 &lt;-- (key1 + LSB(key0)) * 0x8088405 + 1 (mod 2^32)
-    key2 &lt;-- crc32(key2, MSB(key1))
-    temp &lt;-- key2 | 3 (16 LS Bits)
-    key3 &lt;-- LSB((temp * (temp ^ 0x1)) &gt;&gt; 0x8)
-end update_keys
-</code></pre></td></tr></table>
-</div>
-</div><p>Our Goal is to find out the internal representation of these keys.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-plaintext" data-lang="plaintext"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1</span>update_keys(char):
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2</span>    local unsigned short temp
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3</span>    key0 &lt;-- crc32(key0, char)
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4</span>    key1 &lt;-- (key1 + LSB(key0)) * 0x8088405 + 1 (mod 2^32)
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5</span>    key2 &lt;-- crc32(key2, MSB(key1))
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6</span>    temp &lt;-- key2 | 3 (16 LS Bits)
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">7</span>    key3 &lt;-- LSB((temp * (temp ^ 0x1)) &gt;&gt; 0x8)
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">8</span>end update_keys
+</code></pre></div><p>Our Goal is to find out the internal representation of these keys.</p>
 <p>Under a known plaintext attack, both the ciphertext and plaintext are known. In the PKZIP cipher, given a plaintext byte and the corresponding ciphertext byte, the value of the variable key3 can be calculated by</p>
 <p><code>key3 = P ^ C</code></p>
 <p>Where P and C are plaintext and ciphertext bytes respectively.</p>
@@ -235,9 +221,9 @@ So, we run pkcrack and wait, and wait, and some more wait.</p>
         <ul class="widget__list"><li class="cat-item cat-item-2">
                 <a href="https://x3ero0.github.io/categories/crackmes/">Crackmes (7)</a>
             </li><li class="cat-item cat-item-2">
-                <a href="https://x3ero0.github.io/categories/ctf/">CTF (1)</a>
+                <a href="https://x3ero0.github.io/categories/ctf/">CTF (2)</a>
             </li><li class="cat-item cat-item-2">
-                <a href="https://x3ero0.github.io/categories/pwn/">Pwn (2)</a>
+                <a href="https://x3ero0.github.io/categories/pwn/">Pwn (3)</a>
             </li><li class="cat-item cat-item-2">
                 <a href="https://x3ero0.github.io/categories/rev/">Rev (5)</a>
             </li>
@@ -250,6 +236,12 @@ So, we run pkcrack and wait, and wait, and some more wait.</p>
             
                 
                     <li>
+                        <a href="https://x3ero0.github.io/posts/orxw_balsn_ctf_2021_pwn/">or⊕w writeup from Balsn CTF 2021</a>
+                    </li>
+                
+            
+                
+                    <li>
                         <a href="https://x3ero0.github.io/posts/easy_kernel_exploitation/">Easy_Kernel Writeup from K3RN3LCTF 2021</a>
                     </li>
                 
@@ -292,8 +284,6 @@ So, we run pkcrack and wait, and wait, and some more wait.</p>
                     <li>
                         <a href="https://x3ero0.github.io/posts/hsctf-license/">HSCTF License</a>
                     </li>
-                
-            
                 
             
         </ul>
@@ -305,6 +295,12 @@ So, we run pkcrack and wait, and wait, and some more wait.</p>
             
                 
                     <li>
+                        <a href="https://x3ero0.github.io/posts/orxw_balsn_ctf_2021_pwn/">or⊕w writeup from Balsn CTF 2021</a>
+                    </li>
+                
+            
+                
+                    <li>
                         <a href="https://x3ero0.github.io/posts/easy_kernel_exploitation/">Easy_Kernel Writeup from K3RN3LCTF 2021</a>
                     </li>
                 
@@ -347,8 +343,6 @@ So, we run pkcrack and wait, and wait, and some more wait.</p>
                     <li>
                         <a href="https://x3ero0.github.io/posts/hsctf-license/">HSCTF License</a>
                     </li>
-                
-            
                 
             
         </ul>

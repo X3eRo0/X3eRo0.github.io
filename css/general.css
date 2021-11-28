@@ -1,5 +1,13 @@
 @media only screen and (max-width: 767px) {
 
+main {
+  display: block;
+  margin: 1rem;
+  padding: 1rem;
+  width : 95%;
+}
+
+
   .cardleft {
     display: flex;
     width: 100%;
@@ -80,6 +88,14 @@
 }
 
 @media only screen and (min-width: 768px) {
+
+  main {
+    display: block;
+    margin: 1rem;
+    padding: 1rem;
+    width : 68%;
+  }
+
 
   body{
     cursor: url("/img/cur.cur"), default;

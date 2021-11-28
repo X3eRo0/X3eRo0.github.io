@@ -105,6 +105,42 @@ h1 {
     font-size: 1.5em;
 }
 
+.responsive-table {
+    margin-left: auto;
+    margin-right: auto;
+    height: auto;
+}
+
+.styled-table {
+    border-collapse: collapse;
+    /* margin: 25px 0; */
+    min-width: 400px;
+    box-shadow: 0 0 20px rgba(64, 60, 116, 0.6);
+}
+
+.styled-table thead tr {
+    background-color: #403c74;
+    color: #ffffff;
+    text-align: left;
+}
+
+.styled-table th,
+.styled-table td {
+    padding: 5px 8px;
+}
+
+.styled-table tbody tr {
+    border-bottom: 1px solid #dddddd;
+}
+
+.styled-table tbody td {
+    background-color: #14142c;
+}
+
+.styled-table tbody tr:last-of-type {
+    border-bottom: 2px solid #403c74;
+}
+
 iframe {
     vertical-align: bottom;
 }

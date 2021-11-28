@@ -20,8 +20,8 @@
         }
     </style>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
-    <link rel='stylesheet' href='/css/style.css' type='text/css' media='all' />
     <link rel='stylesheet' href='/css/custom.css' type='text/css' media='all' />
+    <link rel='stylesheet' href='/css/style.css' type='text/css' media='all' />
     <link rel='stylesheet' href='/css/syntax.css' type='text/css' media='all' />
     <link rel='stylesheet' href='/css/general.css' type='text/css' media='all' />
     <link rel='stylesheet' href='/css/toc.css' type='text/css' media='all' />
@@ -94,36 +94,16 @@
 
 <h2 id="year3000-re---nullcon-hackim2020-ctf">Year3000 [RE - Nullcon Hackim2020 CTF]</h2>
 <p>Description</p>
-<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
-<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
-</span></code></pre></td>
-<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-plaintext" data-lang="plaintext">One day when I came home at lunchtime I heard a funny noise Went out to the
-back yard to find out If it was one of those rowdy boys Stood there was my
-neighbor called Peter And a flux capacitor. I guess there must be quite some
-entropy in a flux capacitor...
-
-Netcat Link : nc re.ctf.nullcon.net 1234
-</code></pre></td></tr></table>
-</div>
-</div><p>we were given 3000 stripped ELF binaries some 64bit binaries and 32bit binaries. the description of the challenge did&rsquo;nt explained what exactly the task was, so i tried to connect to the given netcat link.</p>
-<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
-<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
-</span></code></pre></td>
-<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-plaintext" data-lang="plaintext">x3ero0 :: year3000 » nc re.ctf.nullcon.net 1234
-1252.bin
-</code></pre></td></tr></table>
-</div>
-</div><p>so it was clear that for each binary we need to send the correct password of the binary.
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-plaintext" data-lang="plaintext"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1</span>One day when I came home at lunchtime I heard a funny noise Went out to the
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2</span>back yard to find out If it was one of those rowdy boys Stood there was my
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3</span>neighbor called Peter And a flux capacitor. I guess there must be quite some
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4</span>entropy in a flux capacitor...
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6</span>Netcat Link : nc re.ctf.nullcon.net 1234
+</code></pre></div><p>we were given 3000 stripped ELF binaries some 64bit binaries and 32bit binaries. the description of the challenge did&rsquo;nt explained what exactly the task was, so i tried to connect to the given netcat link.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-plaintext" data-lang="plaintext"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1</span>x3ero0 :: year3000 » nc re.ctf.nullcon.net 1234
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2</span>1252.bin
+</code></pre></div><p>so it was clear that for each binary we need to send the correct password of the binary.
 lets reverse engineer one of the binaries.</p>
 <pre tabindex="0"><code class="language-x86asm" data-lang="x86asm">public start
 start proc near
@@ -353,236 +333,114 @@ which is</p>
   />
 </div>
 <p>also one more thing to point out is that this value is always stored at the end of .data section. so the correct password for 3.bin is</p>
-<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
-<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
-</span></code></pre></td>
-<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#ff79c6">import</span> struct
-<span style="color:#8be9fd;font-style:italic">print</span> c <span style="color:#ff79c6">*</span> <span style="color:#bd93f9">0x54</span> <span style="color:#ff79c6">+</span> struct<span style="color:#ff79c6">.</span>pack(<span style="color:#ff79c6">&lt;</span>I, <span style="color:#bd93f9">0xA7C6D169</span>)
-
-</code></pre></td></tr></table>
-</div>
-</div><p>output -&gt;</p>
-<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
-<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
-</span></code></pre></td>
-<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-plaintext" data-lang="plaintext">x3ero0 :: year3000 » python solve_3.py | ./3.bin
-Well done
-</code></pre></td></tr></table>
-</div>
-</div><p>so i quickly wrote a script to fetch these values and generate a correct password for all the binaries both 64 bit binaries or 32 bit binaries.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1</span><span style="color:#ff79c6">import</span> struct
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2</span><span style="color:#8be9fd;font-style:italic">print</span> c <span style="color:#ff79c6">*</span> <span style="color:#bd93f9">0x54</span> <span style="color:#ff79c6">+</span> struct<span style="color:#ff79c6">.</span>pack(<span style="color:#ff79c6">&lt;</span>I, <span style="color:#bd93f9">0xA7C6D169</span>)
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3</span>
+</code></pre></div><p>output -&gt;</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-plaintext" data-lang="plaintext"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1</span>x3ero0 :: year3000 » python solve_3.py | ./3.bin
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2</span>Well done
+</code></pre></div><p>so i quickly wrote a script to fetch these values and generate a correct password for all the binaries both 64 bit binaries or 32 bit binaries.</p>
 <p>exploit script &ndash;&gt;</p>
-<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
-<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">22
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">23
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">24
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">25
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">26
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">27
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">28
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">29
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">30
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">31
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">32
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">33
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">34
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">35
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">36
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">37
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">38
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">39
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">40
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">41
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">42
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">43
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">44
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">45
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">46
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">47
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">48
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">49
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">50
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">51
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">52
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">53
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">54
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">55
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">56
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">57
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">58
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">59
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">60
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">61
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">62
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">63
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">64
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">65
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">66
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">67
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">68
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">69
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">70
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">71
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">72
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">73
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">74
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">75
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">76
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">77
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">78
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">79
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">80
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">81
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">82
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">83
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">84
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">85
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">86
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">87
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">88
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">89
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">90
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">91
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">92
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">93
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">94
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">95
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">96
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">97
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">98
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">99
-</span></code></pre></td>
-<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#ff79c6">from</span> pwn <span style="color:#ff79c6">import</span> <span style="color:#ff79c6">*</span>
-<span style="color:#ff79c6">import</span> base64
-
-
-context<span style="color:#ff79c6">.</span>log_level <span style="color:#ff79c6">=</span> <span style="color:#f1fa8c">&#34;critical&#34;</span>
-
-<span style="color:#ff79c6">def</span> <span style="color:#50fa7b">solve</span>(filename):
-
-	file <span style="color:#ff79c6">=</span> <span style="color:#8be9fd;font-style:italic">open</span>(filename, <span style="color:#f1fa8c">&#34;rb&#34;</span>)<span style="color:#ff79c6">.</span>read()
-	
-	ELF64_Coun <span style="color:#ff79c6">=</span> <span style="color:#bd93f9">0x816</span>
-	ELF64_Valu <span style="color:#ff79c6">=</span> <span style="color:#bd93f9">0x81d</span>
-
-	ELF32_Coun <span style="color:#ff79c6">=</span> <span style="color:#bd93f9">0x65e</span>
-	ELF32_Valu <span style="color:#ff79c6">=</span> <span style="color:#bd93f9">0x665</span>
-
-
-	ELF64_Addr <span style="color:#ff79c6">=</span> <span style="color:#bd93f9">0x1010</span>
-	ELF32_Addr <span style="color:#ff79c6">=</span> <span style="color:#bd93f9">0x1008</span>
-
-	
-	Format <span style="color:#ff79c6">=</span> <span style="color:#8be9fd;font-style:italic">ord</span>(file[<span style="color:#bd93f9">0x04</span>])
-	<span style="color:#ff79c6">if</span> (Format <span style="color:#ff79c6">==</span> <span style="color:#bd93f9">2</span>):
-
-		context<span style="color:#ff79c6">.</span>update(arch<span style="color:#ff79c6">=</span><span style="color:#f1fa8c">&#39;amd64&#39;</span>, os<span style="color:#ff79c6">=</span><span style="color:#f1fa8c">&#39;linux&#39;</span>)
-
-		code_count <span style="color:#ff79c6">=</span> file[ELF64_Coun : ELF64_Coun<span style="color:#ff79c6">+</span><span style="color:#bd93f9">7</span>]
-		code_value <span style="color:#ff79c6">=</span> file[ELF64_Valu : ELF64_Valu<span style="color:#ff79c6">+</span><span style="color:#bd93f9">4</span>]
-
-		disa_count <span style="color:#ff79c6">=</span> disasm(code_count)
-		disa_value <span style="color:#ff79c6">=</span> disasm(code_value)
-
-		code_count <span style="color:#ff79c6">=</span> <span style="color:#8be9fd;font-style:italic">int</span>(disa_count<span style="color:#ff79c6">.</span>split(<span style="color:#f1fa8c">&#39;0x&#39;</span>)[<span style="color:#ff79c6">-</span><span style="color:#bd93f9">1</span>], <span style="color:#bd93f9">16</span>)
-		code_value <span style="color:#ff79c6">=</span> <span style="color:#8be9fd;font-style:italic">chr</span>(<span style="color:#8be9fd;font-style:italic">int</span>(disa_value<span style="color:#ff79c6">.</span>split(<span style="color:#f1fa8c">&#39;0x&#39;</span>)[<span style="color:#ff79c6">-</span><span style="color:#bd93f9">1</span>], <span style="color:#bd93f9">16</span>))
-
-		<span style="color:#6272a4">#value = u64(file[ELF64_Addr : ELF64_Addr+8])</span>
-		value <span style="color:#ff79c6">=</span> file[ELF64_Addr : ELF64_Addr<span style="color:#ff79c6">+</span><span style="color:#bd93f9">8</span>]
-		value_n <span style="color:#ff79c6">=</span> u64(value)
-
-		flag <span style="color:#ff79c6">=</span> code_value <span style="color:#ff79c6">*</span> code_count <span style="color:#ff79c6">+</span> value
-
-	<span style="color:#ff79c6">elif</span>(Format <span style="color:#ff79c6">==</span> <span style="color:#bd93f9">1</span>):
-
-		context<span style="color:#ff79c6">.</span>update(arch<span style="color:#ff79c6">=</span><span style="color:#f1fa8c">&#39;i386&#39;</span>, os<span style="color:#ff79c6">=</span><span style="color:#f1fa8c">&#39;linux&#39;</span>)
-
-		code_count <span style="color:#ff79c6">=</span> file[ELF32_Coun : ELF32_Coun<span style="color:#ff79c6">+</span><span style="color:#bd93f9">7</span>]
-		code_value <span style="color:#ff79c6">=</span> file[ELF32_Valu : ELF32_Valu<span style="color:#ff79c6">+</span><span style="color:#bd93f9">4</span>]
-
-		disa_count <span style="color:#ff79c6">=</span> disasm(code_count)
-		disa_value <span style="color:#ff79c6">=</span> disasm(code_value)
-
-		code_count <span style="color:#ff79c6">=</span> <span style="color:#8be9fd;font-style:italic">int</span>(disa_count<span style="color:#ff79c6">.</span>split(<span style="color:#f1fa8c">&#39;0x&#39;</span>)[<span style="color:#ff79c6">-</span><span style="color:#bd93f9">1</span>], <span style="color:#bd93f9">16</span>)
-		code_value <span style="color:#ff79c6">=</span> <span style="color:#8be9fd;font-style:italic">chr</span>(<span style="color:#8be9fd;font-style:italic">int</span>(disa_value<span style="color:#ff79c6">.</span>split(<span style="color:#f1fa8c">&#39;0x&#39;</span>)[<span style="color:#ff79c6">-</span><span style="color:#bd93f9">1</span>], <span style="color:#bd93f9">16</span>))
-
-		<span style="color:#6272a4">#value = u32(file[ELF32_Addr:ELF32_Addr+4])</span>
-		value <span style="color:#ff79c6">=</span> file[ELF32_Addr:ELF32_Addr<span style="color:#ff79c6">+</span><span style="color:#bd93f9">4</span>]
-		value_n <span style="color:#ff79c6">=</span> u32(value)
-		flag <span style="color:#ff79c6">=</span> code_value <span style="color:#ff79c6">*</span> code_count <span style="color:#ff79c6">+</span> value
-	
-	<span style="color:#6272a4">#print &#34;[!] file : &#34; + filename</span>
-	<span style="color:#6272a4">#print &#34;[!] count: &#34; + hex(code_count)</span>
-	<span style="color:#6272a4">#print &#34;[!] value: &#34; + code_value</span>
-	<span style="color:#6272a4">#print &#34;[!] numbe: &#34; + hex(value_n)</span>
-
-	<span style="color:#ff79c6">return</span> flag
-
-
-<span style="color:#ff79c6">def</span> <span style="color:#50fa7b">main</span>():
-
-
-	dump <span style="color:#ff79c6">=</span> <span style="color:#f1fa8c">&#34;&#34;</span>
-	i <span style="color:#ff79c6">=</span> <span style="color:#bd93f9">0</span>
-	p <span style="color:#ff79c6">=</span> remote(<span style="color:#f1fa8c">&#34;re.ctf.nullcon.net&#34;</span>, <span style="color:#bd93f9">1234</span>)
-	a <span style="color:#ff79c6">=</span> <span style="color:#f1fa8c">&#34;&#34;</span>
-	temp <span style="color:#ff79c6">=</span> <span style="color:#f1fa8c">&#34;&#34;</span>
-	<span style="color:#ff79c6">while</span>(<span style="color:#f1fa8c">&#39;hackim&#39;</span> <span style="color:#ff79c6">not</span> <span style="color:#ff79c6">in</span> dump):
-
-		<span style="color:#6272a4"># i noticed that only 10 files were asked</span>
-		<span style="color:#ff79c6">if</span>(i<span style="color:#ff79c6">==</span><span style="color:#bd93f9">10</span>):
-			<span style="color:#8be9fd;font-style:italic">print</span> <span style="color:#f1fa8c">&#34;Flag: &#34;</span> <span style="color:#ff79c6">+</span> p<span style="color:#ff79c6">.</span>recvline()
-			p<span style="color:#ff79c6">.</span>close()
-			exit()
-		file <span style="color:#ff79c6">=</span> p<span style="color:#ff79c6">.</span>recvline()<span style="color:#ff79c6">.</span>strip()
-
-		a <span style="color:#ff79c6">=</span> p<span style="color:#ff79c6">.</span>recvuntil(<span style="color:#f1fa8c">&#34;&gt; &#34;</span>)
-		solver <span style="color:#ff79c6">=</span> solve(file)
-		<span style="color:#6272a4"># .encode(&#39;base64&#39;) doesnt work with bytes </span>
-		p<span style="color:#ff79c6">.</span>sendline(base64<span style="color:#ff79c6">.</span>b64encode(solver))
-		<span style="color:#6272a4">#print str(solver).encode(&#39;base64&#39;)</span>
-		temp <span style="color:#ff79c6">=</span> p<span style="color:#ff79c6">.</span>recvline()
-		<span style="color:#ff79c6">if</span>(<span style="color:#f1fa8c">&#34;Well done&#34;</span> <span style="color:#ff79c6">in</span> temp):
-			<span style="color:#8be9fd;font-style:italic">print</span> <span style="color:#f1fa8c">&#34;[0x</span><span style="color:#f1fa8c">%.4x</span><span style="color:#f1fa8c">]</span><span style="color:#f1fa8c">\t</span><span style="color:#f1fa8c">&#34;</span> <span style="color:#ff79c6">%</span> i<span style="color:#ff79c6">+</span> file <span style="color:#ff79c6">+</span> <span style="color:#f1fa8c">&#39;</span><span style="color:#f1fa8c">\t</span><span style="color:#f1fa8c">: Well Done&#39;</span>
-		<span style="color:#ff79c6">else</span>:
-			<span style="color:#8be9fd;font-style:italic">print</span> <span style="color:#f1fa8c">&#34;[+] Failed:</span><span style="color:#f1fa8c">\t</span><span style="color:#f1fa8c">&#34;</span> <span style="color:#ff79c6">+</span> file <span style="color:#ff79c6">+</span> <span style="color:#f1fa8c">&#34;</span><span style="color:#f1fa8c">\t</span><span style="color:#f1fa8c">dumping recieved data&#34;</span>
-			exit()
-		i <span style="color:#ff79c6">+=</span> <span style="color:#bd93f9">1</span>
-
-<span style="color:#ff79c6">if</span> __name__ <span style="color:#ff79c6">==</span> <span style="color:#f1fa8c">&#34;__main__&#34;</span>:
-	main()
-</code></pre></td></tr></table>
-</div>
-</div><p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1</span><span style="color:#ff79c6">from</span> pwn <span style="color:#ff79c6">import</span> <span style="color:#ff79c6">*</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2</span><span style="color:#ff79c6">import</span> base64
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5</span>context<span style="color:#ff79c6">.</span>log_level <span style="color:#ff79c6">=</span> <span style="color:#f1fa8c">&#34;critical&#34;</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7</span><span style="color:#ff79c6">def</span> <span style="color:#50fa7b">solve</span>(filename):
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9</span>	file <span style="color:#ff79c6">=</span> <span style="color:#8be9fd;font-style:italic">open</span>(filename, <span style="color:#f1fa8c">&#34;rb&#34;</span>)<span style="color:#ff79c6">.</span>read()
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10</span>	
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11</span>	ELF64_Coun <span style="color:#ff79c6">=</span> <span style="color:#bd93f9">0x816</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12</span>	ELF64_Valu <span style="color:#ff79c6">=</span> <span style="color:#bd93f9">0x81d</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14</span>	ELF32_Coun <span style="color:#ff79c6">=</span> <span style="color:#bd93f9">0x65e</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15</span>	ELF32_Valu <span style="color:#ff79c6">=</span> <span style="color:#bd93f9">0x665</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18</span>	ELF64_Addr <span style="color:#ff79c6">=</span> <span style="color:#bd93f9">0x1010</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19</span>	ELF32_Addr <span style="color:#ff79c6">=</span> <span style="color:#bd93f9">0x1008</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21</span>	
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">22</span>	Format <span style="color:#ff79c6">=</span> <span style="color:#8be9fd;font-style:italic">ord</span>(file[<span style="color:#bd93f9">0x04</span>])
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">23</span>	<span style="color:#ff79c6">if</span> (Format <span style="color:#ff79c6">==</span> <span style="color:#bd93f9">2</span>):
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">24</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">25</span>		context<span style="color:#ff79c6">.</span>update(arch<span style="color:#ff79c6">=</span><span style="color:#f1fa8c">&#39;amd64&#39;</span>, os<span style="color:#ff79c6">=</span><span style="color:#f1fa8c">&#39;linux&#39;</span>)
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">26</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">27</span>		code_count <span style="color:#ff79c6">=</span> file[ELF64_Coun : ELF64_Coun<span style="color:#ff79c6">+</span><span style="color:#bd93f9">7</span>]
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">28</span>		code_value <span style="color:#ff79c6">=</span> file[ELF64_Valu : ELF64_Valu<span style="color:#ff79c6">+</span><span style="color:#bd93f9">4</span>]
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">29</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">30</span>		disa_count <span style="color:#ff79c6">=</span> disasm(code_count)
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">31</span>		disa_value <span style="color:#ff79c6">=</span> disasm(code_value)
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">32</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">33</span>		code_count <span style="color:#ff79c6">=</span> <span style="color:#8be9fd;font-style:italic">int</span>(disa_count<span style="color:#ff79c6">.</span>split(<span style="color:#f1fa8c">&#39;0x&#39;</span>)[<span style="color:#ff79c6">-</span><span style="color:#bd93f9">1</span>], <span style="color:#bd93f9">16</span>)
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">34</span>		code_value <span style="color:#ff79c6">=</span> <span style="color:#8be9fd;font-style:italic">chr</span>(<span style="color:#8be9fd;font-style:italic">int</span>(disa_value<span style="color:#ff79c6">.</span>split(<span style="color:#f1fa8c">&#39;0x&#39;</span>)[<span style="color:#ff79c6">-</span><span style="color:#bd93f9">1</span>], <span style="color:#bd93f9">16</span>))
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">35</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">36</span>		<span style="color:#6272a4">#value = u64(file[ELF64_Addr : ELF64_Addr+8])</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">37</span>		value <span style="color:#ff79c6">=</span> file[ELF64_Addr : ELF64_Addr<span style="color:#ff79c6">+</span><span style="color:#bd93f9">8</span>]
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">38</span>		value_n <span style="color:#ff79c6">=</span> u64(value)
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">39</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">40</span>		flag <span style="color:#ff79c6">=</span> code_value <span style="color:#ff79c6">*</span> code_count <span style="color:#ff79c6">+</span> value
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">41</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">42</span>	<span style="color:#ff79c6">elif</span>(Format <span style="color:#ff79c6">==</span> <span style="color:#bd93f9">1</span>):
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">43</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">44</span>		context<span style="color:#ff79c6">.</span>update(arch<span style="color:#ff79c6">=</span><span style="color:#f1fa8c">&#39;i386&#39;</span>, os<span style="color:#ff79c6">=</span><span style="color:#f1fa8c">&#39;linux&#39;</span>)
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">45</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">46</span>		code_count <span style="color:#ff79c6">=</span> file[ELF32_Coun : ELF32_Coun<span style="color:#ff79c6">+</span><span style="color:#bd93f9">7</span>]
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">47</span>		code_value <span style="color:#ff79c6">=</span> file[ELF32_Valu : ELF32_Valu<span style="color:#ff79c6">+</span><span style="color:#bd93f9">4</span>]
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">48</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">49</span>		disa_count <span style="color:#ff79c6">=</span> disasm(code_count)
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">50</span>		disa_value <span style="color:#ff79c6">=</span> disasm(code_value)
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">51</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">52</span>		code_count <span style="color:#ff79c6">=</span> <span style="color:#8be9fd;font-style:italic">int</span>(disa_count<span style="color:#ff79c6">.</span>split(<span style="color:#f1fa8c">&#39;0x&#39;</span>)[<span style="color:#ff79c6">-</span><span style="color:#bd93f9">1</span>], <span style="color:#bd93f9">16</span>)
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">53</span>		code_value <span style="color:#ff79c6">=</span> <span style="color:#8be9fd;font-style:italic">chr</span>(<span style="color:#8be9fd;font-style:italic">int</span>(disa_value<span style="color:#ff79c6">.</span>split(<span style="color:#f1fa8c">&#39;0x&#39;</span>)[<span style="color:#ff79c6">-</span><span style="color:#bd93f9">1</span>], <span style="color:#bd93f9">16</span>))
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">54</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">55</span>		<span style="color:#6272a4">#value = u32(file[ELF32_Addr:ELF32_Addr+4])</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">56</span>		value <span style="color:#ff79c6">=</span> file[ELF32_Addr:ELF32_Addr<span style="color:#ff79c6">+</span><span style="color:#bd93f9">4</span>]
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">57</span>		value_n <span style="color:#ff79c6">=</span> u32(value)
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">58</span>		flag <span style="color:#ff79c6">=</span> code_value <span style="color:#ff79c6">*</span> code_count <span style="color:#ff79c6">+</span> value
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">59</span>	
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">60</span>	<span style="color:#6272a4">#print &#34;[!] file : &#34; + filename</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">61</span>	<span style="color:#6272a4">#print &#34;[!] count: &#34; + hex(code_count)</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">62</span>	<span style="color:#6272a4">#print &#34;[!] value: &#34; + code_value</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">63</span>	<span style="color:#6272a4">#print &#34;[!] numbe: &#34; + hex(value_n)</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">64</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">65</span>	<span style="color:#ff79c6">return</span> flag
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">66</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">67</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">68</span><span style="color:#ff79c6">def</span> <span style="color:#50fa7b">main</span>():
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">69</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">70</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">71</span>	dump <span style="color:#ff79c6">=</span> <span style="color:#f1fa8c">&#34;&#34;</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">72</span>	i <span style="color:#ff79c6">=</span> <span style="color:#bd93f9">0</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">73</span>	p <span style="color:#ff79c6">=</span> remote(<span style="color:#f1fa8c">&#34;re.ctf.nullcon.net&#34;</span>, <span style="color:#bd93f9">1234</span>)
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">74</span>	a <span style="color:#ff79c6">=</span> <span style="color:#f1fa8c">&#34;&#34;</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">75</span>	temp <span style="color:#ff79c6">=</span> <span style="color:#f1fa8c">&#34;&#34;</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">76</span>	<span style="color:#ff79c6">while</span>(<span style="color:#f1fa8c">&#39;hackim&#39;</span> <span style="color:#ff79c6">not</span> <span style="color:#ff79c6">in</span> dump):
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">77</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">78</span>		<span style="color:#6272a4"># i noticed that only 10 files were asked</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">79</span>		<span style="color:#ff79c6">if</span>(i<span style="color:#ff79c6">==</span><span style="color:#bd93f9">10</span>):
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">80</span>			<span style="color:#8be9fd;font-style:italic">print</span> <span style="color:#f1fa8c">&#34;Flag: &#34;</span> <span style="color:#ff79c6">+</span> p<span style="color:#ff79c6">.</span>recvline()
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">81</span>			p<span style="color:#ff79c6">.</span>close()
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">82</span>			exit()
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">83</span>		file <span style="color:#ff79c6">=</span> p<span style="color:#ff79c6">.</span>recvline()<span style="color:#ff79c6">.</span>strip()
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">84</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">85</span>		a <span style="color:#ff79c6">=</span> p<span style="color:#ff79c6">.</span>recvuntil(<span style="color:#f1fa8c">&#34;&gt; &#34;</span>)
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">86</span>		solver <span style="color:#ff79c6">=</span> solve(file)
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">87</span>		<span style="color:#6272a4"># .encode(&#39;base64&#39;) doesnt work with bytes </span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">88</span>		p<span style="color:#ff79c6">.</span>sendline(base64<span style="color:#ff79c6">.</span>b64encode(solver))
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">89</span>		<span style="color:#6272a4">#print str(solver).encode(&#39;base64&#39;)</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">90</span>		temp <span style="color:#ff79c6">=</span> p<span style="color:#ff79c6">.</span>recvline()
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">91</span>		<span style="color:#ff79c6">if</span>(<span style="color:#f1fa8c">&#34;Well done&#34;</span> <span style="color:#ff79c6">in</span> temp):
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">92</span>			<span style="color:#8be9fd;font-style:italic">print</span> <span style="color:#f1fa8c">&#34;[0x</span><span style="color:#f1fa8c">%.4x</span><span style="color:#f1fa8c">]</span><span style="color:#f1fa8c">\t</span><span style="color:#f1fa8c">&#34;</span> <span style="color:#ff79c6">%</span> i<span style="color:#ff79c6">+</span> file <span style="color:#ff79c6">+</span> <span style="color:#f1fa8c">&#39;</span><span style="color:#f1fa8c">\t</span><span style="color:#f1fa8c">: Well Done&#39;</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">93</span>		<span style="color:#ff79c6">else</span>:
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">94</span>			<span style="color:#8be9fd;font-style:italic">print</span> <span style="color:#f1fa8c">&#34;[+] Failed:</span><span style="color:#f1fa8c">\t</span><span style="color:#f1fa8c">&#34;</span> <span style="color:#ff79c6">+</span> file <span style="color:#ff79c6">+</span> <span style="color:#f1fa8c">&#34;</span><span style="color:#f1fa8c">\t</span><span style="color:#f1fa8c">dumping recieved data&#34;</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">95</span>			exit()
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">96</span>		i <span style="color:#ff79c6">+=</span> <span style="color:#bd93f9">1</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">97</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">98</span><span style="color:#ff79c6">if</span> __name__ <span style="color:#ff79c6">==</span> <span style="color:#f1fa8c">&#34;__main__&#34;</span>:
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">99</span>	main()
+</code></pre></div><p>
 
 <br>
 
@@ -644,9 +502,9 @@ context<span style="color:#ff79c6">.</span>log_level <span style="color:#ff79c6"
         <ul class="widget__list"><li class="cat-item cat-item-2">
                 <a href="https://x3ero0.github.io/categories/crackmes/">Crackmes (7)</a>
             </li><li class="cat-item cat-item-2">
-                <a href="https://x3ero0.github.io/categories/ctf/">CTF (1)</a>
+                <a href="https://x3ero0.github.io/categories/ctf/">CTF (2)</a>
             </li><li class="cat-item cat-item-2">
-                <a href="https://x3ero0.github.io/categories/pwn/">Pwn (2)</a>
+                <a href="https://x3ero0.github.io/categories/pwn/">Pwn (3)</a>
             </li><li class="cat-item cat-item-2">
                 <a href="https://x3ero0.github.io/categories/rev/">Rev (5)</a>
             </li>
@@ -659,6 +517,12 @@ context<span style="color:#ff79c6">.</span>log_level <span style="color:#ff79c6"
             
                 
                     <li>
+                        <a href="https://x3ero0.github.io/posts/orxw_balsn_ctf_2021_pwn/">or⊕w writeup from Balsn CTF 2021</a>
+                    </li>
+                
+            
+                
+                    <li>
                         <a href="https://x3ero0.github.io/posts/easy_kernel_exploitation/">Easy_Kernel Writeup from K3RN3LCTF 2021</a>
                     </li>
                 
@@ -701,8 +565,6 @@ context<span style="color:#ff79c6">.</span>log_level <span style="color:#ff79c6"
                     <li>
                         <a href="https://x3ero0.github.io/posts/hsctf-license/">HSCTF License</a>
                     </li>
-                
-            
                 
             
         </ul>
@@ -714,6 +576,12 @@ context<span style="color:#ff79c6">.</span>log_level <span style="color:#ff79c6"
             
                 
                     <li>
+                        <a href="https://x3ero0.github.io/posts/orxw_balsn_ctf_2021_pwn/">or⊕w writeup from Balsn CTF 2021</a>
+                    </li>
+                
+            
+                
+                    <li>
                         <a href="https://x3ero0.github.io/posts/easy_kernel_exploitation/">Easy_Kernel Writeup from K3RN3LCTF 2021</a>
                     </li>
                 
@@ -756,8 +624,6 @@ context<span style="color:#ff79c6">.</span>log_level <span style="color:#ff79c6"
                     <li>
                         <a href="https://x3ero0.github.io/posts/hsctf-license/">HSCTF License</a>
                     </li>
-                
-            
                 
             
         </ul>

@@ -20,8 +20,8 @@
         }
     </style>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
-    <link rel='stylesheet' href='/css/style.css' type='text/css' media='all' />
     <link rel='stylesheet' href='/css/custom.css' type='text/css' media='all' />
+    <link rel='stylesheet' href='/css/style.css' type='text/css' media='all' />
     <link rel='stylesheet' href='/css/syntax.css' type='text/css' media='all' />
     <link rel='stylesheet' href='/css/general.css' type='text/css' media='all' />
     <link rel='stylesheet' href='/css/toc.css' type='text/css' media='all' />
@@ -90,155 +90,74 @@
         <div class="post-content">
             <h3 id="challenge-license--298dyn-re-">Challenge: License [ 298(DYN) RE ]</h3>
 <p>Challenge Description:</p>
-<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
-<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
-</span></code></pre></td>
-<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-plaintext" data-lang="plaintext">Written by: ItzSomebody
-
-Description: 
-Keith made a cool license-checking program but he forgot the flag he used to create the key!
+<p>Written by: ItzSomebody</p>
+<p>Description:</p>
+<blockquote>
+<p>Keith made a cool license-checking program but he forgot the flag he used to create the key!
 To make matters worse, he lost the source code and stripped the binary for his
-license-generator program. Can you help Keith recover his flag? All he knows is:
-• The license key is 4-EZF2M-7O5F4-V9P7O-EVFDP-E4VDO-O
-• He put his name (in the form of &#39;k3ith&#39;) as the first part of the flag
-• There are 3 underscores
-• The flag is in the format hsctf{}
-• The flag doesn&#39;t have random character sequences (you should be able to read the
-	entire flag easily).
-• The flag only contains lowercase English letters and numbers.
-• The generator might produce the same keys for different inputs because
- Keith was too lazy to write the algorithm properly.
-</code></pre></td></tr></table>
-</div>
-</div><p>Binary : <a href="https://github.com/X3eRo0/Crackmes/raw/master/hsctf/license">license</a></p>
+license-generator program. Can you help Keith recover his flag? All he knows is:</p>
+</blockquote>
+<ul>
+<li>The license key is 4-EZF2M-7O5F4-V9P7O-EVFDP-E4VDO-O</li>
+<li>He put his name (in the form of &lsquo;k3ith&rsquo;) as the first part of the flag</li>
+<li>There are 3 underscores</li>
+<li>The flag is in the format hsctf{}</li>
+<li>The flag doesn&rsquo;t have random character sequences (you should be able to read the</li>
+<li>entire flag easily).</li>
+<li>The flag only contains lowercase English letters and numbers.</li>
+<li>The generator might produce the same keys for different inputs because
+Keith was too lazy to write the algorithm properly.</li>
+</ul>
+<p>Binary : <a href="https://github.com/X3eRo0/Crackmes/raw/master/hsctf/license">license</a></p>
 <p>before opening the binary in any disassembler or any debugger, i thought lets take a look at what it does.</p>
 <p>runing the binary will make your work a little easier in this case.</p>
-<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
-<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
-</span></code></pre></td>
-<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-plaintext" data-lang="plaintext">$ ./license 
-gimme dat string: A
-generating key for: a
-X
-$ ./license
-gimme dat string: B
-generating key for: b
-Y
-$ ./license
-gimme dat string: C
-generating key for: c
-Z
-</code></pre></td></tr></table>
-</div>
-</div><p>you can clearly see the pattern. each letter is simply substituted by some other letter.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-plaintext" data-lang="plaintext"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1</span>$ ./license 
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2</span>gimme dat string: A
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3</span>generating key for: a
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4</span>X
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5</span>$ ./license
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6</span>gimme dat string: B
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7</span>generating key for: b
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8</span>Y
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9</span>$ ./license
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10</span>gimme dat string: C
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11</span>generating key for: c
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12</span>Z
+</code></pre></div><p>you can clearly see the pattern. each letter is simply substituted by some other letter.</p>
 <p>so what we can do in this case is that we can get a python dictionary which will store which charecter is substituted by which letter.
 once we have that dictionary we resubstitute the charecters in the key given to us.</p>
 <p>i made a script for that</p>
-<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
-<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">22
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">23
-</span></code></pre></td>
-<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#ff79c6">from</span> pwn <span style="color:#ff79c6">import</span> <span style="color:#ff79c6">*</span>
-<span style="color:#ff79c6">import</span> string
-context<span style="color:#ff79c6">.</span>log_level <span style="color:#ff79c6">=</span> <span style="color:#f1fa8c">&#34;critical&#34;</span>
-
-flag_license <span style="color:#ff79c6">=</span> <span style="color:#f1fa8c">&#34;4-EZF2M-7O5F4-V9P7O-EVFDP-E4VDO-O&#34;</span><span style="color:#ff79c6">.</span>replace(<span style="color:#f1fa8c">&#34;-&#34;</span>,<span style="color:#f1fa8c">&#34;&#34;</span>)
-
-chars <span style="color:#ff79c6">=</span> {}
-
-<span style="color:#ff79c6">for</span> i <span style="color:#ff79c6">in</span> <span style="color:#8be9fd;font-style:italic">range</span>(<span style="color:#bd93f9">0x21</span>,<span style="color:#bd93f9">0x7f</span>):
-    p <span style="color:#ff79c6">=</span> process(<span style="color:#f1fa8c">&#34;./license&#34;</span>)
-    p<span style="color:#ff79c6">.</span>recvuntil(<span style="color:#f1fa8c">&#34;gimme dat string: &#34;</span>)
-    p<span style="color:#ff79c6">.</span>sendline(<span style="color:#8be9fd;font-style:italic">chr</span>(i))
-    corchar <span style="color:#ff79c6">=</span> p<span style="color:#ff79c6">.</span>recv(<span style="color:#bd93f9">23</span>)[<span style="color:#bd93f9">22</span>:]
-    
-    chars[corchar] <span style="color:#ff79c6">=</span> <span style="color:#8be9fd;font-style:italic">chr</span>(i)
-    p<span style="color:#ff79c6">.</span>close
-
-flag <span style="color:#ff79c6">=</span> <span style="color:#f1fa8c">&#34;&#34;</span>
-
-<span style="color:#ff79c6">for</span> ch <span style="color:#ff79c6">in</span> flag_license:
-    flag <span style="color:#ff79c6">+=</span> chars[ch]
-
-<span style="color:#8be9fd;font-style:italic">print</span>(flag)
-</code></pre></td></tr></table>
-</div>
-</div><p>running this script gives us partial flag</p>
-<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
-<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
-</span></code></pre></td>
-<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-plaintext" data-lang="plaintext">╭─pulkit@pulkit-ER28-0652 ~/Capture_The_Flag/hsctf 
-╰─$ python find_keys.py 
-hsctf{k}ith_m~k}s_tr~sh_r}}
-</code></pre></td></tr></table>
-</div>
-</div><p>we can see that &ldquo;}&rdquo; is also 3 and &ldquo;~&rdquo; is 4
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1</span><span style="color:#ff79c6">from</span> pwn <span style="color:#ff79c6">import</span> <span style="color:#ff79c6">*</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2</span><span style="color:#ff79c6">import</span> string
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3</span>context<span style="color:#ff79c6">.</span>log_level <span style="color:#ff79c6">=</span> <span style="color:#f1fa8c">&#34;critical&#34;</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5</span>flag_license <span style="color:#ff79c6">=</span> <span style="color:#f1fa8c">&#34;4-EZF2M-7O5F4-V9P7O-EVFDP-E4VDO-O&#34;</span><span style="color:#ff79c6">.</span>replace(<span style="color:#f1fa8c">&#34;-&#34;</span>,<span style="color:#f1fa8c">&#34;&#34;</span>)
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7</span>chars <span style="color:#ff79c6">=</span> {}
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9</span><span style="color:#ff79c6">for</span> i <span style="color:#ff79c6">in</span> <span style="color:#8be9fd;font-style:italic">range</span>(<span style="color:#bd93f9">0x21</span>,<span style="color:#bd93f9">0x7f</span>):
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10</span>    p <span style="color:#ff79c6">=</span> process(<span style="color:#f1fa8c">&#34;./license&#34;</span>)
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11</span>    p<span style="color:#ff79c6">.</span>recvuntil(<span style="color:#f1fa8c">&#34;gimme dat string: &#34;</span>)
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12</span>    p<span style="color:#ff79c6">.</span>sendline(<span style="color:#8be9fd;font-style:italic">chr</span>(i))
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13</span>    corchar <span style="color:#ff79c6">=</span> p<span style="color:#ff79c6">.</span>recv(<span style="color:#bd93f9">23</span>)[<span style="color:#bd93f9">22</span>:]
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14</span>    
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15</span>    chars[corchar] <span style="color:#ff79c6">=</span> <span style="color:#8be9fd;font-style:italic">chr</span>(i)
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16</span>    p<span style="color:#ff79c6">.</span>close
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18</span>flag <span style="color:#ff79c6">=</span> <span style="color:#f1fa8c">&#34;&#34;</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20</span><span style="color:#ff79c6">for</span> ch <span style="color:#ff79c6">in</span> flag_license:
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21</span>    flag <span style="color:#ff79c6">+=</span> chars[ch]
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">22</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">23</span><span style="color:#8be9fd;font-style:italic">print</span>(flag)
+</code></pre></div><p>running this script gives us partial flag</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-plaintext" data-lang="plaintext"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1</span>╭─pulkit@pulkit-ER28-0652 ~/Capture_The_Flag/hsctf 
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2</span>╰─$ python find_keys.py 
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3</span>hsctf{k}ith_m~k}s_tr~sh_r}}
+</code></pre></div><p>we can see that &ldquo;}&rdquo; is also 3 and &ldquo;~&rdquo; is 4
 in the end flag comes out to be</p>
-<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
-<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
-</span></code></pre></td>
-<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-plaintext" data-lang="plaintext">hsctf{k3ith_m4k3s_tr4sh_r3}
-</code></pre></td></tr></table>
-</div>
-</div><p>Thanks for reading that.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-plaintext" data-lang="plaintext"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1</span>hsctf{k3ith_m4k3s_tr4sh_r3}
+</code></pre></div><p>Thanks for reading that.</p>
         </div>
 
 
@@ -285,9 +204,9 @@ in the end flag comes out to be</p>
         <ul class="widget__list"><li class="cat-item cat-item-2">
                 <a href="https://x3ero0.github.io/categories/crackmes/">Crackmes (7)</a>
             </li><li class="cat-item cat-item-2">
-                <a href="https://x3ero0.github.io/categories/ctf/">CTF (1)</a>
+                <a href="https://x3ero0.github.io/categories/ctf/">CTF (2)</a>
             </li><li class="cat-item cat-item-2">
-                <a href="https://x3ero0.github.io/categories/pwn/">Pwn (2)</a>
+                <a href="https://x3ero0.github.io/categories/pwn/">Pwn (3)</a>
             </li><li class="cat-item cat-item-2">
                 <a href="https://x3ero0.github.io/categories/rev/">Rev (5)</a>
             </li>
@@ -300,6 +219,12 @@ in the end flag comes out to be</p>
             
                 
                     <li>
+                        <a href="https://x3ero0.github.io/posts/orxw_balsn_ctf_2021_pwn/">or⊕w writeup from Balsn CTF 2021</a>
+                    </li>
+                
+            
+                
+                    <li>
                         <a href="https://x3ero0.github.io/posts/easy_kernel_exploitation/">Easy_Kernel Writeup from K3RN3LCTF 2021</a>
                     </li>
                 
@@ -342,8 +267,6 @@ in the end flag comes out to be</p>
                     <li>
                         <a href="https://x3ero0.github.io/posts/hsctf-license/">HSCTF License</a>
                     </li>
-                
-            
                 
             
         </ul>
@@ -355,6 +278,12 @@ in the end flag comes out to be</p>
             
                 
                     <li>
+                        <a href="https://x3ero0.github.io/posts/orxw_balsn_ctf_2021_pwn/">or⊕w writeup from Balsn CTF 2021</a>
+                    </li>
+                
+            
+                
+                    <li>
                         <a href="https://x3ero0.github.io/posts/easy_kernel_exploitation/">Easy_Kernel Writeup from K3RN3LCTF 2021</a>
                     </li>
                 
@@ -397,8 +326,6 @@ in the end flag comes out to be</p>
                     <li>
                         <a href="https://x3ero0.github.io/posts/hsctf-license/">HSCTF License</a>
                     </li>
-                
-            
                 
             
         </ul>

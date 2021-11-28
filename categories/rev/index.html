@@ -20,8 +20,8 @@
         }
     </style>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
-    <link rel='stylesheet' href='/css/style.css' type='text/css' media='all' />
     <link rel='stylesheet' href='/css/custom.css' type='text/css' media='all' />
+    <link rel='stylesheet' href='/css/style.css' type='text/css' media='all' />
     <link rel='stylesheet' href='/css/syntax.css' type='text/css' media='all' />
     <link rel='stylesheet' href='/css/general.css' type='text/css' media='all' />
     <link rel='stylesheet' href='/css/toc.css' type='text/css' media='all' />
@@ -117,7 +117,7 @@
 		</header>
 
 		<div class="post-excerpt"><p>
-			Hell86  Author : ttlhacker Language : Assembler Upload : 8:03 PM 10/12/2018 Level : 3 Platform : Unix/Linux etc. Crackme : crackmes.one  1 2 3 4 5 6 7 8  Desc: - x86_64 linux binary (tested on debian 9 and ubuntu 18.04, should run on any distro). - Takes one command line argument and outputs &#34;OK!&#34; if it&#39;s correct, &#34;Wrong&#34; if it&#39;s not. - Partially written in C, actual verification routine is assembly.
+			Hell86  Author : ttlhacker Language : Assembler Upload : 8:03 PM 10/12/2018 Level : 3 Platform : Unix/Linux etc. Crackme : crackmes.one  1Desc: 2 3 - x86_64 linux binary (tested on debian 9 and ubuntu 18.04, should run on any distro). 4 - Takes one command line argument and outputs &#34;OK!&#34; if it&#39;s correct, &#34;Wrong&#34; if it&#39;s not. 5 - Partially written in C, actual verification routine is assembly.
 			<a href="/posts/hell86_from_ttlhacker/" class="more-link">Read more</a>
 		</p></div>
 	</div>
@@ -244,43 +244,24 @@ The contents of the <strong>The_Elder_Scrolls_V_Skyrim.zip</strong> are as follo
 		<div class="post-excerpt"><p>
 			<h3 id="challenge-license--298dyn-re-">Challenge: License [ 298(DYN) RE ]</h3>
 <p>Challenge Description:</p>
-<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
-<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
-</span></code></pre></td>
-<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-plaintext" data-lang="plaintext">Written by: ItzSomebody
-
-Description: 
-Keith made a cool license-checking program but he forgot the flag he used to create the key!
+<p>Written by: ItzSomebody</p>
+<p>Description:</p>
+<blockquote>
+<p>Keith made a cool license-checking program but he forgot the flag he used to create the key!
 To make matters worse, he lost the source code and stripped the binary for his
-license-generator program. Can you help Keith recover his flag? All he knows is:
-• The license key is 4-EZF2M-7O5F4-V9P7O-EVFDP-E4VDO-O
-• He put his name (in the form of &#39;k3ith&#39;) as the first part of the flag
-• There are 3 underscores
-• The flag is in the format hsctf{}
-• The flag doesn&#39;t have random character sequences (you should be able to read the
-	entire flag easily).
-• The flag only contains lowercase English letters and numbers.
-• The generator might produce the same keys for different inputs because
- Keith was too lazy to write the algorithm properly.
-</code></pre></td></tr></table>
-</div>
-</div>
+license-generator program. Can you help Keith recover his flag? All he knows is:</p>
+</blockquote>
+<ul>
+<li>The license key is 4-EZF2M-7O5F4-V9P7O-EVFDP-E4VDO-O</li>
+<li>He put his name (in the form of &lsquo;k3ith&rsquo;) as the first part of the flag</li>
+<li>There are 3 underscores</li>
+<li>The flag is in the format hsctf{}</li>
+<li>The flag doesn&rsquo;t have random character sequences (you should be able to read the</li>
+<li>entire flag easily).</li>
+<li>The flag only contains lowercase English letters and numbers.</li>
+<li>The generator might produce the same keys for different inputs because
+Keith was too lazy to write the algorithm properly.</li>
+</ul>
 			<a href="/posts/hsctf-license/" class="more-link">Read more</a>
 		</p></div>
 	</div>
@@ -328,9 +309,9 @@ license-generator program. Can you help Keith recover his flag? All he knows is:
         <ul class="widget__list"><li class="cat-item cat-item-2">
                 <a href="https://x3ero0.github.io/categories/crackmes/">Crackmes (7)</a>
             </li><li class="cat-item cat-item-2">
-                <a href="https://x3ero0.github.io/categories/ctf/">CTF (1)</a>
+                <a href="https://x3ero0.github.io/categories/ctf/">CTF (2)</a>
             </li><li class="cat-item cat-item-2">
-                <a href="https://x3ero0.github.io/categories/pwn/">Pwn (2)</a>
+                <a href="https://x3ero0.github.io/categories/pwn/">Pwn (3)</a>
             </li><li class="cat-item cat-item-2">
                 <a href="https://x3ero0.github.io/categories/rev/">Rev (5)</a>
             </li>
@@ -343,6 +324,12 @@ license-generator program. Can you help Keith recover his flag? All he knows is:
             
                 
                     <li>
+                        <a href="https://x3ero0.github.io/posts/orxw_balsn_ctf_2021_pwn/">or⊕w writeup from Balsn CTF 2021</a>
+                    </li>
+                
+            
+                
+                    <li>
                         <a href="https://x3ero0.github.io/posts/easy_kernel_exploitation/">Easy_Kernel Writeup from K3RN3LCTF 2021</a>
                     </li>
                 
@@ -385,8 +372,6 @@ license-generator program. Can you help Keith recover his flag? All he knows is:
                     <li>
                         <a href="https://x3ero0.github.io/posts/hsctf-license/">HSCTF License</a>
                     </li>
-                
-            
                 
             
         </ul>
@@ -398,6 +383,12 @@ license-generator program. Can you help Keith recover his flag? All he knows is:
             
                 
                     <li>
+                        <a href="https://x3ero0.github.io/posts/orxw_balsn_ctf_2021_pwn/">or⊕w writeup from Balsn CTF 2021</a>
+                    </li>
+                
+            
+                
+                    <li>
                         <a href="https://x3ero0.github.io/posts/easy_kernel_exploitation/">Easy_Kernel Writeup from K3RN3LCTF 2021</a>
                     </li>
                 
@@ -440,8 +431,6 @@ license-generator program. Can you help Keith recover his flag? All he knows is:
                     <li>
                         <a href="https://x3ero0.github.io/posts/hsctf-license/">HSCTF License</a>
                     </li>
-                
-            
                 
             
         </ul>

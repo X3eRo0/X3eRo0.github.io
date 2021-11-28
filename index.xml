@@ -7,14 +7,23 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>Copyright © 2008–2021</copyright>
-    <lastBuildDate>Sun, 14 Nov 2021 16:13:20 +0530</lastBuildDate><atom:link href="https://x3ero0.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 22 Nov 2021 17:33:36 +0530</lastBuildDate><atom:link href="https://x3ero0.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>or⊕w writeup from Balsn CTF 2021</title>
+      <link>https://x3ero0.github.io/posts/orxw_balsn_ctf_2021_pwn/</link>
+      <pubDate>Mon, 22 Nov 2021 17:33:36 +0530</pubDate>
+      
+      <guid>https://x3ero0.github.io/posts/orxw_balsn_ctf_2021_pwn/</guid>
+      <description>Author : how2hack Upload : Nov 20th, 2021 Rating : I will rate it 10/10 Platform : Linux Files : or⊕w Desc : No more orw for you :(  First look  or⊕w was the easiest pwn challenge from Balsn CTF 2021. There were 3 more Pwn tasks, which were really hard. in total there were 4 pwn challenges and I only managed to solve or⊕w. Here is the list of Pwn challenges.</description>
+    </item>
+    
     <item>
       <title>Easy_Kernel Writeup from K3RN3LCTF 2021</title>
       <link>https://x3ero0.github.io/posts/easy_kernel_exploitation/</link>
       <pubDate>Sun, 14 Nov 2021 16:13:20 +0530</pubDate>
       
       <guid>https://x3ero0.github.io/posts/easy_kernel_exploitation/</guid>
-      <description>Author : Seal Twitter CTF : K3RN3LCTF Platform : Linux Kernel 5.4.0 (KASLR, SMEP, SMAP, KPTI)  It&amp;rsquo;s been a while, huh?
+      <description>Author : Seal Twitter CTF : K3RN3LCTF Files: easy_kernel.tar.gz Platform : Linux Kernel 5.4.0 (KASLR, SMEP, SMAP, KPTI)  It&amp;rsquo;s been a while, huh?
 Today, we will dive into the basics of Linux Kernel Exploitation. I am not very experienced when it comes to Linux Kernel Exploitaion and I am still learning. So, I am writing about the challenge I solved this weekend in K3RN3LCTF 2021.
 First Look  We have a bunch of files to work with.</description>
     </item>
@@ -134,7 +143,7 @@ First Look  We have a bunch of files to work with.</description>
       <pubDate>Mon, 18 May 2020 13:03:48 +0000</pubDate>
       
       <guid>https://x3ero0.github.io/posts/hell86_from_ttlhacker/</guid>
-      <description>Hell86  Author : ttlhacker Language : Assembler Upload : 8:03 PM 10/12/2018 Level : 3 Platform : Unix/Linux etc. Crackme : crackmes.one  1 2 3 4 5 6 7 8  Desc: - x86_64 linux binary (tested on debian 9 and ubuntu 18.04, should run on any distro). - Takes one command line argument and outputs &amp;#34;OK!&amp;#34; if it&amp;#39;s correct, &amp;#34;Wrong&amp;#34; if it&amp;#39;s not. - Partially written in C, actual verification routine is assembly.</description>
+      <description>Hell86  Author : ttlhacker Language : Assembler Upload : 8:03 PM 10/12/2018 Level : 3 Platform : Unix/Linux etc. Crackme : crackmes.one  1Desc: 2 3 - x86_64 linux binary (tested on debian 9 and ubuntu 18.04, should run on any distro). 4 - Takes one command line argument and outputs &amp;#34;OK!&amp;#34; if it&amp;#39;s correct, &amp;#34;Wrong&amp;#34; if it&amp;#39;s not. 5 - Partially written in C, actual verification routine is assembly.</description>
     </item>
     
     <item>
@@ -208,43 +217,24 @@ The contents of the &lt;strong&gt;The_Elder_Scrolls_V_Skyrim.zip&lt;/strong&gt; 
       <guid>https://x3ero0.github.io/posts/hsctf-license/</guid>
       <description>&lt;h3 id=&#34;challenge-license--298dyn-re-&#34;&gt;Challenge: License [ 298(DYN) RE ]&lt;/h3&gt;
 &lt;p&gt;Challenge Description:&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;div style=&#34;color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;
-&lt;table style=&#34;border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;&#34;&gt;&lt;tr&gt;&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;&#34;&gt;
-&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 1
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 2
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 3
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 4
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 5
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 6
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 7
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 8
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 9
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;10
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;11
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;12
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;13
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;14
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;15
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
-&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;;width:100%&#34;&gt;
-&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-plaintext&#34; data-lang=&#34;plaintext&#34;&gt;Written by: ItzSomebody
-
-Description: 
-Keith made a cool license-checking program but he forgot the flag he used to create the key!
+&lt;p&gt;Written by: ItzSomebody&lt;/p&gt;
+&lt;p&gt;Description:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Keith made a cool license-checking program but he forgot the flag he used to create the key!
 To make matters worse, he lost the source code and stripped the binary for his
-license-generator program. Can you help Keith recover his flag? All he knows is:
-• The license key is 4-EZF2M-7O5F4-V9P7O-EVFDP-E4VDO-O
-• He put his name (in the form of &amp;#39;k3ith&amp;#39;) as the first part of the flag
-• There are 3 underscores
-• The flag is in the format hsctf{}
-• The flag doesn&amp;#39;t have random character sequences (you should be able to read the
-	entire flag easily).
-• The flag only contains lowercase English letters and numbers.
-• The generator might produce the same keys for different inputs because
- Keith was too lazy to write the algorithm properly.
-&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
-&lt;/div&gt;
-&lt;/div&gt;</description>
+license-generator program. Can you help Keith recover his flag? All he knows is:&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;The license key is 4-EZF2M-7O5F4-V9P7O-EVFDP-E4VDO-O&lt;/li&gt;
+&lt;li&gt;He put his name (in the form of &amp;lsquo;k3ith&amp;rsquo;) as the first part of the flag&lt;/li&gt;
+&lt;li&gt;There are 3 underscores&lt;/li&gt;
+&lt;li&gt;The flag is in the format hsctf{}&lt;/li&gt;
+&lt;li&gt;The flag doesn&amp;rsquo;t have random character sequences (you should be able to read the&lt;/li&gt;
+&lt;li&gt;entire flag easily).&lt;/li&gt;
+&lt;li&gt;The flag only contains lowercase English letters and numbers.&lt;/li&gt;
+&lt;li&gt;The generator might produce the same keys for different inputs because
+Keith was too lazy to write the algorithm properly.&lt;/li&gt;
+&lt;/ul&gt;</description>
     </item>
     
     <item>
@@ -351,25 +341,13 @@ license-generator program. Can you help Keith recover his flag? All he knows is:
 
 &lt;h2 id=&#34;year3000-re---nullcon-hackim2020-ctf&#34;&gt;Year3000 [RE - Nullcon Hackim2020 CTF]&lt;/h2&gt;
 &lt;p&gt;Description&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;div style=&#34;color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;
-&lt;table style=&#34;border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;&#34;&gt;&lt;tr&gt;&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;&#34;&gt;
-&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;1
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;2
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;3
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;4
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;5
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;6
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
-&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;;width:100%&#34;&gt;
-&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-plaintext&#34; data-lang=&#34;plaintext&#34;&gt;One day when I came home at lunchtime I heard a funny noise Went out to the
-back yard to find out If it was one of those rowdy boys Stood there was my
-neighbor called Peter And a flux capacitor. I guess there must be quite some
-entropy in a flux capacitor...
-
-Netcat Link : nc re.ctf.nullcon.net 1234
-&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
-&lt;/div&gt;
-&lt;/div&gt;&lt;p&gt;we were given 3000 stripped ELF binaries some 64bit binaries and 32bit binaries. the description of the challenge did&amp;rsquo;nt explained what exactly the task was, so i tried to connect to the given netcat link.&lt;/p&gt;</description>
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-plaintext&#34; data-lang=&#34;plaintext&#34;&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;1&lt;/span&gt;One day when I came home at lunchtime I heard a funny noise Went out to the
+&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;2&lt;/span&gt;back yard to find out If it was one of those rowdy boys Stood there was my
+&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;3&lt;/span&gt;neighbor called Peter And a flux capacitor. I guess there must be quite some
+&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;4&lt;/span&gt;entropy in a flux capacitor...
+&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;5&lt;/span&gt;
+&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;6&lt;/span&gt;Netcat Link : nc re.ctf.nullcon.net 1234
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;we were given 3000 stripped ELF binaries some 64bit binaries and 32bit binaries. the description of the challenge did&amp;rsquo;nt explained what exactly the task was, so i tried to connect to the given netcat link.&lt;/p&gt;</description>
     </item>
     
     <item>

