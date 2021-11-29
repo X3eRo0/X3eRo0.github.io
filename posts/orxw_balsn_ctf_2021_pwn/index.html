@@ -214,7 +214,7 @@ was stored on the <strong>.BSS</strong> section, which was very crucial for my e
     decoding="async"
   />
 </div>
-<p>This function apply&rsquo;s the following seccomp filter to the process.
+<p>This function applies the following seccomp filter to the process.
 
 
 
@@ -248,7 +248,7 @@ was stored on the <strong>.BSS</strong> section, which was very crucial for my e
 </table>
 
 </p>
-<p>Performing any other other syscall will result in the process being killed by <strong>SIGSYS</strong> (Bad system call).</p>
+<p>Performing any other syscall will result in the process being killed by <strong>SIGSYS</strong> (Bad system call).</p>
 <h3 id="seccomp-child">Seccomp child</h3>
 
 
@@ -318,7 +318,7 @@ was stored on the <strong>.BSS</strong> section, which was very crucial for my e
     decoding="async"
   />
 </div>
-<p>As you can see in the above image after the <strong>clone</strong> syscall, which is what <strong>fork()</strong> uses for some reason that I don&rsquo;t know, we see that child is spawned with PID <strong>23852</strong> and it gets a <strong>SIGSEGV</strong> signal and crashes with a segfault. Same thing happens with the parent but the difference is that it does not happen parallely as one would expect and it only happens once the child has exited/crashed.</p>
+<p>As you can see in the above image after the <strong>clone</strong> syscall, which is what <strong>fork()</strong> uses for some reason that I don&rsquo;t know, we see that child is spawned with PID <strong>23852</strong> and it gets a <strong>SIGSEGV</strong> signal and crashes with a segfault. Same thing happens with the parent but the difference is that it does not happen parallelly as one would expect and it only happens once the child has exited/crashed.</p>
 
 
 
@@ -331,7 +331,7 @@ was stored on the <strong>.BSS</strong> section, which was very crucial for my e
   />
 </div>
 <p>It is because the parent does a <strong>wait</strong> syscall and it wait for the child to terminate first.</p>
-<p>So, the ROP chain that you provide is executed by both parent and child but not parallely. Child executes the ROPChain first and then the parent executes the ROPChain. The challenge now is how do you get the flag with all these seccomp filters applied 😕
+<p>So, the ROP chain that you provide is executed by both parent and child but not parallelly. Child executes the ROPChain first and then the parent executes the ROPChain. The challenge now is how do you get the flag with all these seccomp filters applied 😕
 ?</p>
 <p>Obviusly <strong>system()</strong> or <strong>ONE_Gadget</strong> won&rsquo;t work because they all eventually do the <strong>execve</strong> syscall which is blocked in both child and parent. So, how do you get the flag 🏁
  ?</p>
@@ -522,7 +522,7 @@ was stored on the <strong>.BSS</strong> section, which was very crucial for my e
 <span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">24</span>stage_1 <span style="color:#ff79c6">+=</span> pwn<span style="color:#ff79c6">.</span>p64(BSS_ADR<span style="color:#ff79c6">+</span><span style="color:#bd93f9">4</span><span style="color:#ff79c6">+</span><span style="color:#bd93f9">0x3d</span>) <span style="color:#ff79c6">+</span> pwn<span style="color:#ff79c6">.</span>p64(<span style="color:#bd93f9">0</span>) <span style="color:#ff79c6">*</span> <span style="color:#bd93f9">4</span>
 <span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">25</span>stage_1 <span style="color:#ff79c6">+=</span> pwn<span style="color:#ff79c6">.</span>p64(_3D_GDT)
 <span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">26</span>
-</code></pre></div><p>Once you figure out how to execute different ROP chains with the same payload under parent and child, the rest of the exploitation is faily easy.</p>
+</code></pre></div><p>Once you figure out how to execute different ROP chains with the same payload under parent and child, the rest of the exploitation is fairly easy.</p>
 <p>I created a small function to give me ROP chain to leak a specific byte from the flag and then I just ran that exploit until I leaked the &ldquo;}&rdquo; character which means we got the whole flag.</p>
 <p>To get a nice output from the exploit I used pwntool&rsquo;s logging functionality.</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1</span>flag <span style="color:#ff79c6">=</span> <span style="color:#f1fa8c">b</span><span style="color:#f1fa8c">&#34; &#34;</span>
