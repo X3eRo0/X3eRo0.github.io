@@ -40,10 +40,12 @@
 
             <ul class="menu">
                 <li class="menu-item "><a class="menu__link" href="/crackmes/">CRACKMES</a></li>
+                <li class="menu-item "><a class="menu__link" href="/">HOME</a></li>
                 <li class="menu-item "><a class="menu__link" href="/posts/">POSTS</a></li>
             </ul>
             <select onChange="location.href=value;">
                 <option value="/crackmes/" class="menu-item menu-item-type-custom menu-item-object-custom" >CRACKMES</option>
+                <option value="/" class="menu-item menu-item-type-custom menu-item-object-custom" >HOME</option>
                 <option value="/posts/" class="menu-item menu-item-type-custom menu-item-object-custom" >POSTS</option>
             </select>
         </nav>
@@ -94,18 +96,18 @@
 
 <h2 id="year3000-re---nullcon-hackim2020-ctf">Year3000 [RE - Nullcon Hackim2020 CTF]</h2>
 <p>Description</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-plaintext" data-lang="plaintext"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1</span>One day when I came home at lunchtime I heard a funny noise Went out to the
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-plaintext" data-lang="plaintext"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1</span>One day when I came home at lunchtime I heard a funny noise Went out to the
 <span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2</span>back yard to find out If it was one of those rowdy boys Stood there was my
 <span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3</span>neighbor called Peter And a flux capacitor. I guess there must be quite some
 <span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4</span>entropy in a flux capacitor...
 <span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5</span>
 <span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6</span>Netcat Link : nc re.ctf.nullcon.net 1234
 </code></pre></div><p>we were given 3000 stripped ELF binaries some 64bit binaries and 32bit binaries. the description of the challenge did&rsquo;nt explained what exactly the task was, so i tried to connect to the given netcat link.</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-plaintext" data-lang="plaintext"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1</span>x3ero0 :: year3000 » nc re.ctf.nullcon.net 1234
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-plaintext" data-lang="plaintext"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1</span>x3ero0 :: year3000 » nc re.ctf.nullcon.net 1234
 <span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2</span>1252.bin
 </code></pre></div><p>so it was clear that for each binary we need to send the correct password of the binary.
 lets reverse engineer one of the binaries.</p>
-<pre tabindex="0"><code class="language-x86asm" data-lang="x86asm">public start
+<pre><code class="language-x86asm" data-lang="x86asm">public start
 start proc near
 xor     ebp, ebp
 pop     esi
@@ -127,7 +129,7 @@ call    ___libc_start_main
 hlt
 start endp
 </code></pre><p>i calculated the offset of main function through gdb and it was sub_6D0</p>
-<pre tabindex="0"><code class="language-x86asm" data-lang="x86asm">.text:000006D0
+<pre><code class="language-x86asm" data-lang="x86asm">.text:000006D0
 .text:000006D0 ; =============== S U B R O U T I N E =======================================
 .text:000006D0
 .text:000006D0 ; Attributes: bp-based frame fuzzy-sp
@@ -221,7 +223,7 @@ start endp
 .text:000007A2 sub_6D0         endp
 .text:000007A2
 </code></pre><p>lets look at sub_64D</p>
-<pre tabindex="0"><code class="language-x86asm" data-lang="x86asm">.text:0000064D ; =============== S U B R O U T I N E =======================================
+<pre><code class="language-x86asm" data-lang="x86asm">.text:0000064D ; =============== S U B R O U T I N E =======================================
 .text:0000064D
 .text:0000064D ; Attributes: bp-based frame
 .text:0000064D
@@ -292,16 +294,16 @@ start endp
 .text:000006CF sub_64D         endp
 .text:000006CF
 </code></pre><p>if you see this function and notice that at 0x0000065e a number is loaded into dword [local_ch] and at 0x00000665 a character is loaded into byte [local_15h].</p>
-<pre tabindex="0"><code class="language-x86asm" data-lang="x86asm">.text:0000065E                 mov     [ebp+var_C], 54h ; 'T'
+<pre><code class="language-x86asm" data-lang="x86asm">.text:0000065E                 mov     [ebp+var_C], 54h ; 'T'
 .text:00000665                 mov     [ebp+var_15], 63h ; 'c'
 </code></pre><p>the following loop after this simply checks if the user input is &lsquo;c&rsquo; *0x54
 then comes a memcmp at 0x6b5. now to statically analyse the arguments passed to memcmp we need to figure out whats going at 0x6b0</p>
-<pre tabindex="0"><code class="language-x86asm" data-lang="x86asm">.text:000006AB                 lea     edx, (unk_2008 - 1FC0h)[eax]
+<pre><code class="language-x86asm" data-lang="x86asm">.text:000006AB                 lea     edx, (unk_2008 - 1FC0h)[eax]
 </code></pre><p>now lets see what exactly is the value of eax at this instruction. we scroll a little bit up</p>
-<pre tabindex="0"><code class="language-x86asm" data-lang="x86asm">.text:00000654                 call    sub_7A3
+<pre><code class="language-x86asm" data-lang="x86asm">.text:00000654                 call    sub_7A3
 .text:00000659                 add     eax, 1967h
 </code></pre><p>lets see what this function is at 0x7a3</p>
-<pre tabindex="0"><code class="language-x86asm" data-lang="x86asm">.text:000007A3 sub_7A3         proc near               ; CODE XREF: sub_64D+7↑p
+<pre><code class="language-x86asm" data-lang="x86asm">.text:000007A3 sub_7A3         proc near               ; CODE XREF: sub_64D+7↑p
 .text:000007A3 ; __unwind {
 .text:000007A3                 mov     eax, [esp+0]
 .text:000007A6                 retn
@@ -312,15 +314,15 @@ then comes a memcmp at 0x6b5. now to statically analyse the arguments passed to 
 basically eax = address_of_next_instruction_after_call_0x7a3, so eax = 0x00000659
 and then eax += 0x1967, so eax = 0x1fc0.
 okay now lets look at the instruction at 0x000006ab again</p>
-<pre tabindex="0"><code class="language-x86asm" data-lang="x86asm">; from radare2
+<pre><code class="language-x86asm" data-lang="x86asm">; from radare2
 0x000006ab     lea     edx, dword [eax + 0x48] 
 </code></pre><p>so it becomes</p>
-<pre tabindex="0"><code class="language-x86asm" data-lang="x86asm">; from radare2
+<pre><code class="language-x86asm" data-lang="x86asm">; from radare2
 0x000006ab     lea     edx, dword [0x1fc0 + 0x48] ; 0x2008
 </code></pre><p>and you can actually see that ida already calculated the offset for us.
 so memcmp checks that the bytes after &lsquo;c&rsquo; * 0x54 with the dword value at 0x2008
 which is</p>
-<pre tabindex="0"><code class="language-x86asm" data-lang="x86asm">.data:00002008 dword_2008      dd 0A7C6D169h
+<pre><code class="language-x86asm" data-lang="x86asm">.data:00002008 dword_2008      dd 0A7C6D169h
 </code></pre>
 
 
@@ -333,15 +335,15 @@ which is</p>
   />
 </div>
 <p>also one more thing to point out is that this value is always stored at the end of .data section. so the correct password for 3.bin is</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1</span><span style="color:#ff79c6">import</span> struct
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2</span><span style="color:#8be9fd;font-style:italic">print</span> c <span style="color:#ff79c6">*</span> <span style="color:#bd93f9">0x54</span> <span style="color:#ff79c6">+</span> struct<span style="color:#ff79c6">.</span>pack(<span style="color:#ff79c6">&lt;</span>I, <span style="color:#bd93f9">0xA7C6D169</span>)
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1</span><span style="color:#ff79c6">import</span> struct
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2</span><span style="color:#ff79c6">print</span> c <span style="color:#ff79c6">*</span> <span style="color:#bd93f9">0x54</span> <span style="color:#ff79c6">+</span> struct<span style="color:#ff79c6">.</span>pack(<span style="color:#ff79c6">&lt;</span>I, <span style="color:#bd93f9">0xA7C6D169</span>)
 <span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3</span>
 </code></pre></div><p>output -&gt;</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-plaintext" data-lang="plaintext"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1</span>x3ero0 :: year3000 » python solve_3.py | ./3.bin
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-plaintext" data-lang="plaintext"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1</span>x3ero0 :: year3000 » python solve_3.py | ./3.bin
 <span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2</span>Well done
 </code></pre></div><p>so i quickly wrote a script to fetch these values and generate a correct password for all the binaries both 64 bit binaries or 32 bit binaries.</p>
 <p>exploit script &ndash;&gt;</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1</span><span style="color:#ff79c6">from</span> pwn <span style="color:#ff79c6">import</span> <span style="color:#ff79c6">*</span>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1</span><span style="color:#ff79c6">from</span> pwn <span style="color:#ff79c6">import</span> <span style="color:#ff79c6">*</span>
 <span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2</span><span style="color:#ff79c6">import</span> base64
 <span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3</span>
 <span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4</span>
@@ -349,7 +351,7 @@ which is</p>
 <span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6</span>
 <span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7</span><span style="color:#ff79c6">def</span> <span style="color:#50fa7b">solve</span>(filename):
 <span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8</span>
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9</span>	file <span style="color:#ff79c6">=</span> <span style="color:#8be9fd;font-style:italic">open</span>(filename, <span style="color:#f1fa8c">&#34;rb&#34;</span>)<span style="color:#ff79c6">.</span>read()
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9</span>	<span style="color:#8be9fd;font-style:italic">file</span> <span style="color:#ff79c6">=</span> <span style="color:#8be9fd;font-style:italic">open</span>(filename, <span style="color:#f1fa8c">&#34;rb&#34;</span>)<span style="color:#ff79c6">.</span>read()
 <span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10</span>	
 <span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11</span>	ELF64_Coun <span style="color:#ff79c6">=</span> <span style="color:#bd93f9">0x816</span>
 <span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12</span>	ELF64_Valu <span style="color:#ff79c6">=</span> <span style="color:#bd93f9">0x81d</span>
@@ -362,13 +364,13 @@ which is</p>
 <span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19</span>	ELF32_Addr <span style="color:#ff79c6">=</span> <span style="color:#bd93f9">0x1008</span>
 <span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20</span>
 <span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21</span>	
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">22</span>	Format <span style="color:#ff79c6">=</span> <span style="color:#8be9fd;font-style:italic">ord</span>(file[<span style="color:#bd93f9">0x04</span>])
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">22</span>	Format <span style="color:#ff79c6">=</span> <span style="color:#8be9fd;font-style:italic">ord</span>(<span style="color:#8be9fd;font-style:italic">file</span>[<span style="color:#bd93f9">0x04</span>])
 <span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">23</span>	<span style="color:#ff79c6">if</span> (Format <span style="color:#ff79c6">==</span> <span style="color:#bd93f9">2</span>):
 <span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">24</span>
 <span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">25</span>		context<span style="color:#ff79c6">.</span>update(arch<span style="color:#ff79c6">=</span><span style="color:#f1fa8c">&#39;amd64&#39;</span>, os<span style="color:#ff79c6">=</span><span style="color:#f1fa8c">&#39;linux&#39;</span>)
 <span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">26</span>
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">27</span>		code_count <span style="color:#ff79c6">=</span> file[ELF64_Coun : ELF64_Coun<span style="color:#ff79c6">+</span><span style="color:#bd93f9">7</span>]
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">28</span>		code_value <span style="color:#ff79c6">=</span> file[ELF64_Valu : ELF64_Valu<span style="color:#ff79c6">+</span><span style="color:#bd93f9">4</span>]
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">27</span>		code_count <span style="color:#ff79c6">=</span> <span style="color:#8be9fd;font-style:italic">file</span>[ELF64_Coun : ELF64_Coun<span style="color:#ff79c6">+</span><span style="color:#bd93f9">7</span>]
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">28</span>		code_value <span style="color:#ff79c6">=</span> <span style="color:#8be9fd;font-style:italic">file</span>[ELF64_Valu : ELF64_Valu<span style="color:#ff79c6">+</span><span style="color:#bd93f9">4</span>]
 <span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">29</span>
 <span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">30</span>		disa_count <span style="color:#ff79c6">=</span> disasm(code_count)
 <span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">31</span>		disa_value <span style="color:#ff79c6">=</span> disasm(code_value)
@@ -377,7 +379,7 @@ which is</p>
 <span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">34</span>		code_value <span style="color:#ff79c6">=</span> <span style="color:#8be9fd;font-style:italic">chr</span>(<span style="color:#8be9fd;font-style:italic">int</span>(disa_value<span style="color:#ff79c6">.</span>split(<span style="color:#f1fa8c">&#39;0x&#39;</span>)[<span style="color:#ff79c6">-</span><span style="color:#bd93f9">1</span>], <span style="color:#bd93f9">16</span>))
 <span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">35</span>
 <span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">36</span>		<span style="color:#6272a4">#value = u64(file[ELF64_Addr : ELF64_Addr+8])</span>
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">37</span>		value <span style="color:#ff79c6">=</span> file[ELF64_Addr : ELF64_Addr<span style="color:#ff79c6">+</span><span style="color:#bd93f9">8</span>]
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">37</span>		value <span style="color:#ff79c6">=</span> <span style="color:#8be9fd;font-style:italic">file</span>[ELF64_Addr : ELF64_Addr<span style="color:#ff79c6">+</span><span style="color:#bd93f9">8</span>]
 <span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">38</span>		value_n <span style="color:#ff79c6">=</span> u64(value)
 <span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">39</span>
 <span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">40</span>		flag <span style="color:#ff79c6">=</span> code_value <span style="color:#ff79c6">*</span> code_count <span style="color:#ff79c6">+</span> value
@@ -386,8 +388,8 @@ which is</p>
 <span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">43</span>
 <span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">44</span>		context<span style="color:#ff79c6">.</span>update(arch<span style="color:#ff79c6">=</span><span style="color:#f1fa8c">&#39;i386&#39;</span>, os<span style="color:#ff79c6">=</span><span style="color:#f1fa8c">&#39;linux&#39;</span>)
 <span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">45</span>
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">46</span>		code_count <span style="color:#ff79c6">=</span> file[ELF32_Coun : ELF32_Coun<span style="color:#ff79c6">+</span><span style="color:#bd93f9">7</span>]
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">47</span>		code_value <span style="color:#ff79c6">=</span> file[ELF32_Valu : ELF32_Valu<span style="color:#ff79c6">+</span><span style="color:#bd93f9">4</span>]
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">46</span>		code_count <span style="color:#ff79c6">=</span> <span style="color:#8be9fd;font-style:italic">file</span>[ELF32_Coun : ELF32_Coun<span style="color:#ff79c6">+</span><span style="color:#bd93f9">7</span>]
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">47</span>		code_value <span style="color:#ff79c6">=</span> <span style="color:#8be9fd;font-style:italic">file</span>[ELF32_Valu : ELF32_Valu<span style="color:#ff79c6">+</span><span style="color:#bd93f9">4</span>]
 <span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">48</span>
 <span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">49</span>		disa_count <span style="color:#ff79c6">=</span> disasm(code_count)
 <span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">50</span>		disa_value <span style="color:#ff79c6">=</span> disasm(code_value)
@@ -396,7 +398,7 @@ which is</p>
 <span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">53</span>		code_value <span style="color:#ff79c6">=</span> <span style="color:#8be9fd;font-style:italic">chr</span>(<span style="color:#8be9fd;font-style:italic">int</span>(disa_value<span style="color:#ff79c6">.</span>split(<span style="color:#f1fa8c">&#39;0x&#39;</span>)[<span style="color:#ff79c6">-</span><span style="color:#bd93f9">1</span>], <span style="color:#bd93f9">16</span>))
 <span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">54</span>
 <span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">55</span>		<span style="color:#6272a4">#value = u32(file[ELF32_Addr:ELF32_Addr+4])</span>
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">56</span>		value <span style="color:#ff79c6">=</span> file[ELF32_Addr:ELF32_Addr<span style="color:#ff79c6">+</span><span style="color:#bd93f9">4</span>]
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">56</span>		value <span style="color:#ff79c6">=</span> <span style="color:#8be9fd;font-style:italic">file</span>[ELF32_Addr:ELF32_Addr<span style="color:#ff79c6">+</span><span style="color:#bd93f9">4</span>]
 <span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">57</span>		value_n <span style="color:#ff79c6">=</span> u32(value)
 <span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">58</span>		flag <span style="color:#ff79c6">=</span> code_value <span style="color:#ff79c6">*</span> code_count <span style="color:#ff79c6">+</span> value
 <span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">59</span>	
@@ -420,22 +422,22 @@ which is</p>
 <span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">77</span>
 <span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">78</span>		<span style="color:#6272a4"># i noticed that only 10 files were asked</span>
 <span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">79</span>		<span style="color:#ff79c6">if</span>(i<span style="color:#ff79c6">==</span><span style="color:#bd93f9">10</span>):
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">80</span>			<span style="color:#8be9fd;font-style:italic">print</span> <span style="color:#f1fa8c">&#34;Flag: &#34;</span> <span style="color:#ff79c6">+</span> p<span style="color:#ff79c6">.</span>recvline()
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">80</span>			<span style="color:#ff79c6">print</span> <span style="color:#f1fa8c">&#34;Flag: &#34;</span> <span style="color:#ff79c6">+</span> p<span style="color:#ff79c6">.</span>recvline()
 <span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">81</span>			p<span style="color:#ff79c6">.</span>close()
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">82</span>			exit()
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">83</span>		file <span style="color:#ff79c6">=</span> p<span style="color:#ff79c6">.</span>recvline()<span style="color:#ff79c6">.</span>strip()
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">82</span>			<span style="color:#8be9fd;font-style:italic">exit</span>()
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">83</span>		<span style="color:#8be9fd;font-style:italic">file</span> <span style="color:#ff79c6">=</span> p<span style="color:#ff79c6">.</span>recvline()<span style="color:#ff79c6">.</span>strip()
 <span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">84</span>
 <span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">85</span>		a <span style="color:#ff79c6">=</span> p<span style="color:#ff79c6">.</span>recvuntil(<span style="color:#f1fa8c">&#34;&gt; &#34;</span>)
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">86</span>		solver <span style="color:#ff79c6">=</span> solve(file)
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">86</span>		solver <span style="color:#ff79c6">=</span> solve(<span style="color:#8be9fd;font-style:italic">file</span>)
 <span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">87</span>		<span style="color:#6272a4"># .encode(&#39;base64&#39;) doesnt work with bytes </span>
 <span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">88</span>		p<span style="color:#ff79c6">.</span>sendline(base64<span style="color:#ff79c6">.</span>b64encode(solver))
 <span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">89</span>		<span style="color:#6272a4">#print str(solver).encode(&#39;base64&#39;)</span>
 <span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">90</span>		temp <span style="color:#ff79c6">=</span> p<span style="color:#ff79c6">.</span>recvline()
 <span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">91</span>		<span style="color:#ff79c6">if</span>(<span style="color:#f1fa8c">&#34;Well done&#34;</span> <span style="color:#ff79c6">in</span> temp):
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">92</span>			<span style="color:#8be9fd;font-style:italic">print</span> <span style="color:#f1fa8c">&#34;[0x</span><span style="color:#f1fa8c">%.4x</span><span style="color:#f1fa8c">]</span><span style="color:#f1fa8c">\t</span><span style="color:#f1fa8c">&#34;</span> <span style="color:#ff79c6">%</span> i<span style="color:#ff79c6">+</span> file <span style="color:#ff79c6">+</span> <span style="color:#f1fa8c">&#39;</span><span style="color:#f1fa8c">\t</span><span style="color:#f1fa8c">: Well Done&#39;</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">92</span>			<span style="color:#ff79c6">print</span> <span style="color:#f1fa8c">&#34;[0x</span><span style="color:#f1fa8c">%.4x</span><span style="color:#f1fa8c">]</span><span style="color:#f1fa8c">\t</span><span style="color:#f1fa8c">&#34;</span> <span style="color:#ff79c6">%</span> i<span style="color:#ff79c6">+</span> <span style="color:#8be9fd;font-style:italic">file</span> <span style="color:#ff79c6">+</span> <span style="color:#f1fa8c">&#39;</span><span style="color:#f1fa8c">\t</span><span style="color:#f1fa8c">: Well Done&#39;</span>
 <span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">93</span>		<span style="color:#ff79c6">else</span>:
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">94</span>			<span style="color:#8be9fd;font-style:italic">print</span> <span style="color:#f1fa8c">&#34;[+] Failed:</span><span style="color:#f1fa8c">\t</span><span style="color:#f1fa8c">&#34;</span> <span style="color:#ff79c6">+</span> file <span style="color:#ff79c6">+</span> <span style="color:#f1fa8c">&#34;</span><span style="color:#f1fa8c">\t</span><span style="color:#f1fa8c">dumping recieved data&#34;</span>
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">95</span>			exit()
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">94</span>			<span style="color:#ff79c6">print</span> <span style="color:#f1fa8c">&#34;[+] Failed:</span><span style="color:#f1fa8c">\t</span><span style="color:#f1fa8c">&#34;</span> <span style="color:#ff79c6">+</span> <span style="color:#8be9fd;font-style:italic">file</span> <span style="color:#ff79c6">+</span> <span style="color:#f1fa8c">&#34;</span><span style="color:#f1fa8c">\t</span><span style="color:#f1fa8c">dumping recieved data&#34;</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">95</span>			<span style="color:#8be9fd;font-style:italic">exit</span>()
 <span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">96</span>		i <span style="color:#ff79c6">+=</span> <span style="color:#bd93f9">1</span>
 <span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">97</span>
 <span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">98</span><span style="color:#ff79c6">if</span> __name__ <span style="color:#ff79c6">==</span> <span style="color:#f1fa8c">&#34;__main__&#34;</span>:

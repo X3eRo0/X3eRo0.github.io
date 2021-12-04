@@ -7,7 +7,11 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>Copyright © 2008–2021</copyright>
-    <lastBuildDate>Mon, 22 Nov 2021 17:33:36 +0530</lastBuildDate><atom:link href="https://x3ero0.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 22 Nov 2021 17:33:36 +0530</lastBuildDate>
+    
+	<atom:link href="https://x3ero0.github.io/index.xml" rel="self" type="application/rss+xml" />
+    
+    
     <item>
       <title>or⊕w writeup from Balsn CTF 2021</title>
       <link>https://x3ero0.github.io/posts/orxw_balsn_ctf_2021_pwn/</link>
@@ -341,7 +345,7 @@ Keith was too lazy to write the algorithm properly.&lt;/li&gt;
 
 &lt;h2 id=&#34;year3000-re---nullcon-hackim2020-ctf&#34;&gt;Year3000 [RE - Nullcon Hackim2020 CTF]&lt;/h2&gt;
 &lt;p&gt;Description&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-plaintext&#34; data-lang=&#34;plaintext&#34;&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;1&lt;/span&gt;One day when I came home at lunchtime I heard a funny noise Went out to the
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-plaintext&#34; data-lang=&#34;plaintext&#34;&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;1&lt;/span&gt;One day when I came home at lunchtime I heard a funny noise Went out to the
 &lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;2&lt;/span&gt;back yard to find out If it was one of those rowdy boys Stood there was my
 &lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;3&lt;/span&gt;neighbor called Peter And a flux capacitor. I guess there must be quite some
 &lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;4&lt;/span&gt;entropy in a flux capacitor...
