@@ -1,4 +1,4 @@
-@media only screen and (max-width: 767px) {
+@media only screen and (max-width: 962px) {
 
 main {
   display: block;
@@ -85,7 +85,7 @@ main {
 
 }
 
-@media only screen and (min-width: 768px) {
+@media only screen and (min-width: 962px) {
 
   main {
     display: block;
@@ -102,7 +102,7 @@ main {
   .cardleft {
     display: flex;
     float: left;
-    width: 49%;
+    width: 48%;
     outline: 5px solid #6272a4;
     outline-offset: 2px;
     margin-bottom: 15px;
@@ -117,7 +117,7 @@ main {
   .cardright {
     display: flex;
     float: right;
-    width: 49%;
+    width: 48%;
     outline: 5px solid #6272a4;
     outline-offset: 2px;
     margin-bottom: 15px;
@@ -224,8 +224,8 @@ span.fade {
 }
 
 .blur {
-  filter: blur(8px);
-  -webkit-filter: blur(8px);
+  filter: blur(3px) brightness(50%);
+  -webkit-filter: blur(3px) brightness(50%);
 }
 
 .card-text {
