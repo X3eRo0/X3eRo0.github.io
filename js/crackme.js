@@ -14,7 +14,7 @@ function crackme(){
     }
 
 
-    WebAssembly.instantiateStreaming(fetch('/crackme.wasm'))
+    WebAssembly.instantiateStreaming(fetch('/crackme.wasm'), {})
     .then(obj => {
         for (var i = 0; i < password.length; i++){
             obj.instance.exports.set(passbytes[i], i);
