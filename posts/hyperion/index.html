@@ -1,0 +1,1070 @@
+<!DOCTYPE html>
+<html lang="en-us" dir="ltr">
+<head>
+  
+
+  
+
+
+
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Hyperion Writeup | x3ero0&#39;s blog</title>
+<meta name="description" content="x3ero0&#39;s blog contains reverse engineering notes, crackmes, and CTF writeups.">
+<meta name="theme-color" content="#ecd7af">
+<script>
+  (() => {
+    const storageKey = "reflector-theme";
+    const root = document.documentElement;
+    let theme = "light";
+
+    try {
+      const stored = localStorage.getItem(storageKey);
+      if (stored === "light" || stored === "dark") {
+        theme = stored;
+      } else if (window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches) {
+        theme = "dark";
+      }
+    } catch (error) {
+      if (window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches) {
+        theme = "dark";
+      }
+    }
+
+    root.dataset.theme = theme;
+    const meta = document.querySelector('meta[name="theme-color"]');
+    if (meta) {
+      meta.setAttribute("content", theme === "dark" ? "#111315" : "#ecd7af");
+    }
+  })();
+</script>
+<link rel="icon" href="/img/favicon.ico">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous" referrerpolicy="no-referrer">
+
+  <link rel="stylesheet" href="/css/chroma-light.css">
+  <link rel="stylesheet" href="/css/chroma-dark.css">
+      <link rel="stylesheet" href="/css/main.min.ab84453c0a2d4244b57ef088588542846dc4a1ebadec500a69bbc59dde6215d1.css" integrity="sha256-q4RFPAotQkS1fvCIWIVChG3Eoeut7FAKabvFnd5iFdE=" crossorigin="anonymous">
+
+
+        <script src="/js/main.18f58ac4bc81769d572f5acba6b94652499eac9554aaa5c1a9981456dbcb73ea.js" integrity="sha256-GPWKxLyBdp1XL1rLprlGUkmerJVUqqXBqZgUVtvLc&#43;o=" crossorigin="anonymous" defer></script>
+
+
+</head>
+<body class="page page-page section-posts">
+  <div class="page-frame">
+    <a class="skip-link" href="#main-content">Skip to content</a>
+    <header class="site-header">
+  <div class="header-panel">
+    <a class="brand" href="/">x3ero0&#39;s blog</a>
+    <p class="header-summary">reverse engineering, crackmes, and ctf writeups</p>
+    <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav" data-nav-toggle>[menu]</button>
+    <nav id="site-nav" class="site-nav" data-nav aria-label="Primary">
+      
+  <ul class="nav-list">
+      <li>
+        <a class="nav-link" href="/">home</a>
+      </li>
+      <li>
+        <a class="nav-link" href="/posts/">posts</a>
+      </li>
+      <li>
+        <a class="nav-link" href="/crackmes/">crackmes</a>
+      </li>
+  </ul>
+
+    </nav>
+  </div>
+</header>
+
+    <main id="main-content" class="site-main">
+      
+  <article class="document">
+    <header class="document-header">
+      <h1>Hyperion Writeup</h1>
+      <div class="meta-line">
+  
+    <span>posts</span>
+  
+  
+    <time datetime="2021-03-26T12:13:38&#43;05:30">2021-03-26</time>
+  
+  <span>17 min read</span>
+  
+</div>
+
+      
+    </header>
+    <div class="document-body">
+      <ul>
+<li>Author : <a href="https://gynvael.coldwind.pl/">Gynvael Coldwind</a></li>
+<li>Language : C/C++</li>
+<li>Upload : May 9th, 2018</li>
+<li>Level : I will rate it 8/10</li>
+<li>Platform : Server: Linux | Client: Windows/Linux etc.</li>
+<li>Files : <a href="https://github.com/google/google-ctf/tree/master/2017/finals/2017-finals-pwn-hyperion/">hyperion</a></li>
+<li>Desc : It&rsquo;s 2017, so even single-player games require Internet connection.</li>
+</ul>
+
+
+<br>
+
+<p>Hyperion was one of the pwn challenges from Google CTF 2017 Finals. One day I randomly asked Gynvael (who is the author of this challenge) to give me some CTF challenges. He gave me 3 Revs and 1 Pwn challenges. In the end I solved 2 Revs and 1 Pwn.  I received these challenges in June 2019, I solved the 2 Revs (the 3rd Rev is still unsolved and I still have no clue XD) sometime in 2020 but this Pwn (Hyperion) was still remaining. Just recently I decided that I will take a look and I will solve it finally.</p>
+<h3 id="first-look">First Look</h3>
+
+
+
+
+  
+
+
+
+<div class="center image-window" data-image-window>
+  <div class="window-titlebar">
+    <span class="window-title">First look of the Challenge</span>
+    <button
+      class="window-button window-button-icon window-minimize"
+      type="button"
+      aria-expanded="true"
+      aria-label="Minimize image"
+      data-window-toggle
+    >−</button>
+  </div>
+  <div class="window-content">
+    <img
+      class="responsive"
+      src="/img/hyperion/game.png"
+      alt="First look of the Challenge"
+      decoding="async"
+    />
+  </div>
+</div>
+
+
+
+<br>
+
+<p>Hyperion is a single player clone of Scorched Tanks, except that it requires internet connection even when playing againts a bot. We are given a server binary that runs on Linux and 2 versions of client, one for windows and one for linux. The client binaries requires SDL2 because the game uses <a href="https://www.libsdl.org/">SDL2 Library</a> for graphics and controls.</p>
+<p>The Goal of this challenge is to not only defeat the bot, but to also get a shell on the server. I immediately opened the server binary in IDA Pro.</p>
+
+
+<br>
+
+
+
+
+
+  
+
+
+
+<div class="center image-window" data-image-window>
+  <div class="window-titlebar">
+    <span class="window-title">main()</span>
+    <button
+      class="window-button window-button-icon window-minimize"
+      type="button"
+      aria-expanded="true"
+      aria-label="Minimize image"
+      data-window-toggle
+    >−</button>
+  </div>
+  <div class="window-content">
+    <img
+      class="responsive"
+      src="/img/hyperion/main.png"
+      alt="main()"
+      decoding="async"
+    />
+  </div>
+</div>
+
+
+
+<br>
+
+<p>The challenge pops shell if its running in DEBUG environment with &ldquo;HYPERION_ENV_TEST&rdquo; environment variable set. Game also supports fork server mode and single run mode.</p>
+<p>I used the single run mode so that I can interact through <code>STDIN</code> and <code>STDOUT</code>.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-plaintext" data-lang="plaintext"><span class="line"><span class="ln">1</span><span class="cl">socat TCP-LISTEN:1337,reuseaddr,fork exec:./hyperion_server
+</span></span></code></pre></div><p>Now we can connect to the challenge server with <code>localhost</code> as IP.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-plaintext" data-lang="plaintext"><span class="line"><span class="ln">1</span><span class="cl">./hyperion_client localhost
+</span></span></code></pre></div><h3 id="hyperion---lets-play-by-x3ero0">Hyperion - Let&rsquo;s Play by X3eRo0</h3>
+
+
+
+
+  
+
+
+
+<div class="center image-window" data-image-window>
+  <div class="window-titlebar">
+    <span class="window-title">Game Controls</span>
+    <button
+      class="window-button window-button-icon window-minimize"
+      type="button"
+      aria-expanded="true"
+      aria-label="Minimize image"
+      data-window-toggle
+    >−</button>
+  </div>
+  <div class="window-content">
+    <img
+      class="responsive"
+      src="/img/hyperion/controls.png"
+      alt="Game Controls"
+      decoding="async"
+    />
+  </div>
+</div>
+
+
+
+<br>
+
+<p>The game has a map of 640x480 pixels or 38400 bytes. Dirt is represented by <code>1</code> and Air is represented by <code>0</code>. We control the Green Tank and Red Tank is the enemy but Red Tank never misses. We have 3 Weapons as described in the above image.</p>
+<ul>
+<li>1 - 0x12 Damage, 10 Radius Explosion</li>
+<li>2 - 0x00 Damage, 15 Radius Dirt Ball</li>
+<li>3 - 0x08 Damage, 20 Radius Explosion</li>
+</ul>
+<p>Here is a small and very bad gameplay.
+
+
+<br>
+</p>
+
+
+
+
+  
+
+
+
+<div class="center image-window" data-image-window>
+  <div class="window-titlebar">
+    <span class="window-title">main()</span>
+    <button
+      class="window-button window-button-icon window-minimize"
+      type="button"
+      aria-expanded="true"
+      aria-label="Minimize image"
+      data-window-toggle
+    >−</button>
+  </div>
+  <div class="window-content">
+    <img
+      class="responsive"
+      src="/img/hyperion/gameplay.gif"
+      alt="main()"
+      decoding="async"
+    />
+  </div>
+</div>
+
+
+
+<br>
+
+<h3 id="the-reverse-engineering-starts">The Reverse Engineering Starts</h3>
+<p>Before starting reversing the code I wanted to look at the network traffic, for that I used wireshark and followed the TCP stream for the packet I found related to the challenge.</p>
+<p>This is what the server was sending the client upon receiving the connection</p>
+
+
+<br>
+
+
+
+
+
+  
+
+
+
+<div class="center image-window" data-image-window>
+  <div class="window-titlebar">
+    <span class="window-title">main()</span>
+    <button
+      class="window-button window-button-icon window-minimize"
+      type="button"
+      aria-expanded="true"
+      aria-label="Minimize image"
+      data-window-toggle
+    >−</button>
+  </div>
+  <div class="window-content">
+    <img
+      class="responsive"
+      src="/img/hyperion/server_data.png"
+      alt="main()"
+      decoding="async"
+    />
+  </div>
+</div>
+
+
+
+<br>
+
+<p>And this is what the client was send to the server after the player fires a bullet.</p>
+
+
+<br>
+
+
+
+
+
+  
+
+
+
+<div class="center image-window" data-image-window>
+  <div class="window-titlebar">
+    <span class="window-title">main()</span>
+    <button
+      class="window-button window-button-icon window-minimize"
+      type="button"
+      aria-expanded="true"
+      aria-label="Minimize image"
+      data-window-toggle
+    >−</button>
+  </div>
+  <div class="window-content">
+    <img
+      class="responsive"
+      src="/img/hyperion/client_data.png"
+      alt="main()"
+      decoding="async"
+    />
+  </div>
+</div>
+
+
+
+<br>
+
+<p>So, from the above 2 images its clear that the server sends the whole MAP and TANK information to the client and the client renders the MAP and the 2 Tanks based on what information the server sent. The client then sends the bullet information to the server which contains information about weapon, angle and power that the player used to fire at the enemy tank. The server then calculates where this bullet should hit using some basic math and deducts health points and Dirt from the MAP due to the explosion.</p>
+<p>So, now we can start reverse engineering the server binary and look for bugs that we can exploit.</p>
+<p>First let&rsquo;s take a look at some functions which the binary uses more frequently than others, these mainly include network functions to send and receive data.</p>
+<p>BTW this challenge uses <a href="https://github.com/gynvael/NetSock">NetSock</a> which is a C++ Network Library for both Windows and Linux.</p>
+<p>The server binary has <em><strong>SendText</strong></em>, <em><strong>SendMap</strong></em>, <em><strong>SendTank</strong></em>, <em><strong>SendBullet</strong></em> and <em><strong>SendPacket</strong></em> functions, out these SendPacket Wraps the Data to be sent in a C++ string and sends it along with the 32 bit length of the data. So, it first sends the 4 byte header which contains the length of the data to be received by the other party.</p>
+<p><em><strong>SendText</strong></em>, <em><strong>SendMap</strong></em>, <em><strong>SendTank</strong></em> and <em><strong>SendBullet</strong></em> just sends their respective data structures to the client socket.</p>
+<p>Now let&rsquo;s take a look at the main handler function which handles everything.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="line"><span class="ln"> 1</span><span class="cl"><span class="kr">__int64</span> <span class="kr">__fastcall</span> <span class="nf">Game</span><span class="p">(</span><span class="n">Netsock</span> <span class="o">*</span><span class="n">c</span><span class="p">,</span> <span class="kr">__int64</span> <span class="n">some_number</span><span class="p">,</span> <span class="kt">int</span> <span class="n">a3</span><span class="p">,</span> <span class="kt">int</span> <span class="n">a4</span><span class="p">,</span> <span class="kt">int</span> <span class="n">a5</span><span class="p">,</span> <span class="kt">int</span> <span class="n">a6</span><span class="p">)</span>
+</span></span><span class="line"><span class="ln"> 2</span><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="ln"> 3</span><span class="cl">    <span class="kt">int</span> <span class="n">v7</span><span class="p">;</span> <span class="c1">// ecx
+</span></span></span><span class="line"><span class="ln"> 4</span><span class="cl">    <span class="kt">int</span> <span class="n">v8</span><span class="p">;</span> <span class="c1">// er8
+</span></span></span><span class="line"><span class="ln"> 5</span><span class="cl">    <span class="kt">int</span> <span class="n">v9</span><span class="p">;</span> <span class="c1">// er9
+</span></span></span><span class="line"><span class="ln"> 6</span><span class="cl">    <span class="kr">__int64</span> <span class="n">v10</span><span class="p">;</span> <span class="c1">// rdx
+</span></span></span><span class="line"><span class="ln"> 7</span><span class="cl">    <span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">Message_</span><span class="p">;</span> <span class="c1">// rdx
+</span></span></span><span class="line"><span class="ln"> 8</span><span class="cl">    <span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">Tank_1</span><span class="p">;</span> <span class="c1">// rax
+</span></span></span><span class="line"><span class="ln"> 9</span><span class="cl">    <span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">Tank</span><span class="p">;</span> <span class="c1">// rax
+</span></span></span><span class="line"><span class="ln">10</span><span class="cl">    <span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">v14</span><span class="p">;</span> <span class="c1">// rax
+</span></span></span><span class="line hl"><span class="ln">11</span><span class="cl">    <span class="kt">char</span> <span class="n">map</span><span class="p">[</span><span class="mi">38400</span><span class="p">];</span> <span class="c1">// [rsp+10h] [rbp-9608h] BYREF
+</span></span></span><span class="line"><span class="ln">12</span><span class="cl">
+</span></span><span class="line"><span class="ln">13</span><span class="cl">    <span class="k">if</span> <span class="p">(</span> <span class="o">!</span><span class="nf">SendText</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="s">&#34;Welcome to Hyperion Tank Game!&#34;</span><span class="p">)</span> <span class="p">)</span>
+</span></span><span class="line"><span class="ln">14</span><span class="cl">        <span class="k">return</span> <span class="mi">1LL</span><span class="p">;</span>
+</span></span><span class="line"><span class="ln">15</span><span class="cl">    <span class="nf">memset</span><span class="p">(</span><span class="n">map</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="k">sizeof</span><span class="p">(</span><span class="n">map</span><span class="p">));</span>
+</span></span><span class="line"><span class="ln">16</span><span class="cl">    <span class="nf">GenerateMap</span><span class="p">(</span><span class="n">map</span><span class="p">);</span>
+</span></span><span class="line"><span class="ln">17</span><span class="cl">    <span class="nl">LABEL_4</span><span class="p">:</span>
+</span></span><span class="line"><span class="ln">18</span><span class="cl">    <span class="nf">AdjustTankPosition</span><span class="p">(</span><span class="n">tanks</span><span class="p">,</span> <span class="n">map</span><span class="p">);</span>
+</span></span><span class="line"><span class="ln">19</span><span class="cl">    <span class="nf">AdjustTankPosition</span><span class="p">(</span><span class="o">&amp;</span><span class="n">tanks</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">map</span><span class="p">);</span>
+</span></span><span class="line hl"><span class="ln">20</span><span class="cl">    <span class="k">if</span> <span class="p">(</span> <span class="o">!</span><span class="nf">SendMap</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="n">map</span><span class="p">)</span> <span class="o">||</span> <span class="o">!</span><span class="nf">SendTank</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="n">tanks</span><span class="p">)</span> <span class="p">)</span>
+</span></span><span class="line"><span class="ln">21</span><span class="cl">        <span class="nf">exit</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+</span></span></code></pre></div><p>Let&rsquo;s disect this into multiple peices that we can go through one by one.</p>
+<p>So, first we will look at line 11 we see that the map has been allocated
+on the stack with 38400 ((640 * 480) / 8) bytes of size. It first sends the
+welcome text then it generates the map using some random numbers and after that
+it Adjusts Tank coordinates onto the map, now it sends the map and the tank
+structure to the client. So, let&rsquo;s take a look at the SendMap function.</p>
+<p>Before we look at the IDA&rsquo;s decompiled code, I want to mention the networking
+code of this game.</p>
+<p>The game sends packets of this structure</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="line"><span class="ln">1</span><span class="cl"><span class="k">struct</span> <span class="n">Packet</span> <span class="p">{</span>
+</span></span><span class="line"><span class="ln">2</span><span class="cl">  <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">type</span><span class="p">;</span>  <span class="c1">// Use only 4-byte values.
+</span></span></span><span class="line"><span class="ln">3</span><span class="cl">  <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">uint8_t</span><span class="o">&gt;</span> <span class="n">data</span><span class="p">;</span>
+</span></span><span class="line"><span class="ln">4</span><span class="cl"><span class="p">};</span>
+</span></span></code></pre></div><p>the <strong>type</strong> string contains the header for identification of what kind of
+data are we sending and receiving. Now let&rsquo;s analyse the <strong>SendMap</strong> function, I have included comments from the source code.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="line"><span class="ln"> 1</span><span class="cl"><span class="n">_BOOL8</span> <span class="kr">__fastcall</span> <span class="nf">SendMap</span><span class="p">(</span><span class="n">Netsock</span> <span class="o">*</span><span class="n">socket_stuff</span><span class="p">,</span> <span class="k">const</span> <span class="kt">void</span> <span class="o">*</span><span class="n">map</span><span class="p">)</span>
+</span></span><span class="line"><span class="ln"> 2</span><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="ln"> 3</span><span class="cl">    <span class="kt">void</span> <span class="o">*</span><span class="n">v2</span><span class="p">;</span> <span class="c1">// rax
+</span></span></span><span class="line"><span class="ln"> 4</span><span class="cl">    <span class="n">_BOOL4</span> <span class="n">v3</span><span class="p">;</span> <span class="c1">// ebx
+</span></span></span><span class="line"><span class="ln"> 5</span><span class="cl">    <span class="cm">/*Packet p; */</span>
+</span></span><span class="line"><span class="ln"> 6</span><span class="cl">    <span class="n">Packet</span> <span class="n">MapPacket</span><span class="p">;</span> <span class="c1">// [rsp+10h] [rbp-48h] BYREF
+</span></span></span><span class="line"><span class="ln"> 7</span><span class="cl">    <span class="kr">__int64</span> <span class="n">v6</span><span class="p">;</span> <span class="c1">// [rsp+48h] [rbp-10h]
+</span></span></span><span class="line"><span class="ln"> 8</span><span class="cl">
+</span></span><span class="line"><span class="ln"> 9</span><span class="cl">    <span class="cm">/* const size_t data_sz = (MAP_W * (MAP_H + 1)) / 8; */</span>
+</span></span><span class="line hl"><span class="ln">10</span><span class="cl">    <span class="n">v6</span> <span class="o">=</span> <span class="mi">38480LL</span><span class="p">;</span>
+</span></span><span class="line"><span class="ln">11</span><span class="cl">    <span class="cm">/*p.type = &#34;GMAP&#34;;*/</span>
+</span></span><span class="line"><span class="ln">12</span><span class="cl">    <span class="nf">cplusplus_string_init</span><span class="p">(</span><span class="o">&amp;</span><span class="n">MapPacket</span><span class="p">);</span>
+</span></span><span class="line"><span class="ln">13</span><span class="cl">    <span class="n">std</span><span class="o">::</span><span class="n">__cxx11</span><span class="o">::</span> <span class="p">...</span> <span class="o">::</span><span class="n">operator</span><span class="o">=</span><span class="p">(</span><span class="o">&amp;</span><span class="n">MapPacket</span><span class="p">,</span> <span class="s">&#34;GMAP&#34;</span><span class="p">);</span> <span class="c1">// c++ garbage redacted
+</span></span></span><span class="line"><span class="ln">14</span><span class="cl">
+</span></span><span class="line"><span class="ln">15</span><span class="cl">    <span class="cm">/* p.data.resize(data_sz); */</span>
+</span></span><span class="line"><span class="ln">16</span><span class="cl">    <span class="nf">resize</span><span class="p">(</span><span class="n">MapPacket</span><span class="p">.</span><span class="n">data</span><span class="p">,</span> <span class="mh">0x9650uLL</span><span class="p">);</span>
+</span></span><span class="line"><span class="ln">17</span><span class="cl">    <span class="n">v_first_element</span> <span class="o">=</span> <span class="nf">vector_access_operator</span><span class="p">(</span><span class="n">MapPacket</span><span class="p">.</span><span class="n">data</span><span class="p">,</span> <span class="mi">0LL</span><span class="p">);</span>
+</span></span><span class="line hl"><span class="ln">18</span><span class="cl">    <span class="nf">memcpy</span><span class="p">(</span><span class="n">v_first_element</span><span class="p">,</span> <span class="n">map</span><span class="p">,</span> <span class="mi">38480uLL</span><span class="p">);</span>
+</span></span><span class="line hl"><span class="ln">19</span><span class="cl">    <span class="n">v3</span> <span class="o">=</span> <span class="nf">SendPacket</span><span class="p">(</span><span class="n">socket_stuff</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">MapPacket</span><span class="p">);</span>
+</span></span><span class="line"><span class="ln">20</span><span class="cl">    <span class="cm">/* destructor */</span>
+</span></span><span class="line"><span class="ln">21</span><span class="cl">    <span class="nf">func</span><span class="p">(</span><span class="o">&amp;</span><span class="n">MapPacket</span><span class="p">);</span>
+</span></span><span class="line"><span class="ln">22</span><span class="cl">    <span class="k">return</span> <span class="n">v3</span><span class="p">;</span>
+</span></span><span class="line"><span class="ln">23</span><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><p>The vulnerability here is that the <strong>data_sz</strong> is calculated incorrectly because the correct size should be
+(MAP_W * MAP_H) / 8. This function is just giving out all the sensitive pointers on the stack to all the
+clients connecting. The leak includes <strong>stack</strong> pointers, <strong>libc</strong> pointers, and <strong>binary</strong> pointers.</p>
+
+
+
+
+  
+
+
+
+<div class="center image-window" data-image-window>
+  <div class="window-titlebar">
+    <span class="window-title">leaks</span>
+    <button
+      class="window-button window-button-icon window-minimize"
+      type="button"
+      aria-expanded="true"
+      aria-label="Minimize image"
+      data-window-toggle
+    >−</button>
+  </div>
+  <div class="window-content">
+    <img
+      class="responsive"
+      src="/img/hyperion/leak.png"
+      alt="leaks"
+      decoding="async"
+    />
+  </div>
+</div>
+
+<p>The data contained PIE leak, in fact it&rsquo;s the return address of binary +0x2874, at this point we have all the
+information that we need for exploitation but we still haven&rsquo;t found an exploitable vulnerability aside from
+this memory leak.</p>
+<p>Let&rsquo;s analyse next block of code.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="line"><span class="ln">28</span><span class="cl">    <span class="k">if</span> <span class="p">(</span> <span class="o">!</span><span class="nf">RecvClientCommand</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">command_received_by_client</span><span class="p">)</span> <span class="p">)</span>
+</span></span><span class="line"><span class="ln">29</span><span class="cl">        <span class="k">return</span> <span class="mi">2LL</span><span class="p">;</span>
+</span></span><span class="line"><span class="ln">30</span><span class="cl">    <span class="k">if</span> <span class="p">(</span> <span class="nf">cplusplus_string_compare</span><span class="p">(</span><span class="o">&amp;</span><span class="n">command_received_by_client</span><span class="p">,</span> <span class="s">&#34;FIRE&#34;</span><span class="p">)</span> <span class="p">)</span>
+</span></span><span class="line"><span class="ln">31</span><span class="cl">        <span class="k">return</span> <span class="mi">3LL</span><span class="p">;</span>
+</span></span><span class="line"><span class="ln">32</span><span class="cl">    <span class="k">if</span> <span class="p">(</span> <span class="n">tanks</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">hp</span> <span class="o">&lt;=</span> <span class="mi">0</span> <span class="p">)</span>
+</span></span><span class="line"><span class="ln">33</span><span class="cl">    <span class="p">{</span>
+</span></span><span class="line"><span class="ln">34</span><span class="cl">        <span class="nf">SendText</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="s">&#34;Bye.&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="ln">35</span><span class="cl">        <span class="k">return</span> <span class="mi">0LL</span><span class="p">;</span>
+</span></span><span class="line"><span class="ln">36</span><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="ln">37</span><span class="cl">
+</span></span><span class="line"><span class="ln">38</span><span class="cl">    <span class="n">t</span> <span class="o">=</span> <span class="o">*</span><span class="nf">array_access_operator</span><span class="p">(</span><span class="n">command_received_by_client</span><span class="p">.</span><span class="n">data</span><span class="p">,</span> <span class="mi">0LL</span><span class="p">);</span>
+</span></span><span class="line"><span class="ln">39</span><span class="cl">    <span class="k">if</span> <span class="p">(</span> <span class="n">t</span><span class="p">.</span><span class="n">Weapon</span> <span class="o">!=</span> <span class="mi">1</span> <span class="o">&amp;&amp;</span> <span class="n">t</span><span class="p">.</span><span class="n">Weapon</span> <span class="o">!=</span> <span class="mi">2</span> <span class="o">&amp;&amp;</span> <span class="n">t</span><span class="p">.</span><span class="n">Weapon</span> <span class="o">!=</span> <span class="mi">3</span> <span class="p">)</span>
+</span></span><span class="line"><span class="ln">40</span><span class="cl">        <span class="k">return</span> <span class="mi">4LL</span><span class="p">;</span>
+</span></span><span class="line"><span class="ln">41</span><span class="cl">    <span class="k">if</span> <span class="p">(</span> <span class="n">t</span><span class="p">.</span><span class="n">Power</span> <span class="o">&lt;</span> <span class="mf">10.0</span> <span class="o">||</span> <span class="n">t</span><span class="p">.</span><span class="n">Power</span> <span class="o">&gt;</span> <span class="mf">100.0</span> <span class="p">)</span>
+</span></span><span class="line"><span class="ln">42</span><span class="cl">        <span class="k">return</span> <span class="mi">5LL</span><span class="p">;</span>
+</span></span></code></pre></div><p>Here it receives a packet from the client and checks if it&rsquo;s a <strong>FIRE</strong> command, because this
+is the only input that we can send to the server as client. Whenever a client fires a bullet
+it sends a <strong>FIRE</strong> Packet and a <strong>Bullet</strong> Packet. Then it checks if <strong>Weapon</strong> is a valid
+<strong>Weapon</strong> value and if the <strong>Power</strong> and <strong>Angle</strong> are also valid or not.</p>
+<p>Now we will look at the Game loop</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="line"><span class="ln">43</span><span class="cl"><span class="k">if</span> <span class="p">(</span> <span class="n">t</span><span class="p">.</span><span class="n">Angle</span> <span class="o">&gt;=</span> <span class="mf">0.0</span> <span class="o">&amp;&amp;</span> <span class="n">t</span><span class="p">.</span><span class="n">Angle</span> <span class="o">&lt;=</span> <span class="mf">180.0</span> <span class="p">)</span>
+</span></span><span class="line"><span class="ln">44</span><span class="cl"><span class="p">{</span>
+</span></span><span class="line hl"><span class="ln">45</span><span class="cl">    <span class="k">for</span> <span class="p">(</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="p">;</span> <span class="o">++</span><span class="n">i</span> <span class="p">)</span> <span class="c1">// Game loop
+</span></span></span><span class="line"><span class="ln">46</span><span class="cl">    <span class="p">{</span>
+</span></span><span class="line hl"><span class="ln">47</span><span class="cl">        <span class="k">if</span> <span class="p">(</span> <span class="n">i</span> <span class="o">&gt;</span> <span class="mi">1</span> <span class="p">)</span>
+</span></span><span class="line"><span class="ln">48</span><span class="cl">            <span class="k">goto</span> <span class="n">LABEL_4</span><span class="p">;</span>
+</span></span><span class="line"><span class="ln">49</span><span class="cl">        
+</span></span><span class="line"><span class="ln">50</span><span class="cl">        <span class="cm">/* ... */</span>
+</span></span><span class="line"><span class="ln">51</span><span class="cl">
+</span></span><span class="line"><span class="ln">52</span><span class="cl">        <span class="k">if</span> <span class="p">(</span> <span class="n">i</span> <span class="o">||</span> <span class="n">tanks</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">hp</span> <span class="o">&lt;=</span> <span class="mi">0</span> <span class="p">)</span>
+</span></span><span class="line"><span class="ln">53</span><span class="cl">        <span class="p">{</span>
+</span></span><span class="line hl"><span class="ln">54</span><span class="cl">            <span class="k">if</span> <span class="p">(</span> <span class="n">i</span> <span class="o">!=</span> <span class="mi">1</span> <span class="o">||</span> <span class="n">tanks</span><span class="p">[</span><span class="mi">1</span><span class="p">].</span><span class="n">hp</span> <span class="o">&lt;=</span> <span class="mi">0</span> <span class="p">)</span>
+</span></span><span class="line"><span class="ln">55</span><span class="cl">                <span class="k">continue</span><span class="p">;</span>
+</span></span><span class="line"><span class="ln">56</span><span class="cl">            <span class="n">expl</span> <span class="o">=</span> <span class="nf">FireTankGunAndCheatHard</span><span class="p">(</span><span class="n">map</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">bullet_event</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">dword_0</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">v7</span><span class="p">,</span> <span class="n">v8</span><span class="p">,</span> <span class="n">v9</span><span class="p">);</span>
+</span></span><span class="line"><span class="ln">57</span><span class="cl">        <span class="p">}</span>
+</span></span><span class="line hl"><span class="ln">58</span><span class="cl">        <span class="k">else</span>
+</span></span><span class="line"><span class="ln">59</span><span class="cl">        <span class="p">{</span>
+</span></span><span class="line"><span class="ln">60</span><span class="cl">            <span class="o">*&amp;</span><span class="n">expl</span><span class="p">.</span><span class="n">exploded</span> <span class="o">=</span> <span class="nf">FireTankGun</span><span class="p">(</span><span class="n">map</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">bullet_event</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">t</span><span class="p">,</span> <span class="n">v7</span><span class="p">,</span> <span class="n">v8</span><span class="p">);</span>
+</span></span><span class="line"><span class="ln">61</span><span class="cl">            <span class="o">*&amp;</span><span class="n">expl</span><span class="p">.</span><span class="n">y</span> <span class="o">=</span> <span class="n">v10</span><span class="p">;</span>
+</span></span><span class="line"><span class="ln">62</span><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="ln">63</span><span class="cl">        <span class="k">if</span> <span class="p">(</span> <span class="nf">SendBullet</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">bullet_event</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">1</span> <span class="p">)</span>
+</span></span><span class="line"><span class="ln">64</span><span class="cl">            <span class="k">goto</span> <span class="n">LABEL_4</span><span class="p">;</span>
+</span></span><span class="line"><span class="ln">65</span><span class="cl">
+</span></span><span class="line"><span class="ln">66</span><span class="cl">        <span class="cm">/* Explosion related code redacted */</span>
+</span></span><span class="line"><span class="ln">67</span><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="ln">68</span><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><p>In the above loop it is doing the calculation related to Firing of bullet.
+Here IDA&rsquo;s decompiled code made it a bit hard to realise whats happening.
+The highlighted <strong>for-loop</strong> on line <strong>45-47</strong> iterates from <strong>0-1</strong> and
+that is because it is iterating over the two tanks for shooting, if <strong>i</strong>
+is 1 then <strong>FireTankGunAndCheatHard</strong> function is called because <strong>Red Tank</strong>
+is the enemy tank but if <strong>i</strong> is 0, then <strong>FireTankGun</strong> function is called.</p>
+<p>Let&rsquo;s see both of these functions, I am using the challenge source code here</p>
+<h1 id="1-firetankgun">1. FireTankGun</h1>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="line"><span class="ln"> 1</span><span class="cl"><span class="n">Explosion</span> <span class="kr">__fastcall</span> <span class="nf">FireTankGun</span><span class="p">(</span>
+</span></span><span class="line"><span class="ln"> 2</span><span class="cl">	<span class="kt">char</span> <span class="o">*</span><span class="n">map</span><span class="p">,</span>
+</span></span><span class="line"><span class="ln"> 3</span><span class="cl">	<span class="n">Bullet</span> <span class="o">*</span><span class="n">bullet</span><span class="p">,</span>
+</span></span><span class="line"><span class="ln"> 4</span><span class="cl">	<span class="n">TargettingData</span> <span class="o">*</span><span class="n">Target</span><span class="p">,</span>
+</span></span><span class="line"><span class="ln"> 5</span><span class="cl">	<span class="kt">int</span> <span class="n">x</span><span class="p">,</span> <span class="kt">int</span> <span class="n">y</span>
+</span></span><span class="line"><span class="ln"> 6</span><span class="cl"><span class="p">)</span>
+</span></span><span class="line"><span class="ln"> 7</span><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="ln"> 8</span><span class="cl">
+</span></span><span class="line"><span class="ln"> 9</span><span class="cl">	<span class="cm">/* ... */</span>
+</span></span><span class="line"><span class="ln">10</span><span class="cl">
+</span></span><span class="line hl"><span class="ln">11</span><span class="cl">	<span class="n">vx</span> <span class="o">=</span> <span class="mf">0.01</span> <span class="o">*</span> <span class="n">Target</span><span class="o">-&gt;</span><span class="n">Power</span> <span class="o">*</span> <span class="nf">cos</span><span class="p">(</span><span class="mf">3.14159</span> <span class="o">*</span> <span class="n">Target</span><span class="o">-&gt;</span><span class="n">Angle</span> <span class="o">/</span> <span class="mf">180.0</span><span class="p">);</span>
+</span></span><span class="line hl"><span class="ln">12</span><span class="cl">	<span class="n">vy</span> <span class="o">=</span> <span class="mf">0.01</span> <span class="o">*</span> <span class="n">Target</span><span class="o">-&gt;</span><span class="n">Power</span> <span class="o">*</span> <span class="o">-</span><span class="nf">sin</span><span class="p">(</span><span class="mf">3.14159</span> <span class="o">*</span> <span class="n">Target</span><span class="o">-&gt;</span><span class="n">Angle</span> <span class="o">/</span> <span class="mf">180.0</span><span class="p">);</span>
+</span></span><span class="line"><span class="ln">13</span><span class="cl">	<span class="nf">bullet_event_clear</span><span class="p">(</span><span class="n">bullet</span><span class="p">);</span>
+</span></span><span class="line"><span class="ln">14</span><span class="cl">	<span class="n">x_1</span> <span class="o">=</span> <span class="n">v6</span><span class="p">;</span>
+</span></span><span class="line"><span class="ln">15</span><span class="cl">	<span class="n">y_1</span> <span class="o">=</span> <span class="n">v7</span> <span class="o">-</span> <span class="mf">5.0</span><span class="p">;</span>
+</span></span><span class="line"><span class="ln">16</span><span class="cl">	<span class="n">explode</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="ln">17</span><span class="cl">	<span class="n">last_ix</span> <span class="o">=</span> <span class="nf">min</span><span class="p">();</span>
+</span></span><span class="line"><span class="ln">18</span><span class="cl">	<span class="n">last_iy</span> <span class="o">=</span> <span class="nf">min</span><span class="p">();</span>
+</span></span><span class="line"><span class="ln">19</span><span class="cl">	<span class="k">for</span> <span class="p">(</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;=</span> <span class="mi">9999</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span> <span class="p">)</span>
+</span></span><span class="line"><span class="ln">20</span><span class="cl">	<span class="p">{</span>
+</span></span><span class="line"><span class="ln">21</span><span class="cl">		<span class="n">x_1</span> <span class="o">=</span> <span class="n">x_1</span> <span class="o">+</span> <span class="n">vx</span><span class="p">;</span>
+</span></span><span class="line"><span class="ln">22</span><span class="cl">		<span class="n">y_1</span> <span class="o">=</span> <span class="n">y_1</span> <span class="o">+</span> <span class="n">vy</span><span class="p">;</span>
+</span></span><span class="line hl"><span class="ln">23</span><span class="cl">		<span class="n">vy</span> <span class="o">=</span> <span class="n">vy</span> <span class="o">+</span> <span class="mf">0.0009807000000000001</span><span class="p">;</span>
+</span></span><span class="line"><span class="ln">24</span><span class="cl">		<span class="n">ix</span> <span class="o">=</span> <span class="n">x_1</span><span class="p">;</span>
+</span></span><span class="line"><span class="ln">25</span><span class="cl">		<span class="n">iy</span> <span class="o">=</span> <span class="n">y_1</span><span class="p">;</span>
+</span></span><span class="line"><span class="ln">26</span><span class="cl">		<span class="cm">/* ... */</span>
+</span></span><span class="line"><span class="ln">27</span><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="ln">28</span><span class="cl">	<span class="k">if</span> <span class="p">(</span> <span class="n">explode</span> <span class="p">)</span>
+</span></span><span class="line"><span class="ln">29</span><span class="cl">	<span class="p">{</span>
+</span></span><span class="line"><span class="ln">30</span><span class="cl">		<span class="n">a2</span><span class="p">.</span><span class="n">x</span> <span class="o">=</span> <span class="n">ix</span><span class="p">;</span>
+</span></span><span class="line"><span class="ln">31</span><span class="cl">		<span class="n">a2</span><span class="p">.</span><span class="n">y</span> <span class="o">=</span> <span class="n">iy</span><span class="p">;</span>
+</span></span><span class="line"><span class="ln">32</span><span class="cl">		<span class="n">a2</span><span class="p">.</span><span class="n">weapon</span> <span class="o">=</span> <span class="n">Target</span><span class="o">-&gt;</span><span class="n">Weapon</span><span class="p">;</span>
+</span></span><span class="line"><span class="ln">33</span><span class="cl">		<span class="nf">bullet_event_emplace_back</span><span class="p">(</span><span class="n">bullet</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">a2</span><span class="p">);</span>
+</span></span><span class="line hl"><span class="ln">34</span><span class="cl">		<span class="nf">ApplyExplosionToMap</span><span class="p">(</span><span class="n">map</span><span class="p">,</span> <span class="n">ix</span><span class="p">,</span> <span class="n">iy</span><span class="p">,</span> <span class="n">Target</span><span class="o">-&gt;</span><span class="n">Weapon</span><span class="p">);</span>
+</span></span><span class="line"><span class="ln">35</span><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="ln">36</span><span class="cl">	<span class="nf">LOBYTE</span><span class="p">(</span><span class="n">v5</span><span class="p">)</span> <span class="o">=</span> <span class="n">explode</span><span class="p">;</span>
+</span></span><span class="line"><span class="ln">37</span><span class="cl">	<span class="k">return</span> <span class="n">v5</span> <span class="o">|</span> <span class="p">(</span><span class="n">ix</span> <span class="o">&lt;&lt;</span> <span class="mi">32</span><span class="p">);</span>
+</span></span><span class="line"><span class="ln">38</span><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><p>This function is responsible for projectile shooting of <strong>Green Tank</strong>. The trajectory of bullet is effected by <strong>Gravity</strong> (line 23), <strong>Angle</strong> and <strong>Power</strong> (line 11-12). After calculating the correct coordinate of the Explosion, the explosion effect is applied to the <strong>MAP</strong> (line 34).</p>
+<h1 id="2-firetankgunandcheathard">2. FireTankGunAndCheatHard</h1>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="line"><span class="ln"> 1</span><span class="cl"><span class="n">Explosion</span> <span class="kr">__fastcall</span> <span class="nf">FireTankGunAndCheatHard</span><span class="p">(</span>
+</span></span><span class="line"><span class="ln"> 2</span><span class="cl">	<span class="kt">char</span> <span class="o">*</span><span class="n">MAP</span><span class="p">,</span>
+</span></span><span class="line"><span class="ln"> 3</span><span class="cl">	<span class="n">Bullet</span> <span class="o">*</span><span class="n">bullet_event</span><span class="p">,</span>
+</span></span><span class="line"><span class="ln"> 4</span><span class="cl">	<span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">weapon</span><span class="p">,</span>
+</span></span><span class="line"><span class="ln"> 5</span><span class="cl">	<span class="kt">int</span> <span class="n">a4</span><span class="p">,</span> <span class="kt">int</span> <span class="n">a5</span><span class="p">,</span> <span class="kt">int</span> <span class="n">a6</span>
+</span></span><span class="line"><span class="ln"> 6</span><span class="cl"><span class="p">)</span>
+</span></span><span class="line"><span class="ln"> 7</span><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="ln"> 8</span><span class="cl">
+</span></span><span class="line"><span class="ln"> 9</span><span class="cl">	<span class="cm">/* ... */</span>
+</span></span><span class="line"><span class="ln">10</span><span class="cl">	<span class="nf">bullet_event_clear</span><span class="p">(</span><span class="n">bullet_event</span><span class="p">);</span>
+</span></span><span class="line"><span class="ln">11</span><span class="cl">	<span class="n">v17</span> <span class="o">=</span> <span class="n">v7</span><span class="p">;</span>
+</span></span><span class="line"><span class="ln">12</span><span class="cl">	<span class="n">y_1</span> <span class="o">=</span> <span class="n">v8</span> <span class="o">-</span> <span class="mf">5.0</span><span class="p">;</span>
+</span></span><span class="line"><span class="ln">13</span><span class="cl">	<span class="n">explode</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="ln">14</span><span class="cl">	<span class="k">while</span> <span class="p">(</span> <span class="n">y_1</span> <span class="o">&gt;</span> <span class="o">-</span><span class="mf">20.0</span> <span class="p">)</span>
+</span></span><span class="line"><span class="ln">15</span><span class="cl">	<span class="p">{</span>
+</span></span><span class="line"><span class="ln">16</span><span class="cl">		<span class="n">x</span> <span class="o">=</span> <span class="n">v17</span><span class="p">;</span>
+</span></span><span class="line"><span class="ln">17</span><span class="cl">		<span class="n">y</span> <span class="o">=</span> <span class="n">y_1</span><span class="p">;</span>
+</span></span><span class="line"><span class="ln">18</span><span class="cl">		<span class="k">if</span> <span class="p">(</span> <span class="n">y_1</span> <span class="o">&gt;=</span> <span class="mi">0</span> <span class="o">&amp;&amp;</span> <span class="nf">GetPixel</span><span class="p">(</span><span class="n">MAP</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span> <span class="p">)</span>
+</span></span><span class="line"><span class="ln">19</span><span class="cl">		<span class="p">{</span>
+</span></span><span class="line"><span class="ln">20</span><span class="cl">			<span class="n">explode</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+</span></span><span class="line"><span class="ln">21</span><span class="cl">			<span class="k">break</span><span class="p">;</span>
+</span></span><span class="line"><span class="ln">22</span><span class="cl">		<span class="p">}</span>
+</span></span><span class="line"><span class="ln">23</span><span class="cl">		<span class="n">v14</span><span class="p">.</span><span class="n">x</span> <span class="o">=</span> <span class="n">x</span><span class="p">;</span>
+</span></span><span class="line"><span class="ln">24</span><span class="cl">		<span class="n">v14</span><span class="p">.</span><span class="n">y</span> <span class="o">=</span> <span class="n">y</span><span class="p">;</span>
+</span></span><span class="line"><span class="ln">25</span><span class="cl">		<span class="n">v14</span><span class="p">.</span><span class="n">weapon</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="ln">26</span><span class="cl">		<span class="nf">bullet_event_emplace_back</span><span class="p">(</span><span class="n">bullet_event</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">v14</span><span class="p">);</span>
+</span></span><span class="line"><span class="ln">27</span><span class="cl">		<span class="n">y_1</span> <span class="o">=</span> <span class="n">y_1</span> <span class="o">-</span> <span class="mf">1.5</span><span class="p">;</span>
+</span></span><span class="line"><span class="ln">28</span><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="ln">29</span><span class="cl">	<span class="cm">/* ... */</span>
+</span></span><span class="line"><span class="ln">30</span><span class="cl">	<span class="k">if</span> <span class="p">(</span> <span class="n">explode</span> <span class="p">)</span>
+</span></span><span class="line"><span class="ln">31</span><span class="cl">	<span class="p">{</span>
+</span></span><span class="line"><span class="ln">32</span><span class="cl">		<span class="n">x_1</span><span class="p">.</span><span class="n">x</span> <span class="o">=</span> <span class="n">x</span><span class="p">;</span>
+</span></span><span class="line"><span class="ln">33</span><span class="cl">		<span class="n">x_1</span><span class="p">.</span><span class="n">y</span> <span class="o">=</span> <span class="n">y</span><span class="p">;</span>
+</span></span><span class="line"><span class="ln">34</span><span class="cl">		<span class="n">x_1</span><span class="p">.</span><span class="n">weapon</span> <span class="o">=</span> <span class="n">weapon</span><span class="p">;</span>
+</span></span><span class="line"><span class="ln">35</span><span class="cl">		<span class="nf">bullet_event_emplace_back</span><span class="p">(</span><span class="n">bullet_event</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">x_1</span><span class="p">);</span>
+</span></span><span class="line hl"><span class="ln">36</span><span class="cl">		<span class="nf">ApplyExplosionToMap</span><span class="p">(</span><span class="n">MAP</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">weapon</span><span class="p">);</span>
+</span></span><span class="line"><span class="ln">37</span><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="ln">38</span><span class="cl">	<span class="nf">LOBYTE</span><span class="p">(</span><span class="n">v6</span><span class="p">)</span> <span class="o">=</span> <span class="n">explode</span><span class="p">;</span>
+</span></span><span class="line"><span class="ln">39</span><span class="cl">	<span class="o">*&amp;</span><span class="n">v12</span><span class="p">.</span><span class="n">exploded</span> <span class="o">=</span> <span class="n">v6</span> <span class="o">|</span> <span class="p">(</span><span class="n">x</span> <span class="o">&lt;&lt;</span> <span class="mi">32</span><span class="p">);</span>
+</span></span><span class="line"><span class="ln">40</span><span class="cl">	<span class="o">*&amp;</span><span class="n">v12</span><span class="p">.</span><span class="n">y</span> <span class="o">=</span> <span class="n">y</span> <span class="o">|</span> <span class="p">(</span><span class="n">weapon</span> <span class="o">&lt;&lt;</span> <span class="mi">32</span><span class="p">);</span>
+</span></span><span class="line"><span class="ln">41</span><span class="cl">	<span class="k">return</span> <span class="n">v12</span><span class="p">;</span>
+</span></span><span class="line"><span class="ln">42</span><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><p>This function is responsible for <strong>NON-PROJECTILE AIMBOT</strong> shooting of <strong>Red Tank</strong>. The trajectory of bullet shot by <strong>Red Tank</strong> is always fixed on <strong>Green Tank</strong>. The Bullet never misses because it falls straight on <strong>Green Tank</strong>. After calculating the correct coordinate of the Explosion, the explosion effect is applied to the <strong>MAP</strong> (line 36).</p>
+<p>Looking at the above functions we know that the <strong>Red Tank</strong> is going to punish us if we miss any of our shots.</p>
+<h3 id="the-vulnerability">The Vulnerability</h3>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="line"><span class="ln"> 1</span><span class="cl"><span class="kr">__int64</span> <span class="kr">__fastcall</span> <span class="nf">ApplyExplosionToMap</span><span class="p">(</span>
+</span></span><span class="line"><span class="ln"> 2</span><span class="cl">	<span class="kt">char</span> <span class="o">*</span><span class="n">map</span><span class="p">,</span>
+</span></span><span class="line"><span class="ln"> 3</span><span class="cl">	<span class="kt">int</span> <span class="n">x</span><span class="p">,</span>
+</span></span><span class="line"><span class="ln"> 4</span><span class="cl">	<span class="kt">int</span> <span class="n">y</span><span class="p">,</span>
+</span></span><span class="line"><span class="ln"> 5</span><span class="cl">	<span class="kt">int</span> <span class="n">weapon</span>
+</span></span><span class="line"><span class="ln"> 6</span><span class="cl"><span class="p">)</span>
+</span></span><span class="line"><span class="ln"> 7</span><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="ln"> 8</span><span class="cl">	<span class="kt">bool</span> <span class="n">effect</span><span class="p">;</span> <span class="c1">// [rsp+2Ch] [rbp-1Ch]
+</span></span></span><span class="line"><span class="ln"> 9</span><span class="cl">	<span class="kt">int</span> <span class="n">r</span><span class="p">;</span> <span class="c1">// [rsp+34h] [rbp-14h]
+</span></span></span><span class="line"><span class="ln">10</span><span class="cl">	<span class="kt">signed</span> <span class="kt">int</span> <span class="n">j</span><span class="p">;</span> <span class="c1">// [rsp+38h] [rbp-10h]
+</span></span></span><span class="line"><span class="ln">11</span><span class="cl">	<span class="kt">signed</span> <span class="kt">int</span> <span class="n">i</span><span class="p">;</span> <span class="c1">// [rsp+3Ch] [rbp-Ch]
+</span></span></span><span class="line"><span class="ln">12</span><span class="cl">
+</span></span><span class="line"><span class="ln">13</span><span class="cl">	<span class="n">r</span> <span class="o">=</span> <span class="n">WEAPON_EXPLOSION_RADIUS</span><span class="p">[</span><span class="n">weapon</span><span class="p">];</span>
+</span></span><span class="line"><span class="ln">14</span><span class="cl">	<span class="n">effect</span> <span class="o">=</span> <span class="n">weapon</span> <span class="o">==</span> <span class="mi">2</span><span class="p">;</span>
+</span></span><span class="line"><span class="ln">15</span><span class="cl">
+</span></span><span class="line"><span class="ln">16</span><span class="cl">	<span class="k">for</span> <span class="p">(</span> <span class="n">i</span> <span class="o">=</span> <span class="n">y</span> <span class="o">-</span> <span class="n">r</span><span class="p">;</span> <span class="n">y</span> <span class="o">+</span> <span class="n">r</span> <span class="o">&gt;=</span> <span class="n">i</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span> <span class="p">)</span>
+</span></span><span class="line"><span class="ln">17</span><span class="cl">	<span class="p">{</span>
+</span></span><span class="line"><span class="ln">18</span><span class="cl">		<span class="k">for</span> <span class="p">(</span> <span class="n">j</span> <span class="o">=</span> <span class="n">x</span> <span class="o">-</span> <span class="n">r</span><span class="p">;</span> <span class="n">x</span> <span class="o">+</span> <span class="n">r</span> <span class="o">&gt;=</span> <span class="n">j</span><span class="p">;</span> <span class="o">++</span><span class="n">j</span> <span class="p">)</span>
+</span></span><span class="line"><span class="ln">19</span><span class="cl">		<span class="p">{</span>
+</span></span><span class="line hl"><span class="ln">20</span><span class="cl">			<span class="k">if</span> <span class="p">(</span> <span class="p">(</span><span class="n">i</span> <span class="o">&gt;=</span> <span class="mi">0</span> <span class="o">&amp;&amp;</span> <span class="n">i</span> <span class="o">&lt;=</span> <span class="mi">480</span><span class="p">)</span> <span class="o">&amp;&amp;</span> <span class="c1">// Vulnerability
+</span></span></span><span class="line"><span class="ln">21</span><span class="cl">				 <span class="p">(</span><span class="n">j</span> <span class="o">&gt;=</span> <span class="mi">0</span> <span class="o">&amp;&amp;</span> <span class="n">j</span> <span class="o">&lt;=</span> <span class="mi">639</span><span class="p">)</span> <span class="o">&amp;&amp;</span>
+</span></span><span class="line"><span class="ln">22</span><span class="cl">				 <span class="p">((</span><span class="n">j</span> <span class="o">-</span> <span class="n">x</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">j</span> <span class="o">-</span> <span class="n">x</span><span class="p">)</span> <span class="o">+</span> <span class="p">(</span><span class="n">i</span> <span class="o">-</span> <span class="n">y</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">i</span> <span class="o">-</span> <span class="n">y</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="n">r</span> <span class="o">*</span> <span class="n">r</span> <span class="p">)</span>
+</span></span><span class="line"><span class="ln">23</span><span class="cl">			   <span class="p">){</span>
+</span></span><span class="line hl"><span class="ln">24</span><span class="cl">				<span class="nf">PutPixel</span><span class="p">(</span><span class="n">map</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">effect</span><span class="p">);</span>
+</span></span><span class="line"><span class="ln">25</span><span class="cl">			<span class="p">}</span>
+</span></span><span class="line"><span class="ln">26</span><span class="cl">		<span class="p">}</span>
+</span></span><span class="line"><span class="ln">27</span><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="ln">28</span><span class="cl">	<span class="k">return</span> <span class="nf">ApplyGravitationToMap</span><span class="p">(</span><span class="n">map</span><span class="p">,</span> <span class="p">(</span><span class="n">x</span> <span class="o">-</span> <span class="n">r</span><span class="p">),</span> <span class="p">(</span><span class="n">r</span> <span class="o">+</span> <span class="n">x</span><span class="p">));</span>
+</span></span><span class="line"><span class="ln">29</span><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="ln">30</span><span class="cl">
+</span></span><span class="line"><span class="ln">31</span><span class="cl"><span class="cm">/* Modifies Colors in MAP at bit level */</span>
+</span></span><span class="line"><span class="ln">32</span><span class="cl"><span class="kr">__int64</span> <span class="kr">__fastcall</span> <span class="nf">PutPixel</span><span class="p">(</span>
+</span></span><span class="line"><span class="ln">33</span><span class="cl">	<span class="kt">char</span> <span class="o">*</span><span class="n">MAP</span><span class="p">,</span>
+</span></span><span class="line"><span class="ln">34</span><span class="cl">	<span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">x</span><span class="p">,</span>
+</span></span><span class="line"><span class="ln">35</span><span class="cl">	<span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">y</span><span class="p">,</span>
+</span></span><span class="line"><span class="ln">36</span><span class="cl">	<span class="kt">char</span> <span class="n">color</span>
+</span></span><span class="line"><span class="ln">37</span><span class="cl"><span class="p">)</span>
+</span></span><span class="line"><span class="ln">38</span><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="ln">39</span><span class="cl">	<span class="kr">__int64</span> <span class="n">result</span><span class="p">;</span> <span class="c1">// rax
+</span></span></span><span class="line"><span class="ln">40</span><span class="cl">	<span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">v5</span><span class="p">;</span> <span class="c1">// [rsp+20h] [rbp-4h]
+</span></span></span><span class="line"><span class="ln">41</span><span class="cl">
+</span></span><span class="line"><span class="ln">42</span><span class="cl">	<span class="k">if</span> <span class="p">(</span> <span class="n">x</span> <span class="o">&lt;=</span> <span class="mi">639</span> <span class="o">&amp;&amp;</span> <span class="n">y</span> <span class="o">&lt;=</span> <span class="mi">480</span> <span class="p">)</span>
+</span></span><span class="line"><span class="ln">43</span><span class="cl">	<span class="p">{</span>
+</span></span><span class="line"><span class="ln">44</span><span class="cl">		<span class="n">v5</span> <span class="o">=</span> <span class="mi">640</span> <span class="o">*</span> <span class="n">y</span> <span class="o">+</span> <span class="n">x</span><span class="p">;</span>
+</span></span><span class="line"><span class="ln">45</span><span class="cl">		<span class="n">MAP</span><span class="p">[</span><span class="n">v5</span> <span class="o">&gt;&gt;</span> <span class="mi">3</span><span class="p">]</span> <span class="o">&amp;=</span> <span class="o">~</span><span class="p">(</span><span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="p">(</span><span class="n">v5</span> <span class="o">&amp;</span> <span class="mi">7</span><span class="p">));</span>
+</span></span><span class="line"><span class="ln">46</span><span class="cl">		<span class="n">result</span> <span class="o">=</span> <span class="n">MAP</span><span class="p">[</span><span class="n">v5</span> <span class="o">&gt;&gt;</span> <span class="mi">3</span><span class="p">];</span>
+</span></span><span class="line"><span class="ln">47</span><span class="cl">		<span class="nf">LOBYTE</span><span class="p">(</span><span class="n">result</span><span class="p">)</span> <span class="o">=</span> <span class="p">((</span><span class="n">color</span> <span class="o">&amp;</span> <span class="mi">1</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="p">(</span><span class="n">v5</span> <span class="o">&amp;</span> <span class="mi">7</span><span class="p">))</span> <span class="o">|</span> <span class="n">result</span><span class="p">;</span>
+</span></span><span class="line"><span class="ln">48</span><span class="cl">		<span class="n">MAP</span><span class="p">[</span><span class="n">v5</span> <span class="o">&gt;&gt;</span> <span class="mi">3</span><span class="p">]</span> <span class="o">=</span> <span class="n">result</span><span class="p">;</span>
+</span></span><span class="line"><span class="ln">49</span><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="ln">50</span><span class="cl">	<span class="k">return</span> <span class="n">result</span><span class="p">;</span>
+</span></span><span class="line"><span class="ln">51</span><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><p>Did you spot the Vulnerability?</p>
+<p>The vulnerability here is in the <strong>ApplyExplosionToMap()</strong>. If you see line 20
+We can see that the boundary check for <strong>i</strong> is done incorrectly. The boundary
+for <strong>i</strong> should&rsquo;ve been <strong>i &gt;= 0 &amp;&amp; i &lt;= 479</strong>, instead it is <strong>i &gt;= 0 &amp;&amp; i &lt;= 480</strong>.</p>
+<p>What if an explosion happens at the bottom of the <strong>MAP</strong>?. The explosion will create
+an empty circle of Air in the MAP and half of this circle will lie inside the MAP and
+half of the circle will corrupt the values which lies after the MAP.</p>
+<p>This vulnerability allows us to create explosion effect outside of the MAP, which
+means we can manipulate bits outside of the MAP. We know there are important pointers
+just after the MAP on the stack, if we can corrupt them we can redirect code execution.</p>
+<p>I tried to destroy the ground until I reach the bottom of the <strong>MAP</strong> and now if we
+look at the GMAPP leak we will see a lot <strong>NULL</strong> bytes including the part where
+we got the return address from, which means we were able to modify the return address
+by just exploding the ground.</p>
+
+
+
+
+  
+
+
+
+<div class="center image-window" data-image-window>
+  <div class="window-titlebar">
+    <span class="window-title">Leak after exploding ground</span>
+    <button
+      class="window-button window-button-icon window-minimize"
+      type="button"
+      aria-expanded="true"
+      aria-label="Minimize image"
+      data-window-toggle
+    >−</button>
+  </div>
+  <div class="window-content">
+    <img
+      class="responsive"
+      src="/img/hyperion/hexdump.png"
+      alt="Leak after exploding ground"
+      decoding="async"
+    />
+  </div>
+</div>
+
+<h3 id="triggering-the-vulnerability">Triggering The Vulnerability</h3>
+<p>Okay, we know that we can manipulate the return address just by doing different kinds
+of explosions. Explosion with weapon 1 will remove the dirt in the radius of the explosion
+which basically means it will unset the bits in the range of its radius and if we fire
+a weapon 2 which is the dirt ball then we will set all the bits in the range of the weapon 2.</p>
+<p>Using this primitive we can overwrite the return address with any arbitrary value just by
+exploding different weapons, but its not as easy as it sounds. If we start destroying the
+ground instead of shooting at the <strong>Red Tank</strong> then the <strong>Red Tank</strong> will immedieatly destroy
+us and we won&rsquo;t be able to do anything. We need to figure out a way to defeat the <strong>Red Tank</strong>.</p>
+<h3 id="2d-projectile-aimbot">2D Projectile AIMBOT</h3>
+<p>Making an aimbot for hyperion was fairly easy because the tanks don&rsquo;t move horizontally.
+It&rsquo;s like solving a physics problem to find the correct initial velocity and angle to
+hit the target. Since the <strong>Tanks</strong> could be at different height level we can&rsquo;t just use
+the basic projectile motion formulas, we need to take account of the height difference.</p>
+
+
+
+
+  
+
+
+
+<div class="center image-window" data-image-window>
+  <div class="window-titlebar">
+    <span class="window-title">Projectile</span>
+    <button
+      class="window-button window-button-icon window-minimize"
+      type="button"
+      aria-expanded="true"
+      aria-label="Minimize image"
+      data-window-toggle
+    >−</button>
+  </div>
+  <div class="window-content">
+    <img
+      class="responsive"
+      src="/img/hyperion/projectile.png"
+      alt="Projectile"
+      decoding="async"
+    />
+  </div>
+</div>
+
+<p>Let&rsquo;s call the difference of height between both the <strong>Tanks</strong> as <strong>H</strong>, the displacement
+between both the <strong>Tanks</strong> as <strong>D</strong>, initial velocity at which the projectile is launched
+or in our case the <strong>Power</strong> as <strong>u</strong>, Gravitaional acceleration as <strong>g</strong> and initial launch
+angle as <strong>θ</strong> (Theta) then the height of a projectile at any time (t) is given by,</p>
+
+
+
+
+  
+
+
+
+<div class="center image-window" data-image-window>
+  <div class="window-titlebar">
+    <span class="window-title">equation of height</span>
+    <button
+      class="window-button window-button-icon window-minimize"
+      type="button"
+      aria-expanded="true"
+      aria-label="Minimize image"
+      data-window-toggle
+    >−</button>
+  </div>
+  <div class="window-content">
+    <img
+      class="responsive"
+      src="/img/hyperion/height_eq.png"
+      alt="equation of height"
+      decoding="async"
+    />
+  </div>
+</div>
+
+<p>We want the projectile to hit the <strong>Red Tank</strong> which is at displacement <strong>D</strong> from the
+<strong>Green Tank</strong>. So, the time <strong>t</strong> when the projectile reaches the <strong>Red Tank</strong> will be
+given by,</p>
+
+
+
+
+  
+
+
+
+<div class="center image-window" data-image-window>
+  <div class="window-titlebar">
+    <span class="window-title">Time at the end</span>
+    <button
+      class="window-button window-button-icon window-minimize"
+      type="button"
+      aria-expanded="true"
+      aria-label="Minimize image"
+      data-window-toggle
+    >−</button>
+  </div>
+  <div class="window-content">
+    <img
+      class="responsive"
+      src="/img/hyperion/time_eq.png"
+      alt="Time at the end"
+      decoding="async"
+    />
+  </div>
+</div>
+
+<p>Using both the equations we can derive the expression for initial velocity of launch or
+<strong>Power</strong>.</p>
+
+
+
+
+  
+
+
+
+<div class="center image-window" data-image-window>
+  <div class="window-titlebar">
+    <span class="window-title">Derivation of initial Velocity</span>
+    <button
+      class="window-button window-button-icon window-minimize"
+      type="button"
+      aria-expanded="true"
+      aria-label="Minimize image"
+      data-window-toggle
+    >−</button>
+  </div>
+  <div class="window-content">
+    <img
+      class="responsive"
+      src="/img/hyperion/derivation.png"
+      alt="Derivation of initial Velocity"
+      decoding="async"
+    />
+  </div>
+</div>
+
+<p>Using the above expression for the initial velocity we can try a bunch of angles in the
+range of 0-90 degrees for which we get initial velocity under 100 because that is our
+limit for <strong>Power</strong>.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="ln"> 1</span><span class="cl"><span class="kn">from</span> <span class="nn">math</span> <span class="kn">import</span> <span class="n">sqrt</span><span class="p">,</span> <span class="n">sin</span><span class="p">,</span> <span class="n">cos</span><span class="p">,</span> <span class="n">radians</span> <span class="k">as</span> <span class="n">rd</span><span class="p">,</span> <span class="n">degrees</span> <span class="k">as</span> <span class="n">dg</span>
+</span></span><span class="line"><span class="ln"> 2</span><span class="cl">
+</span></span><span class="line"><span class="ln"> 3</span><span class="cl"><span class="k">def</span> <span class="nf">GetAim</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="n">h</span><span class="p">):</span>
+</span></span><span class="line"><span class="ln"> 4</span><span class="cl">    <span class="n">g</span> <span class="o">=</span> <span class="mf">9.8</span>
+</span></span><span class="line"><span class="ln"> 5</span><span class="cl">
+</span></span><span class="line"><span class="ln"> 6</span><span class="cl">    <span class="k">for</span> <span class="n">angle</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">90</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">):</span>
+</span></span><span class="line"><span class="ln"> 7</span><span class="cl">        <span class="n">root</span> <span class="o">=</span> <span class="p">((</span><span class="n">g</span> <span class="o">*</span> <span class="n">d</span> <span class="o">*</span> <span class="n">d</span><span class="p">)</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span>
+</span></span><span class="line"><span class="ln"> 8</span><span class="cl">        <span class="n">root</span> <span class="o">/=</span> <span class="p">(</span><span class="n">d</span> <span class="o">*</span> <span class="nb">abs</span><span class="p">(</span><span class="n">sin</span><span class="p">(</span><span class="n">rd</span><span class="p">(</span><span class="n">angle</span><span class="p">)))</span> <span class="o">*</span> <span class="n">cos</span><span class="p">(</span><span class="n">rd</span><span class="p">(</span><span class="n">angle</span><span class="p">))</span> <span class="o">-</span> <span class="n">h</span> <span class="o">*</span> <span class="p">(</span><span class="n">cos</span><span class="p">(</span><span class="n">rd</span><span class="p">(</span><span class="n">angle</span><span class="p">))</span> <span class="o">**</span> <span class="mi">2</span><span class="p">))</span>
+</span></span><span class="line"><span class="ln"> 9</span><span class="cl">        <span class="n">power</span> <span class="o">=</span> <span class="n">sqrt</span><span class="p">(</span><span class="n">root</span><span class="p">)</span>
+</span></span><span class="line"><span class="ln">10</span><span class="cl">        <span class="n">angle</span> <span class="o">=</span> <span class="mi">180</span> <span class="o">-</span> <span class="n">angle</span>
+</span></span><span class="line"><span class="ln">11</span><span class="cl">        <span class="k">if</span> <span class="n">power</span> <span class="o">&lt;=</span> <span class="mf">100.0</span> <span class="ow">and</span> <span class="n">power</span> <span class="o">&gt;=</span> <span class="mf">10.0</span><span class="p">:</span>
+</span></span><span class="line"><span class="ln">12</span><span class="cl">            <span class="k">return</span> <span class="n">power</span><span class="p">,</span> <span class="n">angle</span>
+</span></span><span class="line"><span class="ln">13</span><span class="cl">
+</span></span><span class="line"><span class="ln">14</span><span class="cl"><span class="k">def</span> <span class="nf">CreateAimbotPacket</span><span class="p">(</span><span class="n">tanks</span><span class="p">):</span>
+</span></span><span class="line"><span class="ln">15</span><span class="cl">    <span class="n">xa</span> <span class="o">=</span> <span class="n">tanks</span><span class="o">.</span><span class="n">tank1</span><span class="o">.</span><span class="n">x</span>
+</span></span><span class="line"><span class="ln">16</span><span class="cl">    <span class="n">xb</span> <span class="o">=</span> <span class="n">tanks</span><span class="o">.</span><span class="n">tank2</span><span class="o">.</span><span class="n">x</span>
+</span></span><span class="line"><span class="ln">17</span><span class="cl">    <span class="n">ya</span> <span class="o">=</span> <span class="n">tanks</span><span class="o">.</span><span class="n">tank1</span><span class="o">.</span><span class="n">y</span>
+</span></span><span class="line"><span class="ln">18</span><span class="cl">    <span class="n">yb</span> <span class="o">=</span> <span class="n">tanks</span><span class="o">.</span><span class="n">tank2</span><span class="o">.</span><span class="n">y</span>
+</span></span><span class="line"><span class="ln">19</span><span class="cl">    <span class="n">d</span> <span class="o">=</span> <span class="nb">abs</span><span class="p">(</span><span class="n">xa</span> <span class="o">-</span> <span class="n">xb</span><span class="p">)</span>
+</span></span><span class="line"><span class="ln">20</span><span class="cl">    <span class="n">h</span> <span class="o">=</span> <span class="nb">abs</span><span class="p">(</span><span class="n">ya</span> <span class="o">-</span> <span class="n">yb</span><span class="p">)</span>
+</span></span><span class="line"><span class="ln">21</span><span class="cl">    <span class="n">power</span><span class="p">,</span> <span class="n">angle</span> <span class="o">=</span> <span class="n">GetAim</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="n">h</span><span class="p">)</span>
+</span></span><span class="line"><span class="ln">22</span><span class="cl">    <span class="nb">print</span><span class="p">(</span><span class="s2">&#34;AIM at (</span><span class="si">%d</span><span class="s2">, </span><span class="si">%d</span><span class="s2">)&#34;</span> <span class="o">%</span> <span class="p">(</span><span class="n">xb</span><span class="p">,</span> <span class="n">yb</span><span class="p">))</span>
+</span></span><span class="line"><span class="ln">23</span><span class="cl">    <span class="nb">print</span><span class="p">(</span><span class="s2">&#34;angle: </span><span class="si">%f</span><span class="s2">&#34;</span> <span class="o">%</span> <span class="n">angle</span><span class="p">)</span>
+</span></span><span class="line"><span class="ln">24</span><span class="cl">    <span class="nb">print</span><span class="p">(</span><span class="s2">&#34;power: </span><span class="si">%f</span><span class="s2">&#34;</span> <span class="o">%</span> <span class="n">power</span><span class="p">)</span>
+</span></span><span class="line"><span class="ln">25</span><span class="cl">    <span class="k">return</span> <span class="n">CreatePacket</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">power</span><span class="p">,</span> <span class="n">angle</span><span class="p">)</span>
+</span></span><span class="line"><span class="ln">26</span><span class="cl">
+</span></span><span class="line"><span class="ln">27</span><span class="cl"><span class="k">def</span> <span class="nf">FireAt</span><span class="p">(</span><span class="n">weapon</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">tanks</span><span class="p">,</span> <span class="n">debug</span><span class="p">):</span>
+</span></span><span class="line"><span class="ln">28</span><span class="cl">    <span class="n">xa</span> <span class="o">=</span> <span class="n">tanks</span><span class="o">.</span><span class="n">tank1</span><span class="o">.</span><span class="n">x</span>
+</span></span><span class="line"><span class="ln">29</span><span class="cl">    <span class="n">xb</span> <span class="o">=</span> <span class="n">x</span>
+</span></span><span class="line"><span class="ln">30</span><span class="cl">    <span class="n">ya</span> <span class="o">=</span> <span class="n">tanks</span><span class="o">.</span><span class="n">tank1</span><span class="o">.</span><span class="n">y</span>
+</span></span><span class="line"><span class="ln">31</span><span class="cl">    <span class="n">yb</span> <span class="o">=</span> <span class="n">y</span>
+</span></span><span class="line"><span class="ln">32</span><span class="cl">    <span class="n">d</span>  <span class="o">=</span> <span class="nb">abs</span><span class="p">(</span><span class="n">xa</span> <span class="o">-</span> <span class="n">xb</span><span class="p">)</span>
+</span></span><span class="line"><span class="ln">33</span><span class="cl">    <span class="n">h</span>  <span class="o">=</span> <span class="nb">abs</span><span class="p">(</span><span class="n">ya</span> <span class="o">-</span> <span class="n">yb</span><span class="p">)</span>
+</span></span><span class="line"><span class="ln">34</span><span class="cl">    <span class="n">P</span><span class="p">,</span><span class="n">A</span><span class="o">=</span> <span class="n">GetAim</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="n">h</span><span class="p">)</span>
+</span></span><span class="line"><span class="ln">35</span><span class="cl">    <span class="k">if</span> <span class="n">debug</span><span class="p">:</span>
+</span></span><span class="line"><span class="ln">36</span><span class="cl">        <span class="nb">print</span><span class="p">(</span><span class="s2">&#34;AIM at (</span><span class="si">%d</span><span class="s2">, </span><span class="si">%d</span><span class="s2">)&#34;</span> <span class="o">%</span> <span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">))</span>
+</span></span><span class="line"><span class="ln">37</span><span class="cl">        <span class="nb">print</span><span class="p">(</span><span class="s2">&#34;angle: </span><span class="si">%f</span><span class="s2">&#34;</span> <span class="o">%</span> <span class="n">A</span><span class="p">)</span>
+</span></span><span class="line"><span class="ln">38</span><span class="cl">        <span class="nb">print</span><span class="p">(</span><span class="s2">&#34;power: </span><span class="si">%f</span><span class="s2">&#34;</span> <span class="o">%</span> <span class="n">P</span><span class="p">)</span>
+</span></span><span class="line"><span class="ln">39</span><span class="cl">    <span class="k">return</span> <span class="n">CreatePacket</span><span class="p">(</span><span class="n">weapon</span><span class="p">,</span> <span class="n">P</span><span class="p">,</span> <span class="n">A</span><span class="p">)</span>
+</span></span></code></pre></div><p>These functions were working fine but eventually we would miss our shot and the other tank hits a bullseye, in this situation we can never kill him because the <strong>MAP</strong> was generated in a way that when we hit him once, he falls in the hole created by the explosion and when we adjust our aim, our bullet collides with a mountain peak instead of colliding with the <strong>Red Tank</strong>. We don&rsquo;t account for any obstruction on the trajectory of the bullet. Sometimes our bullet is obstructed by a mountain or maybe we cannot hit him because of our terrible spawn location, sometimes we spawn at a very steep slope so its not possible to aim at the <strong>Red Tank</strong>. He will keep hitting us and we will always die before him no matter what. So, if we miss even once, we loose the battle and we have to start from scratch and this is what makes this exploit a little unreliable.</p>
+<h3 id="the-exploit">The Exploit</h3>
+<p>The exploitation is easy now, we have to build a primitive to do manipulate bits arbitrarily on the stack. Using this primitive we can overwrite the return address and redirect code execution. We already have a call to <strong>system(&quot;/bin/sh&quot;)</strong> in the executable itself and we also have the <strong>PIE</strong> base address. Using these two values we can get the address where will jump to get code execution.</p>
+<p>If we take a look at the code where it checks if the <strong>Red Tank</strong> is alive or dead? we can see that if we defeat the <strong>Red Tank</strong>, then the <strong>MAP</strong> is ours to play with. We can do anything on the <strong>MAP</strong>.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="line"><span class="ln">100</span><span class="cl">		<span class="n">tanks</span><span class="p">[</span><span class="n">j</span><span class="p">].</span><span class="n">hp</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="ln">101</span><span class="cl">		<span class="k">if</span> <span class="p">(</span> <span class="n">j</span> <span class="p">)</span>
+</span></span><span class="line hl"><span class="ln">102</span><span class="cl">		  <span class="n">Message_</span> <span class="o">=</span> <span class="s">&#34; Stay &amp; practice :)&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="ln">103</span><span class="cl">		<span class="k">else</span>
+</span></span><span class="line"><span class="ln">104</span><span class="cl">		  <span class="n">Message_</span> <span class="o">=</span> <span class="s">&#34; Game Over.&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="ln">105</span><span class="cl">		<span class="k">if</span> <span class="p">(</span> <span class="n">j</span> <span class="p">)</span>
+</span></span><span class="line"><span class="ln">106</span><span class="cl">		  <span class="n">Tank_1</span> <span class="o">=</span> <span class="s">&#34;RED&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="ln">107</span><span class="cl">		<span class="k">else</span>
+</span></span><span class="line"><span class="ln">108</span><span class="cl">		  <span class="n">Tank_1</span> <span class="o">=</span> <span class="s">&#34;GREEN&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="ln">109</span><span class="cl">		<span class="nf">sprintf</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="s">&#34;%s tank destroyed.%s&#34;</span><span class="p">,</span> <span class="n">Tank_1</span><span class="p">,</span> <span class="n">Message_</span><span class="p">);</span>
+</span></span><span class="line"><span class="ln">110</span><span class="cl">		<span class="nf">SendText</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="n">s</span><span class="p">);</span>
+</span></span></code></pre></div><p>Steps to Get the <strong>SHELL</strong>:</p>
+<ol>
+<li>Use the aimbot to kill <strong>Red Tank</strong></li>
+<li>Clear the Ground (clear all the bits on the stack)</li>
+<li>Fire Dirt ball and bombs carefully so that we can write bits of the return address</li>
+</ol>
+<p>But how do we write arbitrary bits with explosions?
+We can easily do that by carefully using the <strong>Dirtball</strong> and the <strong>bomb</strong>, for writing a bit <strong>1</strong> at (630, 479) we must fire the <strong>Dirtball</strong> at 630 - dirtball.radius and then we will fire a explosive bomb such that only 1 set bit remains at 630. We can skip writting bit <strong>0</strong> because the <strong>MAP</strong> is already cleared and the bits at that position are already 0.</p>
+<h2 id="-cat-flagtxt">$ cat flag.txt</h2>
+<p>The exploit is available <a href="https://gist.github.com/X3eRo0/dfbb43660c616cbb03002d83c79c647b">here</a>.</p>
+
+
+<script id="asciicast-Kjqb3kQTHGzmWUutJl1Txm1LY" src="https://asciinema.org/a/Kjqb3kQTHGzmWUutJl1Txm1LY.js" async></script>
+
+
+    </div>
+    <footer class="document-footer">
+      
+    </footer>
+  </article>
+
+  
+
+
+
+
+
+  
+  
+  
+  
+
+
+
+<section class="comments-section" aria-label="Thoughts">
+  <div class="comments-window">
+    <div class="window-titlebar">
+      <span class="window-title">Thoughts?</span>
+    </div>
+    <div class="window-content comments-window-content">
+      <form
+        class="comments-form"
+        data-comments-form
+        data-comments-remote-enabled="true"
+        method="post"
+        target="comments-hidden-transport"
+        action="https://docs.google.com/forms/d/e/1FAIpQLSfNnxL1kkRvil_ngtx3y30aKg45z4McPw8zfmzUsu6vIXnsJg/formResponse"
+      >
+        <div class="comments-row">
+          <input
+            class="guestbook-input"
+            type="text"
+            maxlength="24"
+            placeholder="nickname"
+            aria-label="Nickname"
+            autocomplete="nickname"
+            data-comments-nickname
+            name="entry.1908159203"
+          >
+          <input
+            class="guestbook-input"
+            type="text"
+            maxlength="240"
+            placeholder="website (optional)"
+            aria-label="Website"
+            autocomplete="off"
+            data-comments-website
+            name="entry.1928902955"
+          >
+        </div>
+        <textarea
+          class="guestbook-input guestbook-comment"
+          rows="4"
+          placeholder="share your thoughts"
+          aria-label="Thoughts"
+          autocomplete="off"
+          data-comments-comment
+          name="entry.1702949315"
+          maxlength="1000"
+        ></textarea>
+        <div class="comments-actions">
+          <button class="window-button comments-send" type="submit">send</button>
+        </div>
+      </form>
+      <iframe
+        name="comments-hidden-transport"
+        title="comments submission transport"
+        tabindex="-1"
+        hidden
+      ></iframe>
+    </div>
+  </div>
+
+  <div class="comments-dialog" data-comments-dialog hidden>
+    <button
+      class="guestbook-dialog-backdrop"
+      type="button"
+      aria-label="Close dialog"
+      data-comments-dialog-close
+    ></button>
+    <section class="guestbook-dialog-window" role="dialog" aria-modal="true" aria-labelledby="comments-dialog-title">
+      <div class="window-titlebar">
+        <span class="window-title" id="comments-dialog-title">thoughts?</span>
+        <div class="window-actions">
+          <button
+            class="window-button window-button-icon"
+            type="button"
+            aria-label="Close dialog"
+            data-comments-dialog-close
+            data-comments-dialog-close-button
+          >X</button>
+        </div>
+      </div>
+      <div class="window-content guestbook-dialog-content">
+        <p>Your thought is under review. Thanks!</p>
+        <div class="guestbook-dialog-actions">
+          <button class="window-button" type="button" data-comments-dialog-close>OK</button>
+        </div>
+      </div>
+    </section>
+  </div>
+</section>
+
+
+  
+    <nav class="document-nav" aria-label="Article navigation">
+      
+        <a href="/posts/float-writeup/">prev: Float Writeup</a>
+      
+      
+        <a href="/posts/easy_kernel_exploitation/">next: Easy_Kernel Writeup from K3RN3LCTF 2021</a>
+      
+    </nav>
+  
+
+    </main>
+    
+
+
+
+
+
+  
+  
+  
+  
+
+
+<aside class="theme-sidebar" aria-label="Theme controls">
+  <div class="sidebar-stack">
+    <div class="theme-window">
+      <div class="window-titlebar">
+        <span class="window-title">options</span>
+      </div>
+      <div class="window-content theme-window-content">
+        <div class="control-grid">
+          <div class="control-block control-block-theme">
+            <div class="cassette-button-group" role="group" aria-label="Theme">
+              <button
+                class="cassette-button"
+                type="button"
+                data-theme-choice="dark"
+                aria-pressed="false"
+              >dark</button>
+              <button
+                class="cassette-button"
+                type="button"
+                data-theme-choice="light"
+                aria-pressed="false"
+              >light</button>
+            </div>
+          </div>
+          <div class="control-block">
+            <button class="cassette-button sound-button" type="button" data-sound-toggle aria-pressed="true"></button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    
+</aside>
+
+    <footer class="site-footer">
+  <div class="footer-panel">
+    <p>Copying is an act of love, feel free to copy.</p>
+  </div>
+</footer>
+
+  </div>
+</body>
+</html>

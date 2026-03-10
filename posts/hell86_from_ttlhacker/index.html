@@ -1,0 +1,1383 @@
+<!DOCTYPE html>
+<html lang="en-us" dir="ltr">
+<head>
+  
+
+  
+
+
+
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Hell86 - ttlhacker | x3ero0&#39;s blog</title>
+<meta name="description" content="x3ero0&#39;s blog contains reverse engineering notes, crackmes, and CTF writeups.">
+<meta name="theme-color" content="#ecd7af">
+<script>
+  (() => {
+    const storageKey = "reflector-theme";
+    const root = document.documentElement;
+    let theme = "light";
+
+    try {
+      const stored = localStorage.getItem(storageKey);
+      if (stored === "light" || stored === "dark") {
+        theme = stored;
+      } else if (window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches) {
+        theme = "dark";
+      }
+    } catch (error) {
+      if (window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches) {
+        theme = "dark";
+      }
+    }
+
+    root.dataset.theme = theme;
+    const meta = document.querySelector('meta[name="theme-color"]');
+    if (meta) {
+      meta.setAttribute("content", theme === "dark" ? "#111315" : "#ecd7af");
+    }
+  })();
+</script>
+<link rel="icon" href="/img/favicon.ico">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous" referrerpolicy="no-referrer">
+
+  <link rel="stylesheet" href="/css/chroma-light.css">
+  <link rel="stylesheet" href="/css/chroma-dark.css">
+      <link rel="stylesheet" href="/css/main.min.ab84453c0a2d4244b57ef088588542846dc4a1ebadec500a69bbc59dde6215d1.css" integrity="sha256-q4RFPAotQkS1fvCIWIVChG3Eoeut7FAKabvFnd5iFdE=" crossorigin="anonymous">
+
+
+        <script src="/js/main.18f58ac4bc81769d572f5acba6b94652499eac9554aaa5c1a9981456dbcb73ea.js" integrity="sha256-GPWKxLyBdp1XL1rLprlGUkmerJVUqqXBqZgUVtvLc&#43;o=" crossorigin="anonymous" defer></script>
+
+
+</head>
+<body class="page page-page section-posts">
+  <div class="page-frame">
+    <a class="skip-link" href="#main-content">Skip to content</a>
+    <header class="site-header">
+  <div class="header-panel">
+    <a class="brand" href="/">x3ero0&#39;s blog</a>
+    <p class="header-summary">reverse engineering, crackmes, and ctf writeups</p>
+    <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav" data-nav-toggle>[menu]</button>
+    <nav id="site-nav" class="site-nav" data-nav aria-label="Primary">
+      
+  <ul class="nav-list">
+      <li>
+        <a class="nav-link" href="/">home</a>
+      </li>
+      <li>
+        <a class="nav-link" href="/posts/">posts</a>
+      </li>
+      <li>
+        <a class="nav-link" href="/crackmes/">crackmes</a>
+      </li>
+  </ul>
+
+    </nav>
+  </div>
+</header>
+
+    <main id="main-content" class="site-main">
+      
+  <article class="document">
+    <header class="document-header">
+      <h1>Hell86 - ttlhacker</h1>
+      <div class="meta-line">
+  
+    <span>posts</span>
+  
+  
+    <time datetime="2020-05-18T13:03:48Z">2020-05-18</time>
+  
+  <span>21 min read</span>
+  
+</div>
+
+      
+    </header>
+    <div class="document-body">
+      <h3 id="hell86">Hell86</h3>
+<ul>
+<li>Author : <a href="https://crackmes.one/user/ttlhacker">ttlhacker</a></li>
+<li>Language : Assembler</li>
+<li>Upload : 8:03 PM 10/12/2018</li>
+<li>Level : 3</li>
+<li>Platform : Unix/Linux etc.</li>
+<li>Crackme : <a href="https://crackmes.one/crackme/5bc0fe0033c5d4110a29b296">crackmes.one</a></li>
+</ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-plaintext" data-lang="plaintext"><span class="line"><span class="ln">1</span><span class="cl">Desc: 
+</span></span><span class="line"><span class="ln">2</span><span class="cl">
+</span></span><span class="line"><span class="ln">3</span><span class="cl">   - x86_64 linux binary (tested on debian 9 and ubuntu 18.04, should run on any distro).
+</span></span><span class="line"><span class="ln">4</span><span class="cl">   - Takes one command line argument and outputs &#34;OK!&#34; if it&#39;s correct, &#34;Wrong&#34; if it&#39;s not.
+</span></span><span class="line"><span class="ln">5</span><span class="cl">   - Partially written in C, actual verification routine is assembly.
+</span></span><span class="line"><span class="ln">6</span><span class="cl">   - Don&#39;t patch the binary, of course - find the correct input.
+</span></span><span class="line"><span class="ln">7</span><span class="cl">
+</span></span><span class="line"><span class="ln">8</span><span class="cl">  SHA256: 134b53b78fe74d477bf381ebfd965f92d270f8314886518d451ec3aca29156fa hell86
+</span></span></code></pre></div>
+
+<br>
+
+<p>hell86 is a super awesome crackme by <a href="https://crackmes.one/user/ttlhacker">ttlhacker</a> on <a href="https://crackmes.one/">crackmes.one</a>. it implements VM in an unusual and creative way using signals and stuff. Lets start our analysis by running it.</p>
+<p>Lets start by giving a random input to our crackme.</p>
+
+
+
+
+  
+
+
+
+<div class="center image-window" data-image-window>
+  <div class="window-titlebar">
+    <span class="window-title">Initial run of the crackme</span>
+    <button
+      class="window-button window-button-icon window-minimize"
+      type="button"
+      aria-expanded="true"
+      aria-label="Minimize image"
+      data-window-toggle
+    >−</button>
+  </div>
+  <div class="window-content">
+    <img
+      class="responsive"
+      src="/img/hell86/first_run.png"
+      alt="Initial run of the crackme"
+      decoding="async"
+    />
+  </div>
+</div>
+
+
+
+<br>
+
+<p>So, as we can see the binary takes input using argv
+and throws an error if no argument is passed.</p>
+<p>Lets trace the binary using ltrace and see what it does.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-plaintext" data-lang="plaintext"><span class="line"><span class="ln"> 1</span><span class="cl">_ZNSt8ios_base4InitC1Ev(0x55b4f3a8b881, 0x7ffe79e0e7b8, 0x7ffe79e0e7d0, 224) = 0
+</span></span><span class="line"><span class="ln"> 2</span><span class="cl">__cxa_atexit(0x7f06e2a07990, 0x55b4f3a8b881, 0x55b4f3a8b068, 6) = 0
+</span></span><span class="line"><span class="ln"> 3</span><span class="cl">malloc(8192)                                     = 0x55b4f497feb0
+</span></span><span class="line"><span class="ln"> 4</span><span class="cl">sigaltstack(0x7ffe79e0e688, 0, 0, 0)             = 0
+</span></span><span class="line"><span class="ln"> 5</span><span class="cl">sigfillset(~&lt;31-32&gt;)                             = 0
+</span></span><span class="line"><span class="ln"> 6</span><span class="cl">sigaction(SIGILL, { 0x55b4f3889946, ~&lt;31-32&gt;, 0xffffffff, 0xffffffffffffffff }, nil) = 0
+</span></span><span class="line"><span class="ln"> 7</span><span class="cl">--- SIGILL (Illegal instruction) ---
+</span></span><span class="line"><span class="ln"> 8</span><span class="cl">--- SIGILL (Illegal instruction) ---
+</span></span><span class="line"><span class="ln"> 9</span><span class="cl">--- SIGILL (Illegal instruction) ---
+</span></span><span class="line"><span class="ln">10</span><span class="cl">.....                           .....
+</span></span><span class="line"><span class="ln">11</span><span class="cl">.....                           .....
+</span></span><span class="line"><span class="ln">12</span><span class="cl">.....                           .....
+</span></span><span class="line"><span class="ln">13</span><span class="cl">--- SIGILL (Illegal instruction) ---
+</span></span><span class="line"><span class="ln">14</span><span class="cl">--- SIGILL (Illegal instruction) ---
+</span></span><span class="line"><span class="ln">15</span><span class="cl">--- SIGILL (Illegal instruction) ---
+</span></span><span class="line"><span class="ln">16</span><span class="cl">puts(&#34;Wrong&#34;)                                    = 6
+</span></span><span class="line"><span class="ln">17</span><span class="cl">Wrong
+</span></span><span class="line"><span class="ln">18</span><span class="cl">+++ exited (status 0) +++
+</span></span></code></pre></div>
+
+<br>
+
+<p>The ltrace output tells us that a lot of SIGILL signals were raised. We will take a look at why but first lets see what is SIGILL and is this a normal behavior?</p>
+<ul>
+<li><strong>SIGILL</strong> : is a Linux signal that is raised when an ILLEGAL instruction is encountered. By default it terminates the program.</li>
+<li><strong>THIS IS NOT NORMAL</strong> : When a program receives SIGILL it should terminate unlike hell86 which is raising multiple SIGILLs.</li>
+</ul>
+<p>So, What the Hell is going on?</p>
+<p>This behavior can only be explained if there is a signal handler to handle this &ldquo;SIGILL&rdquo;.
+A normal program terminates like this</p>
+
+
+
+
+  
+
+
+
+<div class="center image-window" data-image-window>
+  <div class="window-titlebar">
+    <span class="window-title">a test asm binary crashing with SIGILL</span>
+    <button
+      class="window-button window-button-icon window-minimize"
+      type="button"
+      aria-expanded="true"
+      aria-label="Minimize image"
+      data-window-toggle
+    >−</button>
+  </div>
+  <div class="window-content">
+    <img
+      class="responsive"
+      src="/img/hell86/sigill.png"
+      alt="a test asm binary crashing with SIGILL"
+      decoding="async"
+    />
+  </div>
+</div>
+
+
+
+<br>
+
+<p>Lets open the binary in IDA Pro.</p>
+<p>
+
+
+
+  
+
+
+
+<div class="center image-window" data-image-window>
+  <div class="window-titlebar">
+    <span class="window-title">main() in ida pro</span>
+    <button
+      class="window-button window-button-icon window-minimize"
+      type="button"
+      aria-expanded="true"
+      aria-label="Minimize image"
+      data-window-toggle
+    >−</button>
+  </div>
+  <div class="window-content">
+    <img
+      class="responsive"
+      src="/img/hell86/ida_main.png"
+      alt="main() in ida pro"
+      decoding="async"
+    />
+  </div>
+</div>
+
+
+
+<br>
+</p>
+<p>As you can see <code>main()</code> is just calling other functions to do the actual stuff. Lets take a look at all of these one by one.</p>
+<p>First lets see <code>init_sigaltstack()</code></p>
+
+
+
+
+  
+
+
+
+<div class="center image-window" data-image-window>
+  <div class="window-titlebar">
+    <span class="window-title">init_sigaltstack()</span>
+    <button
+      class="window-button window-button-icon window-minimize"
+      type="button"
+      aria-expanded="true"
+      aria-label="Minimize image"
+      data-window-toggle
+    >−</button>
+  </div>
+  <div class="window-content">
+    <img
+      class="responsive"
+      src="/img/hell86/sigaltstack.png"
+      alt="init_sigaltstack()"
+      decoding="async"
+    />
+  </div>
+</div>
+
+
+
+<br>
+
+<p>In this function <code>init_sigaltstack()</code> the program is allocating 0x2000 Bytes in the heap to use as an alternate stack. Then it initializes a stack_t structure</p>
+<p><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="line"><span class="ln">1</span><span class="cl"><span class="cm">/* Structure describing a signal stack.  */</span>
+</span></span><span class="line"><span class="ln">2</span><span class="cl"><span class="k">typedef</span> <span class="k">struct</span>
+</span></span><span class="line"><span class="ln">3</span><span class="cl">  <span class="p">{</span>
+</span></span><span class="line"><span class="ln">4</span><span class="cl">    <span class="kt">void</span> <span class="o">*</span><span class="n">ss_sp</span><span class="p">;</span>
+</span></span><span class="line"><span class="ln">5</span><span class="cl">    <span class="kt">int</span> <span class="n">ss_flags</span><span class="p">;</span>
+</span></span><span class="line"><span class="ln">6</span><span class="cl">    <span class="kt">size_t</span> <span class="n">ss_size</span><span class="p">;</span>
+</span></span><span class="line"><span class="ln">7</span><span class="cl">  <span class="p">}</span> <span class="kt">stack_t</span><span class="p">;</span></span></span></code></pre></div>
+
+
+<br>
+</p>
+<p>and finally it calls <code>sigaltstack()</code>. This new stack will only be used when a signal handler of any signal is executing. The stack pointer will point to this new stack in heap while the signal handler is in control.
+if the call to <code>sigaltstack()</code> fails, then we call <code>free()</code> to free the allocated memory.
+
+
+<br>
+
+Now lets look at <code>register_sigill_handler()</code>
+
+
+
+
+  
+
+
+
+<div class="center image-window" data-image-window>
+  <div class="window-titlebar">
+    <span class="window-title">register_sigill_handler()</span>
+    <button
+      class="window-button window-button-icon window-minimize"
+      type="button"
+      aria-expanded="true"
+      aria-label="Minimize image"
+      data-window-toggle
+    >−</button>
+  </div>
+  <div class="window-content">
+    <img
+      class="responsive"
+      src="/img/hell86/handler.png"
+      alt="register_sigill_handler()"
+      decoding="async"
+    />
+  </div>
+</div>
+</p>
+
+
+<br>
+
+<p>and this is the same function from the actual source</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="line"><span class="ln">1</span><span class="cl"><span class="kt">bool</span> <span class="nf">register_sigill_handler</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="ln">2</span><span class="cl">    <span class="k">struct</span> <span class="n">sigaction</span> <span class="n">sa</span> <span class="o">=</span> <span class="p">{};</span>
+</span></span><span class="line"><span class="ln">3</span><span class="cl">    <span class="n">sa</span><span class="p">.</span><span class="n">sa_sigaction</span> <span class="o">=</span> <span class="n">sigill_handler</span><span class="p">;</span>
+</span></span><span class="line"><span class="ln">4</span><span class="cl">    <span class="n">sa</span><span class="p">.</span><span class="n">sa_flags</span> <span class="o">=</span> <span class="n">SA_ONSTACK</span> <span class="o">|</span> <span class="n">SA_SIGINFO</span><span class="p">;</span>
+</span></span><span class="line"><span class="ln">5</span><span class="cl">    <span class="k">if</span> <span class="p">(</span><span class="nf">sigfillset</span><span class="p">(</span><span class="o">&amp;</span><span class="n">sa</span><span class="p">.</span><span class="n">sa_mask</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="ln">6</span><span class="cl">        <span class="k">return</span> <span class="nb">false</span><span class="p">;</span>
+</span></span><span class="line"><span class="ln">7</span><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="ln">8</span><span class="cl">    <span class="k">return</span> <span class="nf">sigaction</span><span class="p">(</span><span class="n">SIGILL</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">sa</span><span class="p">,</span> <span class="n">nullptr</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="ln">9</span><span class="cl"><span class="p">}</span></span></span></code></pre></div>
+
+
+<br>
+
+<p>here <code>sigill_handler</code> is the pointer to the SIGILL handler function. It is initializing the <code>sigaction</code> struct to call <code>sigaction()</code>. Now whenever a SIGILL is raised we will call this handler function instead of terminating the program and this is the reason why we saw all those SIGILLs in the ltrace output.</p>
+
+
+<br>
+
+<p>Now lets take a look at <code>sigill_handler</code></p>
+
+
+
+
+  
+
+
+
+<div class="center image-window" data-image-window>
+  <div class="window-titlebar">
+    <span class="window-title">text view of sigill_handler()</span>
+    <button
+      class="window-button window-button-icon window-minimize"
+      type="button"
+      aria-expanded="true"
+      aria-label="Minimize image"
+      data-window-toggle
+    >−</button>
+  </div>
+  <div class="window-content">
+    <img
+      class="responsive"
+      src="/img/hell86/sigill_handler_text_view.png"
+      alt="text view of sigill_handler()"
+      decoding="async"
+    />
+  </div>
+</div>
+
+
+
+<br>
+
+<p><code>loc_1ee0:</code>
+
+
+<br>
+</p>
+
+
+
+
+  
+
+
+
+<div class="center image-window" data-image-window>
+  <div class="window-titlebar">
+    <span class="window-title">sigill_handler() cont.</span>
+    <button
+      class="window-button window-button-icon window-minimize"
+      type="button"
+      aria-expanded="true"
+      aria-label="Minimize image"
+      data-window-toggle
+    >−</button>
+  </div>
+  <div class="window-content">
+    <img
+      class="responsive"
+      src="/img/hell86/sigill_handler_jmp.png"
+      alt="sigill_handler() cont."
+      decoding="async"
+    />
+  </div>
+</div>
+
+
+
+<br>
+
+<p>As you can see <code>sigill_handler()</code> is just a huge switch case with opcode of the VM instructions as the switch parameter.
+
+
+<br>
+
+
+
+
+
+  
+
+
+
+<div class="center image-window" data-image-window>
+  <div class="window-titlebar">
+    <span class="window-title">sigill_handler() graph view</span>
+    <button
+      class="window-button window-button-icon window-minimize"
+      type="button"
+      aria-expanded="true"
+      aria-label="Minimize image"
+      data-window-toggle
+    >−</button>
+  </div>
+  <div class="window-content">
+    <img
+      class="responsive"
+      src="/img/hell86/graph_sigill_handler.png"
+      alt="sigill_handler() graph view"
+      decoding="async"
+    />
+  </div>
+</div>
+
+
+
+<br>
+</p>
+<h3 id="the-bytecode">The Bytecode</h3>
+
+
+<br>
+
+<p>Now lets go back to main and take a look at <code>verify_input()</code></p>
+<p>we will analyze this function in text view</p>
+
+
+
+
+  
+
+
+
+<div class="center image-window" data-image-window>
+  <div class="window-titlebar">
+    <span class="window-title">bytecode</span>
+    <button
+      class="window-button window-button-icon window-minimize"
+      type="button"
+      aria-expanded="true"
+      aria-label="Minimize image"
+      data-window-toggle
+    >−</button>
+  </div>
+  <div class="window-content">
+    <img
+      class="responsive"
+      src="/img/hell86/bytecode.png"
+      alt="bytecode"
+      decoding="async"
+    />
+  </div>
+</div>
+
+
+
+<br>
+
+<p>Look what we found, the actual reason of SIGILLs. These are UD2 instructions which basically raise Illegal instruction signal or SIGILL. There are some more bytes after each <code>UD2(\x0f\x0b)</code> instruction.</p>
+
+
+
+
+  
+
+
+
+<div class="center image-window" data-image-window>
+  <div class="window-titlebar">
+    <span class="window-title">ud2 from intel manual</span>
+    <button
+      class="window-button window-button-icon window-minimize"
+      type="button"
+      aria-expanded="true"
+      aria-label="Minimize image"
+      data-window-toggle
+    >−</button>
+  </div>
+  <div class="window-content">
+    <img
+      class="responsive"
+      src="/img/hell86/ud2.png"
+      alt="ud2 from intel manual"
+      decoding="async"
+    />
+  </div>
+</div>
+
+
+
+<br>
+
+<h3 id="instruction-encoding">Instruction Encoding</h3>
+<p>The instructions are encoding in hell86 is actually one simple thing in this challenge.
+Each instruction has an 8 byte immediate value which lies just after the <code>UD2</code>.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-plaintext" data-lang="plaintext"><span class="line"><span class="ln">1</span><span class="cl">\x0f\x0b   - UD2
+</span></span><span class="line"><span class="ln">2</span><span class="cl">\x00 * 0x8 - imm64
+</span></span><span class="line"><span class="ln">3</span><span class="cl">\x09       - Opcode
+</span></span><span class="line"><span class="ln">4</span><span class="cl">\x00       - arg1
+</span></span><span class="line"><span class="ln">5</span><span class="cl">\x00       - arg2
+</span></span><span class="line"><span class="ln">6</span><span class="cl">\x00       - arg3 
+</span></span></code></pre></div>
+
+<br>
+
+<p>The structure would look like this :</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="line"><span class="ln">1</span><span class="cl"><span class="cm">/* hell86 instructions */</span>
+</span></span><span class="line"><span class="ln">2</span><span class="cl"><span class="k">typedef</span> <span class="k">struct</span><span class="p">{</span>
+</span></span><span class="line"><span class="ln">3</span><span class="cl">   <span class="kt">uint16_t</span> <span class="n">ud2</span><span class="p">;</span>
+</span></span><span class="line"><span class="ln">4</span><span class="cl">   <span class="n">int64</span>    <span class="n">imm64</span><span class="p">;</span>
+</span></span><span class="line"><span class="ln">5</span><span class="cl">   <span class="kt">char</span>     <span class="n">opcode</span><span class="p">;</span>
+</span></span><span class="line"><span class="ln">6</span><span class="cl">   <span class="kt">char</span>     <span class="n">arg1</span><span class="p">;</span>
+</span></span><span class="line"><span class="ln">7</span><span class="cl">   <span class="kt">char</span>     <span class="n">arg2</span><span class="p">;</span>
+</span></span><span class="line"><span class="ln">8</span><span class="cl">   <span class="kt">char</span>     <span class="n">arg3</span><span class="p">;</span>
+</span></span><span class="line"><span class="ln">9</span><span class="cl"><span class="p">}</span> <span class="n">hell86_instr</span><span class="p">;</span></span></span></code></pre></div>
+
+
+<br>
+
+<h3 id="vm-instructions">VM Instructions</h3>
+<p>Lets hop back to IDA and look at the switch case in text view and figure out where are the VM registers, i haven&rsquo;t seen any mention of VM registers or stack or even ROM.</p>
+<p>Lets start with case 9 as its the first case that the VM executes in IDA.
+<code>case 9:</code>
+
+
+
+
+  
+
+
+
+<div class="center image-window" data-image-window>
+  <div class="window-titlebar">
+    <span class="window-title">case9</span>
+    <button
+      class="window-button window-button-icon window-minimize"
+      type="button"
+      aria-expanded="true"
+      aria-label="Minimize image"
+      data-window-toggle
+    >−</button>
+  </div>
+  <div class="window-content">
+    <img
+      class="responsive"
+      src="/img/hell86/case9.png"
+      alt="case9"
+      decoding="async"
+    />
+  </div>
+</div>
+
+
+
+<br>
+</p>
+<p>Looks like there is an array of 64 bit numbers at <code>rsi</code> (could it be an array of registers?)</p>
+<p>Lets use <code>gdb</code> to break at this instruction and analyze the values of the registers.</p>
+
+
+
+
+  
+
+
+
+<div class="center image-window" data-image-window>
+  <div class="window-titlebar">
+    <span class="window-title">gdb case9</span>
+    <button
+      class="window-button window-button-icon window-minimize"
+      type="button"
+      aria-expanded="true"
+      aria-label="Minimize image"
+      data-window-toggle
+    >−</button>
+  </div>
+  <div class="window-content">
+    <img
+      class="responsive"
+      src="/img/hell86/gdb_case9.png"
+      alt="gdb case9"
+      decoding="async"
+    />
+  </div>
+</div>
+
+
+<br>
+<p>As you can see <code>rsi</code> points on the stack or should i say the new stack. So this is the part which  i am not so sure about. I think whenever a signal is raised the <code>sigcontext</code> structure is pushed on the <code>altstack</code> and its this structure where <code>rsi</code> is pointing at. if we see the <code>sigcontext</code>
+struct.</p>
+<p><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="line"><span class="ln"> 1</span><span class="cl"><span class="cm">/*
+</span></span></span><span class="line"><span class="ln"> 2</span><span class="cl"><span class="cm"> * The 64-bit signal frame:
+</span></span></span><span class="line"><span class="ln"> 3</span><span class="cl"><span class="cm"> */</span>
+</span></span><span class="line"><span class="ln"> 4</span><span class="cl"><span class="k">struct</span> <span class="n">sigcontext_64</span> <span class="p">{</span>
+</span></span><span class="line"><span class="ln"> 5</span><span class="cl">  <span class="n">__u64</span>       <span class="n">r8</span><span class="p">;</span>
+</span></span><span class="line"><span class="ln"> 6</span><span class="cl">  <span class="n">__u64</span>       <span class="n">r9</span><span class="p">;</span>
+</span></span><span class="line"><span class="ln"> 7</span><span class="cl">  <span class="n">__u64</span>       <span class="n">r10</span><span class="p">;</span>
+</span></span><span class="line"><span class="ln"> 8</span><span class="cl">  <span class="n">__u64</span>       <span class="n">r11</span><span class="p">;</span>
+</span></span><span class="line"><span class="ln"> 9</span><span class="cl">  <span class="n">__u64</span>       <span class="n">r12</span><span class="p">;</span>
+</span></span><span class="line"><span class="ln">10</span><span class="cl">  <span class="n">__u64</span>       <span class="n">r13</span><span class="p">;</span>
+</span></span><span class="line"><span class="ln">11</span><span class="cl">  <span class="n">__u64</span>       <span class="n">r14</span><span class="p">;</span>
+</span></span><span class="line"><span class="ln">12</span><span class="cl">  <span class="n">__u64</span>       <span class="n">r15</span><span class="p">;</span>
+</span></span><span class="line"><span class="ln">13</span><span class="cl">  <span class="n">__u64</span>       <span class="n">di</span><span class="p">;</span>
+</span></span><span class="line"><span class="ln">14</span><span class="cl">  <span class="n">__u64</span>       <span class="n">si</span><span class="p">;</span>
+</span></span><span class="line"><span class="ln">15</span><span class="cl">  <span class="n">__u64</span>       <span class="n">bp</span><span class="p">;</span>
+</span></span><span class="line"><span class="ln">16</span><span class="cl">  <span class="n">__u64</span>       <span class="n">bx</span><span class="p">;</span>
+</span></span><span class="line"><span class="ln">17</span><span class="cl">  <span class="n">__u64</span>       <span class="n">dx</span><span class="p">;</span>
+</span></span><span class="line"><span class="ln">18</span><span class="cl">  <span class="n">__u64</span>       <span class="n">ax</span><span class="p">;</span>
+</span></span><span class="line"><span class="ln">19</span><span class="cl">  <span class="n">__u64</span>       <span class="n">cx</span><span class="p">;</span>
+</span></span><span class="line"><span class="ln">20</span><span class="cl">  <span class="n">__u64</span>       <span class="n">sp</span><span class="p">;</span>
+</span></span><span class="line"><span class="ln">21</span><span class="cl">  <span class="n">__u64</span>       <span class="n">ip</span><span class="p">;</span>
+</span></span><span class="line"><span class="ln">22</span><span class="cl">  <span class="n">__u64</span>       <span class="n">flags</span><span class="p">;</span>
+</span></span><span class="line"><span class="ln">23</span><span class="cl">  <span class="n">__u16</span>       <span class="n">cs</span><span class="p">;</span>
+</span></span><span class="line"><span class="ln">24</span><span class="cl">  <span class="n">__u16</span>       <span class="n">gs</span><span class="p">;</span>
+</span></span><span class="line"><span class="ln">25</span><span class="cl">  <span class="n">__u16</span>       <span class="n">fs</span><span class="p">;</span>
+</span></span><span class="line"><span class="ln">26</span><span class="cl">  <span class="n">__u16</span>       <span class="n">ss</span><span class="p">;</span>
+</span></span><span class="line"><span class="ln">27</span><span class="cl">  <span class="n">__u64</span>       <span class="n">err</span><span class="p">;</span>
+</span></span><span class="line"><span class="ln">28</span><span class="cl">  <span class="n">__u64</span>       <span class="n">trapno</span><span class="p">;</span>
+</span></span><span class="line"><span class="ln">29</span><span class="cl">  <span class="n">__u64</span>       <span class="n">oldmask</span><span class="p">;</span>
+</span></span><span class="line"><span class="ln">30</span><span class="cl">  <span class="n">__u64</span>       <span class="n">cr2</span><span class="p">;</span>
+</span></span><span class="line"><span class="ln">31</span><span class="cl">
+</span></span><span class="line"><span class="ln">32</span><span class="cl">  <span class="cm">/*
+</span></span></span><span class="line"><span class="ln">33</span><span class="cl"><span class="cm">   * fpstate is really (struct _fpstate *) or (struct _xstate *)
+</span></span></span><span class="line"><span class="ln">34</span><span class="cl"><span class="cm">   * depending on the FP_XSTATE_MAGIC1 encoded in the SW reserved
+</span></span></span><span class="line"><span class="ln">35</span><span class="cl"><span class="cm">   * bytes of (struct _fpstate) and FP_XSTATE_MAGIC2 present at the end
+</span></span></span><span class="line"><span class="ln">36</span><span class="cl"><span class="cm">   * of extended memory layout. See comments at the definition of
+</span></span></span><span class="line"><span class="ln">37</span><span class="cl"><span class="cm">   * (struct _fpx_sw_bytes)
+</span></span></span><span class="line"><span class="ln">38</span><span class="cl"><span class="cm">   */</span>
+</span></span><span class="line"><span class="ln">39</span><span class="cl">  <span class="n">__u64</span>       <span class="n">fpstate</span><span class="p">;</span> <span class="cm">/* Zero when no FPU/extended context */</span>
+</span></span><span class="line"><span class="ln">40</span><span class="cl">  <span class="n">__u64</span>       <span class="n">reserved1</span><span class="p">[</span><span class="mi">8</span><span class="p">];</span>
+</span></span><span class="line"><span class="ln">41</span><span class="cl"><span class="p">};</span></span></span></code></pre></div>
+
+<br></p>
+<p>This structure is pushed on the stack whenever a signal is raised by the Operating System, and this same structure is then used by sigreturn syscall to restore the values through this structure.</p>
+
+<br>
+
+
+
+
+  
+
+
+
+<div class="center image-window" data-image-window>
+  <div class="window-titlebar">
+    <span class="window-title">gdb case9</span>
+    <button
+      class="window-button window-button-icon window-minimize"
+      type="button"
+      aria-expanded="true"
+      aria-label="Minimize image"
+      data-window-toggle
+    >−</button>
+  </div>
+  <div class="window-content">
+    <img
+      class="responsive"
+      src="/img/hell86/sigreturn_syscall.png"
+      alt="gdb case9"
+      decoding="async"
+    />
+  </div>
+</div>
+
+
+<br>
+<p>You know what this means? this VM doesnt even uses virtual registers. IT USES
+ACTUAL x86_64 register <code>BRUH MOMENT</code></p>
+<h3 id="the-disassembler">The Disassembler</h3>
+<p>Okay, Now that we understand everything (almost), lets get the disassmbler working.
+The following disassembler is just to disassemble the instructions which the VM was
+using. I didn&rsquo;t implemented the ones which were not used.</p>
+<p>After looking at the instructions which the VM was using, i found out that there were total 50 instructions implemented while only 44 were used.</p>
+<p>Also there were some imm64 values which were used as an operand for <code>jmp</code> and <code>call</code> instructions for example <code>malloc()</code> and <code>free()</code> are one of them. these addresses were placed in the bytecode so i just dumped the bytecode using gdb.</p>
+<p>disass.py</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="ln">  1</span><span class="cl"><span class="kn">from</span> <span class="nn">struct</span> <span class="kn">import</span> <span class="n">unpack</span>
+</span></span><span class="line"><span class="ln">  2</span><span class="cl">
+</span></span><span class="line"><span class="ln">  3</span><span class="cl"><span class="n">MALLOC</span> <span class="o">=</span> <span class="mh">0x7ffff7b1c260</span>
+</span></span><span class="line"><span class="ln">  4</span><span class="cl"><span class="n">FREE</span>   <span class="o">=</span> <span class="mh">0x7ffff7b1c850</span>
+</span></span><span class="line"><span class="ln">  5</span><span class="cl">
+</span></span><span class="line"><span class="ln">  6</span><span class="cl"><span class="n">op_addrs</span> <span class="o">=</span> <span class="p">[</span>
+</span></span><span class="line"><span class="ln">  7</span><span class="cl">    <span class="mh">0x1a1f</span><span class="p">,</span>
+</span></span><span class="line"><span class="ln">  8</span><span class="cl">    <span class="mh">0x1a20</span><span class="p">,</span>
+</span></span><span class="line"><span class="ln">  9</span><span class="cl">    <span class="mh">0x1a39</span><span class="p">,</span>
+</span></span><span class="line"><span class="ln"> 10</span><span class="cl">    <span class="mh">0x1a52</span><span class="p">,</span>
+</span></span><span class="line"><span class="ln"> 11</span><span class="cl">    <span class="mh">0x1a6c</span><span class="p">,</span>
+</span></span><span class="line"><span class="ln"> 12</span><span class="cl">    <span class="mh">0x1a87</span><span class="p">,</span>
+</span></span><span class="line"><span class="ln"> 13</span><span class="cl">    <span class="mh">0x1aa2</span><span class="p">,</span>
+</span></span><span class="line"><span class="ln"> 14</span><span class="cl">    <span class="mh">0x1abe</span><span class="p">,</span>
+</span></span><span class="line"><span class="ln"> 15</span><span class="cl">    <span class="mh">0x1ae6</span><span class="p">,</span>
+</span></span><span class="line"><span class="ln"> 16</span><span class="cl">    <span class="mh">0x1ada</span><span class="p">,</span>
+</span></span><span class="line"><span class="ln"> 17</span><span class="cl">    <span class="mh">0x1afa</span><span class="p">,</span>
+</span></span><span class="line"><span class="ln"> 18</span><span class="cl">    <span class="mh">0x1b12</span><span class="p">,</span>
+</span></span><span class="line"><span class="ln"> 19</span><span class="cl">    <span class="mh">0x1b2b</span><span class="p">,</span>
+</span></span><span class="line"><span class="ln"> 20</span><span class="cl">    <span class="mh">0x1b43</span><span class="p">,</span>
+</span></span><span class="line"><span class="ln"> 21</span><span class="cl">    <span class="mh">0x1b5c</span><span class="p">,</span>
+</span></span><span class="line"><span class="ln"> 22</span><span class="cl">    <span class="mh">0x1b73</span><span class="p">,</span>
+</span></span><span class="line"><span class="ln"> 23</span><span class="cl">    <span class="mh">0x1b8b</span><span class="p">,</span>
+</span></span><span class="line"><span class="ln"> 24</span><span class="cl">    <span class="mh">0x1ba3</span><span class="p">,</span>
+</span></span><span class="line"><span class="ln"> 25</span><span class="cl">    <span class="mh">0x1bba</span><span class="p">,</span>
+</span></span><span class="line"><span class="ln"> 26</span><span class="cl">    <span class="mh">0x1bd2</span><span class="p">,</span>
+</span></span><span class="line"><span class="ln"> 27</span><span class="cl">    <span class="mh">0x1be9</span><span class="p">,</span>
+</span></span><span class="line"><span class="ln"> 28</span><span class="cl">    <span class="mh">0x1c01</span><span class="p">,</span>
+</span></span><span class="line"><span class="ln"> 29</span><span class="cl">    <span class="mh">0x1c1a</span><span class="p">,</span>
+</span></span><span class="line"><span class="ln"> 30</span><span class="cl">    <span class="mh">0x1c2e</span><span class="p">,</span>
+</span></span><span class="line"><span class="ln"> 31</span><span class="cl">    <span class="mh">0x1c43</span><span class="p">,</span>
+</span></span><span class="line"><span class="ln"> 32</span><span class="cl">    <span class="mh">0x1c54</span><span class="p">,</span>
+</span></span><span class="line"><span class="ln"> 33</span><span class="cl">    <span class="mh">0x1c6d</span><span class="p">,</span>
+</span></span><span class="line"><span class="ln"> 34</span><span class="cl">    <span class="mh">0x1c86</span><span class="p">,</span>
+</span></span><span class="line"><span class="ln"> 35</span><span class="cl">    <span class="mh">0x1c9f</span><span class="p">,</span>
+</span></span><span class="line"><span class="ln"> 36</span><span class="cl">    <span class="mh">0x1cb3</span><span class="p">,</span>
+</span></span><span class="line"><span class="ln"> 37</span><span class="cl">    <span class="mh">0x1cd2</span><span class="p">,</span>
+</span></span><span class="line"><span class="ln"> 38</span><span class="cl">    <span class="mh">0x1cf1</span><span class="p">,</span>
+</span></span><span class="line"><span class="ln"> 39</span><span class="cl">    <span class="mh">0x1d10</span><span class="p">,</span>
+</span></span><span class="line"><span class="ln"> 40</span><span class="cl">    <span class="mh">0x1d2f</span><span class="p">,</span>
+</span></span><span class="line"><span class="ln"> 41</span><span class="cl">    <span class="mh">0x1d4e</span><span class="p">,</span>
+</span></span><span class="line"><span class="ln"> 42</span><span class="cl">    <span class="mh">0x1d6d</span><span class="p">,</span>
+</span></span><span class="line"><span class="ln"> 43</span><span class="cl">    <span class="mh">0x1d87</span><span class="p">,</span>
+</span></span><span class="line"><span class="ln"> 44</span><span class="cl">    <span class="mh">0x1da1</span><span class="p">,</span>
+</span></span><span class="line"><span class="ln"> 45</span><span class="cl">    <span class="mh">0x1db9</span><span class="p">,</span>
+</span></span><span class="line"><span class="ln"> 46</span><span class="cl">    <span class="mh">0x1dcf</span><span class="p">,</span>
+</span></span><span class="line"><span class="ln"> 47</span><span class="cl">    <span class="mh">0x1de5</span><span class="p">,</span>
+</span></span><span class="line"><span class="ln"> 48</span><span class="cl">    <span class="mh">0x1e07</span><span class="p">,</span>
+</span></span><span class="line"><span class="ln"> 49</span><span class="cl">    <span class="mh">0x1e9c</span><span class="p">,</span>
+</span></span><span class="line"><span class="ln"> 50</span><span class="cl">    <span class="mh">0x1ebe</span><span class="p">,</span>
+</span></span><span class="line"><span class="ln"> 51</span><span class="cl">    <span class="mh">0x1e1e</span><span class="p">,</span>
+</span></span><span class="line"><span class="ln"> 52</span><span class="cl">    <span class="mh">0x1e32</span><span class="p">,</span>
+</span></span><span class="line"><span class="ln"> 53</span><span class="cl">    <span class="mh">0x1e49</span><span class="p">,</span>
+</span></span><span class="line"><span class="ln"> 54</span><span class="cl">    <span class="mh">0x1e60</span><span class="p">,</span>
+</span></span><span class="line"><span class="ln"> 55</span><span class="cl">    <span class="mh">0x1e74</span><span class="p">,</span>
+</span></span><span class="line"><span class="ln"> 56</span><span class="cl">    <span class="mh">0x1e88</span>
+</span></span><span class="line"><span class="ln"> 57</span><span class="cl"><span class="p">]</span>
+</span></span><span class="line"><span class="ln"> 58</span><span class="cl">
+</span></span><span class="line"><span class="ln"> 59</span><span class="cl"><span class="n">registers</span> <span class="o">=</span> <span class="p">{</span>
+</span></span><span class="line"><span class="ln"> 60</span><span class="cl">    <span class="mi">0</span> <span class="p">:</span> <span class="s2">&#34;r8&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="ln"> 61</span><span class="cl">    <span class="mi">1</span> <span class="p">:</span> <span class="s2">&#34;r9&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="ln"> 62</span><span class="cl">    <span class="mi">2</span> <span class="p">:</span> <span class="s2">&#34;r10&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="ln"> 63</span><span class="cl">    <span class="mi">3</span> <span class="p">:</span> <span class="s2">&#34;r11&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="ln"> 64</span><span class="cl">    <span class="mi">4</span> <span class="p">:</span> <span class="s2">&#34;r12&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="ln"> 65</span><span class="cl">    <span class="mi">5</span> <span class="p">:</span> <span class="s2">&#34;r13&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="ln"> 66</span><span class="cl">    <span class="mi">6</span> <span class="p">:</span> <span class="s2">&#34;r14&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="ln"> 67</span><span class="cl">    <span class="mi">7</span> <span class="p">:</span> <span class="s2">&#34;r15&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="ln"> 68</span><span class="cl">    <span class="mi">8</span> <span class="p">:</span> <span class="s2">&#34;rdi&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="ln"> 69</span><span class="cl">    <span class="mi">9</span> <span class="p">:</span> <span class="s2">&#34;rsi&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="ln"> 70</span><span class="cl">    <span class="mi">10</span> <span class="p">:</span> <span class="s2">&#34;rbp&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="ln"> 71</span><span class="cl">    <span class="mi">11</span> <span class="p">:</span> <span class="s2">&#34;rbx&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="ln"> 72</span><span class="cl">    <span class="mi">12</span> <span class="p">:</span> <span class="s2">&#34;rdx&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="ln"> 73</span><span class="cl">    <span class="mi">13</span> <span class="p">:</span> <span class="s2">&#34;rax&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="ln"> 74</span><span class="cl">    <span class="mi">14</span> <span class="p">:</span> <span class="s2">&#34;rcx&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="ln"> 75</span><span class="cl">    <span class="mi">15</span> <span class="p">:</span> <span class="s2">&#34;sp&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="ln"> 76</span><span class="cl">    <span class="mi">16</span> <span class="p">:</span> <span class="s2">&#34;pc&#34;</span>  
+</span></span><span class="line"><span class="ln"> 77</span><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="ln"> 78</span><span class="cl">
+</span></span><span class="line"><span class="ln"> 79</span><span class="cl">
+</span></span><span class="line"><span class="ln"> 80</span><span class="cl"><span class="n">bytecode</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&#34;bytecode&#34;</span><span class="p">,</span> <span class="s2">&#34;rb&#34;</span><span class="p">)</span><span class="o">.</span><span class="n">read</span><span class="p">()</span><span class="c1">#[0x1190:0x1946]</span>
+</span></span><span class="line"><span class="ln"> 81</span><span class="cl">
+</span></span><span class="line"><span class="ln"> 82</span><span class="cl"><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">bytecode</span><span class="p">),</span> <span class="mh">0xE</span><span class="p">):</span>
+</span></span><span class="line"><span class="ln"> 83</span><span class="cl">    <span class="n">instruction</span> <span class="o">=</span> <span class="n">bytecode</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">2</span><span class="p">:</span><span class="n">i</span><span class="o">+</span><span class="mh">0xe</span><span class="p">]</span>
+</span></span><span class="line"><span class="ln"> 84</span><span class="cl">    <span class="n">opcode</span> <span class="o">=</span> <span class="nb">ord</span><span class="p">(</span><span class="n">instruction</span><span class="p">[</span><span class="mi">8</span><span class="p">])</span>
+</span></span><span class="line"><span class="ln"> 85</span><span class="cl">    <span class="n">arg1</span>   <span class="o">=</span> <span class="nb">ord</span><span class="p">(</span><span class="n">instruction</span><span class="p">[</span><span class="mi">9</span><span class="p">])</span>
+</span></span><span class="line"><span class="ln"> 86</span><span class="cl">    <span class="n">arg2</span>   <span class="o">=</span> <span class="nb">ord</span><span class="p">(</span><span class="n">instruction</span><span class="p">[</span><span class="mi">10</span><span class="p">])</span>
+</span></span><span class="line"><span class="ln"> 87</span><span class="cl">    <span class="n">arg3</span>   <span class="o">=</span> <span class="nb">ord</span><span class="p">(</span><span class="n">instruction</span><span class="p">[</span><span class="mi">11</span><span class="p">])</span>
+</span></span><span class="line"><span class="ln"> 88</span><span class="cl">
+</span></span><span class="line"><span class="ln"> 89</span><span class="cl">    <span class="n">imm</span>    <span class="o">=</span> <span class="n">unpack</span><span class="p">(</span><span class="s2">&#34;Q&#34;</span><span class="p">,</span> <span class="n">instruction</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span> <span class="mi">8</span><span class="p">])[</span><span class="mi">0</span><span class="p">]</span>
+</span></span><span class="line"><span class="ln"> 90</span><span class="cl">    <span class="c1">#tmp = &#34;&#34;.join([(&#34;\\x%.2X&#34; % ord(x)) for x in instruction])</span>
+</span></span><span class="line"><span class="ln"> 91</span><span class="cl">    <span class="n">dis</span> <span class="o">=</span> <span class="s2">&#34;</span><span class="si">%.4i</span><span class="s2">: [</span><span class="si">%.2i</span><span class="s2">][ </span><span class="si">%.4x</span><span class="s2"> ][ </span><span class="si">%.4x</span><span class="s2"> ] &#34;</span> <span class="o">%</span> <span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">opcode</span><span class="p">,</span> <span class="n">op_addrs</span><span class="p">[</span><span class="n">opcode</span><span class="p">],</span> <span class="mh">0x1190</span> <span class="o">+</span> <span class="n">i</span><span class="p">)</span>
+</span></span><span class="line"><span class="ln"> 92</span><span class="cl">    <span class="c1">#dis = &#34;%.4x: [%.4x] %s\t&#34; % (i, 0x1190 + i, tmp)</span>
+</span></span><span class="line"><span class="ln"> 93</span><span class="cl">
+</span></span><span class="line"><span class="ln"> 94</span><span class="cl">    <span class="k">if</span>   <span class="n">opcode</span> <span class="o">==</span> <span class="mi">9</span><span class="p">:</span>
+</span></span><span class="line"><span class="ln"> 95</span><span class="cl">        <span class="k">if</span> <span class="n">imm</span> <span class="o">&amp;</span> <span class="mh">0x555555550000</span><span class="p">:</span>
+</span></span><span class="line"><span class="ln"> 96</span><span class="cl">            <span class="n">imm</span> <span class="o">=</span> <span class="n">imm</span> <span class="o">-</span> <span class="mh">0x555555554000</span>
+</span></span><span class="line"><span class="ln"> 97</span><span class="cl">        <span class="k">if</span> <span class="n">registers</span><span class="p">[</span><span class="n">arg1</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&#34;pc&#34;</span><span class="p">:</span>
+</span></span><span class="line"><span class="ln"> 98</span><span class="cl">            <span class="n">dis</span> <span class="o">+=</span>  <span class="s2">&#34;jmp 0x</span><span class="si">%.4x</span><span class="s2">&#34;</span> <span class="o">%</span> <span class="p">(</span><span class="n">imm</span><span class="p">)</span>
+</span></span><span class="line"><span class="ln"> 99</span><span class="cl">        <span class="k">else</span><span class="p">:</span>
+</span></span><span class="line"><span class="ln">100</span><span class="cl">            <span class="n">dis</span> <span class="o">+=</span>  <span class="s2">&#34;</span><span class="si">%s</span><span class="s2"> = 0x</span><span class="si">%.4x</span><span class="s2">&#34;</span> <span class="o">%</span> <span class="p">(</span><span class="n">registers</span><span class="p">[</span><span class="n">arg1</span><span class="p">],</span> <span class="n">imm</span><span class="p">)</span>
+</span></span><span class="line"><span class="ln">101</span><span class="cl">    <span class="k">elif</span> <span class="n">opcode</span> <span class="o">==</span> <span class="mi">36</span><span class="p">:</span>
+</span></span><span class="line"><span class="ln">102</span><span class="cl">        <span class="n">dis</span> <span class="o">+=</span>  <span class="s2">&#34;if </span><span class="si">%s</span><span class="s2"> != 0x</span><span class="si">%.4x</span><span class="s2">: </span><span class="si">%s</span><span class="s2"> = 1; else: </span><span class="si">%s</span><span class="s2"> = 0;&#34;</span> <span class="o">%</span> <span class="p">(</span><span class="n">registers</span><span class="p">[</span><span class="n">arg2</span><span class="p">],</span> <span class="n">imm</span><span class="p">,</span> <span class="n">registers</span><span class="p">[</span><span class="n">arg1</span><span class="p">],</span> <span class="n">registers</span><span class="p">[</span><span class="n">arg1</span><span class="p">])</span>
+</span></span><span class="line"><span class="ln">103</span><span class="cl">    <span class="k">elif</span> <span class="n">opcode</span> <span class="o">==</span> <span class="mi">37</span><span class="p">:</span>
+</span></span><span class="line"><span class="ln">104</span><span class="cl">        <span class="n">dis</span> <span class="o">+=</span>  <span class="s2">&#34;if </span><span class="si">%s</span><span class="s2"> == 0: </span><span class="si">%s</span><span class="s2"> = 1;&#34;</span> <span class="o">%</span> <span class="p">(</span><span class="n">registers</span><span class="p">[</span><span class="n">arg2</span><span class="p">],</span> <span class="n">registers</span><span class="p">[</span><span class="n">arg1</span><span class="p">])</span>
+</span></span><span class="line"><span class="ln">105</span><span class="cl">    <span class="k">elif</span> <span class="n">opcode</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+</span></span><span class="line"><span class="ln">106</span><span class="cl">        <span class="n">dis</span> <span class="o">+=</span>  <span class="s2">&#34;</span><span class="si">%s</span><span class="s2"> = </span><span class="si">%s</span><span class="s2"> + </span><span class="si">%s</span><span class="s2">&#34;</span> <span class="o">%</span> <span class="p">(</span><span class="n">registers</span><span class="p">[</span><span class="n">arg1</span><span class="p">],</span> <span class="n">registers</span><span class="p">[</span><span class="n">arg2</span><span class="p">],</span> <span class="n">registers</span><span class="p">[</span><span class="n">arg3</span><span class="p">])</span>
+</span></span><span class="line"><span class="ln">107</span><span class="cl">    <span class="k">elif</span> <span class="n">opcode</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+</span></span><span class="line"><span class="ln">108</span><span class="cl">        <span class="n">dis</span> <span class="o">+=</span>  <span class="s2">&#34;</span><span class="si">%s</span><span class="s2"> = </span><span class="si">%s</span><span class="s2"> - </span><span class="si">%s</span><span class="s2">&#34;</span> <span class="o">%</span> <span class="p">(</span><span class="n">registers</span><span class="p">[</span><span class="n">arg1</span><span class="p">],</span> <span class="n">registers</span><span class="p">[</span><span class="n">arg2</span><span class="p">],</span> <span class="n">registers</span><span class="p">[</span><span class="n">arg3</span><span class="p">])</span>
+</span></span><span class="line"><span class="ln">109</span><span class="cl">    <span class="k">elif</span> <span class="n">opcode</span> <span class="o">==</span> <span class="mi">3</span><span class="p">:</span>
+</span></span><span class="line"><span class="ln">110</span><span class="cl">        <span class="n">dis</span> <span class="o">+=</span>  <span class="s2">&#34;</span><span class="si">%s</span><span class="s2"> = </span><span class="si">%s</span><span class="s2"> * </span><span class="si">%s</span><span class="s2">&#34;</span> <span class="o">%</span> <span class="p">(</span><span class="n">registers</span><span class="p">[</span><span class="n">arg1</span><span class="p">],</span> <span class="n">registers</span><span class="p">[</span><span class="n">arg2</span><span class="p">],</span> <span class="n">registers</span><span class="p">[</span><span class="n">arg3</span><span class="p">])</span>
+</span></span><span class="line"><span class="ln">111</span><span class="cl">    <span class="k">elif</span> <span class="n">opcode</span> <span class="o">==</span> <span class="mi">4</span> <span class="ow">or</span> <span class="n">opcode</span> <span class="o">==</span> <span class="mi">5</span><span class="p">:</span>
+</span></span><span class="line"><span class="ln">112</span><span class="cl">        <span class="n">dis</span> <span class="o">+=</span>  <span class="s2">&#34;</span><span class="si">%s</span><span class="s2"> = </span><span class="si">%s</span><span class="s2"> / </span><span class="si">%s</span><span class="s2">&#34;</span> <span class="o">%</span> <span class="p">(</span><span class="n">registers</span><span class="p">[</span><span class="n">arg1</span><span class="p">],</span> <span class="n">registers</span><span class="p">[</span><span class="n">arg2</span><span class="p">],</span> <span class="n">registers</span><span class="p">[</span><span class="n">arg3</span><span class="p">])</span>
+</span></span><span class="line"><span class="ln">113</span><span class="cl">    <span class="k">elif</span> <span class="n">opcode</span> <span class="o">==</span> <span class="mi">6</span><span class="p">:</span>
+</span></span><span class="line"><span class="ln">114</span><span class="cl">        <span class="n">dis</span> <span class="o">+=</span>  <span class="s2">&#34;</span><span class="si">%s</span><span class="s2"> = </span><span class="si">%s</span><span class="s2"> &gt;&gt; </span><span class="si">%s</span><span class="s2">&#34;</span> <span class="o">%</span> <span class="p">(</span><span class="n">registers</span><span class="p">[</span><span class="n">arg1</span><span class="p">],</span> <span class="n">registers</span><span class="p">[</span><span class="n">arg2</span><span class="p">],</span> <span class="n">registers</span><span class="p">[</span><span class="n">arg3</span><span class="p">])</span>
+</span></span><span class="line"><span class="ln">115</span><span class="cl">    <span class="k">elif</span> <span class="n">opcode</span> <span class="o">==</span> <span class="mi">7</span><span class="p">:</span>
+</span></span><span class="line"><span class="ln">116</span><span class="cl">        <span class="n">dis</span> <span class="o">+=</span>  <span class="s2">&#34;</span><span class="si">%s</span><span class="s2"> = </span><span class="si">%s</span><span class="s2"> &lt;&lt; </span><span class="si">%s</span><span class="s2">&#34;</span> <span class="o">%</span> <span class="p">(</span><span class="n">registers</span><span class="p">[</span><span class="n">arg1</span><span class="p">],</span> <span class="n">registers</span><span class="p">[</span><span class="n">arg2</span><span class="p">],</span> <span class="n">registers</span><span class="p">[</span><span class="n">arg3</span><span class="p">])</span>
+</span></span><span class="line"><span class="ln">117</span><span class="cl">    <span class="k">elif</span> <span class="n">opcode</span> <span class="o">==</span> <span class="mi">8</span><span class="p">:</span>
+</span></span><span class="line"><span class="ln">118</span><span class="cl">        <span class="n">dis</span> <span class="o">+=</span>  <span class="s2">&#34;</span><span class="si">%s</span><span class="s2"> = ~</span><span class="si">%s</span><span class="s2">&#34;</span> <span class="o">%</span> <span class="p">(</span><span class="n">registers</span><span class="p">[</span><span class="n">arg1</span><span class="p">],</span> <span class="n">registers</span><span class="p">[</span><span class="n">arg2</span><span class="p">])</span>
+</span></span><span class="line"><span class="ln">119</span><span class="cl">    <span class="k">elif</span> <span class="n">opcode</span> <span class="o">==</span> <span class="mi">10</span> <span class="ow">or</span> <span class="n">opcode</span> <span class="o">==</span> <span class="mi">11</span><span class="p">:</span>
+</span></span><span class="line"><span class="ln">120</span><span class="cl">        <span class="n">dis</span> <span class="o">+=</span>  <span class="s2">&#34;(WORD)  </span><span class="si">%s</span><span class="s2"> = BYTE  [</span><span class="si">%s</span><span class="s2"> + 0x</span><span class="si">%.4x</span><span class="s2">]&#34;</span> <span class="o">%</span> <span class="p">(</span><span class="n">registers</span><span class="p">[</span><span class="n">arg1</span><span class="p">],</span> <span class="n">registers</span><span class="p">[</span><span class="n">arg2</span><span class="p">],</span> <span class="n">imm</span><span class="p">)</span>
+</span></span><span class="line"><span class="ln">121</span><span class="cl">    <span class="k">elif</span> <span class="n">opcode</span> <span class="o">==</span> <span class="mi">11</span><span class="p">:</span>
+</span></span><span class="line"><span class="ln">122</span><span class="cl">        <span class="n">dis</span> <span class="o">+=</span>  <span class="s2">&#34;(QWORD) </span><span class="si">%s</span><span class="s2"> = BYTE  [</span><span class="si">%s</span><span class="s2"> + 0x</span><span class="si">%.4x</span><span class="s2">]&#34;</span> <span class="o">%</span> <span class="p">(</span><span class="n">registers</span><span class="p">[</span><span class="n">arg1</span><span class="p">],</span> <span class="n">registers</span><span class="p">[</span><span class="n">arg2</span><span class="p">],</span> <span class="n">imm</span><span class="p">)</span>
+</span></span><span class="line"><span class="ln">123</span><span class="cl">    <span class="k">elif</span> <span class="n">opcode</span> <span class="o">==</span> <span class="mi">12</span><span class="p">:</span>
+</span></span><span class="line"><span class="ln">124</span><span class="cl">        <span class="n">dis</span> <span class="o">+=</span>  <span class="s2">&#34;(DWORD) </span><span class="si">%s</span><span class="s2"> = WORD  [</span><span class="si">%s</span><span class="s2"> + 0x</span><span class="si">%.4x</span><span class="s2">]&#34;</span> <span class="o">%</span> <span class="p">(</span><span class="n">registers</span><span class="p">[</span><span class="n">arg1</span><span class="p">],</span> <span class="n">registers</span><span class="p">[</span><span class="n">arg2</span><span class="p">],</span> <span class="n">imm</span><span class="p">)</span>
+</span></span><span class="line"><span class="ln">125</span><span class="cl">    <span class="k">elif</span> <span class="n">opcode</span> <span class="o">==</span> <span class="mi">13</span><span class="p">:</span>
+</span></span><span class="line"><span class="ln">126</span><span class="cl">        <span class="n">dis</span> <span class="o">+=</span>  <span class="s2">&#34;(QWORD) </span><span class="si">%s</span><span class="s2"> = WORD  [</span><span class="si">%s</span><span class="s2"> + 0x</span><span class="si">%.4x</span><span class="s2">]&#34;</span> <span class="o">%</span> <span class="p">(</span><span class="n">registers</span><span class="p">[</span><span class="n">arg1</span><span class="p">],</span> <span class="n">registers</span><span class="p">[</span><span class="n">arg2</span><span class="p">],</span> <span class="n">imm</span><span class="p">)</span>
+</span></span><span class="line"><span class="ln">127</span><span class="cl">    <span class="k">elif</span> <span class="n">opcode</span> <span class="o">==</span> <span class="mi">14</span><span class="p">:</span>
+</span></span><span class="line"><span class="ln">128</span><span class="cl">        <span class="n">dis</span> <span class="o">+=</span>  <span class="s2">&#34;(DWORD) </span><span class="si">%s</span><span class="s2"> = QWORD [</span><span class="si">%s</span><span class="s2"> + 0x</span><span class="si">%.4x</span><span class="s2">]&#34;</span> <span class="o">%</span> <span class="p">(</span><span class="n">registers</span><span class="p">[</span><span class="n">arg1</span><span class="p">],</span> <span class="n">registers</span><span class="p">[</span><span class="n">arg2</span><span class="p">],</span> <span class="n">imm</span><span class="p">)</span>
+</span></span><span class="line"><span class="ln">129</span><span class="cl">    <span class="k">elif</span> <span class="n">opcode</span> <span class="o">==</span> <span class="mi">15</span><span class="p">:</span>
+</span></span><span class="line"><span class="ln">130</span><span class="cl">        <span class="n">dis</span> <span class="o">+=</span>  <span class="s2">&#34;(QWORD) </span><span class="si">%s</span><span class="s2"> = DWORD [</span><span class="si">%s</span><span class="s2"> + 0x</span><span class="si">%.4x</span><span class="s2">]&#34;</span> <span class="o">%</span> <span class="p">(</span><span class="n">registers</span><span class="p">[</span><span class="n">arg1</span><span class="p">],</span> <span class="n">registers</span><span class="p">[</span><span class="n">arg2</span><span class="p">],</span> <span class="n">imm</span><span class="p">)</span>
+</span></span><span class="line"><span class="ln">131</span><span class="cl">    <span class="k">elif</span> <span class="n">opcode</span> <span class="o">==</span> <span class="mi">16</span><span class="p">:</span>
+</span></span><span class="line"><span class="ln">132</span><span class="cl">        <span class="k">if</span> <span class="n">imm</span> <span class="o">&amp;</span> <span class="mh">0xffffffffffffff00</span><span class="p">:</span>
+</span></span><span class="line"><span class="ln">133</span><span class="cl">            <span class="n">imm</span> <span class="o">=</span> <span class="mh">0x10000000000000000</span> <span class="o">-</span> <span class="n">imm</span>
+</span></span><span class="line"><span class="ln">134</span><span class="cl">            <span class="n">dis</span> <span class="o">+=</span>  <span class="s2">&#34;(QWORD) </span><span class="si">%s</span><span class="s2"> = DWORD [</span><span class="si">%s</span><span class="s2"> - 0x</span><span class="si">%.4x</span><span class="s2">]&#34;</span> <span class="o">%</span> <span class="p">(</span><span class="n">registers</span><span class="p">[</span><span class="n">arg1</span><span class="p">],</span> <span class="n">registers</span><span class="p">[</span><span class="n">arg2</span><span class="p">],</span> <span class="n">imm</span><span class="p">)</span>
+</span></span><span class="line"><span class="ln">135</span><span class="cl">        <span class="k">else</span><span class="p">:</span>
+</span></span><span class="line"><span class="ln">136</span><span class="cl">            <span class="n">dis</span> <span class="o">+=</span>  <span class="s2">&#34;(QWORD) </span><span class="si">%s</span><span class="s2"> = DWORD [</span><span class="si">%s</span><span class="s2"> + 0x</span><span class="si">%.4x</span><span class="s2">]&#34;</span> <span class="o">%</span> <span class="p">(</span><span class="n">registers</span><span class="p">[</span><span class="n">arg1</span><span class="p">],</span> <span class="n">registers</span><span class="p">[</span><span class="n">arg2</span><span class="p">],</span> <span class="n">imm</span><span class="p">)</span>
+</span></span><span class="line"><span class="ln">137</span><span class="cl">    <span class="k">elif</span> <span class="n">opcode</span> <span class="o">==</span> <span class="mi">17</span><span class="p">:</span>
+</span></span><span class="line"><span class="ln">138</span><span class="cl">        <span class="n">dis</span> <span class="o">+=</span>  <span class="s2">&#34;[</span><span class="si">%s</span><span class="s2"> + 0x</span><span class="si">%.4x</span><span class="s2">] = </span><span class="si">%s</span><span class="s2"> &amp; 0xff&#34;</span> <span class="o">%</span> <span class="p">(</span><span class="n">registers</span><span class="p">[</span><span class="n">arg1</span><span class="p">],</span> <span class="n">registers</span><span class="p">[</span><span class="n">arg2</span><span class="p">],</span> <span class="n">imm</span><span class="p">)</span>
+</span></span><span class="line"><span class="ln">139</span><span class="cl">    <span class="k">elif</span> <span class="n">opcode</span> <span class="o">==</span> <span class="mi">18</span><span class="p">:</span>
+</span></span><span class="line"><span class="ln">140</span><span class="cl">        <span class="n">dis</span> <span class="o">+=</span>  <span class="s2">&#34;[</span><span class="si">%s</span><span class="s2"> + 0x</span><span class="si">%.4x</span><span class="s2">] = </span><span class="si">%s</span><span class="s2"> &amp; 0xffff&#34;</span> <span class="o">%</span> <span class="p">(</span><span class="n">registers</span><span class="p">[</span><span class="n">arg1</span><span class="p">],</span> <span class="n">registers</span><span class="p">[</span><span class="n">arg2</span><span class="p">],</span> <span class="n">imm</span><span class="p">)</span>
+</span></span><span class="line"><span class="ln">141</span><span class="cl">    <span class="k">elif</span> <span class="n">opcode</span> <span class="o">==</span> <span class="mi">19</span><span class="p">:</span>
+</span></span><span class="line"><span class="ln">142</span><span class="cl">        <span class="n">dis</span> <span class="o">+=</span>  <span class="s2">&#34;[</span><span class="si">%s</span><span class="s2"> + 0x</span><span class="si">%.4x</span><span class="s2">] = </span><span class="si">%s</span><span class="s2"> &amp; 0xffffffff&#34;</span> <span class="o">%</span> <span class="p">(</span><span class="n">registers</span><span class="p">[</span><span class="n">arg1</span><span class="p">],</span> <span class="n">registers</span><span class="p">[</span><span class="n">arg2</span><span class="p">],</span> <span class="n">imm</span><span class="p">)</span>
+</span></span><span class="line"><span class="ln">143</span><span class="cl">    <span class="k">elif</span> <span class="n">opcode</span> <span class="o">==</span> <span class="mi">20</span><span class="p">:</span>
+</span></span><span class="line"><span class="ln">144</span><span class="cl">        <span class="k">if</span> <span class="n">imm</span> <span class="o">&amp;</span> <span class="mh">0xffffffffffffff00</span><span class="p">:</span>
+</span></span><span class="line"><span class="ln">145</span><span class="cl">            <span class="n">imm</span> <span class="o">=</span> <span class="mh">0x10000000000000000</span> <span class="o">-</span> <span class="n">imm</span>
+</span></span><span class="line"><span class="ln">146</span><span class="cl">            <span class="n">dis</span> <span class="o">+=</span>  <span class="s2">&#34;[</span><span class="si">%s</span><span class="s2"> - 0x</span><span class="si">%.4x</span><span class="s2">] = </span><span class="si">%s</span><span class="s2">&#34;</span> <span class="o">%</span> <span class="p">(</span><span class="n">registers</span><span class="p">[</span><span class="n">arg2</span><span class="p">],</span> <span class="n">imm</span><span class="p">,</span> <span class="n">registers</span><span class="p">[</span><span class="n">arg3</span><span class="p">])</span>
+</span></span><span class="line"><span class="ln">147</span><span class="cl">        <span class="k">else</span><span class="p">:</span>
+</span></span><span class="line"><span class="ln">148</span><span class="cl">            <span class="n">dis</span> <span class="o">+=</span>  <span class="s2">&#34;[</span><span class="si">%s</span><span class="s2"> + 0x</span><span class="si">%.4x</span><span class="s2">] = </span><span class="si">%s</span><span class="s2">&#34;</span> <span class="o">%</span> <span class="p">(</span><span class="n">registers</span><span class="p">[</span><span class="n">arg2</span><span class="p">],</span> <span class="n">imm</span><span class="p">,</span> <span class="n">registers</span><span class="p">[</span><span class="n">arg3</span><span class="p">])</span>
+</span></span><span class="line"><span class="ln">149</span><span class="cl">    <span class="k">elif</span> <span class="n">opcode</span> <span class="o">==</span> <span class="mi">21</span><span class="p">:</span>
+</span></span><span class="line"><span class="ln">150</span><span class="cl">        <span class="n">dis</span> <span class="o">+=</span>  <span class="s2">&#34;push </span><span class="si">%s</span><span class="s2">&#34;</span> <span class="o">%</span> <span class="p">(</span><span class="n">registers</span><span class="p">[</span><span class="n">arg2</span><span class="p">])</span>
+</span></span><span class="line"><span class="ln">151</span><span class="cl">    <span class="k">elif</span> <span class="n">opcode</span> <span class="o">==</span> <span class="mi">22</span><span class="p">:</span>
+</span></span><span class="line"><span class="ln">152</span><span class="cl">        <span class="n">dis</span> <span class="o">+=</span>  <span class="s2">&#34;push 0x</span><span class="si">%.4x</span><span class="s2">&#34;</span> <span class="o">%</span> <span class="p">(</span><span class="n">imm</span><span class="p">)</span>
+</span></span><span class="line"><span class="ln">153</span><span class="cl">    <span class="k">elif</span> <span class="n">opcode</span> <span class="o">==</span> <span class="mi">23</span><span class="p">:</span>
+</span></span><span class="line"><span class="ln">154</span><span class="cl">        <span class="n">dis</span> <span class="o">+=</span>  <span class="s2">&#34;pop </span><span class="si">%s</span><span class="s2">&#34;</span> <span class="o">%</span> <span class="p">(</span><span class="n">registers</span><span class="p">[</span><span class="n">arg1</span><span class="p">])</span>
+</span></span><span class="line"><span class="ln">155</span><span class="cl">    <span class="k">elif</span> <span class="n">opcode</span> <span class="o">==</span> <span class="mi">24</span><span class="p">:</span>
+</span></span><span class="line"><span class="ln">156</span><span class="cl">        <span class="n">dis</span> <span class="o">+=</span>  <span class="s2">&#34;</span><span class="si">%s</span><span class="s2"> = </span><span class="si">%s</span><span class="s2">&#34;</span> <span class="o">%</span> <span class="p">(</span><span class="n">registers</span><span class="p">[</span><span class="n">arg1</span><span class="p">],</span> <span class="n">registers</span><span class="p">[</span><span class="n">arg2</span><span class="p">])</span>
+</span></span><span class="line"><span class="ln">157</span><span class="cl">    <span class="k">elif</span> <span class="n">opcode</span> <span class="o">==</span> <span class="mi">25</span><span class="p">:</span>
+</span></span><span class="line"><span class="ln">158</span><span class="cl">        <span class="n">dis</span> <span class="o">+=</span>  <span class="s2">&#34;</span><span class="si">%s</span><span class="s2"> = </span><span class="si">%s</span><span class="s2"> | </span><span class="si">%s</span><span class="s2">&#34;</span> <span class="o">%</span> <span class="p">(</span><span class="n">registers</span><span class="p">[</span><span class="n">arg1</span><span class="p">],</span> <span class="n">registers</span><span class="p">[</span><span class="n">arg2</span><span class="p">],</span> <span class="n">registers</span><span class="p">[</span><span class="n">arg3</span><span class="p">])</span>
+</span></span><span class="line"><span class="ln">159</span><span class="cl">    <span class="k">elif</span> <span class="n">opcode</span> <span class="o">==</span> <span class="mi">26</span><span class="p">:</span>
+</span></span><span class="line"><span class="ln">160</span><span class="cl">        <span class="n">dis</span> <span class="o">+=</span> <span class="s2">&#34;</span><span class="si">%s</span><span class="s2"> = </span><span class="si">%s</span><span class="s2"> &amp; </span><span class="si">%s</span><span class="s2">&#34;</span> <span class="o">%</span> <span class="p">(</span><span class="n">registers</span><span class="p">[</span><span class="n">arg1</span><span class="p">],</span> <span class="n">registers</span><span class="p">[</span><span class="n">arg2</span><span class="p">],</span> <span class="n">registers</span><span class="p">[</span><span class="n">arg3</span><span class="p">])</span>
+</span></span><span class="line"><span class="ln">161</span><span class="cl">    <span class="k">elif</span> <span class="n">opcode</span> <span class="o">==</span> <span class="mi">27</span><span class="p">:</span>
+</span></span><span class="line"><span class="ln">162</span><span class="cl">        <span class="n">dis</span> <span class="o">+=</span> <span class="s2">&#34;</span><span class="si">%s</span><span class="s2"> = </span><span class="si">%s</span><span class="s2"> ^ </span><span class="si">%s</span><span class="s2">&#34;</span> <span class="o">%</span> <span class="p">(</span><span class="n">registers</span><span class="p">[</span><span class="n">arg1</span><span class="p">],</span> <span class="n">registers</span><span class="p">[</span><span class="n">arg2</span><span class="p">],</span> <span class="n">registers</span><span class="p">[</span><span class="n">arg3</span><span class="p">])</span>
+</span></span><span class="line"><span class="ln">163</span><span class="cl">    <span class="k">elif</span> <span class="n">opcode</span> <span class="o">==</span> <span class="mi">28</span><span class="p">:</span>
+</span></span><span class="line"><span class="ln">164</span><span class="cl">        <span class="n">dis</span> <span class="o">+=</span> <span class="s2">&#34;</span><span class="si">%s</span><span class="s2"> = ! </span><span class="si">%s</span><span class="s2">&#34;</span> <span class="o">%</span> <span class="p">(</span><span class="n">registers</span><span class="p">[</span><span class="n">arg1</span><span class="p">],</span> <span class="n">registers</span><span class="p">[</span><span class="n">arg2</span><span class="p">])</span>
+</span></span><span class="line"><span class="ln">165</span><span class="cl">    <span class="k">elif</span> <span class="n">opcode</span> <span class="o">==</span> <span class="mi">29</span><span class="p">:</span>
+</span></span><span class="line"><span class="ln">166</span><span class="cl">        <span class="k">pass</span>
+</span></span><span class="line"><span class="ln">167</span><span class="cl">    <span class="k">elif</span> <span class="n">opcode</span> <span class="o">==</span> <span class="mi">33</span><span class="p">:</span>
+</span></span><span class="line"><span class="ln">168</span><span class="cl">        <span class="n">dis</span> <span class="o">+=</span> <span class="s2">&#34;if </span><span class="si">%s</span><span class="s2"> ==  </span><span class="si">%s</span><span class="s2">: </span><span class="si">%s</span><span class="s2"> = 1&#34;</span> <span class="o">%</span> <span class="p">(</span><span class="n">registers</span><span class="p">[</span><span class="n">arg3</span><span class="p">],</span> <span class="n">registers</span><span class="p">[</span><span class="n">arg2</span><span class="p">],</span> <span class="n">registers</span><span class="p">[</span><span class="n">arg1</span><span class="p">])</span>
+</span></span><span class="line"><span class="ln">169</span><span class="cl">    <span class="k">elif</span> <span class="n">opcode</span> <span class="o">==</span> <span class="mi">38</span><span class="p">:</span>
+</span></span><span class="line"><span class="ln">170</span><span class="cl">        <span class="k">if</span> <span class="n">imm</span> <span class="o">&amp;</span> <span class="mh">0x555555550000</span><span class="p">:</span>
+</span></span><span class="line"><span class="ln">171</span><span class="cl">            <span class="n">imm</span> <span class="o">=</span> <span class="n">imm</span> <span class="o">-</span> <span class="mh">0x555555554000</span>
+</span></span><span class="line"><span class="ln">172</span><span class="cl">        <span class="n">dis</span> <span class="o">+=</span> <span class="s2">&#34;if </span><span class="si">%s</span><span class="s2"> == 0; jmp 0x</span><span class="si">%.4x</span><span class="s2">&#34;</span> <span class="o">%</span> <span class="p">(</span><span class="n">registers</span><span class="p">[</span><span class="n">arg2</span><span class="p">],</span> <span class="n">imm</span><span class="p">)</span>
+</span></span><span class="line"><span class="ln">173</span><span class="cl">    <span class="k">elif</span> <span class="n">opcode</span> <span class="o">==</span> <span class="mi">39</span><span class="p">:</span>
+</span></span><span class="line"><span class="ln">174</span><span class="cl">        <span class="k">if</span> <span class="n">imm</span> <span class="o">&amp;</span> <span class="mh">0x555555550000</span><span class="p">:</span>
+</span></span><span class="line"><span class="ln">175</span><span class="cl">            <span class="n">imm</span> <span class="o">=</span> <span class="n">imm</span> <span class="o">-</span> <span class="mh">0x555555554000</span>
+</span></span><span class="line"><span class="ln">176</span><span class="cl">        <span class="n">dis</span> <span class="o">+=</span> <span class="s2">&#34;if </span><span class="si">%s</span><span class="s2"> != 0; jmp 0x</span><span class="si">%.4x</span><span class="s2">&#34;</span> <span class="o">%</span> <span class="p">(</span><span class="n">registers</span><span class="p">[</span><span class="n">arg2</span><span class="p">],</span> <span class="n">imm</span><span class="p">)</span>
+</span></span><span class="line"><span class="ln">177</span><span class="cl">    <span class="k">elif</span> <span class="n">opcode</span> <span class="o">==</span> <span class="mi">40</span><span class="p">:</span>
+</span></span><span class="line"><span class="ln">178</span><span class="cl">        <span class="k">if</span> <span class="n">imm</span> <span class="o">==</span> <span class="n">FREE</span><span class="p">:</span> <span class="c1"># free</span>
+</span></span><span class="line"><span class="ln">179</span><span class="cl">            <span class="n">dis</span> <span class="o">+=</span> <span class="s2">&#34;call </span><span class="si">%s</span><span class="s2">&#34;</span> <span class="o">%</span> <span class="p">(</span><span class="s2">&#34;free&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="ln">180</span><span class="cl">        <span class="k">elif</span> <span class="n">imm</span> <span class="o">==</span> <span class="n">MALLOC</span><span class="p">:</span> <span class="c1"># malloc</span>
+</span></span><span class="line"><span class="ln">181</span><span class="cl">            <span class="n">dis</span> <span class="o">+=</span> <span class="s2">&#34;call </span><span class="si">%s</span><span class="s2">&#34;</span> <span class="o">%</span> <span class="p">(</span><span class="s2">&#34;malloc&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="ln">182</span><span class="cl">        <span class="k">else</span><span class="p">:</span>
+</span></span><span class="line"><span class="ln">183</span><span class="cl">            <span class="k">if</span> <span class="n">imm</span> <span class="o">&amp;</span> <span class="mh">0x555555550000</span><span class="p">:</span>
+</span></span><span class="line"><span class="ln">184</span><span class="cl">                <span class="n">imm</span> <span class="o">=</span> <span class="n">imm</span> <span class="o">-</span> <span class="mh">0x555555554000</span>
+</span></span><span class="line"><span class="ln">185</span><span class="cl">            <span class="n">dis</span> <span class="o">+=</span> <span class="s2">&#34;call 0x</span><span class="si">%.4x</span><span class="s2">&#34;</span> <span class="o">%</span> <span class="p">(</span><span class="n">imm</span><span class="p">)</span>
+</span></span><span class="line"><span class="ln">186</span><span class="cl">    <span class="k">elif</span> <span class="n">opcode</span> <span class="o">==</span> <span class="mi">41</span><span class="p">:</span>
+</span></span><span class="line"><span class="ln">187</span><span class="cl">        <span class="n">dis</span> <span class="o">+=</span> <span class="s2">&#34;return&#34;</span>
+</span></span><span class="line"><span class="ln">188</span><span class="cl">    <span class="k">elif</span> <span class="n">opcode</span> <span class="o">==</span> <span class="mi">42</span><span class="p">:</span>
+</span></span><span class="line"><span class="ln">189</span><span class="cl">        <span class="n">dis</span> <span class="o">+=</span>  <span class="s2">&#34;if </span><span class="si">%s</span><span class="s2"> != 0; return&#34;</span> <span class="o">%</span> <span class="p">(</span><span class="n">registers</span><span class="p">[</span><span class="n">arg2</span><span class="p">])</span>
+</span></span><span class="line"><span class="ln">190</span><span class="cl">    <span class="k">elif</span> <span class="n">opcode</span> <span class="o">==</span> <span class="mi">43</span><span class="p">:</span>
+</span></span><span class="line"><span class="ln">191</span><span class="cl">        <span class="n">dis</span> <span class="o">+=</span> <span class="s2">&#34;if </span><span class="si">%s</span><span class="s2"> == 0; return&#34;</span> <span class="o">%</span> <span class="p">(</span><span class="n">registers</span><span class="p">[</span><span class="n">arg2</span><span class="p">])</span>
+</span></span><span class="line"><span class="ln">192</span><span class="cl">    <span class="k">elif</span> <span class="n">opcode</span> <span class="o">==</span> <span class="mi">44</span><span class="p">:</span>
+</span></span><span class="line"><span class="ln">193</span><span class="cl">        <span class="k">if</span> <span class="n">imm</span> <span class="o">&amp;</span> <span class="mh">0xffffffffffffff00</span><span class="p">:</span>
+</span></span><span class="line"><span class="ln">194</span><span class="cl">            <span class="n">imm</span> <span class="o">=</span> <span class="mh">0x10000000000000000</span> <span class="o">-</span> <span class="n">imm</span>
+</span></span><span class="line"><span class="ln">195</span><span class="cl">            <span class="n">dis</span> <span class="o">+=</span>  <span class="s2">&#34;</span><span class="si">%s</span><span class="s2"> = </span><span class="si">%s</span><span class="s2"> - 0x</span><span class="si">%.4x</span><span class="s2">&#34;</span> <span class="o">%</span> <span class="p">(</span><span class="n">registers</span><span class="p">[</span><span class="n">arg1</span><span class="p">],</span> <span class="n">registers</span><span class="p">[</span><span class="n">arg2</span><span class="p">],</span> <span class="n">imm</span><span class="p">)</span>
+</span></span><span class="line"><span class="ln">196</span><span class="cl">        <span class="k">else</span><span class="p">:</span>
+</span></span><span class="line"><span class="ln">197</span><span class="cl">            <span class="n">dis</span> <span class="o">+=</span>  <span class="s2">&#34;</span><span class="si">%s</span><span class="s2"> = </span><span class="si">%s</span><span class="s2"> + 0x</span><span class="si">%.4x</span><span class="s2">&#34;</span> <span class="o">%</span> <span class="p">(</span><span class="n">registers</span><span class="p">[</span><span class="n">arg1</span><span class="p">],</span> <span class="n">registers</span><span class="p">[</span><span class="n">arg2</span><span class="p">],</span> <span class="n">imm</span><span class="p">)</span>
+</span></span><span class="line"><span class="ln">198</span><span class="cl">    <span class="k">elif</span> <span class="n">opcode</span> <span class="o">==</span> <span class="mi">45</span><span class="p">:</span>
+</span></span><span class="line"><span class="ln">199</span><span class="cl">        <span class="n">dis</span> <span class="o">+=</span> <span class="s2">&#34;</span><span class="si">%s</span><span class="s2"> = </span><span class="si">%s</span><span class="s2"> &gt;&gt; 0x</span><span class="si">%.4x</span><span class="s2">&#34;</span> <span class="o">%</span> <span class="p">(</span><span class="n">registers</span><span class="p">[</span><span class="n">arg1</span><span class="p">],</span> <span class="n">registers</span><span class="p">[</span><span class="n">arg2</span><span class="p">],</span> <span class="p">(</span><span class="n">imm</span> <span class="o">&amp;</span> <span class="mh">0xff</span><span class="p">))</span>
+</span></span><span class="line"><span class="ln">200</span><span class="cl">    <span class="k">elif</span> <span class="n">opcode</span> <span class="o">==</span> <span class="mi">46</span><span class="p">:</span>
+</span></span><span class="line"><span class="ln">201</span><span class="cl">        <span class="n">dis</span> <span class="o">+=</span> <span class="s2">&#34;</span><span class="si">%s</span><span class="s2"> = </span><span class="si">%s</span><span class="s2"> &lt;&lt; 0x</span><span class="si">%.4x</span><span class="s2">&#34;</span> <span class="o">%</span> <span class="p">(</span><span class="n">registers</span><span class="p">[</span><span class="n">arg1</span><span class="p">],</span> <span class="n">registers</span><span class="p">[</span><span class="n">arg2</span><span class="p">],</span> <span class="p">(</span><span class="n">imm</span> <span class="o">&amp;</span> <span class="mh">0xff</span><span class="p">))</span>
+</span></span><span class="line"><span class="ln">202</span><span class="cl">    <span class="k">elif</span> <span class="n">opcode</span> <span class="o">==</span> <span class="mi">47</span><span class="p">:</span>
+</span></span><span class="line"><span class="ln">203</span><span class="cl">        <span class="n">dis</span> <span class="o">+=</span> <span class="s2">&#34;</span><span class="si">%s</span><span class="s2"> = </span><span class="si">%s</span><span class="s2"> | 0x</span><span class="si">%.4x</span><span class="s2">&#34;</span> <span class="o">%</span> <span class="p">(</span><span class="n">registers</span><span class="p">[</span><span class="n">arg1</span><span class="p">],</span> <span class="n">registers</span><span class="p">[</span><span class="n">arg2</span><span class="p">],</span> <span class="n">imm</span><span class="p">)</span>
+</span></span><span class="line"><span class="ln">204</span><span class="cl">    <span class="k">elif</span> <span class="n">opcode</span> <span class="o">==</span> <span class="mi">48</span><span class="p">:</span>
+</span></span><span class="line"><span class="ln">205</span><span class="cl">        <span class="n">dis</span> <span class="o">+=</span> <span class="s2">&#34;</span><span class="si">%s</span><span class="s2"> = </span><span class="si">%s</span><span class="s2"> &amp; 0x</span><span class="si">%.4x</span><span class="s2">&#34;</span> <span class="o">%</span> <span class="p">(</span><span class="n">registers</span><span class="p">[</span><span class="n">arg1</span><span class="p">],</span> <span class="n">registers</span><span class="p">[</span><span class="n">arg2</span><span class="p">],</span> <span class="n">imm</span><span class="p">)</span>
+</span></span><span class="line"><span class="ln">206</span><span class="cl">    <span class="k">elif</span> <span class="n">opcode</span> <span class="o">==</span> <span class="mi">49</span><span class="p">:</span>
+</span></span><span class="line"><span class="ln">207</span><span class="cl">        <span class="n">dis</span> <span class="o">+=</span> <span class="s2">&#34;</span><span class="si">%s</span><span class="s2"> = </span><span class="si">%s</span><span class="s2"> ^ 0x</span><span class="si">%.4x</span><span class="s2">&#34;</span> <span class="o">%</span> <span class="p">(</span><span class="n">registers</span><span class="p">[</span><span class="n">arg1</span><span class="p">],</span> <span class="n">registers</span><span class="p">[</span><span class="n">arg2</span><span class="p">],</span> <span class="n">imm</span><span class="p">)</span>
+</span></span><span class="line"><span class="ln">208</span><span class="cl">    <span class="k">else</span><span class="p">:</span>
+</span></span><span class="line"><span class="ln">209</span><span class="cl">        <span class="n">dis</span> <span class="o">+=</span>  <span class="s2">&#34;</span><span class="si">%s</span><span class="s2">&#34;</span> <span class="o">%</span> <span class="p">(</span><span class="s2">&#34;UNKNOWN&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="ln">210</span><span class="cl">
+</span></span><span class="line"><span class="ln">211</span><span class="cl">    <span class="nb">print</span> <span class="n">dis</span></span></span></code></pre></div>
+
+ <br> 
+<p>After running this you will get this disassembly</p>
+
+<br>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-plaintext" data-lang="plaintext"><span class="line"><span class="cl">0000: [09][ 1ada ][ 1190 ] rax = 0x0002                                
+</span></span><span class="line"><span class="cl">0014: [36][ 1d87 ][ 119e ] if rdi != 0x0002: r8 = 1; else: r8 = 0;     
+</span></span><span class="line"><span class="cl">0028: [42][ 1e9c ][ 11ac ] if r8 != 0; return                          
+</span></span><span class="line"><span class="cl">0042: [44][ 1e1e ][ 11ba ] rsi = rsi + 0x0008                          
+</span></span><span class="line"><span class="cl">0056: [16][ 1b8b ][ 11c8 ] (QWORD) rdi = DWORD [rsi + 0x0000]          
+</span></span><span class="line"><span class="cl">0070: [09][ 1ada ][ 11d6 ] jmp 0x11e4                                  
+</span></span><span class="line"><span class="cl">0084: [21][ 1c01 ][ 11e4 ] push rbp                                    
+</span></span><span class="line"><span class="cl">0098: [24][ 1c43 ][ 11f2 ] rbp = sp                                    
+</span></span><span class="line"><span class="cl">0112: [44][ 1e1e ][ 1200 ] sp = sp - 0x0010                            
+</span></span><span class="line"><span class="cl">0126: [20][ 1be9 ][ 120e ] [rbp - 0x0010] = rdi                        
+</span></span><span class="line"><span class="cl">0140: [40][ 1de5 ][ 121c ] call 0x17da                                 
+</span></span><span class="line"><span class="cl">0154: [36][ 1d87 ][ 122a ] if rax != 0x0024: rax = 1; else: rax = 0;   
+</span></span><span class="line"><span class="cl">0168: [39][ 1dcf ][ 1238 ] if rax != 0; jmp 0x13ce                     
+</span></span><span class="line"><span class="cl">0182: [09][ 1ada ][ 1246 ] rdi = 0x20cd                                
+</span></span><span class="line"><span class="cl">0196: [40][ 1de5 ][ 1254 ] call 0x17da                                 
+</span></span><span class="line"><span class="cl">0210: [20][ 1be9 ][ 1262 ] [rbp - 0x0008] = rax                        
+</span></span><span class="line"><span class="cl">0224: [16][ 1b8b ][ 1270 ] (QWORD) rdi = DWORD [rbp - 0x0010]          
+</span></span><span class="line"><span class="cl">0238: [09][ 1ada ][ 127e ] rsi = 0x20cd                                
+</span></span><span class="line"><span class="cl">0252: [24][ 1c43 ][ 128c ] rdx = rax                                   
+</span></span><span class="line"><span class="cl">0266: [40][ 1de5 ][ 129a ] call 0x182e                                 
+</span></span><span class="line"><span class="cl">0280: [39][ 1dcf ][ 12a8 ] if rax != 0; jmp 0x13ce                     
+</span></span><span class="line"><span class="cl">0294: [16][ 1b8b ][ 12b6 ] (QWORD) rdi = DWORD [rbp - 0x0010]          
+</span></span><span class="line"><span class="cl">0308: [10][ 1afa ][ 12c4 ] (WORD)  rsi = BYTE  [rdi + 0x0023]          
+</span></span><span class="line"><span class="cl">0322: [36][ 1d87 ][ 12d2 ] if rsi != 0x007d: rsi = 1; else: rsi = 0;   
+</span></span><span class="line"><span class="cl">0336: [39][ 1dcf ][ 12e0 ] if rsi != 0; jmp 0x13ce                     
+</span></span><span class="line"><span class="cl">0350: [16][ 1b8b ][ 12ee ] (QWORD) rsi = DWORD [rbp - 0x0008]          
+</span></span><span class="line"><span class="cl">0364: [01][ 1a20 ][ 12fc ] rdi = rdi + rsi                             
+</span></span><span class="line"><span class="cl">0378: [08][ 1ae6 ][ 130a ] rsi = ~rsi                                  
+</span></span><span class="line"><span class="cl">0392: [44][ 1e1e ][ 1318 ] rsi = rsi + 0x0023                          
+</span></span><span class="line"><span class="cl">0406: [21][ 1c01 ][ 1326 ] push rsi                                    
+</span></span><span class="line"><span class="cl">0420: [40][ 1de5 ][ 1334 ] call 0x1406                                 
+</span></span><span class="line"><span class="cl">0434: [23][ 1c2e ][ 1342 ] pop rsi                                     
+</span></span><span class="line"><span class="cl">0448: [38][ 1db9 ][ 1350 ] if rax == 0; jmp 0x13ce                     
+</span></span><span class="line"><span class="cl">0462: [24][ 1c43 ][ 135e ] rdi = rax                                   
+</span></span><span class="line"><span class="cl">0476: [21][ 1c01 ][ 136c ] push rdi                                    
+</span></span><span class="line"><span class="cl">0490: [40][ 1de5 ][ 137a ] call 0x15fe                                 
+</span></span><span class="line"><span class="cl">0504: [23][ 1c2e ][ 1388 ] pop rdi                                     
+</span></span><span class="line"><span class="cl">0518: [21][ 1c01 ][ 1396 ] push rax                                    
+</span></span><span class="line"><span class="cl">0532: [40][ 1de5 ][ 13a4 ] call free                                   
+</span></span><span class="line"><span class="cl">0546: [23][ 1c2e ][ 13b2 ] pop rax                                     
+</span></span><span class="line"><span class="cl">0560: [09][ 1ada ][ 13c0 ] jmp 0x13dc                                  
+</span></span><span class="line"><span class="cl">0574: [09][ 1ada ][ 13ce ] rax = 0x0001                                
+</span></span><span class="line"><span class="cl">0588: [24][ 1c43 ][ 13dc ] sp = rbp                                    
+</span></span><span class="line"><span class="cl">0602: [23][ 1c2e ][ 13ea ] pop rbp                                     
+</span></span><span class="line"><span class="cl">0616: [41][ 1e07 ][ 13f8 ] return                                      
+</span></span><span class="line"><span class="cl">0630: [09][ 1ada ][ 1406 ] rax = 0x0000                                
+</span></span><span class="line"><span class="cl">0644: [43][ 1ebe ][ 1414 ] if rsi == 0; return                         
+</span></span><span class="line"><span class="cl">0658: [21][ 1c01 ][ 1422 ] push rdi                                    
+</span></span><span class="line"><span class="cl">0672: [21][ 1c01 ][ 1430 ] push rsi                                    
+</span></span><span class="line"><span class="cl">0686: [46][ 1e49 ][ 143e ] rdi = rsi &lt;&lt; 0x0003                         
+</span></span><span class="line"><span class="cl">0700: [40][ 1de5 ][ 144c ] call malloc                                 
+</span></span><span class="line"><span class="cl">0714: [23][ 1c2e ][ 145a ] pop rsi                                     
+</span></span><span class="line"><span class="cl">0728: [23][ 1c2e ][ 1468 ] pop rdi                                     
+</span></span><span class="line"><span class="cl">0742: [43][ 1ebe ][ 1476 ] if rax == 0; return                         
+</span></span><span class="line"><span class="cl">0756: [24][ 1c43 ][ 1484 ] r8 = rax                                    
+</span></span><span class="line"><span class="cl">0770: [24][ 1c43 ][ 1492 ] r9 = rax                                    
+</span></span><span class="line"><span class="cl">0784: [21][ 1c01 ][ 14a0 ] push r9                                     
+</span></span><span class="line"><span class="cl">0798: [21][ 1c01 ][ 14ae ] push r8                                     
+</span></span><span class="line"><span class="cl">0812: [21][ 1c01 ][ 14bc ] push rdi                                    
+</span></span><span class="line"><span class="cl">0826: [21][ 1c01 ][ 14ca ] push rsi                                    
+</span></span><span class="line"><span class="cl">0840: [10][ 1afa ][ 14d8 ] (WORD)  rsi = BYTE  [rdi + 0x0000]          
+</span></span><span class="line"><span class="cl">0854: [09][ 1ada ][ 14e6 ] rdi = 0x20a0                                
+</span></span><span class="line"><span class="cl">0868: [40][ 1de5 ][ 14f4 ] call 0x18c8                                 
+</span></span><span class="line"><span class="cl">0882: [23][ 1c2e ][ 1502 ] pop rsi                                     
+</span></span><span class="line"><span class="cl">0896: [23][ 1c2e ][ 1510 ] pop rdi                                     
+</span></span><span class="line"><span class="cl">0910: [23][ 1c2e ][ 151e ] pop r8                                      
+</span></span><span class="line"><span class="cl">0924: [23][ 1c2e ][ 152c ] pop r9                                      
+</span></span><span class="line"><span class="cl">0938: [38][ 1db9 ][ 153a ] if rax == 0; jmp 0x15c6                     
+</span></span><span class="line"><span class="cl">0952: [09][ 1ada ][ 1548 ] r10 = 0x20a0                                
+</span></span><span class="line"><span class="cl">0966: [02][ 1a39 ][ 1556 ] rax = rax - r10                             
+</span></span><span class="line"><span class="cl">0980: [20][ 1be9 ][ 1564 ] [r9 + 0x0000] = rax                         
+</span></span><span class="line"><span class="cl">0994: [44][ 1e1e ][ 1572 ] r9 = r9 + 0x0008                            
+</span></span><span class="line"><span class="cl">1008: [44][ 1e1e ][ 1580 ] rdi = rdi + 0x0001                          
+</span></span><span class="line"><span class="cl">1022: [44][ 1e1e ][ 158e ] rsi = rsi - 0x0001                          
+</span></span><span class="line"><span class="cl">1036: [39][ 1dcf ][ 159c ] if rsi != 0; jmp 0x14a0                     
+</span></span><span class="line"><span class="cl">1050: [24][ 1c43 ][ 15aa ] rax = r8                                    
+</span></span><span class="line"><span class="cl">1064: [41][ 1e07 ][ 15b8 ] return                                      
+</span></span><span class="line"><span class="cl">1078: [24][ 1c43 ][ 15c6 ] rdi = r8                                    
+</span></span><span class="line"><span class="cl">1092: [40][ 1de5 ][ 15d4 ] call free                                   
+</span></span><span class="line"><span class="cl">1106: [09][ 1ada ][ 15e2 ] rax = 0x0000                                
+</span></span><span class="line"><span class="cl">1120: [41][ 1e07 ][ 15f0 ] return                                      
+</span></span><span class="line"><span class="cl">1134: [09][ 1ada ][ 15fe ] rax = 0x0001                                
+</span></span><span class="line"><span class="cl">1148: [43][ 1ebe ][ 160c ] if rsi == 0; return                         
+</span></span><span class="line"><span class="cl">1162: [16][ 1b8b ][ 161a ] (QWORD) r8 = DWORD [rdi + 0x0000]           
+</span></span><span class="line"><span class="cl">1176: [36][ 1d87 ][ 1628 ] if r8 != 0x0016: r8 = 1; else: r8 = 0;      
+</span></span><span class="line"><span class="cl">1190: [42][ 1e9c ][ 1636 ] if r8 != 0; return                          
+</span></span><span class="line"><span class="cl">1204: [21][ 1c01 ][ 1644 ] push rdi                                    
+</span></span><span class="line"><span class="cl">1218: [21][ 1c01 ][ 1652 ] push rsi                                    
+</span></span><span class="line"><span class="cl">1232: [40][ 1de5 ][ 1660 ] call 0x1724                                 
+</span></span><span class="line"><span class="cl">1246: [23][ 1c2e ][ 166e ] pop rsi                                     
+</span></span><span class="line"><span class="cl">1260: [23][ 1c2e ][ 167c ] pop rdi                                     
+</span></span><span class="line"><span class="cl">1274: [44][ 1e1e ][ 168a ] rsi = rsi - 0x0001                          
+</span></span><span class="line"><span class="cl">1288: [21][ 1c01 ][ 1698 ] push rdi                                    
+</span></span><span class="line"><span class="cl">1302: [46][ 1e49 ][ 16a6 ] rdx = rsi &lt;&lt; 0x0003                         
+</span></span><span class="line"><span class="cl">1316: [09][ 1ada ][ 16b4 ] rsi = 0x1fa0                                
+</span></span><span class="line"><span class="cl">1330: [40][ 1de5 ][ 16c2 ] call 0x182e                                 
+</span></span><span class="line"><span class="cl">1344: [23][ 1c2e ][ 16d0 ] pop rdi                                     
+</span></span><span class="line"><span class="cl">1358: [24][ 1c43 ][ 16de ] r8 = rax                                    
+</span></span><span class="line"><span class="cl">1372: [09][ 1ada ][ 16ec ] rax = 0x0001                                
+</span></span><span class="line"><span class="cl">1386: [42][ 1e9c ][ 16fa ] if r8 != 0; return                          
+</span></span><span class="line"><span class="cl">1400: [09][ 1ada ][ 1708 ] rax = 0x0000                                
+</span></span><span class="line"><span class="cl">1414: [41][ 1e07 ][ 1716 ] return                                      
+</span></span><span class="line"><span class="cl">1428: [43][ 1ebe ][ 1724 ] if rsi == 0; return                         
+</span></span><span class="line"><span class="cl">1442: [44][ 1e1e ][ 1732 ] rsi = rsi - 0x0001                          
+</span></span><span class="line"><span class="cl">1456: [43][ 1ebe ][ 1740 ] if rsi == 0; return                         
+</span></span><span class="line"><span class="cl">1470: [16][ 1b8b ][ 174e ] (QWORD) r8 = DWORD [rdi + 0x0000]           
+</span></span><span class="line"><span class="cl">1484: [16][ 1b8b ][ 175c ] (QWORD) r9 = DWORD [rdi + 0x0008]           
+</span></span><span class="line"><span class="cl">1498: [02][ 1a39 ][ 176a ] r8 = r9 - r8                                
+</span></span><span class="line"><span class="cl">1512: [27][ 1c86 ][ 1778 ] r8 = r8 ^ rsi                               
+</span></span><span class="line"><span class="cl">1526: [03][ 1a52 ][ 1786 ] r9 = r8 * r8                                
+</span></span><span class="line"><span class="cl">1540: [03][ 1a52 ][ 1794 ] r8 = r9 * r8                                
+</span></span><span class="line"><span class="cl">1554: [20][ 1be9 ][ 17a2 ] [rdi + 0x0000] = r8                         
+</span></span><span class="line"><span class="cl">1568: [44][ 1e1e ][ 17b0 ] rdi = rdi + 0x0008                          
+</span></span><span class="line"><span class="cl">1582: [44][ 1e1e ][ 17be ] rsi = rsi - 0x0001                          
+</span></span><span class="line"><span class="cl">1596: [09][ 1ada ][ 17cc ] jmp 0x1740                                  
+</span></span><span class="line"><span class="cl">1610: [09][ 1ada ][ 17da ] rax = 0x0000                                
+</span></span><span class="line"><span class="cl">1624: [10][ 1afa ][ 17e8 ] (WORD)  r10 = BYTE  [rdi + 0x0000]          
+</span></span><span class="line"><span class="cl">1638: [43][ 1ebe ][ 17f6 ] if r10 == 0; return                         
+</span></span><span class="line"><span class="cl">1652: [44][ 1e1e ][ 1804 ] rdi = rdi + 0x0001                          
+</span></span><span class="line"><span class="cl">1666: [44][ 1e1e ][ 1812 ] rax = rax + 0x0001                          
+</span></span><span class="line"><span class="cl">1680: [09][ 1ada ][ 1820 ] jmp 0x17e8                                  
+</span></span><span class="line"><span class="cl">1694: [09][ 1ada ][ 182e ] rax = 0x0000                                
+</span></span><span class="line"><span class="cl">1708: [43][ 1ebe ][ 183c ] if rdx == 0; return                         
+</span></span><span class="line"><span class="cl">1722: [10][ 1afa ][ 184a ] (WORD)  r8 = BYTE  [rdi + 0x0000]           
+</span></span><span class="line"><span class="cl">1736: [10][ 1afa ][ 1858 ] (WORD)  r9 = BYTE  [rsi + 0x0000]           
+</span></span><span class="line"><span class="cl">1750: [27][ 1c86 ][ 1866 ] r8 = r8 ^ r9                                
+</span></span><span class="line"><span class="cl">1764: [25][ 1c54 ][ 1874 ] rax = rax | r8                              
+</span></span><span class="line"><span class="cl">1778: [44][ 1e1e ][ 1882 ] rdx = rdx - 0x0001                          
+</span></span><span class="line"><span class="cl">1792: [44][ 1e1e ][ 1890 ] rdi = rdi + 0x0001                          
+</span></span><span class="line"><span class="cl">1806: [44][ 1e1e ][ 189e ] rsi = rsi + 0x0001                          
+</span></span><span class="line"><span class="cl">1820: [39][ 1dcf ][ 18ac ] if rdx != 0; jmp 0x184a                     
+</span></span><span class="line"><span class="cl">1834: [41][ 1e07 ][ 18ba ] return                                      
+</span></span><span class="line"><span class="cl">1848: [24][ 1c43 ][ 18c8 ] rax = rdi                                   
+</span></span><span class="line"><span class="cl">1862: [10][ 1afa ][ 18d6 ] (WORD)  r8 = BYTE  [rax + 0x0000]           
+</span></span><span class="line"><span class="cl">1876: [38][ 1db9 ][ 18e4 ] if r8 == 0; jmp 0x192a                      
+</span></span><span class="line"><span class="cl">1890: [33][ 1d2f ][ 18f2 ] if rsi ==  r8: r8 = 1                       
+</span></span><span class="line"><span class="cl">1904: [42][ 1e9c ][ 1900 ] if r8 != 0; return                          
+</span></span><span class="line"><span class="cl">1918: [44][ 1e1e ][ 190e ] rax = rax + 0x0001                          
+</span></span><span class="line"><span class="cl">1932: [09][ 1ada ][ 191c ] jmp 0x18d6                                  
+</span></span><span class="line"><span class="cl">1946: [09][ 1ada ][ 192a ] rax = 0x0000                                
+</span></span><span class="line"><span class="cl">1960: [41][ 1e07 ][ 1938 ] return
+</span></span></code></pre></div>
+<br>
+<h3 id="flag-checking">Flag Checking</h3>
+<p>After analyzing the whole disassembly i managed to understand how its all working.</p>
+<p>At the entry point of our bytecode, <code>argv</code> and <code>argc</code> are in <code>rsi</code> and <code>rdi</code> respectively.</p>
+<p>The Flag Checking is done like this:</p>
+<ol>
+<li>if argc != 2; return</li>
+<li>if argv[1][:5] != &ldquo;FLAG{&rdquo;; return</li>
+<li>if argv[1][::-1] != &ldquo;}&rdquo;; return</li>
+<li>if argv[1][5] != &ldquo;x&rdquo;; return</li>
+<li>if len(argv[1][5:-1]) != 0x1e; return</li>
+</ol>
+<p>Now this is where it gets interesting. it calls <code>malloc()</code> to create an array of size 0x1e
+and then it loops through our input.
+For each character in our input it calculates the index of the character in a global string at 0x20A0 &ndash; <code>abdfgehikmanoqrstucvwlxyz-01h23p456u78j9-_.+</code> and then stores that index into the malloc&rsquo;d array.</p>
+<p>As of Now our flag should look like this
+<code>FLAG{xbbbbbbbbbbbbbbbbbbbbbbbbbbbbb}</code></p>
+<p>Now it performs this operation on our index array:
+
+<br>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="ln">1</span><span class="cl"><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mh">0x1d</span><span class="p">):</span>
+</span></span><span class="line"><span class="ln">2</span><span class="cl">  <span class="n">r8</span> <span class="o">=</span> <span class="nb">input</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">0</span><span class="p">]</span>
+</span></span><span class="line"><span class="ln">3</span><span class="cl">  <span class="n">r9</span> <span class="o">=</span> <span class="nb">input</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span>
+</span></span><span class="line"><span class="ln">4</span><span class="cl">  <span class="n">r8</span> <span class="o">=</span> <span class="n">r9</span> <span class="o">-</span> <span class="n">r8</span>
+</span></span><span class="line"><span class="ln">5</span><span class="cl">  <span class="n">r8</span> <span class="o">=</span> <span class="n">r8</span> <span class="o">^</span> <span class="p">(</span><span class="mh">0x1d</span> <span class="o">-</span> <span class="n">i</span><span class="p">)</span>
+</span></span><span class="line"><span class="ln">6</span><span class="cl">  <span class="n">r8</span> <span class="o">=</span> <span class="n">r8</span> <span class="o">*</span> <span class="n">r8</span> <span class="o">*</span> <span class="n">r8</span>
+</span></span><span class="line"><span class="ln">7</span><span class="cl">  <span class="nb">input</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">r8</span></span></span></code></pre></div>
+
+<br>
+And after this the binary was checking the modified input index array with another array at 0x1FA0.
+Without wasting time i put together a quick z3 script to print the flag and it worked in like first try. This challenge is my favourite until i solve another amazing crackme. Thanks ttlhacker for this amazing challange here is the script in action.</p>
+<p>solve.py
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="ln"> 1</span><span class="cl"><span class="kn">from</span> <span class="nn">z3</span> <span class="kn">import</span> <span class="o">*</span>
+</span></span><span class="line"><span class="ln"> 2</span><span class="cl">
+</span></span><span class="line"><span class="ln"> 3</span><span class="cl"><span class="n">chrset</span> <span class="o">=</span> <span class="s2">&#34;abdfgehikmanoqrstucvwlxyz-01h23p456u78j9-_.+&#34;</span>
+</span></span><span class="line"><span class="ln"> 4</span><span class="cl"><span class="n">inpt</span> <span class="o">=</span> <span class="s2">&#34;FLAG</span><span class="si">{xbbbbbbbbbbbbbbbbbbbbbbbbbbbbb}</span><span class="s2">&#34;</span>
+</span></span><span class="line"><span class="ln"> 5</span><span class="cl">
+</span></span><span class="line"><span class="ln"> 6</span><span class="cl"><span class="n">enc</span> <span class="o">=</span> <span class="p">[</span>
+</span></span><span class="line"><span class="ln"> 7</span><span class="cl">    <span class="mh">0x16C8</span><span class="p">,</span>
+</span></span><span class="line"><span class="ln"> 8</span><span class="cl">    <span class="mh">0x0FFFFFFFFFFFF8BA1</span><span class="p">,</span>
+</span></span><span class="line"><span class="ln"> 9</span><span class="cl">    <span class="mh">0x0FFFFFFFFFFFFE0C0</span><span class="p">,</span>
+</span></span><span class="line"><span class="ln">10</span><span class="cl">    <span class="mh">0x3600</span><span class="p">,</span>
+</span></span><span class="line"><span class="ln">11</span><span class="cl">    <span class="mh">0x0FFFFFFFFFFFFE535</span><span class="p">,</span>
+</span></span><span class="line"><span class="ln">12</span><span class="cl">    <span class="mh">0x16C8</span><span class="p">,</span>
+</span></span><span class="line"><span class="ln">13</span><span class="cl">    <span class="mh">0x0FFFFFFFFFFFF8BA1</span><span class="p">,</span>
+</span></span><span class="line"><span class="ln">14</span><span class="cl">    <span class="mh">0x5F45</span><span class="p">,</span>
+</span></span><span class="line"><span class="ln">15</span><span class="cl">    <span class="mh">0x0FFFFFFFFFFFFD668</span><span class="p">,</span>
+</span></span><span class="line"><span class="ln">16</span><span class="cl">    <span class="mh">0x0FFFFFFFFFFFFFFF8</span><span class="p">,</span>
+</span></span><span class="line"><span class="ln">17</span><span class="cl">    <span class="mh">0x5F45</span><span class="p">,</span>
+</span></span><span class="line"><span class="ln">18</span><span class="cl">    <span class="mh">0x0FFFFFFFFFFFFCA00</span><span class="p">,</span>
+</span></span><span class="line"><span class="ln">19</span><span class="cl">    <span class="mh">0x0FFFFFFFFFFFFBB58</span><span class="p">,</span>
+</span></span><span class="line"><span class="ln">20</span><span class="cl">    <span class="mh">0x0AB8</span><span class="p">,</span>
+</span></span><span class="line"><span class="ln">21</span><span class="cl">    <span class="mh">0x0FFFFFFFFFFFFBB58</span><span class="p">,</span>
+</span></span><span class="line"><span class="ln">22</span><span class="cl">    <span class="mh">0x4CE3</span><span class="p">,</span>
+</span></span><span class="line"><span class="ln">23</span><span class="cl">    <span class="mh">0x0FFFFFFFFFFFF8000</span><span class="p">,</span>
+</span></span><span class="line"><span class="ln">24</span><span class="cl">    <span class="mh">0x2D9</span><span class="p">,</span>
+</span></span><span class="line"><span class="ln">25</span><span class="cl">    <span class="mh">0x4CE3</span><span class="p">,</span>
+</span></span><span class="line"><span class="ln">26</span><span class="cl">    <span class="mh">0x0FFFFFFFFFFFFFFFF</span><span class="p">,</span>
+</span></span><span class="line"><span class="ln">27</span><span class="cl">    <span class="mh">0x2D9</span><span class="p">,</span>
+</span></span><span class="line"><span class="ln">28</span><span class="cl">    <span class="mh">0x3E8</span><span class="p">,</span>
+</span></span><span class="line"><span class="ln">29</span><span class="cl">    <span class="mh">0x7D</span><span class="p">,</span>
+</span></span><span class="line"><span class="ln">30</span><span class="cl">    <span class="mh">0x0FFFFFFFFFFFFE938</span><span class="p">,</span>
+</span></span><span class="line"><span class="ln">31</span><span class="cl">    <span class="mh">0x200</span><span class="p">,</span>
+</span></span><span class="line"><span class="ln">32</span><span class="cl">    <span class="mh">0x200</span><span class="p">,</span>
+</span></span><span class="line"><span class="ln">33</span><span class="cl">    <span class="mh">0x0FFFFFFFFFFFFE535</span><span class="p">,</span>
+</span></span><span class="line"><span class="ln">34</span><span class="cl">    <span class="mh">0x1F40</span><span class="p">,</span>
+</span></span><span class="line"><span class="ln">35</span><span class="cl">    <span class="mh">0x0FFFFFFFFFFFFE0C0</span><span class="p">,</span>
+</span></span><span class="line"><span class="ln">36</span><span class="cl"><span class="p">]</span>
+</span></span><span class="line"><span class="ln">37</span><span class="cl">
+</span></span><span class="line"><span class="ln">38</span><span class="cl"><span class="n">flag</span> <span class="o">=</span> <span class="p">[</span><span class="n">BitVec</span><span class="p">(</span><span class="s2">&#34;flag_</span><span class="si">%i</span><span class="s2">&#34;</span> <span class="o">%</span> <span class="n">i</span><span class="p">,</span> <span class="mi">64</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mh">0x1e</span><span class="p">)]</span>
+</span></span><span class="line"><span class="ln">39</span><span class="cl">
+</span></span><span class="line"><span class="ln">40</span><span class="cl">
+</span></span><span class="line"><span class="ln">41</span><span class="cl"><span class="n">s</span> <span class="o">=</span> <span class="n">Solver</span><span class="p">()</span>
+</span></span><span class="line"><span class="ln">42</span><span class="cl"><span class="n">s</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">flag</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="mh">0x16</span><span class="p">)</span>
+</span></span><span class="line"><span class="ln">43</span><span class="cl">
+</span></span><span class="line"><span class="ln">44</span><span class="cl"><span class="n">enc_f</span> <span class="o">=</span> <span class="p">[]</span>
+</span></span><span class="line"><span class="ln">45</span><span class="cl">
+</span></span><span class="line"><span class="ln">46</span><span class="cl"><span class="n">i</span> <span class="o">=</span> <span class="mi">0</span>
+</span></span><span class="line"><span class="ln">47</span><span class="cl"><span class="k">while</span> <span class="n">i</span> <span class="o">!=</span> <span class="mh">0x1d</span><span class="p">:</span>
+</span></span><span class="line"><span class="ln">48</span><span class="cl">    <span class="n">a</span> <span class="o">=</span> <span class="n">flag</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+</span></span><span class="line"><span class="ln">49</span><span class="cl">    <span class="n">b</span> <span class="o">=</span> <span class="n">flag</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span>
+</span></span><span class="line"><span class="ln">50</span><span class="cl">    <span class="n">a</span> <span class="o">=</span> <span class="n">b</span> <span class="o">-</span> <span class="n">a</span>
+</span></span><span class="line"><span class="ln">51</span><span class="cl">    <span class="n">a</span> <span class="o">=</span> <span class="n">a</span> <span class="o">^</span> <span class="p">(</span><span class="mh">0x1d</span> <span class="o">-</span> <span class="n">i</span><span class="p">)</span>
+</span></span><span class="line"><span class="ln">52</span><span class="cl">    <span class="n">b</span> <span class="o">=</span> <span class="n">a</span> <span class="o">*</span> <span class="n">a</span>
+</span></span><span class="line"><span class="ln">53</span><span class="cl">    <span class="n">a</span> <span class="o">=</span> <span class="n">b</span> <span class="o">*</span> <span class="n">a</span>
+</span></span><span class="line"><span class="ln">54</span><span class="cl">    <span class="n">enc_f</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+</span></span><span class="line"><span class="ln">55</span><span class="cl">    <span class="n">i</span> <span class="o">+=</span> <span class="mi">1</span>
+</span></span><span class="line"><span class="ln">56</span><span class="cl">
+</span></span><span class="line"><span class="ln">57</span><span class="cl"><span class="c1">#print len(enc_f), len(enc)</span>
+</span></span><span class="line"><span class="ln">58</span><span class="cl"><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mh">0x1d</span><span class="p">):</span>
+</span></span><span class="line"><span class="ln">59</span><span class="cl">    <span class="n">s</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">enc_f</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">==</span> <span class="n">enc</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+</span></span><span class="line"><span class="ln">60</span><span class="cl">
+</span></span><span class="line"><span class="ln">61</span><span class="cl"><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mh">0x1e</span><span class="p">,</span> <span class="mi">1</span><span class="p">):</span>
+</span></span><span class="line"><span class="ln">62</span><span class="cl">    <span class="n">s</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">flag</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">chrset</span><span class="p">))</span>
+</span></span><span class="line"><span class="ln">63</span><span class="cl">    <span class="n">s</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">flag</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">)</span>
+</span></span><span class="line"><span class="ln">64</span><span class="cl">
+</span></span><span class="line"><span class="ln">65</span><span class="cl"><span class="k">if</span> <span class="n">s</span><span class="o">.</span><span class="n">check</span><span class="p">()</span> <span class="o">!=</span> <span class="s2">&#34;unsat&#34;</span><span class="p">:</span>
+</span></span><span class="line"><span class="ln">66</span><span class="cl">    <span class="n">m</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="n">model</span><span class="p">()</span>
+</span></span><span class="line"><span class="ln">67</span><span class="cl">
+</span></span><span class="line"><span class="ln">68</span><span class="cl">    <span class="n">solved</span> <span class="o">=</span> <span class="s2">&#34;FLAG{&#34;</span>
+</span></span><span class="line"><span class="ln">69</span><span class="cl">    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mh">0x1e</span><span class="p">):</span>
+</span></span><span class="line"><span class="ln">70</span><span class="cl">        <span class="n">obj</span> <span class="o">=</span> <span class="n">flag</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+</span></span><span class="line"><span class="ln">71</span><span class="cl">        <span class="n">solved</span> <span class="o">+=</span> <span class="n">chrset</span><span class="p">[</span><span class="n">m</span><span class="p">[</span><span class="n">obj</span><span class="p">]</span><span class="o">.</span><span class="n">as_long</span><span class="p">()]</span>
+</span></span><span class="line"><span class="ln">72</span><span class="cl">
+</span></span><span class="line"><span class="ln">73</span><span class="cl">    <span class="nb">print</span> <span class="n">solved</span> <span class="o">+</span> <span class="s2">&#34;}&#34;</span>
+</span></span><span class="line"><span class="ln">74</span><span class="cl"><span class="k">else</span><span class="p">:</span>
+</span></span><span class="line"><span class="ln">75</span><span class="cl">    <span class="nb">print</span> <span class="s2">&#34;unsat&#34;</span></span></span></code></pre></div>
+
+<br>
+The solving script in action:
+
+
+<script id="asciicast-CXHotULlSW5rHKSRUy8scgRvq" src="https://asciinema.org/a/CXHotULlSW5rHKSRUy8scgRvq.js" async></script>
+
+
+<br></p>
+<p><code>FLAG{x86-1s-s0-fund4m3nt4lly-br0k3n}</code></p>
+
+    </div>
+    <footer class="document-footer">
+      
+    </footer>
+  </article>
+
+  
+
+
+
+
+
+  
+  
+  
+  
+
+
+
+<section class="comments-section" aria-label="Thoughts">
+  <div class="comments-window">
+    <div class="window-titlebar">
+      <span class="window-title">Thoughts?</span>
+    </div>
+    <div class="window-content comments-window-content">
+      <form
+        class="comments-form"
+        data-comments-form
+        data-comments-remote-enabled="true"
+        method="post"
+        target="comments-hidden-transport"
+        action="https://docs.google.com/forms/d/e/1FAIpQLSfNnxL1kkRvil_ngtx3y30aKg45z4McPw8zfmzUsu6vIXnsJg/formResponse"
+      >
+        <div class="comments-row">
+          <input
+            class="guestbook-input"
+            type="text"
+            maxlength="24"
+            placeholder="nickname"
+            aria-label="Nickname"
+            autocomplete="nickname"
+            data-comments-nickname
+            name="entry.1908159203"
+          >
+          <input
+            class="guestbook-input"
+            type="text"
+            maxlength="240"
+            placeholder="website (optional)"
+            aria-label="Website"
+            autocomplete="off"
+            data-comments-website
+            name="entry.1928902955"
+          >
+        </div>
+        <textarea
+          class="guestbook-input guestbook-comment"
+          rows="4"
+          placeholder="share your thoughts"
+          aria-label="Thoughts"
+          autocomplete="off"
+          data-comments-comment
+          name="entry.1702949315"
+          maxlength="1000"
+        ></textarea>
+        <div class="comments-actions">
+          <button class="window-button comments-send" type="submit">send</button>
+        </div>
+      </form>
+      <iframe
+        name="comments-hidden-transport"
+        title="comments submission transport"
+        tabindex="-1"
+        hidden
+      ></iframe>
+    </div>
+  </div>
+
+  <div class="comments-dialog" data-comments-dialog hidden>
+    <button
+      class="guestbook-dialog-backdrop"
+      type="button"
+      aria-label="Close dialog"
+      data-comments-dialog-close
+    ></button>
+    <section class="guestbook-dialog-window" role="dialog" aria-modal="true" aria-labelledby="comments-dialog-title">
+      <div class="window-titlebar">
+        <span class="window-title" id="comments-dialog-title">thoughts?</span>
+        <div class="window-actions">
+          <button
+            class="window-button window-button-icon"
+            type="button"
+            aria-label="Close dialog"
+            data-comments-dialog-close
+            data-comments-dialog-close-button
+          >X</button>
+        </div>
+      </div>
+      <div class="window-content guestbook-dialog-content">
+        <p>Your thought is under review. Thanks!</p>
+        <div class="guestbook-dialog-actions">
+          <button class="window-button" type="button" data-comments-dialog-close>OK</button>
+        </div>
+      </div>
+    </section>
+  </div>
+</section>
+
+
+  
+    <nav class="document-nav" aria-label="Article navigation">
+      
+        <a href="/posts/reversing_a_malware_in_disguise/">prev: Reversing a malware in disguise</a>
+      
+      
+        <a href="/posts/float-writeup/">next: Float Writeup</a>
+      
+    </nav>
+  
+
+    </main>
+    
+
+
+
+
+
+  
+  
+  
+  
+
+
+<aside class="theme-sidebar" aria-label="Theme controls">
+  <div class="sidebar-stack">
+    <div class="theme-window">
+      <div class="window-titlebar">
+        <span class="window-title">options</span>
+      </div>
+      <div class="window-content theme-window-content">
+        <div class="control-grid">
+          <div class="control-block control-block-theme">
+            <div class="cassette-button-group" role="group" aria-label="Theme">
+              <button
+                class="cassette-button"
+                type="button"
+                data-theme-choice="dark"
+                aria-pressed="false"
+              >dark</button>
+              <button
+                class="cassette-button"
+                type="button"
+                data-theme-choice="light"
+                aria-pressed="false"
+              >light</button>
+            </div>
+          </div>
+          <div class="control-block">
+            <button class="cassette-button sound-button" type="button" data-sound-toggle aria-pressed="true"></button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    
+</aside>
+
+    <footer class="site-footer">
+  <div class="footer-panel">
+    <p>Copying is an act of love, feel free to copy.</p>
+  </div>
+</footer>
+
+  </div>
+</body>
+</html>

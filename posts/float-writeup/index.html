@@ -1,0 +1,684 @@
+<!DOCTYPE html>
+<html lang="en-us" dir="ltr">
+<head>
+  
+
+  
+
+
+
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Float Writeup | x3ero0&#39;s blog</title>
+<meta name="description" content="x3ero0&#39;s blog contains reverse engineering notes, crackmes, and CTF writeups.">
+<meta name="theme-color" content="#ecd7af">
+<script>
+  (() => {
+    const storageKey = "reflector-theme";
+    const root = document.documentElement;
+    let theme = "light";
+
+    try {
+      const stored = localStorage.getItem(storageKey);
+      if (stored === "light" || stored === "dark") {
+        theme = stored;
+      } else if (window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches) {
+        theme = "dark";
+      }
+    } catch (error) {
+      if (window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches) {
+        theme = "dark";
+      }
+    }
+
+    root.dataset.theme = theme;
+    const meta = document.querySelector('meta[name="theme-color"]');
+    if (meta) {
+      meta.setAttribute("content", theme === "dark" ? "#111315" : "#ecd7af");
+    }
+  })();
+</script>
+<link rel="icon" href="/img/favicon.ico">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous" referrerpolicy="no-referrer">
+
+  <link rel="stylesheet" href="/css/chroma-light.css">
+  <link rel="stylesheet" href="/css/chroma-dark.css">
+      <link rel="stylesheet" href="/css/main.min.ab84453c0a2d4244b57ef088588542846dc4a1ebadec500a69bbc59dde6215d1.css" integrity="sha256-q4RFPAotQkS1fvCIWIVChG3Eoeut7FAKabvFnd5iFdE=" crossorigin="anonymous">
+
+
+        <script src="/js/main.18f58ac4bc81769d572f5acba6b94652499eac9554aaa5c1a9981456dbcb73ea.js" integrity="sha256-GPWKxLyBdp1XL1rLprlGUkmerJVUqqXBqZgUVtvLc&#43;o=" crossorigin="anonymous" defer></script>
+
+
+</head>
+<body class="page page-page section-posts">
+  <div class="page-frame">
+    <a class="skip-link" href="#main-content">Skip to content</a>
+    <header class="site-header">
+  <div class="header-panel">
+    <a class="brand" href="/">x3ero0&#39;s blog</a>
+    <p class="header-summary">reverse engineering, crackmes, and ctf writeups</p>
+    <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav" data-nav-toggle>[menu]</button>
+    <nav id="site-nav" class="site-nav" data-nav aria-label="Primary">
+      
+  <ul class="nav-list">
+      <li>
+        <a class="nav-link" href="/">home</a>
+      </li>
+      <li>
+        <a class="nav-link" href="/posts/">posts</a>
+      </li>
+      <li>
+        <a class="nav-link" href="/crackmes/">crackmes</a>
+      </li>
+  </ul>
+
+    </nav>
+  </div>
+</header>
+
+    <main id="main-content" class="site-main">
+      
+  <article class="document">
+    <header class="document-header">
+      <h1>Float Writeup</h1>
+      <div class="meta-line">
+  
+    <span>posts</span>
+  
+  
+    <time datetime="2020-06-07T05:39:55Z">2020-06-07</time>
+  
+  <span>5 min read</span>
+  
+</div>
+
+      
+    </header>
+    <div class="document-body">
+      <p>Solving the Float <a href="/crackmes/fl04t/">crackme</a></p>
+<ul>
+<li>Author : <a href="/crackmes/">X3eRo0</a></li>
+<li>Language : Assembler</li>
+<li>Upload : Fri, 29 May 2020 05:09:29</li>
+<li>Difficulty: 3</li>
+<li>Platform : Unix/Linux etc.</li>
+<li>Crackme : <a href="/crackmes/fl04t/">fl04t</a></li>
+</ul>
+<p>Desc:</p>
+<ul>
+<li>Find the correct password which prints [- PASSWORD ACCEPTED -]</li>
+<li>Written in x86_64 asm</li>
+<li>Don&rsquo;t patch the binary, of course - find the correct input.</li>
+</ul>
+<p>SHA256: c5d23382b4fe9ed760a09d8346311d3bbbbbaf48311906912bb52fc77d903786  fl04t</p>
+
+
+<br>
+
+<h3 id="writeup">Writeup</h3>
+<p>Hey there!
+Another day, another crackme. This time we have a fl04t crackme. Lets start by doing the initial recon.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-plaintext" data-lang="plaintext"><span class="line"><span class="ln">1</span><span class="cl">/c/Users/X3eRo0/Desktop/asm/fl04t_x3ero0 » ls -las
+</span></span><span class="line"><span class="ln">2</span><span class="cl">total 16
+</span></span><span class="line"><span class="ln">3</span><span class="cl"> 0 drwxrwx--- 1 root vboxsf    0 Jun  7 05:56 .
+</span></span><span class="line"><span class="ln">4</span><span class="cl"> 4 drwxrwx--- 1 root vboxsf 4096 Jun  7 05:56 ..
+</span></span><span class="line"><span class="ln">5</span><span class="cl">12 -rwxrwx--- 1 root vboxsf 8480 Jun  7 05:55 fl04t
+</span></span></code></pre></div><p>
+
+<br>
+
+As you can see the binary just around 2KB.
+
+
+<br>
+</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-plaintext" data-lang="plaintext"><span class="line"><span class="ln"> 1</span><span class="cl">/c/Users/X3eRo0/Desktop/asm/fl04t_x3ero0 » ./fl04t
+</span></span><span class="line"><span class="ln"> 2</span><span class="cl">+---------=[ X3eRo0 ]=---------+
+</span></span><span class="line"><span class="ln"> 3</span><span class="cl">[+] input length must be 20
+</span></span><span class="line"><span class="ln"> 4</span><span class="cl">:= float?
+</span></span><span class="line"><span class="ln"> 5</span><span class="cl">:= let_me_in___let_me_in
+</span></span><span class="line"><span class="ln"> 6</span><span class="cl">:= AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+</span></span><span class="line"><span class="ln"> 7</span><span class="cl">:= := := pls
+</span></span><span class="line"><span class="ln"> 8</span><span class="cl">:= wtf
+</span></span><span class="line"><span class="ln"> 9</span><span class="cl">:= 01234567890123456789
+</span></span><span class="line"><span class="ln">10</span><span class="cl">[- SEE YOU LATER -]
+</span></span></code></pre></div><p>
+
+<br>
+
+Seems like it only checks the password if the length is 0x14 Bytes.</p>
+
+
+<br>
+
+<p>Lets open it in Ghidra, already analysed the code and labeled them accordingly.</p>
+
+
+
+
+  
+
+
+
+<div class="center image-window" data-image-window>
+  <div class="window-titlebar">
+    <span class="window-title">ghidra decompiled code</span>
+    <button
+      class="window-button window-button-icon window-minimize"
+      type="button"
+      aria-expanded="true"
+      aria-label="Minimize image"
+      data-window-toggle
+    >−</button>
+  </div>
+  <div class="window-content">
+    <img
+      class="responsive"
+      src="/img/fl04t/decompiled.png"
+      alt="ghidra decompiled code"
+      decoding="async"
+    />
+  </div>
+</div>
+
+
+
+<br>
+
+<p>Looking at the main() function, we see that our input is 20 Bytes and they are divided in 2 blocks of 10 bytes each. The checking is done like this.
+
+
+<br>
+</p>
+<ol>
+<li>xor first 10 bytes of input with with first 10 bytes of encrypted flag.</li>
+<li>result of check_flag(first_half_of_input); is stored in a global variable isFlagValid;</li>
+<li>next 10 bytes of input are then xored with the next 10 bytes of encrypted flag</li>
+<li>result of check_flag(second_half_of_input); is binary anded (&amp;) with the isFlagValid.</li>
+<li>if isFlagValid is not equal to 1 then print &ldquo;SEE YOU LATER&rdquo;</li>
+<li>otherwise print &ldquo;PASSWORD ACCEPTED&rdquo;</li>
+</ol>
+<p>The goal is clear the correct flag will result in a sequence of bytes that when passed to the check_flag() returns 1.</p>
+<hr>
+<h2 id="check_flaglong-double--input">Check_flag(long double * input)</h2>
+<p>
+
+<br>
+
+Lets look at check_flag()
+
+
+
+
+  
+
+
+
+<div class="center image-window" data-image-window>
+  <div class="window-titlebar">
+    <span class="window-title">check_flag() decompiled code</span>
+    <button
+      class="window-button window-button-icon window-minimize"
+      type="button"
+      aria-expanded="true"
+      aria-label="Minimize image"
+      data-window-toggle
+    >−</button>
+  </div>
+  <div class="window-content">
+    <img
+      class="responsive"
+      src="/img/fl04t/check_flag.png"
+      alt="check_flag() decompiled code"
+      decoding="async"
+    />
+  </div>
+</div>
+
+
+
+<br>
+</p>
+<p>Ghidra recognized the argument to the function as a pointer to float10. If we see the assembly its actually
+tword (10 Bytes) or in C a long double.
+
+
+<br>
+</p>
+<pre tabindex="0"><code class="language-x86asm" data-lang="x86asm">FLD        tword ptr [input]
+</code></pre><p>
+
+<br>
+
+We know that x86 has a completely different set of registers and cpu for floats, i,e. FPU.
+
+
+<br>
+</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-plaintext" data-lang="plaintext"><span class="line"><span class="ln">1</span><span class="cl">FLD:
+</span></span><span class="line"><span class="ln">2</span><span class="cl">    &gt; Loads the given tword in st(0) floating point register.
+</span></span></code></pre></div><p>
+
+<br>
+
+
+
+
+
+  
+
+
+
+<div class="center image-window" data-image-window>
+  <div class="window-titlebar">
+    <span class="window-title">disassembly</span>
+    <button
+      class="window-button window-button-icon window-minimize"
+      type="button"
+      aria-expanded="true"
+      aria-label="Minimize image"
+      data-window-toggle
+    >−</button>
+  </div>
+  <div class="window-content">
+    <img
+      class="responsive"
+      src="/img/fl04t/check_flag_disassembly.png"
+      alt="disassembly"
+      decoding="async"
+    />
+  </div>
+</div>
+
+
+
+<br>
+</p>
+<p>If we follow the disassembly, we see that our input (in rdi) is loaded in the st(0) floating point register.
+then fcos instruction is executed.</p>
+
+
+<br>
+
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-plaintext" data-lang="plaintext"><span class="line"><span class="ln">1</span><span class="cl">FCOS:
+</span></span><span class="line"><span class="ln">2</span><span class="cl">    &gt; Calculates the approximate cosine value of st(0) and puts the result back in st(0).
+</span></span><span class="line"><span class="ln">3</span><span class="cl">    &gt; If the value is st(0) is outside the acceptable range (−2^63 to +2^63) a special flag (C2 flag) in the FPUStatusWord is set. This flag is the 10th bit in the FPUStatusWord.
+</span></span><span class="line"><span class="ln">4</span><span class="cl">    &gt; In case C2 flag is set the st(0) remains unchanged.
+</span></span></code></pre></div><p>
+
+<br>
+
+Then <code>fstsw ax</code>  is executed.
+
+
+<br>
+</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-plaintext" data-lang="plaintext"><span class="line"><span class="ln">1</span><span class="cl">FSTSW ax:
+</span></span><span class="line"><span class="ln">2</span><span class="cl">     &gt; Store FPU status word in AX register after
+</span></span><span class="line"><span class="ln">3</span><span class="cl">       checking for pending unmasked floating-point
+</span></span><span class="line"><span class="ln">4</span><span class="cl">       exceptions.
+</span></span></code></pre></div>
+
+<br>
+
+<p>So the binary shifts this FPUStatusWord right by 10 bits and checks if C2 flag is set. If it is set that means the input is out of valid range.
+The check_flag() function checks if the input tword is in the valid range or not. if its not then it returns 0.
+other wise it again loads the input in the register stack, this time the value will be in st(1) as st(0) is already occupied. Finally <code>fucomi st, st(1)</code> is executed.</p>
+
+
+<br>
+
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-plaintext" data-lang="plaintext"><span class="line"><span class="ln">1</span><span class="cl">FUCOM:
+</span></span><span class="line"><span class="ln">2</span><span class="cl">   &gt; Compare ST(0) with ST(1).
+</span></span></code></pre></div><p>
+
+<br>
+
+So basically, the cosine of our input is calculated and then checked if its equal to our input or not.
+
+
+<br>
+</p>
+<p><code>cos(input) == input ?</code></p>
+
+
+<br>
+
+<hr>
+<h2 id="solving-the-equation">Solving The Equation</h2>
+<p>So the solution of this crackme boils down to this equation
+<code>cos(x) == x</code></p>
+<p>
+
+<br>
+
+
+
+<br>
+
+
+
+
+
+  
+
+
+
+<div class="center image-window" data-image-window>
+  <div class="window-titlebar">
+    <span class="window-title">desmos graph</span>
+    <button
+      class="window-button window-button-icon window-minimize"
+      type="button"
+      aria-expanded="true"
+      aria-label="Minimize image"
+      data-window-toggle
+    >−</button>
+  </div>
+  <div class="window-content">
+    <img
+      class="responsive"
+      src="/img/fl04t/graph.png"
+      alt="desmos graph"
+      decoding="async"
+    />
+  </div>
+</div>
+
+
+
+<br>
+</p>
+<p>Desmos graph tells us a not so precise solution of the equation rounded upto 3 decimal places, but in order to get the correct long double so that fcos(input) == input we need a precise solution. To find the solution i made a simple C program to find the solution using binary search or bisection. The concept is that we keep on dividing the search space to half until we find the solution. You can find a lot of resources on this technique online.</p>
+
+
+<br>
+
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="line"><span class="ln"> 1</span><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;stdio.h&gt;</span><span class="cp">
+</span></span></span><span class="line"><span class="ln"> 2</span><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;math.h&gt;</span><span class="cp">
+</span></span></span><span class="line"><span class="ln"> 3</span><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;string.h&gt;</span><span class="cp">
+</span></span></span><span class="line"><span class="ln"> 4</span><span class="cl">
+</span></span><span class="line"><span class="ln"> 5</span><span class="cl"><span class="kt">void</span> <span class="nf">print_mem</span><span class="p">(</span><span class="kt">char</span> <span class="o">*</span><span class="n">mem</span><span class="p">,</span> <span class="kt">int</span> <span class="n">len</span><span class="p">){</span>
+</span></span><span class="line"><span class="ln"> 6</span><span class="cl">
+</span></span><span class="line"><span class="ln"> 7</span><span class="cl">    <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">len</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">){</span>
+</span></span><span class="line"><span class="ln"> 8</span><span class="cl">        <span class="nf">printf</span><span class="p">(</span><span class="s">&#34;</span><span class="se">\\</span><span class="s">x%.2X&#34;</span><span class="p">,</span> <span class="o">*</span><span class="p">(</span><span class="kt">unsigned</span> <span class="kt">char</span> <span class="o">*</span><span class="p">)(</span><span class="n">mem</span> <span class="o">+</span> <span class="n">i</span><span class="p">));</span>
+</span></span><span class="line"><span class="ln"> 9</span><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="ln">10</span><span class="cl">    <span class="nf">printf</span><span class="p">(</span><span class="s">&#34;</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="ln">11</span><span class="cl">
+</span></span><span class="line"><span class="ln">12</span><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="ln">13</span><span class="cl">
+</span></span><span class="line"><span class="ln">14</span><span class="cl"><span class="kt">int</span> <span class="nf">main</span><span class="p">(){</span>
+</span></span><span class="line"><span class="ln">15</span><span class="cl">
+</span></span><span class="line"><span class="ln">16</span><span class="cl">    <span class="kt">long</span> <span class="kt">double</span> <span class="n">right</span> <span class="o">=</span> <span class="mf">1.5707963267948966</span><span class="p">;</span>
+</span></span><span class="line"><span class="ln">17</span><span class="cl">    <span class="kt">long</span> <span class="kt">double</span> <span class="n">left</span>  <span class="o">=</span> <span class="mf">0.00000</span><span class="p">;</span>
+</span></span><span class="line"><span class="ln">18</span><span class="cl">    <span class="kt">long</span> <span class="kt">double</span> <span class="n">midd</span>  <span class="o">=</span> <span class="p">(</span><span class="n">left</span> <span class="o">+</span> <span class="n">right</span><span class="p">)</span><span class="o">/</span> <span class="mi">2</span><span class="p">;</span>
+</span></span><span class="line"><span class="ln">19</span><span class="cl">    <span class="kt">long</span> <span class="kt">double</span> <span class="n">ress</span>  <span class="o">=</span> <span class="nf">cosl</span><span class="p">(</span><span class="n">midd</span><span class="p">);</span>
+</span></span><span class="line"><span class="ln">20</span><span class="cl">    <span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="ln">21</span><span class="cl">    <span class="nf">printf</span><span class="p">(</span><span class="s">&#34;midd: %Lf</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">,</span> <span class="n">midd</span><span class="p">);</span>
+</span></span><span class="line"><span class="ln">22</span><span class="cl">    <span class="nf">printf</span><span class="p">(</span><span class="s">&#34;numm: %Lf</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">,</span> <span class="n">number</span><span class="p">);</span>
+</span></span><span class="line"><span class="ln">23</span><span class="cl">    <span class="k">while</span><span class="p">(</span><span class="nf">memcmp</span><span class="p">((</span><span class="kt">char</span> <span class="o">*</span><span class="p">)</span><span class="o">&amp;</span><span class="n">ress</span><span class="p">,</span> <span class="p">(</span><span class="kt">char</span> <span class="o">*</span><span class="p">)</span><span class="o">&amp;</span><span class="n">midd</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">){</span>
+</span></span><span class="line"><span class="ln">24</span><span class="cl">
+</span></span><span class="line"><span class="ln">25</span><span class="cl">        <span class="k">if</span><span class="p">(</span><span class="n">midd</span> <span class="o">&gt;</span> <span class="n">ress</span><span class="p">){</span>
+</span></span><span class="line"><span class="ln">26</span><span class="cl">            <span class="n">right</span>  <span class="o">=</span> <span class="n">midd</span><span class="p">;</span>
+</span></span><span class="line"><span class="ln">27</span><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="ln">28</span><span class="cl">        <span class="k">if</span><span class="p">(</span><span class="n">midd</span> <span class="o">&lt;</span> <span class="n">ress</span><span class="p">){</span>
+</span></span><span class="line"><span class="ln">29</span><span class="cl">            <span class="n">left</span> <span class="o">=</span> <span class="n">midd</span><span class="p">;</span>
+</span></span><span class="line"><span class="ln">30</span><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="ln">31</span><span class="cl">        <span class="n">midd</span> <span class="o">=</span> <span class="p">(</span><span class="n">left</span> <span class="o">+</span> <span class="n">right</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span><span class="p">;</span>
+</span></span><span class="line"><span class="ln">32</span><span class="cl">        <span class="n">ress</span> <span class="o">=</span> <span class="nf">cosl</span><span class="p">(</span><span class="n">midd</span><span class="p">);</span>
+</span></span><span class="line"><span class="ln">33</span><span class="cl">
+</span></span><span class="line"><span class="ln">34</span><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="ln">35</span><span class="cl">
+</span></span><span class="line"><span class="ln">36</span><span class="cl">    <span class="nf">printf</span><span class="p">(</span><span class="s">&#34;midd: %Lf</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">,</span> <span class="n">midd</span><span class="p">);</span>
+</span></span><span class="line"><span class="ln">37</span><span class="cl">    <span class="nf">print_mem</span><span class="p">((</span><span class="kt">char</span> <span class="o">*</span><span class="p">)</span><span class="o">&amp;</span><span class="n">midd</span><span class="p">,</span> <span class="mi">10</span><span class="p">);</span>
+</span></span><span class="line"><span class="ln">38</span><span class="cl">    <span class="nf">printf</span><span class="p">(</span><span class="s">&#34;ress: %Lf</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">,</span> <span class="n">ress</span><span class="p">);</span>
+</span></span><span class="line"><span class="ln">39</span><span class="cl">    <span class="nf">print_mem</span><span class="p">((</span><span class="kt">char</span> <span class="o">*</span><span class="p">)</span><span class="o">&amp;</span><span class="n">ress</span><span class="p">,</span> <span class="mi">10</span><span class="p">);</span>
+</span></span><span class="line"><span class="ln">40</span><span class="cl">
+</span></span><span class="line"><span class="ln">41</span><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><p>
+
+<br>
+
+This gives the exact 10 Byte value of the solution.
+
+
+<br>
+</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-plaintext" data-lang="plaintext"><span class="line"><span class="ln">1</span><span class="cl">/c/Users/X3eRo0/Desktop/asm » ./a.out
+</span></span><span class="line"><span class="ln">2</span><span class="cl">midd: 0.739085
+</span></span><span class="line"><span class="ln">3</span><span class="cl">&#34;\xCB\x6D\x71\x1E\xEC\xAE\x34\xBD\xFE\x3F&#34;
+</span></span><span class="line"><span class="ln">4</span><span class="cl">ress: 0.739085
+</span></span><span class="line"><span class="ln">5</span><span class="cl">&#34;\xCB\x6D\x71\x1E\xEC\xAE\x34\xBD\xFE\x3F&#34;
+</span></span><span class="line"><span class="ln">6</span><span class="cl">/c/Users/X3eRo0/Desktop/asm »
+</span></span></code></pre></div><p>
+
+<br>
+
+The Decimal values are useless to us because
+
+
+<br>
+</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-plaintext" data-lang="plaintext"><span class="line"><span class="ln">1</span><span class="cl">float lesson number 06: 
+</span></span><span class="line"><span class="ln">2</span><span class="cl">    never ever use decimal representation for floats
+</span></span><span class="line"><span class="ln">3</span><span class="cl">    if you need a precise float value :) that&#39;s because
+</span></span><span class="line"><span class="ln">4</span><span class="cl">    floats are binary; and in fractional numbers decimals
+</span></span><span class="line"><span class="ln">5</span><span class="cl">    and binary numbers differ in what can be expressed 
+</span></span><span class="line"><span class="ln">6</span><span class="cl">    e.g number 0.1 &lt;-- perfectly sane in decimal is not
+</span></span><span class="line"><span class="ln">7</span><span class="cl">    expressable in binary it requires infinite number of 
+</span></span><span class="line"><span class="ln">8</span><span class="cl">    digits.
+</span></span></code></pre></div>
+
+<br>
+
+<p>Now that we know what is the correct value we can xor these bytes with the encrypted bytes in the binary
+to get the flag.</p>
+
+
+<br>
+
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="ln"> 1</span><span class="cl"><span class="n">solution</span>  <span class="o">=</span> <span class="s2">&#34;</span><span class="se">\xCB\x6D\x71\x1E\xEC\xAE\x34\xBD\xFE\x3F</span><span class="s2">&#34;</span>
+</span></span><span class="line"><span class="ln"> 2</span><span class="cl"><span class="n">enc_bytes</span> <span class="o">=</span> <span class="p">[</span>
+</span></span><span class="line"><span class="ln"> 3</span><span class="cl">    <span class="s2">&#34;</span><span class="se">\xAD\x1F\x41\x73\xB3\xC8\x58\x8D\xCA\x4B</span><span class="s2">&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="ln"> 4</span><span class="cl">    <span class="s2">&#34;</span><span class="se">\xB8\x32\x40\x73\x9C\x9E\x46\xC9\xA1\x15</span><span class="s2">&#34;</span>
+</span></span><span class="line"><span class="ln"> 5</span><span class="cl"><span class="p">]</span>
+</span></span><span class="line"><span class="ln"> 6</span><span class="cl">
+</span></span><span class="line"><span class="ln"> 7</span><span class="cl"><span class="k">def</span> <span class="nf">xor</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
+</span></span><span class="line"><span class="ln"> 8</span><span class="cl">    <span class="n">res</span> <span class="o">=</span> <span class="s2">&#34;&#34;</span>
+</span></span><span class="line"><span class="ln"> 9</span><span class="cl">    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">len</span><span class="p">(</span><span class="n">key</span><span class="p">):</span>
+</span></span><span class="line"><span class="ln">10</span><span class="cl">        <span class="k">return</span> <span class="n">res</span>
+</span></span><span class="line"><span class="ln">11</span><span class="cl">    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">):</span>
+</span></span><span class="line"><span class="ln">12</span><span class="cl">        <span class="n">res</span> <span class="o">+=</span> <span class="nb">chr</span><span class="p">(</span><span class="nb">ord</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="n">i</span><span class="p">])</span> <span class="o">^</span> <span class="nb">ord</span><span class="p">(</span><span class="n">key</span><span class="p">[</span><span class="n">i</span><span class="p">]))</span>
+</span></span><span class="line"><span class="ln">13</span><span class="cl">    <span class="k">return</span> <span class="n">res</span>
+</span></span><span class="line"><span class="ln">14</span><span class="cl">
+</span></span><span class="line"><span class="ln">15</span><span class="cl"><span class="n">flag</span> <span class="o">=</span> <span class="s2">&#34;&#34;</span>
+</span></span><span class="line"><span class="ln">16</span><span class="cl">
+</span></span><span class="line"><span class="ln">17</span><span class="cl"><span class="k">for</span> <span class="n">enc_byte</span> <span class="ow">in</span> <span class="n">enc_bytes</span><span class="p">:</span>
+</span></span><span class="line"><span class="ln">18</span><span class="cl">    <span class="n">flag</span> <span class="o">+=</span> <span class="n">xor</span><span class="p">(</span><span class="n">enc_byte</span><span class="p">,</span> <span class="n">solution</span><span class="p">)</span>
+</span></span><span class="line"><span class="ln">19</span><span class="cl">
+</span></span><span class="line"><span class="ln">20</span><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="n">flag</span><span class="p">)</span>
+</span></span></code></pre></div><p>
+
+<br>
+
+This gives us the flag <code>fr0m_fl04ts_1mp0rt_*</code></p>
+
+    </div>
+    <footer class="document-footer">
+      
+    </footer>
+  </article>
+
+  
+
+
+
+
+
+  
+  
+  
+  
+
+
+
+<section class="comments-section" aria-label="Thoughts">
+  <div class="comments-window">
+    <div class="window-titlebar">
+      <span class="window-title">Thoughts?</span>
+    </div>
+    <div class="window-content comments-window-content">
+      <form
+        class="comments-form"
+        data-comments-form
+        data-comments-remote-enabled="true"
+        method="post"
+        target="comments-hidden-transport"
+        action="https://docs.google.com/forms/d/e/1FAIpQLSfNnxL1kkRvil_ngtx3y30aKg45z4McPw8zfmzUsu6vIXnsJg/formResponse"
+      >
+        <div class="comments-row">
+          <input
+            class="guestbook-input"
+            type="text"
+            maxlength="24"
+            placeholder="nickname"
+            aria-label="Nickname"
+            autocomplete="nickname"
+            data-comments-nickname
+            name="entry.1908159203"
+          >
+          <input
+            class="guestbook-input"
+            type="text"
+            maxlength="240"
+            placeholder="website (optional)"
+            aria-label="Website"
+            autocomplete="off"
+            data-comments-website
+            name="entry.1928902955"
+          >
+        </div>
+        <textarea
+          class="guestbook-input guestbook-comment"
+          rows="4"
+          placeholder="share your thoughts"
+          aria-label="Thoughts"
+          autocomplete="off"
+          data-comments-comment
+          name="entry.1702949315"
+          maxlength="1000"
+        ></textarea>
+        <div class="comments-actions">
+          <button class="window-button comments-send" type="submit">send</button>
+        </div>
+      </form>
+      <iframe
+        name="comments-hidden-transport"
+        title="comments submission transport"
+        tabindex="-1"
+        hidden
+      ></iframe>
+    </div>
+  </div>
+
+  <div class="comments-dialog" data-comments-dialog hidden>
+    <button
+      class="guestbook-dialog-backdrop"
+      type="button"
+      aria-label="Close dialog"
+      data-comments-dialog-close
+    ></button>
+    <section class="guestbook-dialog-window" role="dialog" aria-modal="true" aria-labelledby="comments-dialog-title">
+      <div class="window-titlebar">
+        <span class="window-title" id="comments-dialog-title">thoughts?</span>
+        <div class="window-actions">
+          <button
+            class="window-button window-button-icon"
+            type="button"
+            aria-label="Close dialog"
+            data-comments-dialog-close
+            data-comments-dialog-close-button
+          >X</button>
+        </div>
+      </div>
+      <div class="window-content guestbook-dialog-content">
+        <p>Your thought is under review. Thanks!</p>
+        <div class="guestbook-dialog-actions">
+          <button class="window-button" type="button" data-comments-dialog-close>OK</button>
+        </div>
+      </div>
+    </section>
+  </div>
+</section>
+
+
+  
+    <nav class="document-nav" aria-label="Article navigation">
+      
+        <a href="/posts/hell86_from_ttlhacker/">prev: Hell86 - ttlhacker</a>
+      
+      
+        <a href="/posts/hyperion/">next: Hyperion Writeup</a>
+      
+    </nav>
+  
+
+    </main>
+    
+
+
+
+
+
+  
+  
+  
+  
+
+
+<aside class="theme-sidebar" aria-label="Theme controls">
+  <div class="sidebar-stack">
+    <div class="theme-window">
+      <div class="window-titlebar">
+        <span class="window-title">options</span>
+      </div>
+      <div class="window-content theme-window-content">
+        <div class="control-grid">
+          <div class="control-block control-block-theme">
+            <div class="cassette-button-group" role="group" aria-label="Theme">
+              <button
+                class="cassette-button"
+                type="button"
+                data-theme-choice="dark"
+                aria-pressed="false"
+              >dark</button>
+              <button
+                class="cassette-button"
+                type="button"
+                data-theme-choice="light"
+                aria-pressed="false"
+              >light</button>
+            </div>
+          </div>
+          <div class="control-block">
+            <button class="cassette-button sound-button" type="button" data-sound-toggle aria-pressed="true"></button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    
+</aside>
+
+    <footer class="site-footer">
+  <div class="footer-panel">
+    <p>Copying is an act of love, feel free to copy.</p>
+  </div>
+</footer>
+
+  </div>
+</body>
+</html>
