@@ -1,122 +1,144 @@
 <!DOCTYPE html>
-<html>
-    <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1">
-    <title>Watevr_repyc - x3ero0&#39;s blog</title>
-    <link rel="shortcut icon" href="/img/favicon.ico">
-    <style type="text/css">
-        img.wp-smiley,
-        img.emoji {
-            display: inline !important;
-            border: none !important;
-            box-shadow: none !important;
-            height: 1em !important;
-            width: 1em !important;
-            margin: 0 .07em !important;
-            vertical-align: -0.1em !important;
-            background: none !important;
-            padding: 0 !important;
-        }
-    </style>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
-    <link rel='stylesheet' href='/css/custom.css' type='text/css' media='all' />
-    <link rel='stylesheet' href='/css/style.css' type='text/css' media='all' />
-    <link rel='stylesheet' href='/css/syntax.css' type='text/css' media='all' />
-    <link rel='stylesheet' href='/css/general.css' type='text/css' media='all' />
-    <link rel='stylesheet' href='/css/toc.css' type='text/css' media='all' />
-    <link rel='stylesheet' href='/css/image.css' type='text/css' media='all' />
+<html lang="en-us" dir="ltr">
+<head>
+  
+
+  
+
+
+
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Watevr_repyc | x3ero0&#39;s blog</title>
+<meta name="description" content="x3ero0&#39;s blog contains reverse engineering notes, crackmes, and CTF writeups.">
+<meta name="theme-color" content="#f7f7f2">
+<script>
+  (() => {
+    const storageKey = "reflector-theme";
+    const root = document.documentElement;
+    let theme = "light";
+
+    try {
+      const stored = localStorage.getItem(storageKey);
+      if (stored === "light" || stored === "dark") {
+        theme = stored;
+      } else if (window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches) {
+        theme = "dark";
+      }
+    } catch (error) {
+      if (window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches) {
+        theme = "dark";
+      }
+    }
+
+    root.dataset.theme = theme;
+    const meta = document.querySelector('meta[name="theme-color"]');
+    if (meta) {
+      meta.setAttribute("content", theme === "dark" ? "#111315" : "#f7f7f2");
+    }
+  })();
+</script>
+<link rel="icon" href="/img/favicon.ico">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous" referrerpolicy="no-referrer">
+
+  <link rel="stylesheet" href="/css/chroma-light.css">
+  <link rel="stylesheet" href="/css/chroma-dark.css">
+      <link rel="stylesheet" href="/css/main.min.8922a1a49c9c90da672308fecef192f6cb5c5f0b6ca01ce4b6d648fa1a3e8b11.css" integrity="sha256-iSKhpJyckNpnIwj&#43;zvGS9stcXwtsoBzkttZI&#43;ho&#43;ixE=" crossorigin="anonymous">
+
+
+        <script src="/js/main.9a5dcf5db86a42efab8f8c1173e839a88165d67872dafbc375cc2a5c43546907.js" integrity="sha256-ml3PXbhqQu&#43;rj4wRc&#43;g5qIFl1nhy2vvDdcwqXENUaQc=" crossorigin="anonymous" defer></script>
+
+
 </head>
+<body class="page page-page section-posts">
+  <div class="page-frame">
+    <a class="skip-link" href="#main-content">Skip to content</a>
+    <header class="site-header">
+  <div class="header-panel">
+    <a class="brand" href="/">x3ero0&#39;s blog</a>
+    <p class="header-summary">reverse engineering, crackmes, and ctf writeups</p>
+    <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav" data-nav-toggle>[menu]</button>
+    <nav id="site-nav" class="site-nav" data-nav aria-label="Primary">
+      
+  <ul class="nav-list">
+      <li>
+        <a class="nav-link" href="/">home</a>
+      </li>
+      <li>
+        <a class="nav-link" href="/posts/">posts</a>
+      </li>
+      <li>
+        <a class="nav-link" href="/crackmes/">crackmes</a>
+      </li>
+  </ul>
 
-    <body class="two-column">
-        <a href="#content">Skip to content</a>
-<div class="wrapper">
-    <header role="banner" class="banner widgets columns-1">
-        <a href="/" rel="home">
-            <h1 class="site">x3ero0&#39;s blog</h1>
-            <p></p>
-        </a>
-        <nav role="navigation" aria-label="Primary Navigation">
+    </nav>
+  </div>
+</header>
 
-            <ul class="menu">
-                <li class="menu-item "><a class="menu__link" href="/">HOME</a></li>
-                <li class="menu-item "><a class="menu__link" href="/posts/">POSTS</a></li>
-                <li class="menu-item "><a class="menu__link" href="/crackmes/">CRACKMES</a></li>
-            </ul>
-            <select onChange="location.href=value;">
-                <option value="/" class="menu-item menu-item-type-custom menu-item-object-custom" >HOME</option>
-                <option value="/posts/" class="menu-item menu-item-type-custom menu-item-object-custom" >POSTS</option>
-                <option value="/crackmes/" class="menu-item menu-item-type-custom menu-item-object-custom" >CRACKMES</option>
-            </select>
-        </nav>
-    </header>
-
-    <br>
-    <div style="width: 100%; max-height: 100px; text-align: center;">
-       
+    <main id="main-content" class="site-main">
+      
+  <article class="document">
+    <header class="document-header">
+      <h1>Watevr_repyc</h1>
+      <div class="meta-line">
+  
+    <span>posts</span>
+  
+  
+    <time datetime="2020-04-10T20:20:07Z">2020-04-10</time>
+  
+  <span>4 min read</span>
+  
 </div>
 
-    <div class="breadcrumbs">
-        
-    </div>
-
-        <div id="content" class="content">
-
-<main role="main">
-    <article role="article" class="post type-post format-standard hentry">
-        <header class="post-header">
-            <h1>Watevr_repyc</h1>
-            <div class="post-details">
-                <a rel="bookmark">
-                    <time datetime="2020-04-10T410:820:76">2020-04-10</time>
-                </a>
-				
-<span style="float: right;">
-    <div id="fb-root" style="height: 100%;"></div>
-    
-    <script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v3.2"></script>
-    
-    <div class="fb-share-button" data-href="https://x3ero0.github.io/posts/watevr_repyc/" data-layout="button_count" data-size="small">
-        <a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3a%2f%2fx3ero0.github.io%2fposts%2fwatevr_repyc%2f" class="fb-xfbml-parse-ignore">Share</a>
-    </div>
-    &nbsp;
-    <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" data-text="Watevr_repyc" data-url="https://x3ero0.github.io/posts/watevr_repyc/" data-show-count="false">Tweet</a>
-    <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
-    &nbsp;
-    
-</span>
-
-            </div>
-        </header>
-
-        <div class="post-content">
-            <link rel="stylesheet" href="/css/styles/atelier-forest-dark.css">
-<script src="/js/highlight.pack.js"></script>
-<script>hljs.initHighlightingOnLoad();</script>
-
-<h3 id="challenge-repyc-rev---147-points">Challenge: REPYC [REV] - 147 Points</h3>
+      
+    </header>
+    <div class="document-body">
+      <h3 id="challenge-repyc-rev---147-points">Challenge: REPYC [REV] - 147 Points</h3>
 <p>Challenge Description:</p>
 <ul>
 <li>woo thi chal sooo repyc!<!-- raw HTML omitted --></li>
 <li>File: <a href="https://github.com/X3eRo0/Crackmes/blob/master/watevrctf/3nohtyp.pyc?raw=true">3nohtyp.pyc</a><!-- raw HTML omitted --></li>
 <li>Difficulty estimate: Easy</li>
 </ul>
-<p>We are given a pyc file and running file on this pyc reveals that its a python 3.6 compiled python bytecode.</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-plaintext" data-lang="plaintext"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1</span>[~]$ file 3nohtyp.pyc                                                                              
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2</span>3nohtyp.pyc: python 3.6 byte-compiled</code></pre></div>
+<p>We are given a pyc file and running file on this pyc reveals that its a python 3.6 compiled python bytecode.
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-plaintext" data-lang="plaintext"><span class="line"><span class="ln">1</span><span class="cl">[~]$ file 3nohtyp.pyc                                                                              
+</span></span><span class="line"><span class="ln">2</span><span class="cl">3nohtyp.pyc: python 3.6 byte-compiled</span></span></code></pre></div></p>
 <p>so i went with the usuall approach to a python pyc challenge, where the first part is to decompile the bytecode.
 i used uncompyle6 <code>[~]$ uncompyle6 3nohtyp.pyc &gt; repyc.py</code> and the output was very weird just look at this <a href="https://pastebin.com/h8dM34Jt">file</a></p>
 
 
 
-<div class="center">
-  <img
-    class="responsive"
-    src="/img/watevrctf/repyc.py.PNG"
-    alt="repyc.py"
-    decoding="async"
-  />
+
+  
+
+
+
+<div class="center image-window" data-image-window>
+  <div class="window-titlebar">
+    <span class="window-title">repyc.py</span>
+    <button
+      class="window-button window-button-icon window-minimize"
+      type="button"
+      aria-expanded="true"
+      aria-label="Minimize image"
+      data-window-toggle
+    >−</button>
+  </div>
+  <div class="window-content">
+    <img
+      class="responsive"
+      src="/img/watevrctf/repyc.py.PNG"
+      alt="repyc.py"
+      decoding="async"
+    />
+  </div>
 </div>
+
 <p>I never thought that reversing a python source file would be so difficult. At first i thought maybe there is
 python obfuscator which obfuscates variable names with unicode Chinese looking charecters and there are a lot of other obfuscators which uses other techniques similar to this one but unfortunately i didn&rsquo;t find any obfuscator which does this kind of obfuscation, i thought if i found the obfuscator maybe an unobfuscator also exists so that will make my work easier but i was wrong.</p>
 <p>Some good obfuscators which i found are:</p>
@@ -126,259 +148,267 @@ python obfuscator which obfuscates variable names with unicode Chinese looking c
 </ul>
 <p>So the next thing i did was i started replacing each chinese charecter in the file with simple names like i
 translated first 3 lines like this</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-plaintext" data-lang="plaintext"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1</span>佤 = 0     
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2</span>侰 = ~佤 * ~佤
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3</span>俴 = 侰 + 侰      
-</code></pre></div><p>translated to</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-plaintext" data-lang="plaintext"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1</span>A = 0
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2</span>B = ~A * ~A
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3</span>C = B + B
-</code></pre></div><p>and finally</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-plaintext" data-lang="plaintext"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1</span>A = 0
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2</span>B = 1
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3</span>C = 2
-</code></pre></div><p>And later in the code instead of just using 1, 2 and 3 they use A, B and C so i replaced all the A, B and Cs with their respective values</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-plaintext" data-lang="plaintext"><span class="line"><span class="ln">1</span><span class="cl">佤 = 0     
+</span></span><span class="line"><span class="ln">2</span><span class="cl">侰 = ~佤 * ~佤
+</span></span><span class="line"><span class="ln">3</span><span class="cl">俴 = 侰 + 侰      
+</span></span></code></pre></div><p>translated to</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-plaintext" data-lang="plaintext"><span class="line"><span class="ln">1</span><span class="cl">A = 0
+</span></span><span class="line"><span class="ln">2</span><span class="cl">B = ~A * ~A
+</span></span><span class="line"><span class="ln">3</span><span class="cl">C = B + B
+</span></span></code></pre></div><p>and finally</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-plaintext" data-lang="plaintext"><span class="line"><span class="ln">1</span><span class="cl">A = 0
+</span></span><span class="line"><span class="ln">2</span><span class="cl">B = 1
+</span></span><span class="line"><span class="ln">3</span><span class="cl">C = 2
+</span></span></code></pre></div><p>And later in the code instead of just using 1, 2 and 3 they use A, B and C so i replaced all the A, B and Cs with their respective values</p>
 <p>then comes this function</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-plaintext" data-lang="plaintext"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1</span>def 䯂(䵦):
-</code></pre></div><p>At this point i already guessed it was a VM so i named this function VM(byte)</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-plaintext" data-lang="plaintext"><span class="line"><span class="ln">1</span><span class="cl">def 䯂(䵦):
+</span></span></code></pre></div><p>At this point i already guessed it was a VM so i named this function VM(byte)</p>
 <p>next we see some more declarations which turns out to be registers and memory and stack and stuff
 for example</p>
 <p><code>괠 = [A] * C ** (C * C)</code> translates to <code>reg = [0]  * 16</code>
 and <code>궓 = [A] * 100</code> translates to <code>mem = [0] * 100</code>
 and after reading the rest of the code turns out <code>괣 = []</code> was the stack</p>
 <p>so this part looks like this now</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1</span>A <span style="color:#ff79c6">=</span> <span style="color:#bd93f9">0</span>
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2</span>B <span style="color:#ff79c6">=</span> <span style="color:#bd93f9">1</span>
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3</span>C <span style="color:#ff79c6">=</span> <span style="color:#bd93f9">2</span>
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4</span>
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5</span><span style="color:#ff79c6">def</span> <span style="color:#50fa7b">VM</span>(byte):
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6</span>    var1 <span style="color:#ff79c6">=</span> <span style="color:#bd93f9">0</span>
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7</span>    var2 <span style="color:#ff79c6">=</span> <span style="color:#bd93f9">0</span>
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8</span>    reg  <span style="color:#ff79c6">=</span> [<span style="color:#bd93f9">0</span>] <span style="color:#ff79c6">*</span> <span style="color:#bd93f9">16</span> <span style="color:#6272a4"># array of registers</span>
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9</span>    mem <span style="color:#ff79c6">=</span> [<span style="color:#bd93f9">0</span>] <span style="color:#ff79c6">*</span> <span style="color:#bd93f9">100</span> <span style="color:#6272a4"># contains our input</span>
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10</span>    stack <span style="color:#ff79c6">=</span> []
-</code></pre></div><p>then there is a while loop <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-plaintext" data-lang="plaintext"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1</span> while 䵦[굴][A] != &#39;듃&#39;:</code></pre></div> which translated to <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-plaintext" data-lang="plaintext"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1</span> byte[var1][0] != &#39;듃&#39; </code></pre></div>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="ln"> 1</span><span class="cl"><span class="n">A</span> <span class="o">=</span> <span class="mi">0</span>
+</span></span><span class="line"><span class="ln"> 2</span><span class="cl"><span class="n">B</span> <span class="o">=</span> <span class="mi">1</span>
+</span></span><span class="line"><span class="ln"> 3</span><span class="cl"><span class="n">C</span> <span class="o">=</span> <span class="mi">2</span>
+</span></span><span class="line"><span class="ln"> 4</span><span class="cl">
+</span></span><span class="line"><span class="ln"> 5</span><span class="cl"><span class="k">def</span> <span class="nf">VM</span><span class="p">(</span><span class="n">byte</span><span class="p">):</span>
+</span></span><span class="line"><span class="ln"> 6</span><span class="cl">    <span class="n">var1</span> <span class="o">=</span> <span class="mi">0</span>
+</span></span><span class="line"><span class="ln"> 7</span><span class="cl">    <span class="n">var2</span> <span class="o">=</span> <span class="mi">0</span>
+</span></span><span class="line"><span class="ln"> 8</span><span class="cl">    <span class="n">reg</span>  <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="mi">16</span> <span class="c1"># array of registers</span>
+</span></span><span class="line"><span class="ln"> 9</span><span class="cl">    <span class="n">mem</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="mi">100</span> <span class="c1"># contains our input</span>
+</span></span><span class="line"><span class="ln">10</span><span class="cl">    <span class="n">stack</span> <span class="o">=</span> <span class="p">[]</span>
+</span></span></code></pre></div><p>then there is a while loop <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-plaintext" data-lang="plaintext"><span class="line"><span class="ln">1</span><span class="cl"> while 䵦[굴][A] != &#39;듃&#39;:</span></span></code></pre></div> which translated to <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-plaintext" data-lang="plaintext"><span class="line"><span class="ln">1</span><span class="cl"> byte[var1][0] != &#39;듃&#39; </span></span></code></pre></div>
 so it was clear that &lsquo;듃&rsquo; is the hlt instruction as soon as it encounters &lsquo;듃&rsquo; the VM will stop execution</p>
 <p>and finally</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1</span>굸 <span style="color:#ff79c6">=</span> 䵦[굴][A]<span style="color:#ff79c6">.</span>lower()
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2</span>亀 <span style="color:#ff79c6">=</span> 䵦[굴][B:]
-</code></pre></div><p>translated to</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1</span>opcode <span style="color:#ff79c6">=</span> byte[var1][<span style="color:#bd93f9">0</span>]<span style="color:#ff79c6">.</span>lower()
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2</span>_arg_ <span style="color:#ff79c6">=</span> byte[var1][<span style="color:#bd93f9">1</span>:]
-</code></pre></div><p>and at this point it was time to analyse all the opcodes, so i used my big brain and only analysed the ones which were actually executed. when you see the call to the VM() function the arguments passed is a list of instructions for sat down and started to do find and replace on all the instructions.
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="ln">1</span><span class="cl"><span class="n">굸</span> <span class="o">=</span> <span class="n">䵦</span><span class="p">[</span><span class="n">굴</span><span class="p">][</span><span class="n">A</span><span class="p">]</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+</span></span><span class="line"><span class="ln">2</span><span class="cl"><span class="n">亀</span> <span class="o">=</span> <span class="n">䵦</span><span class="p">[</span><span class="n">굴</span><span class="p">][</span><span class="n">B</span><span class="p">:]</span>
+</span></span></code></pre></div><p>translated to</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="ln">1</span><span class="cl"><span class="n">opcode</span> <span class="o">=</span> <span class="n">byte</span><span class="p">[</span><span class="n">var1</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+</span></span><span class="line"><span class="ln">2</span><span class="cl"><span class="n">_arg_</span> <span class="o">=</span> <span class="n">byte</span><span class="p">[</span><span class="n">var1</span><span class="p">][</span><span class="mi">1</span><span class="p">:]</span>
+</span></span></code></pre></div><p>and at this point it was time to analyse all the opcodes, so i used my big brain and only analysed the ones which were actually executed. when you see the call to the VM() function the arguments passed is a list of instructions for sat down and started to do find and replace on all the instructions.
 but then i noticed that the instructions in the bottom were not correctly indented so i fixed that and i ended up with this</p>
 
 
 
-<div class="center">
-  <img
-    class="responsive"
-    src="/img/watevrctf/solution.py.PNG"
-    alt="solution.py"
-    decoding="async"
-  />
+
+  
+
+
+
+<div class="center image-window" data-image-window>
+  <div class="window-titlebar">
+    <span class="window-title">solution.py</span>
+    <button
+      class="window-button window-button-icon window-minimize"
+      type="button"
+      aria-expanded="true"
+      aria-label="Minimize image"
+      data-window-toggle
+    >−</button>
+  </div>
+  <div class="window-content">
+    <img
+      class="responsive"
+      src="/img/watevrctf/solution.py.PNG"
+      alt="solution.py"
+      decoding="async"
+    />
+  </div>
 </div>
+
 <p>after that i just did a lot of find and replace and i finally fixed the whole python file
 and i ended up with this VM Bytecode</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1</span>VM([
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2</span> [<span style="color:#f1fa8c">&#39;mov&#39;</span>, <span style="color:#bd93f9">0</span>, <span style="color:#f1fa8c">&#39;Authentication token: &#39;</span>],
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3</span> [<span style="color:#f1fa8c">&#39;mem_mov&#39;</span>, <span style="color:#bd93f9">0</span>, <span style="color:#bd93f9">0</span>], <span style="color:#6272a4"># mem(r1) = r2</span>
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4</span> [<span style="color:#f1fa8c">&#39;mov&#39;</span>, <span style="color:#bd93f9">6</span>, <span style="color:#f1fa8c">&#39;á×äÓâæíäàßåÉÛãåäÉÖÓÉäàÓÉÖÓåäÉÓÚÕæïèäßÙÚÉÛÓäàÙÔÉÓâæÉàÓÚÕÓÒÙæäàÉäàßåÉßåÉäàÓÉÚÓáÉ·Ôâ×ÚÕÓÔÉ³ÚÕæïèäßÙÚÉÅä×ÚÔ×æÔÉ×Úïá×ïåÉßÉÔÙÚäÉæÓ×ÜÜïÉà×âÓÉ×ÉÑÙÙÔÉâßÔÉÖãäÉßÉæÓ×ÜÜïÉÓÚÞÙïÉäàßåÉåÙÚÑÉßÉàÙèÓÉïÙãÉáßÜÜÉÓÚÞÙïÉßäÉ×åáÓÜÜ</span><span style="color:#f1fa8c">\x97</span><span style="color:#f1fa8c">ÉïÙãäãÖÓ</span><span style="color:#f1fa8c">\x9a</span><span style="color:#f1fa8c">ÕÙÛ</span><span style="color:#f1fa8c">\x99</span><span style="color:#f1fa8c">á×äÕà©â«³£ï²ÕÔÈ·±â¨ë&#39;</span>],
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5</span> [<span style="color:#f1fa8c">&#39;mov&#39;</span>, <span style="color:#bd93f9">2</span>, <span style="color:#bd93f9">120</span>],
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6</span> [<span style="color:#f1fa8c">&#39;mov&#39;</span>, <span style="color:#bd93f9">4</span>, <span style="color:#bd93f9">15</span>],
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7</span> [<span style="color:#f1fa8c">&#39;mov&#39;</span>, <span style="color:#bd93f9">3</span>, <span style="color:#bd93f9">1</span>],
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8</span> [<span style="color:#f1fa8c">&#39;multiply&#39;</span>, <span style="color:#bd93f9">2</span>, <span style="color:#bd93f9">2</span>, <span style="color:#bd93f9">3</span>], <span style="color:#6272a4"># r2 = r2 * r3</span>
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9</span> [<span style="color:#f1fa8c">&#39;add&#39;</span>, <span style="color:#bd93f9">2</span>, <span style="color:#bd93f9">2</span>, <span style="color:#bd93f9">4</span>], <span style="color:#6272a4"># r2 = r2 + r4</span>
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10</span> [<span style="color:#f1fa8c">&#39;nop&#39;</span>, <span style="color:#bd93f9">0</span>, <span style="color:#bd93f9">2</span>], <span style="color:#6272a4"># maybe nop</span>
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11</span> [<span style="color:#f1fa8c">&#39;zero_reg&#39;</span>, <span style="color:#bd93f9">3</span>], <span style="color:#6272a4"># sets r3 = 0</span>
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12</span> [<span style="color:#f1fa8c">&#39;xor_string&#39;</span>, <span style="color:#bd93f9">6</span>, <span style="color:#bd93f9">3</span>],
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13</span> [<span style="color:#f1fa8c">&#39;mov&#39;</span>, <span style="color:#bd93f9">0</span>, <span style="color:#f1fa8c">&#39;Thanks.&#39;</span>],
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14</span> [<span style="color:#f1fa8c">&#39;mov&#39;</span>, <span style="color:#bd93f9">1</span>, <span style="color:#f1fa8c">&#39;Authorizing access...&#39;</span>],
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15</span> [<span style="color:#f1fa8c">&#39;print_reg&#39;</span>, <span style="color:#bd93f9">0</span>], <span style="color:#6272a4"># prints r0</span>
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16</span> [<span style="color:#f1fa8c">&#39;reg2mem&#39;</span>, <span style="color:#bd93f9">0</span>, <span style="color:#bd93f9">0</span>], <span style="color:#6272a4"># set r[arg0] = mem[arg1]</span>
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17</span> [<span style="color:#f1fa8c">&#39;xor_string&#39;</span>, <span style="color:#bd93f9">0</span>, <span style="color:#bd93f9">2</span>],
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18</span> [<span style="color:#f1fa8c">&#39;subtract_string&#39;</span>, <span style="color:#bd93f9">0</span>, <span style="color:#bd93f9">4</span>],
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19</span> [<span style="color:#f1fa8c">&#39;mov&#39;</span>, <span style="color:#bd93f9">5</span>, <span style="color:#bd93f9">19</span>],
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20</span> [<span style="color:#f1fa8c">&#39;strcmp&#39;</span>, <span style="color:#bd93f9">0</span>, <span style="color:#bd93f9">6</span>, <span style="color:#bd93f9">5</span>], <span style="color:#6272a4"># check strings ; if not equal r[7] = 1 ; push r[arg[2]]</span>
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21</span> [<span style="color:#f1fa8c">&#39;print_reg&#39;</span>, <span style="color:#bd93f9">1</span>],
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">22</span> [<span style="color:#f1fa8c">&#39;mov&#39;</span>, <span style="color:#bd93f9">1</span>, <span style="color:#f1fa8c">&#39;Access denied!&#39;</span>],
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">23</span> [<span style="color:#f1fa8c">&#39;print_reg&#39;</span>, <span style="color:#bd93f9">1</span>],
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">24</span> [<span style="color:#f1fa8c">&#39;hlt&#39;</span>]])
-</code></pre></div><p>clearly it loads this huge string into r6 and then xors it with 135 and then subtract 15 from each charecter and then compares with our input so i quicly wrote a decrypt function</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1</span><span style="color:#ff79c6">def</span> <span style="color:#50fa7b">find_flag</span>():
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2</span>
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3</span>    b <span style="color:#ff79c6">=</span> <span style="color:#f1fa8c">&#39;á×äÓâæíäàßåÉÛãåäÉÖÓÉäàÓÉÖÓåäÉÓÚÕæïèäßÙÚÉÛÓäàÙÔÉÓâæÉàÓÚÕÓÒÙæäàÉäàßåÉßåÉäàÓÉÚÓáÉ·Ôâ×ÚÕÓÔÉ³ÚÕæïèäßÙÚÉÅä×ÚÔ×æÔÉ×Úïá×ïåÉßÉÔÙÚäÉæÓ×ÜÜïÉà×âÓÉ×ÉÑÙÙÔÉâßÔÉÖãäÉßÉæÓ×ÜÜïÉÓÚÞÙïÉäàßåÉåÙÚÑÉßÉàÙèÓÉïÙãÉáßÜÜÉÓÚÞÙïÉßäÉ×åáÓÜÜ</span><span style="color:#f1fa8c">\x97</span><span style="color:#f1fa8c">ÉïÙãäãÖÓ</span><span style="color:#f1fa8c">\x9a</span><span style="color:#f1fa8c">ÕÙÛ</span><span style="color:#f1fa8c">\x99</span><span style="color:#f1fa8c">á×äÕà©â«³£ï²ÕÔÈ·±â¨ë&#39;</span>
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4</span>    temp <span style="color:#ff79c6">=</span> <span style="color:#f1fa8c">&#39;&#39;</span>
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5</span>    <span style="color:#ff79c6">for</span> i <span style="color:#ff79c6">in</span> <span style="color:#8be9fd;font-style:italic">range</span>(<span style="color:#8be9fd;font-style:italic">len</span>(b)):
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6</span>        temp <span style="color:#ff79c6">+=</span> <span style="color:#8be9fd;font-style:italic">chr</span>(<span style="color:#8be9fd;font-style:italic">ord</span>(b[i]) <span style="color:#ff79c6">+</span> <span style="color:#bd93f9">15</span>)
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7</span>
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8</span>    a <span style="color:#ff79c6">=</span> temp
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9</span>    temp <span style="color:#ff79c6">=</span> <span style="color:#f1fa8c">&#34;&#34;</span>
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10</span>    <span style="color:#ff79c6">for</span> i <span style="color:#ff79c6">in</span> <span style="color:#8be9fd;font-style:italic">range</span>(<span style="color:#8be9fd;font-style:italic">len</span>(a)):
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11</span>        temp <span style="color:#ff79c6">+=</span> <span style="color:#8be9fd;font-style:italic">chr</span>(<span style="color:#8be9fd;font-style:italic">ord</span>(a[i]) <span style="color:#ff79c6">^</span> <span style="color:#bd93f9">135</span>)
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12</span>
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13</span>    <span style="color:#8be9fd;font-style:italic">print</span>(temp)
-</code></pre></div><p>and just after that i got the flag</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-plaintext" data-lang="plaintext"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1</span>[~]$ python3 solution.py                                                                           
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2</span>watevr{this_must_be_the_best_encryption_method_evr_henceforth_this_is_the_new_Advanced_Encryption_Standard_anyways_i_dont_really_have_a_good_vid_but_i_really_enjoy_this_song_i_hope_you_will_enjoy_it_aswell!_youtube.com/watch?v=E5yFcdPAGv0}
-</code></pre></div><p>damn that flag is huge and i also wonder whats up with these youtube links?</p>
-        </div>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="ln"> 1</span><span class="cl"><span class="n">VM</span><span class="p">([</span>
+</span></span><span class="line"><span class="ln"> 2</span><span class="cl"> <span class="p">[</span><span class="s1">&#39;mov&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;Authentication token: &#39;</span><span class="p">],</span>
+</span></span><span class="line"><span class="ln"> 3</span><span class="cl"> <span class="p">[</span><span class="s1">&#39;mem_mov&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="c1"># mem(r1) = r2</span>
+</span></span><span class="line"><span class="ln"> 4</span><span class="cl"> <span class="p">[</span><span class="s1">&#39;mov&#39;</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="s1">&#39;á×äÓâæíäàßåÉÛãåäÉÖÓÉäàÓÉÖÓåäÉÓÚÕæïèäßÙÚÉÛÓäàÙÔÉÓâæÉàÓÚÕÓÒÙæäàÉäàßåÉßåÉäàÓÉÚÓáÉ·Ôâ×ÚÕÓÔÉ³ÚÕæïèäßÙÚÉÅä×ÚÔ×æÔÉ×Úïá×ïåÉßÉÔÙÚäÉæÓ×ÜÜïÉà×âÓÉ×ÉÑÙÙÔÉâßÔÉÖãäÉßÉæÓ×ÜÜïÉÓÚÞÙïÉäàßåÉåÙÚÑÉßÉàÙèÓÉïÙãÉáßÜÜÉÓÚÞÙïÉßäÉ×åáÓÜÜ</span><span class="se">\x97</span><span class="s1">ÉïÙãäãÖÓ</span><span class="se">\x9a</span><span class="s1">ÕÙÛ</span><span class="se">\x99</span><span class="s1">á×äÕà©â«³£ï²ÕÔÈ·±â¨ë&#39;</span><span class="p">],</span>
+</span></span><span class="line"><span class="ln"> 5</span><span class="cl"> <span class="p">[</span><span class="s1">&#39;mov&#39;</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">120</span><span class="p">],</span>
+</span></span><span class="line"><span class="ln"> 6</span><span class="cl"> <span class="p">[</span><span class="s1">&#39;mov&#39;</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">15</span><span class="p">],</span>
+</span></span><span class="line"><span class="ln"> 7</span><span class="cl"> <span class="p">[</span><span class="s1">&#39;mov&#39;</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span>
+</span></span><span class="line"><span class="ln"> 8</span><span class="cl"> <span class="p">[</span><span class="s1">&#39;multiply&#39;</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="c1"># r2 = r2 * r3</span>
+</span></span><span class="line"><span class="ln"> 9</span><span class="cl"> <span class="p">[</span><span class="s1">&#39;add&#39;</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">],</span> <span class="c1"># r2 = r2 + r4</span>
+</span></span><span class="line"><span class="ln">10</span><span class="cl"> <span class="p">[</span><span class="s1">&#39;nop&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="c1"># maybe nop</span>
+</span></span><span class="line"><span class="ln">11</span><span class="cl"> <span class="p">[</span><span class="s1">&#39;zero_reg&#39;</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="c1"># sets r3 = 0</span>
+</span></span><span class="line"><span class="ln">12</span><span class="cl"> <span class="p">[</span><span class="s1">&#39;xor_string&#39;</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span>
+</span></span><span class="line"><span class="ln">13</span><span class="cl"> <span class="p">[</span><span class="s1">&#39;mov&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;Thanks.&#39;</span><span class="p">],</span>
+</span></span><span class="line"><span class="ln">14</span><span class="cl"> <span class="p">[</span><span class="s1">&#39;mov&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;Authorizing access...&#39;</span><span class="p">],</span>
+</span></span><span class="line"><span class="ln">15</span><span class="cl"> <span class="p">[</span><span class="s1">&#39;print_reg&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="c1"># prints r0</span>
+</span></span><span class="line"><span class="ln">16</span><span class="cl"> <span class="p">[</span><span class="s1">&#39;reg2mem&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="c1"># set r[arg0] = mem[arg1]</span>
+</span></span><span class="line"><span class="ln">17</span><span class="cl"> <span class="p">[</span><span class="s1">&#39;xor_string&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span>
+</span></span><span class="line"><span class="ln">18</span><span class="cl"> <span class="p">[</span><span class="s1">&#39;subtract_string&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">4</span><span class="p">],</span>
+</span></span><span class="line"><span class="ln">19</span><span class="cl"> <span class="p">[</span><span class="s1">&#39;mov&#39;</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">19</span><span class="p">],</span>
+</span></span><span class="line"><span class="ln">20</span><span class="cl"> <span class="p">[</span><span class="s1">&#39;strcmp&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">5</span><span class="p">],</span> <span class="c1"># check strings ; if not equal r[7] = 1 ; push r[arg[2]]</span>
+</span></span><span class="line"><span class="ln">21</span><span class="cl"> <span class="p">[</span><span class="s1">&#39;print_reg&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span>
+</span></span><span class="line"><span class="ln">22</span><span class="cl"> <span class="p">[</span><span class="s1">&#39;mov&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;Access denied!&#39;</span><span class="p">],</span>
+</span></span><span class="line"><span class="ln">23</span><span class="cl"> <span class="p">[</span><span class="s1">&#39;print_reg&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span>
+</span></span><span class="line"><span class="ln">24</span><span class="cl"> <span class="p">[</span><span class="s1">&#39;hlt&#39;</span><span class="p">]])</span>
+</span></span></code></pre></div><p>clearly it loads this huge string into r6 and then xors it with 135 and then subtract 15 from each charecter and then compares with our input so i quicly wrote a decrypt function</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="ln"> 1</span><span class="cl"><span class="k">def</span> <span class="nf">find_flag</span><span class="p">():</span>
+</span></span><span class="line"><span class="ln"> 2</span><span class="cl">
+</span></span><span class="line"><span class="ln"> 3</span><span class="cl">    <span class="n">b</span> <span class="o">=</span> <span class="s1">&#39;á×äÓâæíäàßåÉÛãåäÉÖÓÉäàÓÉÖÓåäÉÓÚÕæïèäßÙÚÉÛÓäàÙÔÉÓâæÉàÓÚÕÓÒÙæäàÉäàßåÉßåÉäàÓÉÚÓáÉ·Ôâ×ÚÕÓÔÉ³ÚÕæïèäßÙÚÉÅä×ÚÔ×æÔÉ×Úïá×ïåÉßÉÔÙÚäÉæÓ×ÜÜïÉà×âÓÉ×ÉÑÙÙÔÉâßÔÉÖãäÉßÉæÓ×ÜÜïÉÓÚÞÙïÉäàßåÉåÙÚÑÉßÉàÙèÓÉïÙãÉáßÜÜÉÓÚÞÙïÉßäÉ×åáÓÜÜ</span><span class="se">\x97</span><span class="s1">ÉïÙãäãÖÓ</span><span class="se">\x9a</span><span class="s1">ÕÙÛ</span><span class="se">\x99</span><span class="s1">á×äÕà©â«³£ï²ÕÔÈ·±â¨ë&#39;</span>
+</span></span><span class="line"><span class="ln"> 4</span><span class="cl">    <span class="n">temp</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+</span></span><span class="line"><span class="ln"> 5</span><span class="cl">    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">b</span><span class="p">)):</span>
+</span></span><span class="line"><span class="ln"> 6</span><span class="cl">        <span class="n">temp</span> <span class="o">+=</span> <span class="nb">chr</span><span class="p">(</span><span class="nb">ord</span><span class="p">(</span><span class="n">b</span><span class="p">[</span><span class="n">i</span><span class="p">])</span> <span class="o">+</span> <span class="mi">15</span><span class="p">)</span>
+</span></span><span class="line"><span class="ln"> 7</span><span class="cl">
+</span></span><span class="line"><span class="ln"> 8</span><span class="cl">    <span class="n">a</span> <span class="o">=</span> <span class="n">temp</span>
+</span></span><span class="line"><span class="ln"> 9</span><span class="cl">    <span class="n">temp</span> <span class="o">=</span> <span class="s2">&#34;&#34;</span>
+</span></span><span class="line"><span class="ln">10</span><span class="cl">    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">a</span><span class="p">)):</span>
+</span></span><span class="line"><span class="ln">11</span><span class="cl">        <span class="n">temp</span> <span class="o">+=</span> <span class="nb">chr</span><span class="p">(</span><span class="nb">ord</span><span class="p">(</span><span class="n">a</span><span class="p">[</span><span class="n">i</span><span class="p">])</span> <span class="o">^</span> <span class="mi">135</span><span class="p">)</span>
+</span></span><span class="line"><span class="ln">12</span><span class="cl">
+</span></span><span class="line"><span class="ln">13</span><span class="cl">    <span class="nb">print</span><span class="p">(</span><span class="n">temp</span><span class="p">)</span>
+</span></span></code></pre></div><p>and just after that i got the flag</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-plaintext" data-lang="plaintext"><span class="line"><span class="ln">1</span><span class="cl">[~]$ python3 solution.py                                                                           
+</span></span><span class="line"><span class="ln">2</span><span class="cl">watevr{this_must_be_the_best_encryption_method_evr_henceforth_this_is_the_new_Advanced_Encryption_Standard_anyways_i_dont_really_have_a_good_vid_but_i_really_enjoy_this_song_i_hope_you_will_enjoy_it_aswell!_youtube.com/watch?v=E5yFcdPAGv0}
+</span></span></code></pre></div><p>damn that flag is huge and i also wonder whats up with these youtube links?</p>
 
+    </div>
+    <footer class="document-footer">
+      
+    </footer>
+  </article>
 
+  
+    <nav class="document-nav" aria-label="Article navigation">
+      
+        <a href="/posts/hsctf-license/">prev: HSCTF License</a>
+      
+      
+    </nav>
+  
 
-        <footer class="post-footer">
-                
-                
-                
-                <span class="post-categories">
-                        <a href="https://x3ero0.github.io/categories/rev/">Rev</a>&emsp;
-                        
-                </span>
-                
-        
-                
-                
-                
-        </footer>
-        
-<table cellspacing="15" style="width:100%; border: none;">
-    <tr>
-        <td style="text-align: center; border: none; padding: 0px;">
-        </td>
-        <td style="text-align: center; border: none; padding: 0px;">
-        </td>
-    </tr>
-</table>
-
-        
-    </article>
-
-    
-
-</main>
-
-
-        <div class="sidebar1 widgets columns-1">
-
-    <aside>
-    
-</aside>
-    <aside class="widget widget_categories">
-        <h2>Categories</h2>
-        <ul class="widget__list"><li class="cat-item cat-item-2">
-                <a href="https://x3ero0.github.io/categories/crackmes/">Crackmes (7)</a>
-            </li><li class="cat-item cat-item-2">
-                <a href="https://x3ero0.github.io/categories/ctf/">CTF (2)</a>
-            </li><li class="cat-item cat-item-2">
-                <a href="https://x3ero0.github.io/categories/pwn/">Pwn (3)</a>
-            </li><li class="cat-item cat-item-2">
-                <a href="https://x3ero0.github.io/categories/rev/">Rev (5)</a>
-            </li>
-        </ul>
-    </aside>
-
-    <aside class="widget widget_recent_entries">
-        <h2>Recent Posts</h2>
-        <ul>
-            
-                
-                    <li>
-                        <a href="https://x3ero0.github.io/posts/orxw_balsn_ctf_2021_pwn/">or⊕w writeup from Balsn CTF 2021</a>
-                    </li>
-                
-            
-                
-                    <li>
-                        <a href="https://x3ero0.github.io/posts/easy_kernel_exploitation/">Easy_Kernel Writeup from K3RN3LCTF 2021</a>
-                    </li>
-                
-            
-                
-                    <li>
-                        <a href="https://x3ero0.github.io/posts/hyperion/">Hyperion Writeup</a>
-                    </li>
-                
-            
-                
-                    <li>
-                        <a href="https://x3ero0.github.io/posts/float-writeup/">Float Writeup</a>
-                    </li>
-                
-            
-                
-            
-                
-                    <li>
-                        <a href="https://x3ero0.github.io/posts/hell86_from_ttlhacker/">Hell86 - ttlhacker</a>
-                    </li>
-                
-            
-                
-                    <li>
-                        <a href="https://x3ero0.github.io/posts/reversing_a_malware_in_disguise/">Reversing a malware in disguise</a>
-                    </li>
-                
-            
-                
-                    <li>
-                        <a href="https://x3ero0.github.io/posts/watevr_repyc/">Watevr_repyc</a>
-                    </li>
-                
-            
-                
-            
-                
-                    <li>
-                        <a href="https://x3ero0.github.io/posts/hsctf-license/">HSCTF License</a>
-                    </li>
-                
-            
-        </ul>
-    </aside>
-
-    <aside class="widget widget_recent_entries">
-        <h2>Recent Crackmes</h2>
-        <ul>
-            
-                
-            
-                
-            
-                
-            
-                
-            
-                
-                    <li>
-                        <a href="https://x3ero0.github.io/crackmes/fl04t/">[0x007] fl04t</a>
-                    </li>
-                
-            
-                
-            
-                
-            
-                
-            
-                
-            
-                
-            
-        </ul>
-    </aside>
-</div>
-
-        </div>
-        </div>
-<footer role="contentinfo" class="document-footer contentinfo widgets columns-1">
-
-    <aside class="widget widget_text">
-        <div class="textwidget">
-            <p>© x3ero0&#39;s blog</p>
-        </div>
-    </aside>
+    </main>
+    <footer class="site-footer">
+  <div class="footer-panel">
+    <p>Copying is an act of love, feel free to copy.</p>
+  </div>
 </footer>
-</div>
 
-    </body>
+  </div>
+  
+
+
+
+
+
+  
+  
+  
+  
+
+
+<aside class="theme-sidebar" aria-label="Theme controls">
+  <div class="sidebar-stack">
+    <div class="theme-window">
+      <div class="window-titlebar" aria-hidden="true">
+        <span class="window-title">&nbsp;</span>
+      </div>
+      <div class="window-content theme-window-content">
+        <button class="theme-toggle" type="button" data-theme-toggle aria-pressed="false">
+          <span class="theme-toggle-track" aria-hidden="true">
+            <span class="theme-toggle-thumb"></span>
+          </span>
+          <span class="theme-toggle-text" data-theme-label>light</span>
+        </button>
+      </div>
+    </div>
+
+    <section class="guestbook-window" aria-label="Guestbook">
+      <div class="window-titlebar">
+        <span class="window-title">guestbook</span>
+      </div>
+      <div class="window-content guestbook-window-content">
+        <div class="guestbook-feed" data-guestbook-feed aria-live="polite"></div>
+        <form
+          class="guestbook-form"
+          data-guestbook-form
+          data-guestbook-remote-enabled="true"
+          method="post"
+          target="guestbook-hidden-transport"
+          action="https://docs.google.com/forms/d/e/1FAIpQLSctVbY2_aoazFFBBdS3CFGsKIb0JmXJTk1MbITiuh6rfHOLzg/formResponse"
+        >
+          <div class="guestbook-row">
+            <input
+              class="guestbook-input"
+              type="text"
+              maxlength="24"
+              placeholder="nickname"
+              aria-label="Nickname"
+              autocomplete="nickname"
+              data-guestbook-nickname
+              name="entry.1908159203" id="entry.1908159203"
+            >
+            <div class="guestbook-actions">
+              <button class="window-button" type="submit">send</button>
+            </div>
+          </div>
+          <input
+            class="guestbook-input"
+            type="text"
+            maxlength="240"
+            placeholder="website"
+            aria-label="Website"
+            autocomplete="off"
+            data-guestbook-website
+            name="entry.1928902955" id="entry.1928902955"
+          >
+          <textarea
+            class="guestbook-input guestbook-comment"
+            rows="4"
+            placeholder="comment"
+            aria-label="Comment"
+            autocomplete="off"
+            data-guestbook-comment
+            name="entry.1702949315" id="entry.1702949315"
+            maxlength="240"
+          ></textarea>
+          
+        </form>
+        <iframe
+          name="guestbook-hidden-transport"
+          class="guestbook-transport"
+          title="guestbook submission transport"
+          tabindex="-1"
+          hidden
+        ></iframe>
+      </div>
+    </section>
+  </div>
+
+  <div class="guestbook-dialog" data-guestbook-dialog hidden>
+    <button
+      class="guestbook-dialog-backdrop"
+      type="button"
+      aria-label="Close dialog"
+      data-guestbook-dialog-close
+    ></button>
+    <section class="guestbook-dialog-window" role="dialog" aria-modal="true" aria-labelledby="guestbook-dialog-title">
+      <div class="window-titlebar">
+        <span class="window-title" id="guestbook-dialog-title">guestbook</span>
+        <div class="window-actions">
+          <button
+            class="window-button window-button-icon"
+            type="button"
+            aria-label="Close dialog"
+            data-guestbook-dialog-close
+            data-guestbook-dialog-close-button
+          >X</button>
+        </div>
+      </div>
+      <div class="window-content guestbook-dialog-content">
+        <p>Your comment is under review. Check back later.</p>
+        <div class="guestbook-dialog-actions">
+          <button
+            class="window-button"
+            type="button"
+            data-guestbook-dialog-close
+          >OK</button>
+        </div>
+      </div>
+    </section>
+  </div>
+</aside>
+
+</body>
 </html>

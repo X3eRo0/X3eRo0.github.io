@@ -1,111 +1,115 @@
 <!DOCTYPE html>
-<html>
-    <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1">
-    <title>Year3000 - x3ero0&#39;s blog</title>
-    <link rel="shortcut icon" href="/img/favicon.ico">
-    <style type="text/css">
-        img.wp-smiley,
-        img.emoji {
-            display: inline !important;
-            border: none !important;
-            box-shadow: none !important;
-            height: 1em !important;
-            width: 1em !important;
-            margin: 0 .07em !important;
-            vertical-align: -0.1em !important;
-            background: none !important;
-            padding: 0 !important;
-        }
-    </style>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
-    <link rel='stylesheet' href='/css/custom.css' type='text/css' media='all' />
-    <link rel='stylesheet' href='/css/style.css' type='text/css' media='all' />
-    <link rel='stylesheet' href='/css/syntax.css' type='text/css' media='all' />
-    <link rel='stylesheet' href='/css/general.css' type='text/css' media='all' />
-    <link rel='stylesheet' href='/css/toc.css' type='text/css' media='all' />
-    <link rel='stylesheet' href='/css/image.css' type='text/css' media='all' />
+<html lang="en-us" dir="ltr">
+<head>
+  
+
+  
+
+
+
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Year3000 | x3ero0&#39;s blog</title>
+<meta name="description" content="x3ero0&#39;s blog contains reverse engineering notes, crackmes, and CTF writeups.">
+<meta name="theme-color" content="#f7f7f2">
+<script>
+  (() => {
+    const storageKey = "reflector-theme";
+    const root = document.documentElement;
+    let theme = "light";
+
+    try {
+      const stored = localStorage.getItem(storageKey);
+      if (stored === "light" || stored === "dark") {
+        theme = stored;
+      } else if (window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches) {
+        theme = "dark";
+      }
+    } catch (error) {
+      if (window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches) {
+        theme = "dark";
+      }
+    }
+
+    root.dataset.theme = theme;
+    const meta = document.querySelector('meta[name="theme-color"]');
+    if (meta) {
+      meta.setAttribute("content", theme === "dark" ? "#111315" : "#f7f7f2");
+    }
+  })();
+</script>
+<link rel="icon" href="/img/favicon.ico">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous" referrerpolicy="no-referrer">
+
+  <link rel="stylesheet" href="/css/chroma-light.css">
+  <link rel="stylesheet" href="/css/chroma-dark.css">
+      <link rel="stylesheet" href="/css/main.min.8922a1a49c9c90da672308fecef192f6cb5c5f0b6ca01ce4b6d648fa1a3e8b11.css" integrity="sha256-iSKhpJyckNpnIwj&#43;zvGS9stcXwtsoBzkttZI&#43;ho&#43;ixE=" crossorigin="anonymous">
+
+
+        <script src="/js/main.9a5dcf5db86a42efab8f8c1173e839a88165d67872dafbc375cc2a5c43546907.js" integrity="sha256-ml3PXbhqQu&#43;rj4wRc&#43;g5qIFl1nhy2vvDdcwqXENUaQc=" crossorigin="anonymous" defer></script>
+
+
 </head>
+<body class="page page-page section-posts">
+  <div class="page-frame">
+    <a class="skip-link" href="#main-content">Skip to content</a>
+    <header class="site-header">
+  <div class="header-panel">
+    <a class="brand" href="/">x3ero0&#39;s blog</a>
+    <p class="header-summary">reverse engineering, crackmes, and ctf writeups</p>
+    <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav" data-nav-toggle>[menu]</button>
+    <nav id="site-nav" class="site-nav" data-nav aria-label="Primary">
+      
+  <ul class="nav-list">
+      <li>
+        <a class="nav-link" href="/">home</a>
+      </li>
+      <li>
+        <a class="nav-link" href="/posts/">posts</a>
+      </li>
+      <li>
+        <a class="nav-link" href="/crackmes/">crackmes</a>
+      </li>
+  </ul>
 
-    <body class="two-column">
-        <a href="#content">Skip to content</a>
-<div class="wrapper">
-    <header role="banner" class="banner widgets columns-1">
-        <a href="/" rel="home">
-            <h1 class="site">x3ero0&#39;s blog</h1>
-            <p></p>
-        </a>
-        <nav role="navigation" aria-label="Primary Navigation">
+    </nav>
+  </div>
+</header>
 
-            <ul class="menu">
-                <li class="menu-item "><a class="menu__link" href="/">HOME</a></li>
-                <li class="menu-item "><a class="menu__link" href="/posts/">POSTS</a></li>
-                <li class="menu-item "><a class="menu__link" href="/crackmes/">CRACKMES</a></li>
-            </ul>
-            <select onChange="location.href=value;">
-                <option value="/" class="menu-item menu-item-type-custom menu-item-object-custom" >HOME</option>
-                <option value="/posts/" class="menu-item menu-item-type-custom menu-item-object-custom" >POSTS</option>
-                <option value="/crackmes/" class="menu-item menu-item-type-custom menu-item-object-custom" >CRACKMES</option>
-            </select>
-        </nav>
-    </header>
-
-    <br>
-    <div style="width: 100%; max-height: 100px; text-align: center;">
-       
+    <main id="main-content" class="site-main">
+      
+  <article class="document">
+    <header class="document-header">
+      <h1>Year3000</h1>
+      <div class="meta-line">
+  
+    <span>posts</span>
+  
+  
+    <time datetime="2020-02-08T18:04:11Z">2020-02-08</time>
+  
+  <span>8 min read</span>
+  
 </div>
 
-    <div class="breadcrumbs">
-        
-    </div>
-
-        <div id="content" class="content">
-
-<main role="main">
-    <article role="article" class="post type-post format-standard hentry">
-        <header class="post-header">
-            <h1>Year3000</h1>
-            <div class="post-details">
-                <a rel="bookmark">
-                    <time datetime="2020-02-08T28:64:116">2020-02-08</time>
-                </a>
-				
-<span style="float: right;">
-    <div id="fb-root" style="height: 100%;"></div>
-    
-    <script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v3.2"></script>
-    
-    <div class="fb-share-button" data-href="https://x3ero0.github.io/posts/year3000/" data-layout="button_count" data-size="small">
-        <a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3a%2f%2fx3ero0.github.io%2fposts%2fyear3000%2f" class="fb-xfbml-parse-ignore">Share</a>
-    </div>
-    &nbsp;
-    <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" data-text="Year3000" data-url="https://x3ero0.github.io/posts/year3000/" data-show-count="false">Tweet</a>
-    <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
-    &nbsp;
-    
-</span>
-
-            </div>
-        </header>
-
-        <div class="post-content">
-            <link rel="stylesheet" href="/css/styles/atelier-forest-dark.css">
-<script src="/js/highlight.pack.js"></script>
-<script>hljs.initHighlightingOnLoad();</script>
-
-<h2 id="year3000-re---nullcon-hackim2020-ctf">Year3000 [RE - Nullcon Hackim2020 CTF]</h2>
+      
+    </header>
+    <div class="document-body">
+      <h2 id="year3000-re---nullcon-hackim2020-ctf">Year3000 [RE - Nullcon Hackim2020 CTF]</h2>
 <p>Description</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-plaintext" data-lang="plaintext"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1</span>One day when I came home at lunchtime I heard a funny noise Went out to the
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2</span>back yard to find out If it was one of those rowdy boys Stood there was my
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3</span>neighbor called Peter And a flux capacitor. I guess there must be quite some
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4</span>entropy in a flux capacitor...
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5</span>
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6</span>Netcat Link : nc re.ctf.nullcon.net 1234
-</code></pre></div><p>we were given 3000 stripped ELF binaries some 64bit binaries and 32bit binaries. the description of the challenge did&rsquo;nt explained what exactly the task was, so i tried to connect to the given netcat link.</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-plaintext" data-lang="plaintext"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1</span>x3ero0 :: year3000 » nc re.ctf.nullcon.net 1234
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2</span>1252.bin
-</code></pre></div><p>so it was clear that for each binary we need to send the correct password of the binary.
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-plaintext" data-lang="plaintext"><span class="line"><span class="ln">1</span><span class="cl">One day when I came home at lunchtime I heard a funny noise Went out to the
+</span></span><span class="line"><span class="ln">2</span><span class="cl">back yard to find out If it was one of those rowdy boys Stood there was my
+</span></span><span class="line"><span class="ln">3</span><span class="cl">neighbor called Peter And a flux capacitor. I guess there must be quite some
+</span></span><span class="line"><span class="ln">4</span><span class="cl">entropy in a flux capacitor...
+</span></span><span class="line"><span class="ln">5</span><span class="cl">
+</span></span><span class="line"><span class="ln">6</span><span class="cl">Netcat Link : nc re.ctf.nullcon.net 1234
+</span></span></code></pre></div><p>we were given 3000 stripped ELF binaries some 64bit binaries and 32bit binaries. the description of the challenge did&rsquo;nt explained what exactly the task was, so i tried to connect to the given netcat link.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-plaintext" data-lang="plaintext"><span class="line"><span class="ln">1</span><span class="cl">x3ero0 :: year3000 » nc re.ctf.nullcon.net 1234
+</span></span><span class="line"><span class="ln">2</span><span class="cl">1252.bin
+</span></span></code></pre></div><p>so it was clear that for each binary we need to send the correct password of the binary.
 lets reverse engineer one of the binaries.</p>
 <pre tabindex="0"><code class="language-x86asm" data-lang="x86asm">public start
 start proc near
@@ -174,7 +178,7 @@ start endp
 .text:0000072C                 mov     eax, [eax]
 .text:0000072E                 sub     esp, 4
 .text:00000731                 push    eax             ; stream
-.text:00000732                 push    64h ; 'd'       ; n
+.text:00000732                 push    64h ; &#39;d&#39;       ; n
 .text:00000734                 lea     eax, [ebp+s]
 .text:00000737                 push    eax             ; s
 .text:00000738                 call    _fgets
@@ -188,7 +192,7 @@ start endp
 .text:00000752                 cmp     [ebp+var_74], 0
 .text:00000756                 jz      short loc_76C
 .text:00000758                 sub     esp, 0Ch
-.text:0000075B                 lea     eax, (aWellDone - 1FC0h)[ebx] ; &quot;Well done&quot;
+.text:0000075B                 lea     eax, (aWellDone - 1FC0h)[ebx] ; &#34;Well done&#34;
 .text:00000761                 push    eax             ; s
 .text:00000762                 call    _puts
 .text:00000767                 add     esp, 10h
@@ -197,7 +201,7 @@ start endp
 .text:0000076C
 .text:0000076C loc_76C:                                ; CODE XREF: sub_6D0+86↑j
 .text:0000076C                 sub     esp, 0Ch
-.text:0000076F                 lea     eax, (aYouHaveFailed - 1FC0h)[ebx] ; &quot;You have failed&quot;
+.text:0000076F                 lea     eax, (aYouHaveFailed - 1FC0h)[ebx] ; &#34;You have failed&#34;
 .text:00000775                 push    eax             ; s
 .text:00000776                 call    _puts
 .text:0000077B                 add     esp, 10h
@@ -243,8 +247,8 @@ start endp
 .text:00000651                 sub     esp, 00000014h
 .text:00000654                 call    sub_7A3
 .text:00000659                 add     eax, 1967h
-.text:0000065E                 mov     [ebp+var_C], 54h ; 'T'
-.text:00000665                 mov     [ebp+var_15], 63h ; 'c'
+.text:0000065E                 mov     [ebp+var_C], 54h ; &#39;T&#39;
+.text:00000665                 mov     [ebp+var_15], 63h ; &#39;c&#39;
 .text:00000669                 mov     [ebp+var_14], 1
 .text:00000670                 mov     [ebp+var_10], 0
 .text:00000677                 jmp     short loc_696
@@ -294,8 +298,8 @@ start endp
 .text:000006CF sub_64D         endp
 .text:000006CF
 </code></pre><p>if you see this function and notice that at 0x0000065e a number is loaded into dword [local_ch] and at 0x00000665 a character is loaded into byte [local_15h].</p>
-<pre tabindex="0"><code class="language-x86asm" data-lang="x86asm">.text:0000065E                 mov     [ebp+var_C], 54h ; 'T'
-.text:00000665                 mov     [ebp+var_15], 63h ; 'c'
+<pre tabindex="0"><code class="language-x86asm" data-lang="x86asm">.text:0000065E                 mov     [ebp+var_C], 54h ; &#39;T&#39;
+.text:00000665                 mov     [ebp+var_15], 63h ; &#39;c&#39;
 </code></pre><p>the following loop after this simply checks if the user input is &lsquo;c&rsquo; *0x54
 then comes a memcmp at 0x6b5. now to statically analyse the arguments passed to memcmp we need to figure out whats going at 0x6b0</p>
 <pre tabindex="0"><code class="language-x86asm" data-lang="x86asm">.text:000006AB                 lea     edx, (unk_2008 - 1FC0h)[eax]
@@ -326,123 +330,140 @@ which is</p>
 </code></pre>
 
 
-<div class="center">
-  <img
-    class="responsive"
-    src="/img/year3000/main.png"
-    alt="Dump Of 3.bin"
-    decoding="async"
-  />
+
+  
+
+
+
+<div class="center image-window" data-image-window>
+  <div class="window-titlebar">
+    <span class="window-title">Dump Of 3.bin</span>
+    <button
+      class="window-button window-button-icon window-minimize"
+      type="button"
+      aria-expanded="true"
+      aria-label="Minimize image"
+      data-window-toggle
+    >−</button>
+  </div>
+  <div class="window-content">
+    <img
+      class="responsive"
+      src="/img/year3000/main.png"
+      alt="Dump Of 3.bin"
+      decoding="async"
+    />
+  </div>
 </div>
+
 <p>also one more thing to point out is that this value is always stored at the end of .data section. so the correct password for 3.bin is</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1</span><span style="color:#ff79c6">import</span> struct
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2</span><span style="color:#8be9fd;font-style:italic">print</span> c <span style="color:#ff79c6">*</span> <span style="color:#bd93f9">0x54</span> <span style="color:#ff79c6">+</span> struct<span style="color:#ff79c6">.</span>pack(<span style="color:#ff79c6">&lt;</span>I, <span style="color:#bd93f9">0xA7C6D169</span>)
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3</span>
-</code></pre></div><p>output -&gt;</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-plaintext" data-lang="plaintext"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1</span>x3ero0 :: year3000 » python solve_3.py | ./3.bin
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2</span>Well done
-</code></pre></div><p>so i quickly wrote a script to fetch these values and generate a correct password for all the binaries both 64 bit binaries or 32 bit binaries.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="ln">1</span><span class="cl"><span class="kn">import</span> <span class="nn">struct</span>
+</span></span><span class="line"><span class="ln">2</span><span class="cl"><span class="nb">print</span> <span class="n">c</span> <span class="o">*</span> <span class="mh">0x54</span> <span class="o">+</span> <span class="n">struct</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="o">&lt;</span><span class="n">I</span><span class="p">,</span> <span class="mh">0xA7C6D169</span><span class="p">)</span>
+</span></span></code></pre></div><p>output -&gt;</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-plaintext" data-lang="plaintext"><span class="line"><span class="ln">1</span><span class="cl">x3ero0 :: year3000 » python solve_3.py | ./3.bin
+</span></span><span class="line"><span class="ln">2</span><span class="cl">Well done
+</span></span></code></pre></div><p>so i quickly wrote a script to fetch these values and generate a correct password for all the binaries both 64 bit binaries or 32 bit binaries.</p>
 <p>exploit script &ndash;&gt;</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1</span><span style="color:#ff79c6">from</span> pwn <span style="color:#ff79c6">import</span> <span style="color:#ff79c6">*</span>
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2</span><span style="color:#ff79c6">import</span> base64
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3</span>
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4</span>
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5</span>context<span style="color:#ff79c6">.</span>log_level <span style="color:#ff79c6">=</span> <span style="color:#f1fa8c">&#34;critical&#34;</span>
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6</span>
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7</span><span style="color:#ff79c6">def</span> <span style="color:#50fa7b">solve</span>(filename):
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8</span>
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9</span>	file <span style="color:#ff79c6">=</span> <span style="color:#8be9fd;font-style:italic">open</span>(filename, <span style="color:#f1fa8c">&#34;rb&#34;</span>)<span style="color:#ff79c6">.</span>read()
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10</span>	
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11</span>	ELF64_Coun <span style="color:#ff79c6">=</span> <span style="color:#bd93f9">0x816</span>
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12</span>	ELF64_Valu <span style="color:#ff79c6">=</span> <span style="color:#bd93f9">0x81d</span>
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13</span>
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14</span>	ELF32_Coun <span style="color:#ff79c6">=</span> <span style="color:#bd93f9">0x65e</span>
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15</span>	ELF32_Valu <span style="color:#ff79c6">=</span> <span style="color:#bd93f9">0x665</span>
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16</span>
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17</span>
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18</span>	ELF64_Addr <span style="color:#ff79c6">=</span> <span style="color:#bd93f9">0x1010</span>
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19</span>	ELF32_Addr <span style="color:#ff79c6">=</span> <span style="color:#bd93f9">0x1008</span>
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20</span>
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21</span>	
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">22</span>	Format <span style="color:#ff79c6">=</span> <span style="color:#8be9fd;font-style:italic">ord</span>(file[<span style="color:#bd93f9">0x04</span>])
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">23</span>	<span style="color:#ff79c6">if</span> (Format <span style="color:#ff79c6">==</span> <span style="color:#bd93f9">2</span>):
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">24</span>
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">25</span>		context<span style="color:#ff79c6">.</span>update(arch<span style="color:#ff79c6">=</span><span style="color:#f1fa8c">&#39;amd64&#39;</span>, os<span style="color:#ff79c6">=</span><span style="color:#f1fa8c">&#39;linux&#39;</span>)
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">26</span>
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">27</span>		code_count <span style="color:#ff79c6">=</span> file[ELF64_Coun : ELF64_Coun<span style="color:#ff79c6">+</span><span style="color:#bd93f9">7</span>]
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">28</span>		code_value <span style="color:#ff79c6">=</span> file[ELF64_Valu : ELF64_Valu<span style="color:#ff79c6">+</span><span style="color:#bd93f9">4</span>]
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">29</span>
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">30</span>		disa_count <span style="color:#ff79c6">=</span> disasm(code_count)
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">31</span>		disa_value <span style="color:#ff79c6">=</span> disasm(code_value)
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">32</span>
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">33</span>		code_count <span style="color:#ff79c6">=</span> <span style="color:#8be9fd;font-style:italic">int</span>(disa_count<span style="color:#ff79c6">.</span>split(<span style="color:#f1fa8c">&#39;0x&#39;</span>)[<span style="color:#ff79c6">-</span><span style="color:#bd93f9">1</span>], <span style="color:#bd93f9">16</span>)
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">34</span>		code_value <span style="color:#ff79c6">=</span> <span style="color:#8be9fd;font-style:italic">chr</span>(<span style="color:#8be9fd;font-style:italic">int</span>(disa_value<span style="color:#ff79c6">.</span>split(<span style="color:#f1fa8c">&#39;0x&#39;</span>)[<span style="color:#ff79c6">-</span><span style="color:#bd93f9">1</span>], <span style="color:#bd93f9">16</span>))
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">35</span>
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">36</span>		<span style="color:#6272a4">#value = u64(file[ELF64_Addr : ELF64_Addr+8])</span>
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">37</span>		value <span style="color:#ff79c6">=</span> file[ELF64_Addr : ELF64_Addr<span style="color:#ff79c6">+</span><span style="color:#bd93f9">8</span>]
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">38</span>		value_n <span style="color:#ff79c6">=</span> u64(value)
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">39</span>
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">40</span>		flag <span style="color:#ff79c6">=</span> code_value <span style="color:#ff79c6">*</span> code_count <span style="color:#ff79c6">+</span> value
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">41</span>
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">42</span>	<span style="color:#ff79c6">elif</span>(Format <span style="color:#ff79c6">==</span> <span style="color:#bd93f9">1</span>):
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">43</span>
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">44</span>		context<span style="color:#ff79c6">.</span>update(arch<span style="color:#ff79c6">=</span><span style="color:#f1fa8c">&#39;i386&#39;</span>, os<span style="color:#ff79c6">=</span><span style="color:#f1fa8c">&#39;linux&#39;</span>)
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">45</span>
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">46</span>		code_count <span style="color:#ff79c6">=</span> file[ELF32_Coun : ELF32_Coun<span style="color:#ff79c6">+</span><span style="color:#bd93f9">7</span>]
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">47</span>		code_value <span style="color:#ff79c6">=</span> file[ELF32_Valu : ELF32_Valu<span style="color:#ff79c6">+</span><span style="color:#bd93f9">4</span>]
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">48</span>
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">49</span>		disa_count <span style="color:#ff79c6">=</span> disasm(code_count)
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">50</span>		disa_value <span style="color:#ff79c6">=</span> disasm(code_value)
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">51</span>
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">52</span>		code_count <span style="color:#ff79c6">=</span> <span style="color:#8be9fd;font-style:italic">int</span>(disa_count<span style="color:#ff79c6">.</span>split(<span style="color:#f1fa8c">&#39;0x&#39;</span>)[<span style="color:#ff79c6">-</span><span style="color:#bd93f9">1</span>], <span style="color:#bd93f9">16</span>)
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">53</span>		code_value <span style="color:#ff79c6">=</span> <span style="color:#8be9fd;font-style:italic">chr</span>(<span style="color:#8be9fd;font-style:italic">int</span>(disa_value<span style="color:#ff79c6">.</span>split(<span style="color:#f1fa8c">&#39;0x&#39;</span>)[<span style="color:#ff79c6">-</span><span style="color:#bd93f9">1</span>], <span style="color:#bd93f9">16</span>))
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">54</span>
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">55</span>		<span style="color:#6272a4">#value = u32(file[ELF32_Addr:ELF32_Addr+4])</span>
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">56</span>		value <span style="color:#ff79c6">=</span> file[ELF32_Addr:ELF32_Addr<span style="color:#ff79c6">+</span><span style="color:#bd93f9">4</span>]
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">57</span>		value_n <span style="color:#ff79c6">=</span> u32(value)
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">58</span>		flag <span style="color:#ff79c6">=</span> code_value <span style="color:#ff79c6">*</span> code_count <span style="color:#ff79c6">+</span> value
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">59</span>	
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">60</span>	<span style="color:#6272a4">#print &#34;[!] file : &#34; + filename</span>
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">61</span>	<span style="color:#6272a4">#print &#34;[!] count: &#34; + hex(code_count)</span>
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">62</span>	<span style="color:#6272a4">#print &#34;[!] value: &#34; + code_value</span>
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">63</span>	<span style="color:#6272a4">#print &#34;[!] numbe: &#34; + hex(value_n)</span>
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">64</span>
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">65</span>	<span style="color:#ff79c6">return</span> flag
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">66</span>
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">67</span>
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">68</span><span style="color:#ff79c6">def</span> <span style="color:#50fa7b">main</span>():
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">69</span>
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">70</span>
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">71</span>	dump <span style="color:#ff79c6">=</span> <span style="color:#f1fa8c">&#34;&#34;</span>
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">72</span>	i <span style="color:#ff79c6">=</span> <span style="color:#bd93f9">0</span>
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">73</span>	p <span style="color:#ff79c6">=</span> remote(<span style="color:#f1fa8c">&#34;re.ctf.nullcon.net&#34;</span>, <span style="color:#bd93f9">1234</span>)
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">74</span>	a <span style="color:#ff79c6">=</span> <span style="color:#f1fa8c">&#34;&#34;</span>
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">75</span>	temp <span style="color:#ff79c6">=</span> <span style="color:#f1fa8c">&#34;&#34;</span>
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">76</span>	<span style="color:#ff79c6">while</span>(<span style="color:#f1fa8c">&#39;hackim&#39;</span> <span style="color:#ff79c6">not</span> <span style="color:#ff79c6">in</span> dump):
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">77</span>
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">78</span>		<span style="color:#6272a4"># i noticed that only 10 files were asked</span>
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">79</span>		<span style="color:#ff79c6">if</span>(i<span style="color:#ff79c6">==</span><span style="color:#bd93f9">10</span>):
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">80</span>			<span style="color:#8be9fd;font-style:italic">print</span> <span style="color:#f1fa8c">&#34;Flag: &#34;</span> <span style="color:#ff79c6">+</span> p<span style="color:#ff79c6">.</span>recvline()
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">81</span>			p<span style="color:#ff79c6">.</span>close()
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">82</span>			exit()
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">83</span>		file <span style="color:#ff79c6">=</span> p<span style="color:#ff79c6">.</span>recvline()<span style="color:#ff79c6">.</span>strip()
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">84</span>
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">85</span>		a <span style="color:#ff79c6">=</span> p<span style="color:#ff79c6">.</span>recvuntil(<span style="color:#f1fa8c">&#34;&gt; &#34;</span>)
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">86</span>		solver <span style="color:#ff79c6">=</span> solve(file)
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">87</span>		<span style="color:#6272a4"># .encode(&#39;base64&#39;) doesnt work with bytes </span>
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">88</span>		p<span style="color:#ff79c6">.</span>sendline(base64<span style="color:#ff79c6">.</span>b64encode(solver))
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">89</span>		<span style="color:#6272a4">#print str(solver).encode(&#39;base64&#39;)</span>
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">90</span>		temp <span style="color:#ff79c6">=</span> p<span style="color:#ff79c6">.</span>recvline()
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">91</span>		<span style="color:#ff79c6">if</span>(<span style="color:#f1fa8c">&#34;Well done&#34;</span> <span style="color:#ff79c6">in</span> temp):
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">92</span>			<span style="color:#8be9fd;font-style:italic">print</span> <span style="color:#f1fa8c">&#34;[0x</span><span style="color:#f1fa8c">%.4x</span><span style="color:#f1fa8c">]</span><span style="color:#f1fa8c">\t</span><span style="color:#f1fa8c">&#34;</span> <span style="color:#ff79c6">%</span> i<span style="color:#ff79c6">+</span> file <span style="color:#ff79c6">+</span> <span style="color:#f1fa8c">&#39;</span><span style="color:#f1fa8c">\t</span><span style="color:#f1fa8c">: Well Done&#39;</span>
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">93</span>		<span style="color:#ff79c6">else</span>:
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">94</span>			<span style="color:#8be9fd;font-style:italic">print</span> <span style="color:#f1fa8c">&#34;[+] Failed:</span><span style="color:#f1fa8c">\t</span><span style="color:#f1fa8c">&#34;</span> <span style="color:#ff79c6">+</span> file <span style="color:#ff79c6">+</span> <span style="color:#f1fa8c">&#34;</span><span style="color:#f1fa8c">\t</span><span style="color:#f1fa8c">dumping recieved data&#34;</span>
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">95</span>			exit()
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">96</span>		i <span style="color:#ff79c6">+=</span> <span style="color:#bd93f9">1</span>
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">97</span>
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">98</span><span style="color:#ff79c6">if</span> __name__ <span style="color:#ff79c6">==</span> <span style="color:#f1fa8c">&#34;__main__&#34;</span>:
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">99</span>	main()
-</code></pre></div><p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="ln"> 1</span><span class="cl"><span class="kn">from</span> <span class="nn">pwn</span> <span class="kn">import</span> <span class="o">*</span>
+</span></span><span class="line"><span class="ln"> 2</span><span class="cl"><span class="kn">import</span> <span class="nn">base64</span>
+</span></span><span class="line"><span class="ln"> 3</span><span class="cl">
+</span></span><span class="line"><span class="ln"> 4</span><span class="cl">
+</span></span><span class="line"><span class="ln"> 5</span><span class="cl"><span class="n">context</span><span class="o">.</span><span class="n">log_level</span> <span class="o">=</span> <span class="s2">&#34;critical&#34;</span>
+</span></span><span class="line"><span class="ln"> 6</span><span class="cl">
+</span></span><span class="line"><span class="ln"> 7</span><span class="cl"><span class="k">def</span> <span class="nf">solve</span><span class="p">(</span><span class="n">filename</span><span class="p">):</span>
+</span></span><span class="line"><span class="ln"> 8</span><span class="cl">
+</span></span><span class="line"><span class="ln"> 9</span><span class="cl">	<span class="n">file</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="s2">&#34;rb&#34;</span><span class="p">)</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+</span></span><span class="line"><span class="ln">10</span><span class="cl">	
+</span></span><span class="line"><span class="ln">11</span><span class="cl">	<span class="n">ELF64_Coun</span> <span class="o">=</span> <span class="mh">0x816</span>
+</span></span><span class="line"><span class="ln">12</span><span class="cl">	<span class="n">ELF64_Valu</span> <span class="o">=</span> <span class="mh">0x81d</span>
+</span></span><span class="line"><span class="ln">13</span><span class="cl">
+</span></span><span class="line"><span class="ln">14</span><span class="cl">	<span class="n">ELF32_Coun</span> <span class="o">=</span> <span class="mh">0x65e</span>
+</span></span><span class="line"><span class="ln">15</span><span class="cl">	<span class="n">ELF32_Valu</span> <span class="o">=</span> <span class="mh">0x665</span>
+</span></span><span class="line"><span class="ln">16</span><span class="cl">
+</span></span><span class="line"><span class="ln">17</span><span class="cl">
+</span></span><span class="line"><span class="ln">18</span><span class="cl">	<span class="n">ELF64_Addr</span> <span class="o">=</span> <span class="mh">0x1010</span>
+</span></span><span class="line"><span class="ln">19</span><span class="cl">	<span class="n">ELF32_Addr</span> <span class="o">=</span> <span class="mh">0x1008</span>
+</span></span><span class="line"><span class="ln">20</span><span class="cl">
+</span></span><span class="line"><span class="ln">21</span><span class="cl">	
+</span></span><span class="line"><span class="ln">22</span><span class="cl">	<span class="n">Format</span> <span class="o">=</span> <span class="nb">ord</span><span class="p">(</span><span class="n">file</span><span class="p">[</span><span class="mh">0x04</span><span class="p">])</span>
+</span></span><span class="line"><span class="ln">23</span><span class="cl">	<span class="k">if</span> <span class="p">(</span><span class="n">Format</span> <span class="o">==</span> <span class="mi">2</span><span class="p">):</span>
+</span></span><span class="line"><span class="ln">24</span><span class="cl">
+</span></span><span class="line"><span class="ln">25</span><span class="cl">		<span class="n">context</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">arch</span><span class="o">=</span><span class="s1">&#39;amd64&#39;</span><span class="p">,</span> <span class="n">os</span><span class="o">=</span><span class="s1">&#39;linux&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="ln">26</span><span class="cl">
+</span></span><span class="line"><span class="ln">27</span><span class="cl">		<span class="n">code_count</span> <span class="o">=</span> <span class="n">file</span><span class="p">[</span><span class="n">ELF64_Coun</span> <span class="p">:</span> <span class="n">ELF64_Coun</span><span class="o">+</span><span class="mi">7</span><span class="p">]</span>
+</span></span><span class="line"><span class="ln">28</span><span class="cl">		<span class="n">code_value</span> <span class="o">=</span> <span class="n">file</span><span class="p">[</span><span class="n">ELF64_Valu</span> <span class="p">:</span> <span class="n">ELF64_Valu</span><span class="o">+</span><span class="mi">4</span><span class="p">]</span>
+</span></span><span class="line"><span class="ln">29</span><span class="cl">
+</span></span><span class="line"><span class="ln">30</span><span class="cl">		<span class="n">disa_count</span> <span class="o">=</span> <span class="n">disasm</span><span class="p">(</span><span class="n">code_count</span><span class="p">)</span>
+</span></span><span class="line"><span class="ln">31</span><span class="cl">		<span class="n">disa_value</span> <span class="o">=</span> <span class="n">disasm</span><span class="p">(</span><span class="n">code_value</span><span class="p">)</span>
+</span></span><span class="line"><span class="ln">32</span><span class="cl">
+</span></span><span class="line"><span class="ln">33</span><span class="cl">		<span class="n">code_count</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">disa_count</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;0x&#39;</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="mi">16</span><span class="p">)</span>
+</span></span><span class="line"><span class="ln">34</span><span class="cl">		<span class="n">code_value</span> <span class="o">=</span> <span class="nb">chr</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">disa_value</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;0x&#39;</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="mi">16</span><span class="p">))</span>
+</span></span><span class="line"><span class="ln">35</span><span class="cl">
+</span></span><span class="line"><span class="ln">36</span><span class="cl">		<span class="c1">#value = u64(file[ELF64_Addr : ELF64_Addr+8])</span>
+</span></span><span class="line"><span class="ln">37</span><span class="cl">		<span class="n">value</span> <span class="o">=</span> <span class="n">file</span><span class="p">[</span><span class="n">ELF64_Addr</span> <span class="p">:</span> <span class="n">ELF64_Addr</span><span class="o">+</span><span class="mi">8</span><span class="p">]</span>
+</span></span><span class="line"><span class="ln">38</span><span class="cl">		<span class="n">value_n</span> <span class="o">=</span> <span class="n">u64</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+</span></span><span class="line"><span class="ln">39</span><span class="cl">
+</span></span><span class="line"><span class="ln">40</span><span class="cl">		<span class="n">flag</span> <span class="o">=</span> <span class="n">code_value</span> <span class="o">*</span> <span class="n">code_count</span> <span class="o">+</span> <span class="n">value</span>
+</span></span><span class="line"><span class="ln">41</span><span class="cl">
+</span></span><span class="line"><span class="ln">42</span><span class="cl">	<span class="k">elif</span><span class="p">(</span><span class="n">Format</span> <span class="o">==</span> <span class="mi">1</span><span class="p">):</span>
+</span></span><span class="line"><span class="ln">43</span><span class="cl">
+</span></span><span class="line"><span class="ln">44</span><span class="cl">		<span class="n">context</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">arch</span><span class="o">=</span><span class="s1">&#39;i386&#39;</span><span class="p">,</span> <span class="n">os</span><span class="o">=</span><span class="s1">&#39;linux&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="ln">45</span><span class="cl">
+</span></span><span class="line"><span class="ln">46</span><span class="cl">		<span class="n">code_count</span> <span class="o">=</span> <span class="n">file</span><span class="p">[</span><span class="n">ELF32_Coun</span> <span class="p">:</span> <span class="n">ELF32_Coun</span><span class="o">+</span><span class="mi">7</span><span class="p">]</span>
+</span></span><span class="line"><span class="ln">47</span><span class="cl">		<span class="n">code_value</span> <span class="o">=</span> <span class="n">file</span><span class="p">[</span><span class="n">ELF32_Valu</span> <span class="p">:</span> <span class="n">ELF32_Valu</span><span class="o">+</span><span class="mi">4</span><span class="p">]</span>
+</span></span><span class="line"><span class="ln">48</span><span class="cl">
+</span></span><span class="line"><span class="ln">49</span><span class="cl">		<span class="n">disa_count</span> <span class="o">=</span> <span class="n">disasm</span><span class="p">(</span><span class="n">code_count</span><span class="p">)</span>
+</span></span><span class="line"><span class="ln">50</span><span class="cl">		<span class="n">disa_value</span> <span class="o">=</span> <span class="n">disasm</span><span class="p">(</span><span class="n">code_value</span><span class="p">)</span>
+</span></span><span class="line"><span class="ln">51</span><span class="cl">
+</span></span><span class="line"><span class="ln">52</span><span class="cl">		<span class="n">code_count</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">disa_count</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;0x&#39;</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="mi">16</span><span class="p">)</span>
+</span></span><span class="line"><span class="ln">53</span><span class="cl">		<span class="n">code_value</span> <span class="o">=</span> <span class="nb">chr</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">disa_value</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;0x&#39;</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="mi">16</span><span class="p">))</span>
+</span></span><span class="line"><span class="ln">54</span><span class="cl">
+</span></span><span class="line"><span class="ln">55</span><span class="cl">		<span class="c1">#value = u32(file[ELF32_Addr:ELF32_Addr+4])</span>
+</span></span><span class="line"><span class="ln">56</span><span class="cl">		<span class="n">value</span> <span class="o">=</span> <span class="n">file</span><span class="p">[</span><span class="n">ELF32_Addr</span><span class="p">:</span><span class="n">ELF32_Addr</span><span class="o">+</span><span class="mi">4</span><span class="p">]</span>
+</span></span><span class="line"><span class="ln">57</span><span class="cl">		<span class="n">value_n</span> <span class="o">=</span> <span class="n">u32</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+</span></span><span class="line"><span class="ln">58</span><span class="cl">		<span class="n">flag</span> <span class="o">=</span> <span class="n">code_value</span> <span class="o">*</span> <span class="n">code_count</span> <span class="o">+</span> <span class="n">value</span>
+</span></span><span class="line"><span class="ln">59</span><span class="cl">	
+</span></span><span class="line"><span class="ln">60</span><span class="cl">	<span class="c1">#print &#34;[!] file : &#34; + filename</span>
+</span></span><span class="line"><span class="ln">61</span><span class="cl">	<span class="c1">#print &#34;[!] count: &#34; + hex(code_count)</span>
+</span></span><span class="line"><span class="ln">62</span><span class="cl">	<span class="c1">#print &#34;[!] value: &#34; + code_value</span>
+</span></span><span class="line"><span class="ln">63</span><span class="cl">	<span class="c1">#print &#34;[!] numbe: &#34; + hex(value_n)</span>
+</span></span><span class="line"><span class="ln">64</span><span class="cl">
+</span></span><span class="line"><span class="ln">65</span><span class="cl">	<span class="k">return</span> <span class="n">flag</span>
+</span></span><span class="line"><span class="ln">66</span><span class="cl">
+</span></span><span class="line"><span class="ln">67</span><span class="cl">
+</span></span><span class="line"><span class="ln">68</span><span class="cl"><span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+</span></span><span class="line"><span class="ln">69</span><span class="cl">
+</span></span><span class="line"><span class="ln">70</span><span class="cl">
+</span></span><span class="line"><span class="ln">71</span><span class="cl">	<span class="n">dump</span> <span class="o">=</span> <span class="s2">&#34;&#34;</span>
+</span></span><span class="line"><span class="ln">72</span><span class="cl">	<span class="n">i</span> <span class="o">=</span> <span class="mi">0</span>
+</span></span><span class="line"><span class="ln">73</span><span class="cl">	<span class="n">p</span> <span class="o">=</span> <span class="n">remote</span><span class="p">(</span><span class="s2">&#34;re.ctf.nullcon.net&#34;</span><span class="p">,</span> <span class="mi">1234</span><span class="p">)</span>
+</span></span><span class="line"><span class="ln">74</span><span class="cl">	<span class="n">a</span> <span class="o">=</span> <span class="s2">&#34;&#34;</span>
+</span></span><span class="line"><span class="ln">75</span><span class="cl">	<span class="n">temp</span> <span class="o">=</span> <span class="s2">&#34;&#34;</span>
+</span></span><span class="line"><span class="ln">76</span><span class="cl">	<span class="k">while</span><span class="p">(</span><span class="s1">&#39;hackim&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">dump</span><span class="p">):</span>
+</span></span><span class="line"><span class="ln">77</span><span class="cl">
+</span></span><span class="line"><span class="ln">78</span><span class="cl">		<span class="c1"># i noticed that only 10 files were asked</span>
+</span></span><span class="line"><span class="ln">79</span><span class="cl">		<span class="k">if</span><span class="p">(</span><span class="n">i</span><span class="o">==</span><span class="mi">10</span><span class="p">):</span>
+</span></span><span class="line"><span class="ln">80</span><span class="cl">			<span class="nb">print</span> <span class="s2">&#34;Flag: &#34;</span> <span class="o">+</span> <span class="n">p</span><span class="o">.</span><span class="n">recvline</span><span class="p">()</span>
+</span></span><span class="line"><span class="ln">81</span><span class="cl">			<span class="n">p</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</span></span><span class="line"><span class="ln">82</span><span class="cl">			<span class="n">exit</span><span class="p">()</span>
+</span></span><span class="line"><span class="ln">83</span><span class="cl">		<span class="n">file</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">recvline</span><span class="p">()</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+</span></span><span class="line"><span class="ln">84</span><span class="cl">
+</span></span><span class="line"><span class="ln">85</span><span class="cl">		<span class="n">a</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">recvuntil</span><span class="p">(</span><span class="s2">&#34;&gt; &#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="ln">86</span><span class="cl">		<span class="n">solver</span> <span class="o">=</span> <span class="n">solve</span><span class="p">(</span><span class="n">file</span><span class="p">)</span>
+</span></span><span class="line"><span class="ln">87</span><span class="cl">		<span class="c1"># .encode(&#39;base64&#39;) doesnt work with bytes </span>
+</span></span><span class="line"><span class="ln">88</span><span class="cl">		<span class="n">p</span><span class="o">.</span><span class="n">sendline</span><span class="p">(</span><span class="n">base64</span><span class="o">.</span><span class="n">b64encode</span><span class="p">(</span><span class="n">solver</span><span class="p">))</span>
+</span></span><span class="line"><span class="ln">89</span><span class="cl">		<span class="c1">#print str(solver).encode(&#39;base64&#39;)</span>
+</span></span><span class="line"><span class="ln">90</span><span class="cl">		<span class="n">temp</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">recvline</span><span class="p">()</span>
+</span></span><span class="line"><span class="ln">91</span><span class="cl">		<span class="k">if</span><span class="p">(</span><span class="s2">&#34;Well done&#34;</span> <span class="ow">in</span> <span class="n">temp</span><span class="p">):</span>
+</span></span><span class="line"><span class="ln">92</span><span class="cl">			<span class="nb">print</span> <span class="s2">&#34;[0x</span><span class="si">%.4x</span><span class="s2">]</span><span class="se">\t</span><span class="s2">&#34;</span> <span class="o">%</span> <span class="n">i</span><span class="o">+</span> <span class="n">file</span> <span class="o">+</span> <span class="s1">&#39;</span><span class="se">\t</span><span class="s1">: Well Done&#39;</span>
+</span></span><span class="line"><span class="ln">93</span><span class="cl">		<span class="k">else</span><span class="p">:</span>
+</span></span><span class="line"><span class="ln">94</span><span class="cl">			<span class="nb">print</span> <span class="s2">&#34;[+] Failed:</span><span class="se">\t</span><span class="s2">&#34;</span> <span class="o">+</span> <span class="n">file</span> <span class="o">+</span> <span class="s2">&#34;</span><span class="se">\t</span><span class="s2">dumping recieved data&#34;</span>
+</span></span><span class="line"><span class="ln">95</span><span class="cl">			<span class="n">exit</span><span class="p">()</span>
+</span></span><span class="line"><span class="ln">96</span><span class="cl">		<span class="n">i</span> <span class="o">+=</span> <span class="mi">1</span>
+</span></span><span class="line"><span class="ln">97</span><span class="cl">
+</span></span><span class="line"><span class="ln">98</span><span class="cl"><span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&#34;__main__&#34;</span><span class="p">:</span>
+</span></span><span class="line"><span class="ln">99</span><span class="cl">	<span class="n">main</span><span class="p">()</span>
+</span></span></code></pre></div><p>
 
 <br>
 
@@ -463,158 +484,155 @@ which is</p>
 
 <script id="asciicast-hWkZOX1XIXtKfZHT3NgaKXzpn" src="https://asciinema.org/a/hWkZOX1XIXtKfZHT3NgaKXzpn.js" async></script>
 </p>
-        </div>
 
+    </div>
+    <footer class="document-footer">
+      
+    </footer>
+  </article>
 
+  
+    <nav class="document-nav" aria-label="Article navigation">
+      
+        <a href="/posts/obfuscation-techniques/">prev: Obfuscation_Techniques</a>
+      
+      
+        <a href="/posts/plaintext_attack_on_zip_legacy_crypto/">next: Plaintext Attack on Zip</a>
+      
+    </nav>
+  
 
-        <footer class="post-footer">
-                
-                
-                
-        
-                
-                
-                
-        </footer>
-        
-<table cellspacing="15" style="width:100%; border: none;">
-    <tr>
-        <td style="text-align: center; border: none; padding: 0px;">
-        </td>
-        <td style="text-align: center; border: none; padding: 0px;">
-        </td>
-    </tr>
-</table>
-
-        
-    </article>
-
-    
-
-</main>
-
-
-        <div class="sidebar1 widgets columns-1">
-
-    <aside>
-    
-</aside>
-    <aside class="widget widget_categories">
-        <h2>Categories</h2>
-        <ul class="widget__list"><li class="cat-item cat-item-2">
-                <a href="https://x3ero0.github.io/categories/crackmes/">Crackmes (7)</a>
-            </li><li class="cat-item cat-item-2">
-                <a href="https://x3ero0.github.io/categories/ctf/">CTF (2)</a>
-            </li><li class="cat-item cat-item-2">
-                <a href="https://x3ero0.github.io/categories/pwn/">Pwn (3)</a>
-            </li><li class="cat-item cat-item-2">
-                <a href="https://x3ero0.github.io/categories/rev/">Rev (5)</a>
-            </li>
-        </ul>
-    </aside>
-
-    <aside class="widget widget_recent_entries">
-        <h2>Recent Posts</h2>
-        <ul>
-            
-                
-                    <li>
-                        <a href="https://x3ero0.github.io/posts/orxw_balsn_ctf_2021_pwn/">or⊕w writeup from Balsn CTF 2021</a>
-                    </li>
-                
-            
-                
-                    <li>
-                        <a href="https://x3ero0.github.io/posts/easy_kernel_exploitation/">Easy_Kernel Writeup from K3RN3LCTF 2021</a>
-                    </li>
-                
-            
-                
-                    <li>
-                        <a href="https://x3ero0.github.io/posts/hyperion/">Hyperion Writeup</a>
-                    </li>
-                
-            
-                
-                    <li>
-                        <a href="https://x3ero0.github.io/posts/float-writeup/">Float Writeup</a>
-                    </li>
-                
-            
-                
-            
-                
-                    <li>
-                        <a href="https://x3ero0.github.io/posts/hell86_from_ttlhacker/">Hell86 - ttlhacker</a>
-                    </li>
-                
-            
-                
-                    <li>
-                        <a href="https://x3ero0.github.io/posts/reversing_a_malware_in_disguise/">Reversing a malware in disguise</a>
-                    </li>
-                
-            
-                
-                    <li>
-                        <a href="https://x3ero0.github.io/posts/watevr_repyc/">Watevr_repyc</a>
-                    </li>
-                
-            
-                
-            
-                
-                    <li>
-                        <a href="https://x3ero0.github.io/posts/hsctf-license/">HSCTF License</a>
-                    </li>
-                
-            
-        </ul>
-    </aside>
-
-    <aside class="widget widget_recent_entries">
-        <h2>Recent Crackmes</h2>
-        <ul>
-            
-                
-            
-                
-            
-                
-            
-                
-            
-                
-                    <li>
-                        <a href="https://x3ero0.github.io/crackmes/fl04t/">[0x007] fl04t</a>
-                    </li>
-                
-            
-                
-            
-                
-            
-                
-            
-                
-            
-                
-            
-        </ul>
-    </aside>
-</div>
-
-        </div>
-        </div>
-<footer role="contentinfo" class="document-footer contentinfo widgets columns-1">
-
-    <aside class="widget widget_text">
-        <div class="textwidget">
-            <p>© x3ero0&#39;s blog</p>
-        </div>
-    </aside>
+    </main>
+    <footer class="site-footer">
+  <div class="footer-panel">
+    <p>Copying is an act of love, feel free to copy.</p>
+  </div>
 </footer>
-</div>
 
-    </body>
+  </div>
+  
+
+
+
+
+
+  
+  
+  
+  
+
+
+<aside class="theme-sidebar" aria-label="Theme controls">
+  <div class="sidebar-stack">
+    <div class="theme-window">
+      <div class="window-titlebar" aria-hidden="true">
+        <span class="window-title">&nbsp;</span>
+      </div>
+      <div class="window-content theme-window-content">
+        <button class="theme-toggle" type="button" data-theme-toggle aria-pressed="false">
+          <span class="theme-toggle-track" aria-hidden="true">
+            <span class="theme-toggle-thumb"></span>
+          </span>
+          <span class="theme-toggle-text" data-theme-label>light</span>
+        </button>
+      </div>
+    </div>
+
+    <section class="guestbook-window" aria-label="Guestbook">
+      <div class="window-titlebar">
+        <span class="window-title">guestbook</span>
+      </div>
+      <div class="window-content guestbook-window-content">
+        <div class="guestbook-feed" data-guestbook-feed aria-live="polite"></div>
+        <form
+          class="guestbook-form"
+          data-guestbook-form
+          data-guestbook-remote-enabled="true"
+          method="post"
+          target="guestbook-hidden-transport"
+          action="https://docs.google.com/forms/d/e/1FAIpQLSctVbY2_aoazFFBBdS3CFGsKIb0JmXJTk1MbITiuh6rfHOLzg/formResponse"
+        >
+          <div class="guestbook-row">
+            <input
+              class="guestbook-input"
+              type="text"
+              maxlength="24"
+              placeholder="nickname"
+              aria-label="Nickname"
+              autocomplete="nickname"
+              data-guestbook-nickname
+              name="entry.1908159203" id="entry.1908159203"
+            >
+            <div class="guestbook-actions">
+              <button class="window-button" type="submit">send</button>
+            </div>
+          </div>
+          <input
+            class="guestbook-input"
+            type="text"
+            maxlength="240"
+            placeholder="website"
+            aria-label="Website"
+            autocomplete="off"
+            data-guestbook-website
+            name="entry.1928902955" id="entry.1928902955"
+          >
+          <textarea
+            class="guestbook-input guestbook-comment"
+            rows="4"
+            placeholder="comment"
+            aria-label="Comment"
+            autocomplete="off"
+            data-guestbook-comment
+            name="entry.1702949315" id="entry.1702949315"
+            maxlength="240"
+          ></textarea>
+          
+        </form>
+        <iframe
+          name="guestbook-hidden-transport"
+          class="guestbook-transport"
+          title="guestbook submission transport"
+          tabindex="-1"
+          hidden
+        ></iframe>
+      </div>
+    </section>
+  </div>
+
+  <div class="guestbook-dialog" data-guestbook-dialog hidden>
+    <button
+      class="guestbook-dialog-backdrop"
+      type="button"
+      aria-label="Close dialog"
+      data-guestbook-dialog-close
+    ></button>
+    <section class="guestbook-dialog-window" role="dialog" aria-modal="true" aria-labelledby="guestbook-dialog-title">
+      <div class="window-titlebar">
+        <span class="window-title" id="guestbook-dialog-title">guestbook</span>
+        <div class="window-actions">
+          <button
+            class="window-button window-button-icon"
+            type="button"
+            aria-label="Close dialog"
+            data-guestbook-dialog-close
+            data-guestbook-dialog-close-button
+          >X</button>
+        </div>
+      </div>
+      <div class="window-content guestbook-dialog-content">
+        <p>Your comment is under review. Check back later.</p>
+        <div class="guestbook-dialog-actions">
+          <button
+            class="window-button"
+            type="button"
+            data-guestbook-dialog-close
+          >OK</button>
+        </div>
+      </div>
+    </section>
+  </div>
+</aside>
+
+</body>
 </html>

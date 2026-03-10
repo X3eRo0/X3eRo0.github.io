@@ -1,292 +1,333 @@
 <!DOCTYPE html>
-<html>
-    <head>
-	<meta name="generator" content="Hugo 0.92.2" />
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1">
-    <title> - x3ero0&#39;s blog</title>
-    <link rel="shortcut icon" href="/img/favicon.ico">
-    <style type="text/css">
-        img.wp-smiley,
-        img.emoji {
-            display: inline !important;
-            border: none !important;
-            box-shadow: none !important;
-            height: 1em !important;
-            width: 1em !important;
-            margin: 0 .07em !important;
-            vertical-align: -0.1em !important;
-            background: none !important;
-            padding: 0 !important;
-        }
-    </style>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
-    <link rel='stylesheet' href='/css/custom.css' type='text/css' media='all' />
-    <link rel='stylesheet' href='/css/style.css' type='text/css' media='all' />
-    <link rel='stylesheet' href='/css/syntax.css' type='text/css' media='all' />
-    <link rel='stylesheet' href='/css/general.css' type='text/css' media='all' />
-    <link rel='stylesheet' href='/css/toc.css' type='text/css' media='all' />
-    <link rel='stylesheet' href='/css/image.css' type='text/css' media='all' />
+<html lang="en-us" dir="ltr">
+<head>
+	<meta name="generator" content="Hugo 0.157.0">
+  
+
+
+
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>x3ero0&#39;s blog</title>
+<meta name="description" content="x3ero0&#39;s blog contains reverse engineering notes, crackmes, and CTF writeups.">
+<meta name="theme-color" content="#f7f7f2">
+<script>
+  (() => {
+    const storageKey = "reflector-theme";
+    const root = document.documentElement;
+    let theme = "light";
+
+    try {
+      const stored = localStorage.getItem(storageKey);
+      if (stored === "light" || stored === "dark") {
+        theme = stored;
+      } else if (window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches) {
+        theme = "dark";
+      }
+    } catch (error) {
+      if (window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches) {
+        theme = "dark";
+      }
+    }
+
+    root.dataset.theme = theme;
+    const meta = document.querySelector('meta[name="theme-color"]');
+    if (meta) {
+      meta.setAttribute("content", theme === "dark" ? "#111315" : "#f7f7f2");
+    }
+  })();
+</script>
+<link rel="icon" href="/img/favicon.ico">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous" referrerpolicy="no-referrer">
+
+  <link rel="stylesheet" href="/css/chroma-light.css">
+  <link rel="stylesheet" href="/css/chroma-dark.css">
+      <link rel="stylesheet" href="/css/main.min.8922a1a49c9c90da672308fecef192f6cb5c5f0b6ca01ce4b6d648fa1a3e8b11.css" integrity="sha256-iSKhpJyckNpnIwj&#43;zvGS9stcXwtsoBzkttZI&#43;ho&#43;ixE=" crossorigin="anonymous">
+
+
+        <script src="/js/main.9a5dcf5db86a42efab8f8c1173e839a88165d67872dafbc375cc2a5c43546907.js" integrity="sha256-ml3PXbhqQu&#43;rj4wRc&#43;g5qIFl1nhy2vvDdcwqXENUaQc=" crossorigin="anonymous" defer></script>
+
+
 </head>
+<body class="page page-home section-home">
+  <div class="page-frame">
+    <a class="skip-link" href="#main-content">Skip to content</a>
+    <header class="site-header">
+  <div class="header-panel">
+    <a class="brand" href="/">x3ero0&#39;s blog</a>
+    <p class="header-summary">reverse engineering, crackmes, and ctf writeups</p>
+    <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav" data-nav-toggle>[menu]</button>
+    <nav id="site-nav" class="site-nav" data-nav aria-label="Primary">
+      
+  <ul class="nav-list">
+      <li>
+        <a class="nav-link is-active" href="/">home</a>
+      </li>
+      <li>
+        <a class="nav-link" href="/posts/">posts</a>
+      </li>
+      <li>
+        <a class="nav-link" href="/crackmes/">crackmes</a>
+      </li>
+  </ul>
 
-    <body class="two-column">
-        <a href="#content">Skip to content</a>
-<div class="wrapper">
-    <header role="banner" class="banner widgets columns-1">
-        <a href="/" rel="home">
-            <h1 class="site">x3ero0&#39;s blog</h1>
-            <p></p>
-        </a>
-        <nav role="navigation" aria-label="Primary Navigation">
+    </nav>
+  </div>
+</header>
 
-            <ul class="menu">
-                <li class="menu-item  current-menu-item current_page_item "><a class="menu__link" href="/">HOME</a></li>
-                <li class="menu-item "><a class="menu__link" href="/posts/">POSTS</a></li>
-                <li class="menu-item "><a class="menu__link" href="/crackmes/">CRACKMES</a></li>
-            </ul>
-            <select onChange="location.href=value;">
-                <option value="/" class="menu-item menu-item-type-custom menu-item-object-custom"  selected="selected" >HOME</option>
-                <option value="/posts/" class="menu-item menu-item-type-custom menu-item-object-custom" >POSTS</option>
-                <option value="/crackmes/" class="menu-item menu-item-type-custom menu-item-object-custom" >CRACKMES</option>
-            </select>
-        </nav>
+    <main id="main-content" class="site-main">
+      
+  
+  
+  <section class="document">
+    <header class="document-header">
+      <h1>x3ero0&#39;s blog</h1>
+      
+        <p class="lede">Reverse engineering notes, crackmes, and CTF writeups in a mostly text-only shell.</p>
+      
     </header>
+  </section>
 
-    <br>
-    <div style="width: 100%; max-height: 100px; text-align: center;">
-       
-</div>
-
-    <div class="breadcrumbs">
+  <section class="document">
+    <h2>posts</h2>
+    <div class="archive-stack">
+      
         
+<article class="page-card">
+  <header class="page-card-header">
+    <p class="page-card-date">
+      <time datetime="2020-04-10T20:20:07Z">2020-04-10</time>
+      <span aria-hidden="true"> - </span>
+      <span>4 min</span>
+    </p>
+    <a class="page-card-link" href="/posts/watevr_repyc/">Watevr_repyc</a>
+  </header>
+</article>
+
+      
+        
+<article class="page-card">
+  <header class="page-card-header">
+    <p class="page-card-date">
+      <time datetime="2020-04-10T20:06:26Z">2020-04-10</time>
+      <span aria-hidden="true"> - </span>
+      <span>2 min</span>
+    </p>
+    <a class="page-card-link" href="/posts/hsctf-license/">HSCTF License</a>
+  </header>
+</article>
+
+      
+        
+<article class="page-card">
+  <header class="page-card-header">
+    <p class="page-card-date">
+      <time datetime="2020-03-27T09:54:19Z">2020-03-27</time>
+      <span aria-hidden="true"> - </span>
+      <span>3 min</span>
+    </p>
+    <a class="page-card-link" href="/posts/plaintext_attack_on_zip_legacy_crypto/">Plaintext Attack on Zip</a>
+  </header>
+</article>
+
+      
+        
+<article class="page-card">
+  <header class="page-card-header">
+    <p class="page-card-date">
+      <time datetime="2020-02-08T18:04:11Z">2020-02-08</time>
+      <span aria-hidden="true"> - </span>
+      <span>8 min</span>
+    </p>
+    <a class="page-card-link" href="/posts/year3000/">Year3000</a>
+  </header>
+</article>
+
+      
+        
+<article class="page-card">
+  <header class="page-card-header">
+    <p class="page-card-date">
+      <time datetime="2020-02-05T06:34:52Z">2020-02-05</time>
+      <span aria-hidden="true"> - </span>
+      <span>3 min</span>
+    </p>
+    <a class="page-card-link" href="/posts/obfuscation-techniques/">Obfuscation_Techniques</a>
+  </header>
+</article>
+
+      
     </div>
-
-        <div id="content" class="content">
-
-<main aria-role="main">
-    <section class="container text-monospace mt-5">
-    </section>
-  <div class="homepage-content">
     
 
-    
-    <div class="crackmediv">
-        <div class="crackme">
-            <p class="anim">CN/GE</p>
-            <br>
-            <br>
-            <br>
-            <input id="password" class="pswd" type="password" maxlength="36" autocomplete="off">
-            <button onclick="crackme()" class="subm">Enter</button>
-            <script src="/js/crackme.js"></script>
+  </section>
+
+  <section class="document">
+    <div class="crackme-window is-collapsed" data-window-frame data-window-kind="crackme">
+      <div class="window-titlebar">
+        <span class="window-title">interactive crackme</span>
+        <div class="window-actions">
+          <button
+            class="window-button window-button-icon"
+            type="button"
+            aria-expanded="false"
+            aria-label="Expand crackme"
+            data-window-toggle
+          >+</button>
         </div>
-        <script src="/js/anim.js"></script>
-        <script>var stop_anim=false; var textanim = Animate();</script>
+      </div>
+      <div class="window-content crackme-window-content">
+        <div class="crackme-block crackme">
+          <div class="crackme-form">
+            <input id="password" class="pswd" type="password" maxlength="36" autocomplete="off" placeholder="password">
+            <button onclick="crackme()" class="subm" type="button">check</button>
+          </div>
+          <div class="crackme-anim" aria-hidden="true">
+            <p class="anim">READY</p>
+          </div>
+          <p id="crackme-status" class="crackme-status" aria-live="polite"></p>
+        </div>
+      </div>
     </div>
-    <div class="col">
-        
-            <div onclick="location.href='https:\/\/x3ero0.github.io\/posts\/orxw_balsn_ctf_2021_pwn\/'" class="cardleft">
-              <img class="blur" src="/img/orxw/wait.png" style="width:100%;height: 300px;">
-              <div class="card-text">
-                <h2>or⊕w writeup from Balsn CTF 2021</h2>
-                <p></p>
-                <time>Mon, Nov 22, 2021</time>
-              </div>
-            </div>
-        
-        
-            <div onclick="location.href='https:\/\/x3ero0.github.io\/posts\/easy_kernel_exploitation\/'" class="cardright">
-              <img class="blur" src="/img/easy_kernel/cookie2.png" style="width:100%;height: 300px;">
-              <div class="card-text">
-                <h2>Easy_Kernel Writeup from K3RN3LCTF 2021</h2>
-                <p></p>
-                <time>Sun, Nov 14, 2021</time>
-              </div>
-            </div>
-        
+  </section>
+
+  <script src="/js/crackme.js"></script>
+  <script src="/js/anim.js"></script>
+
+    </main>
+    <footer class="site-footer">
+  <div class="footer-panel">
+    <p>Copying is an act of love, feel free to copy.</p>
+  </div>
+</footer>
+
+  </div>
+  
+
+
+
+
+
+  
+  
+  
+  
+
+
+<aside class="theme-sidebar" aria-label="Theme controls">
+  <div class="sidebar-stack">
+    <div class="theme-window">
+      <div class="window-titlebar" aria-hidden="true">
+        <span class="window-title">&nbsp;</span>
+      </div>
+      <div class="window-content theme-window-content">
+        <button class="theme-toggle" type="button" data-theme-toggle aria-pressed="false">
+          <span class="theme-toggle-track" aria-hidden="true">
+            <span class="theme-toggle-thumb"></span>
+          </span>
+          <span class="theme-toggle-text" data-theme-label>light</span>
+        </button>
+      </div>
     </div>
-    <div class="col">
-        
-            <div onclick="location.href='https:\/\/x3ero0.github.io\/posts\/hyperion\/'" class="cardleft">
-              <img class="blur" src="/img/hyperion/hexdump.png" style="width:100%;height: 300px;">
-              <div class="card-text">
-                <h2>Hyperion Writeup</h2>
-                <p></p>
-                <time>Fri, Mar 26, 2021</time>
-              </div>
+
+    <section class="guestbook-window" aria-label="Guestbook">
+      <div class="window-titlebar">
+        <span class="window-title">guestbook</span>
+      </div>
+      <div class="window-content guestbook-window-content">
+        <div class="guestbook-feed" data-guestbook-feed aria-live="polite"></div>
+        <form
+          class="guestbook-form"
+          data-guestbook-form
+          data-guestbook-remote-enabled="true"
+          method="post"
+          target="guestbook-hidden-transport"
+          action="https://docs.google.com/forms/d/e/1FAIpQLSctVbY2_aoazFFBBdS3CFGsKIb0JmXJTk1MbITiuh6rfHOLzg/formResponse"
+        >
+          <div class="guestbook-row">
+            <input
+              class="guestbook-input"
+              type="text"
+              maxlength="24"
+              placeholder="nickname"
+              aria-label="Nickname"
+              autocomplete="nickname"
+              data-guestbook-nickname
+              name="entry.1908159203" id="entry.1908159203"
+            >
+            <div class="guestbook-actions">
+              <button class="window-button" type="submit">send</button>
             </div>
-        
-        
-            <div onclick="location.href='https:\/\/x3ero0.github.io\/posts\/float-writeup\/'" class="cardright">
-              <img class="blur" src="img/fl04t/check_flag_disassembly.png" style="width:100%;height: 300px;">
-              <div class="card-text">
-                <h2>Float Writeup</h2>
-                <p></p>
-                <time>Sun, Jun 7, 2020</time>
-              </div>
-            </div>
-        
-    </div>
-    <div class="col">
-        
-            <div onclick="location.href='https:\/\/x3ero0.github.io\/posts\/hell86_from_ttlhacker\/'" class="cardleft">
-              <img class="blur" src="/img/hell86/sigaltstack.png" style="width:100%;height: 300px;">
-              <div class="card-text">
-                <h2>Hell86 - ttlhacker</h2>
-                <p></p>
-                <time>Mon, May 18, 2020</time>
-              </div>
-            </div>
-        
-        
-            <div onclick="location.href='https:\/\/x3ero0.github.io\/posts\/reversing_a_malware_in_disguise\/'" class="cardright">
-              <img class="blur" src="/img/reversing-a-malware/dump.PNG" style="width:100%;height: 300px;">
-              <div class="card-text">
-                <h2>Reversing a malware in disguise</h2>
-                <p></p>
-                <time>Tue, Apr 14, 2020</time>
-              </div>
-            </div>
-        
-    </div>
-    
-    
+          </div>
+          <input
+            class="guestbook-input"
+            type="text"
+            maxlength="240"
+            placeholder="website"
+            aria-label="Website"
+            autocomplete="off"
+            data-guestbook-website
+            name="entry.1928902955" id="entry.1928902955"
+          >
+          <textarea
+            class="guestbook-input guestbook-comment"
+            rows="4"
+            placeholder="comment"
+            aria-label="Comment"
+            autocomplete="off"
+            data-guestbook-comment
+            name="entry.1702949315" id="entry.1702949315"
+            maxlength="240"
+          ></textarea>
+          
+        </form>
+        <iframe
+          name="guestbook-hidden-transport"
+          class="guestbook-transport"
+          title="guestbook submission transport"
+          tabindex="-1"
+          hidden
+        ></iframe>
+      </div>
+    </section>
   </div>
 
-
-
-<table cellspacing="15" style="width:100%; border: none;">
-    <tr>
-        <td style="text-align: center; border: none; padding: 0px;">
-        </td>
-        <td style="text-align: center; border: none; padding: 0px;">
-        </td>
-    </tr>
-</table>
-
-</main>
-
-        <div class="sidebar1 widgets columns-1">
-
-    <aside>
-    
+  <div class="guestbook-dialog" data-guestbook-dialog hidden>
+    <button
+      class="guestbook-dialog-backdrop"
+      type="button"
+      aria-label="Close dialog"
+      data-guestbook-dialog-close
+    ></button>
+    <section class="guestbook-dialog-window" role="dialog" aria-modal="true" aria-labelledby="guestbook-dialog-title">
+      <div class="window-titlebar">
+        <span class="window-title" id="guestbook-dialog-title">guestbook</span>
+        <div class="window-actions">
+          <button
+            class="window-button window-button-icon"
+            type="button"
+            aria-label="Close dialog"
+            data-guestbook-dialog-close
+            data-guestbook-dialog-close-button
+          >X</button>
+        </div>
+      </div>
+      <div class="window-content guestbook-dialog-content">
+        <p>Your comment is under review. Check back later.</p>
+        <div class="guestbook-dialog-actions">
+          <button
+            class="window-button"
+            type="button"
+            data-guestbook-dialog-close
+          >OK</button>
+        </div>
+      </div>
+    </section>
+  </div>
 </aside>
-    <aside class="widget widget_categories">
-        <h2>Categories</h2>
-        <ul class="widget__list"><li class="cat-item cat-item-2">
-                <a href="https://x3ero0.github.io/categories/crackmes/">Crackmes (7)</a>
-            </li><li class="cat-item cat-item-2">
-                <a href="https://x3ero0.github.io/categories/ctf/">CTF (2)</a>
-            </li><li class="cat-item cat-item-2">
-                <a href="https://x3ero0.github.io/categories/pwn/">Pwn (3)</a>
-            </li><li class="cat-item cat-item-2">
-                <a href="https://x3ero0.github.io/categories/rev/">Rev (5)</a>
-            </li>
-        </ul>
-    </aside>
 
-    <aside class="widget widget_recent_entries">
-        <h2>Recent Posts</h2>
-        <ul>
-            
-                
-                    <li>
-                        <a href="https://x3ero0.github.io/posts/orxw_balsn_ctf_2021_pwn/">or⊕w writeup from Balsn CTF 2021</a>
-                    </li>
-                
-            
-                
-                    <li>
-                        <a href="https://x3ero0.github.io/posts/easy_kernel_exploitation/">Easy_Kernel Writeup from K3RN3LCTF 2021</a>
-                    </li>
-                
-            
-                
-                    <li>
-                        <a href="https://x3ero0.github.io/posts/hyperion/">Hyperion Writeup</a>
-                    </li>
-                
-            
-                
-                    <li>
-                        <a href="https://x3ero0.github.io/posts/float-writeup/">Float Writeup</a>
-                    </li>
-                
-            
-                
-            
-                
-                    <li>
-                        <a href="https://x3ero0.github.io/posts/hell86_from_ttlhacker/">Hell86 - ttlhacker</a>
-                    </li>
-                
-            
-                
-                    <li>
-                        <a href="https://x3ero0.github.io/posts/reversing_a_malware_in_disguise/">Reversing a malware in disguise</a>
-                    </li>
-                
-            
-                
-                    <li>
-                        <a href="https://x3ero0.github.io/posts/watevr_repyc/">Watevr_repyc</a>
-                    </li>
-                
-            
-                
-            
-                
-                    <li>
-                        <a href="https://x3ero0.github.io/posts/hsctf-license/">HSCTF License</a>
-                    </li>
-                
-            
-        </ul>
-    </aside>
-
-    <aside class="widget widget_recent_entries">
-        <h2>Recent Crackmes</h2>
-        <ul>
-            
-                
-            
-                
-            
-                
-            
-                
-            
-                
-                    <li>
-                        <a href="https://x3ero0.github.io/crackmes/fl04t/">[0x007] fl04t</a>
-                    </li>
-                
-            
-                
-            
-                
-            
-                
-            
-                
-            
-                
-            
-        </ul>
-    </aside>
-</div>
-
-        </div>
-        </div>
-<footer role="contentinfo" class="document-footer contentinfo widgets columns-1">
-
-    <aside class="widget widget_text">
-        <div class="textwidget">
-            <p>© x3ero0&#39;s blog</p>
-        </div>
-    </aside>
-</footer>
-</div>
-
-    </body>
+</body>
 </html>

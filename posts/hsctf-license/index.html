@@ -1,96 +1,104 @@
 <!DOCTYPE html>
-<html>
-    <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1">
-    <title>HSCTF License - x3ero0&#39;s blog</title>
-    <link rel="shortcut icon" href="/img/favicon.ico">
-    <style type="text/css">
-        img.wp-smiley,
-        img.emoji {
-            display: inline !important;
-            border: none !important;
-            box-shadow: none !important;
-            height: 1em !important;
-            width: 1em !important;
-            margin: 0 .07em !important;
-            vertical-align: -0.1em !important;
-            background: none !important;
-            padding: 0 !important;
-        }
-    </style>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
-    <link rel='stylesheet' href='/css/custom.css' type='text/css' media='all' />
-    <link rel='stylesheet' href='/css/style.css' type='text/css' media='all' />
-    <link rel='stylesheet' href='/css/syntax.css' type='text/css' media='all' />
-    <link rel='stylesheet' href='/css/general.css' type='text/css' media='all' />
-    <link rel='stylesheet' href='/css/toc.css' type='text/css' media='all' />
-    <link rel='stylesheet' href='/css/image.css' type='text/css' media='all' />
+<html lang="en-us" dir="ltr">
+<head>
+  
+
+  
+
+
+
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>HSCTF License | x3ero0&#39;s blog</title>
+<meta name="description" content="x3ero0&#39;s blog contains reverse engineering notes, crackmes, and CTF writeups.">
+<meta name="theme-color" content="#f7f7f2">
+<script>
+  (() => {
+    const storageKey = "reflector-theme";
+    const root = document.documentElement;
+    let theme = "light";
+
+    try {
+      const stored = localStorage.getItem(storageKey);
+      if (stored === "light" || stored === "dark") {
+        theme = stored;
+      } else if (window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches) {
+        theme = "dark";
+      }
+    } catch (error) {
+      if (window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches) {
+        theme = "dark";
+      }
+    }
+
+    root.dataset.theme = theme;
+    const meta = document.querySelector('meta[name="theme-color"]');
+    if (meta) {
+      meta.setAttribute("content", theme === "dark" ? "#111315" : "#f7f7f2");
+    }
+  })();
+</script>
+<link rel="icon" href="/img/favicon.ico">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous" referrerpolicy="no-referrer">
+
+  <link rel="stylesheet" href="/css/chroma-light.css">
+  <link rel="stylesheet" href="/css/chroma-dark.css">
+      <link rel="stylesheet" href="/css/main.min.8922a1a49c9c90da672308fecef192f6cb5c5f0b6ca01ce4b6d648fa1a3e8b11.css" integrity="sha256-iSKhpJyckNpnIwj&#43;zvGS9stcXwtsoBzkttZI&#43;ho&#43;ixE=" crossorigin="anonymous">
+
+
+        <script src="/js/main.9a5dcf5db86a42efab8f8c1173e839a88165d67872dafbc375cc2a5c43546907.js" integrity="sha256-ml3PXbhqQu&#43;rj4wRc&#43;g5qIFl1nhy2vvDdcwqXENUaQc=" crossorigin="anonymous" defer></script>
+
+
 </head>
+<body class="page page-page section-posts">
+  <div class="page-frame">
+    <a class="skip-link" href="#main-content">Skip to content</a>
+    <header class="site-header">
+  <div class="header-panel">
+    <a class="brand" href="/">x3ero0&#39;s blog</a>
+    <p class="header-summary">reverse engineering, crackmes, and ctf writeups</p>
+    <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav" data-nav-toggle>[menu]</button>
+    <nav id="site-nav" class="site-nav" data-nav aria-label="Primary">
+      
+  <ul class="nav-list">
+      <li>
+        <a class="nav-link" href="/">home</a>
+      </li>
+      <li>
+        <a class="nav-link" href="/posts/">posts</a>
+      </li>
+      <li>
+        <a class="nav-link" href="/crackmes/">crackmes</a>
+      </li>
+  </ul>
 
-    <body class="two-column">
-        <a href="#content">Skip to content</a>
-<div class="wrapper">
-    <header role="banner" class="banner widgets columns-1">
-        <a href="/" rel="home">
-            <h1 class="site">x3ero0&#39;s blog</h1>
-            <p></p>
-        </a>
-        <nav role="navigation" aria-label="Primary Navigation">
+    </nav>
+  </div>
+</header>
 
-            <ul class="menu">
-                <li class="menu-item "><a class="menu__link" href="/">HOME</a></li>
-                <li class="menu-item "><a class="menu__link" href="/posts/">POSTS</a></li>
-                <li class="menu-item "><a class="menu__link" href="/crackmes/">CRACKMES</a></li>
-            </ul>
-            <select onChange="location.href=value;">
-                <option value="/" class="menu-item menu-item-type-custom menu-item-object-custom" >HOME</option>
-                <option value="/posts/" class="menu-item menu-item-type-custom menu-item-object-custom" >POSTS</option>
-                <option value="/crackmes/" class="menu-item menu-item-type-custom menu-item-object-custom" >CRACKMES</option>
-            </select>
-        </nav>
-    </header>
-
-    <br>
-    <div style="width: 100%; max-height: 100px; text-align: center;">
-       
+    <main id="main-content" class="site-main">
+      
+  <article class="document">
+    <header class="document-header">
+      <h1>HSCTF License</h1>
+      <div class="meta-line">
+  
+    <span>posts</span>
+  
+  
+    <time datetime="2020-04-10T20:06:26Z">2020-04-10</time>
+  
+  <span>2 min read</span>
+  
 </div>
 
-    <div class="breadcrumbs">
-        
-    </div>
-
-        <div id="content" class="content">
-
-<main role="main">
-    <article role="article" class="post type-post format-standard hentry">
-        <header class="post-header">
-            <h1>HSCTF License</h1>
-            <div class="post-details">
-                <a rel="bookmark">
-                    <time datetime="2020-04-10T410:86:266">2020-04-10</time>
-                </a>
-				
-<span style="float: right;">
-    <div id="fb-root" style="height: 100%;"></div>
-    
-    <script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v3.2"></script>
-    
-    <div class="fb-share-button" data-href="https://x3ero0.github.io/posts/hsctf-license/" data-layout="button_count" data-size="small">
-        <a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3a%2f%2fx3ero0.github.io%2fposts%2fhsctf-license%2f" class="fb-xfbml-parse-ignore">Share</a>
-    </div>
-    &nbsp;
-    <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" data-text="HSCTF License" data-url="https://x3ero0.github.io/posts/hsctf-license/" data-show-count="false">Tweet</a>
-    <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
-    &nbsp;
-    
-</span>
-
-            </div>
-        </header>
-
-        <div class="post-content">
-            <h3 id="challenge-license--298dyn-re-">Challenge: License [ 298(DYN) RE ]</h3>
+      
+    </header>
+    <div class="document-body">
+      <h3 id="challenge-license--298dyn-re-">Challenge: License [ 298(DYN) RE ]</h3>
 <p>Challenge Description:</p>
 <p>Written by: ItzSomebody</p>
 <p>Description:</p>
@@ -108,215 +116,207 @@ license-generator program. Can you help Keith recover his flag? All he knows is:
 <li>entire flag easily).</li>
 <li>The flag only contains lowercase English letters and numbers.</li>
 <li>The generator might produce the same keys for different inputs because
-Keith was too lazy to write the algorithm properly.</li>
+Keith was too lazy to write the algorithm properly.
+Binary : <a href="https://github.com/X3eRo0/Crackmes/raw/master/hsctf/license">license</a></li>
 </ul>
-<p>Binary : <a href="https://github.com/X3eRo0/Crackmes/raw/master/hsctf/license">license</a></p>
 <p>before opening the binary in any disassembler or any debugger, i thought lets take a look at what it does.</p>
 <p>runing the binary will make your work a little easier in this case.</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-plaintext" data-lang="plaintext"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1</span>$ ./license 
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2</span>gimme dat string: A
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3</span>generating key for: a
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4</span>X
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5</span>$ ./license
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6</span>gimme dat string: B
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7</span>generating key for: b
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8</span>Y
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9</span>$ ./license
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10</span>gimme dat string: C
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11</span>generating key for: c
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12</span>Z
-</code></pre></div><p>you can clearly see the pattern. each letter is simply substituted by some other letter.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-plaintext" data-lang="plaintext"><span class="line"><span class="ln"> 1</span><span class="cl">$ ./license 
+</span></span><span class="line"><span class="ln"> 2</span><span class="cl">gimme dat string: A
+</span></span><span class="line"><span class="ln"> 3</span><span class="cl">generating key for: a
+</span></span><span class="line"><span class="ln"> 4</span><span class="cl">X
+</span></span><span class="line"><span class="ln"> 5</span><span class="cl">$ ./license
+</span></span><span class="line"><span class="ln"> 6</span><span class="cl">gimme dat string: B
+</span></span><span class="line"><span class="ln"> 7</span><span class="cl">generating key for: b
+</span></span><span class="line"><span class="ln"> 8</span><span class="cl">Y
+</span></span><span class="line"><span class="ln"> 9</span><span class="cl">$ ./license
+</span></span><span class="line"><span class="ln">10</span><span class="cl">gimme dat string: C
+</span></span><span class="line"><span class="ln">11</span><span class="cl">generating key for: c
+</span></span><span class="line"><span class="ln">12</span><span class="cl">Z
+</span></span></code></pre></div><p>you can clearly see the pattern. each letter is simply substituted by some other letter.</p>
 <p>so what we can do in this case is that we can get a python dictionary which will store which charecter is substituted by which letter.
 once we have that dictionary we resubstitute the charecters in the key given to us.</p>
 <p>i made a script for that</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1</span><span style="color:#ff79c6">from</span> pwn <span style="color:#ff79c6">import</span> <span style="color:#ff79c6">*</span>
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2</span><span style="color:#ff79c6">import</span> string
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3</span>context<span style="color:#ff79c6">.</span>log_level <span style="color:#ff79c6">=</span> <span style="color:#f1fa8c">&#34;critical&#34;</span>
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4</span>
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5</span>flag_license <span style="color:#ff79c6">=</span> <span style="color:#f1fa8c">&#34;4-EZF2M-7O5F4-V9P7O-EVFDP-E4VDO-O&#34;</span><span style="color:#ff79c6">.</span>replace(<span style="color:#f1fa8c">&#34;-&#34;</span>,<span style="color:#f1fa8c">&#34;&#34;</span>)
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6</span>
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7</span>chars <span style="color:#ff79c6">=</span> {}
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8</span>
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9</span><span style="color:#ff79c6">for</span> i <span style="color:#ff79c6">in</span> <span style="color:#8be9fd;font-style:italic">range</span>(<span style="color:#bd93f9">0x21</span>,<span style="color:#bd93f9">0x7f</span>):
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10</span>    p <span style="color:#ff79c6">=</span> process(<span style="color:#f1fa8c">&#34;./license&#34;</span>)
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11</span>    p<span style="color:#ff79c6">.</span>recvuntil(<span style="color:#f1fa8c">&#34;gimme dat string: &#34;</span>)
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12</span>    p<span style="color:#ff79c6">.</span>sendline(<span style="color:#8be9fd;font-style:italic">chr</span>(i))
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13</span>    corchar <span style="color:#ff79c6">=</span> p<span style="color:#ff79c6">.</span>recv(<span style="color:#bd93f9">23</span>)[<span style="color:#bd93f9">22</span>:]
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14</span>    
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15</span>    chars[corchar] <span style="color:#ff79c6">=</span> <span style="color:#8be9fd;font-style:italic">chr</span>(i)
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16</span>    p<span style="color:#ff79c6">.</span>close
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17</span>
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18</span>flag <span style="color:#ff79c6">=</span> <span style="color:#f1fa8c">&#34;&#34;</span>
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19</span>
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20</span><span style="color:#ff79c6">for</span> ch <span style="color:#ff79c6">in</span> flag_license:
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21</span>    flag <span style="color:#ff79c6">+=</span> chars[ch]
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">22</span>
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">23</span><span style="color:#8be9fd;font-style:italic">print</span>(flag)
-</code></pre></div><p>running this script gives us partial flag</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-plaintext" data-lang="plaintext"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1</span>╭─pulkit@pulkit-ER28-0652 ~/Capture_The_Flag/hsctf 
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2</span>╰─$ python find_keys.py 
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3</span>hsctf{k}ith_m~k}s_tr~sh_r}}
-</code></pre></div><p>we can see that &ldquo;}&rdquo; is also 3 and &ldquo;~&rdquo; is 4
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="ln"> 1</span><span class="cl"><span class="kn">from</span> <span class="nn">pwn</span> <span class="kn">import</span> <span class="o">*</span>
+</span></span><span class="line"><span class="ln"> 2</span><span class="cl"><span class="kn">import</span> <span class="nn">string</span>
+</span></span><span class="line"><span class="ln"> 3</span><span class="cl"><span class="n">context</span><span class="o">.</span><span class="n">log_level</span> <span class="o">=</span> <span class="s2">&#34;critical&#34;</span>
+</span></span><span class="line"><span class="ln"> 4</span><span class="cl">
+</span></span><span class="line"><span class="ln"> 5</span><span class="cl"><span class="n">flag_license</span> <span class="o">=</span> <span class="s2">&#34;4-EZF2M-7O5F4-V9P7O-EVFDP-E4VDO-O&#34;</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&#34;-&#34;</span><span class="p">,</span><span class="s2">&#34;&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="ln"> 6</span><span class="cl">
+</span></span><span class="line"><span class="ln"> 7</span><span class="cl"><span class="n">chars</span> <span class="o">=</span> <span class="p">{}</span>
+</span></span><span class="line"><span class="ln"> 8</span><span class="cl">
+</span></span><span class="line"><span class="ln"> 9</span><span class="cl"><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mh">0x21</span><span class="p">,</span><span class="mh">0x7f</span><span class="p">):</span>
+</span></span><span class="line"><span class="ln">10</span><span class="cl">    <span class="n">p</span> <span class="o">=</span> <span class="n">process</span><span class="p">(</span><span class="s2">&#34;./license&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="ln">11</span><span class="cl">    <span class="n">p</span><span class="o">.</span><span class="n">recvuntil</span><span class="p">(</span><span class="s2">&#34;gimme dat string: &#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="ln">12</span><span class="cl">    <span class="n">p</span><span class="o">.</span><span class="n">sendline</span><span class="p">(</span><span class="nb">chr</span><span class="p">(</span><span class="n">i</span><span class="p">))</span>
+</span></span><span class="line"><span class="ln">13</span><span class="cl">    <span class="n">corchar</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">recv</span><span class="p">(</span><span class="mi">23</span><span class="p">)[</span><span class="mi">22</span><span class="p">:]</span>
+</span></span><span class="line"><span class="ln">14</span><span class="cl">    
+</span></span><span class="line"><span class="ln">15</span><span class="cl">    <span class="n">chars</span><span class="p">[</span><span class="n">corchar</span><span class="p">]</span> <span class="o">=</span> <span class="nb">chr</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+</span></span><span class="line"><span class="ln">16</span><span class="cl">    <span class="n">p</span><span class="o">.</span><span class="n">close</span>
+</span></span><span class="line"><span class="ln">17</span><span class="cl">
+</span></span><span class="line"><span class="ln">18</span><span class="cl"><span class="n">flag</span> <span class="o">=</span> <span class="s2">&#34;&#34;</span>
+</span></span><span class="line"><span class="ln">19</span><span class="cl">
+</span></span><span class="line"><span class="ln">20</span><span class="cl"><span class="k">for</span> <span class="n">ch</span> <span class="ow">in</span> <span class="n">flag_license</span><span class="p">:</span>
+</span></span><span class="line"><span class="ln">21</span><span class="cl">    <span class="n">flag</span> <span class="o">+=</span> <span class="n">chars</span><span class="p">[</span><span class="n">ch</span><span class="p">]</span>
+</span></span><span class="line"><span class="ln">22</span><span class="cl">
+</span></span><span class="line"><span class="ln">23</span><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="n">flag</span><span class="p">)</span>
+</span></span></code></pre></div><p>running this script gives us partial flag</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-plaintext" data-lang="plaintext"><span class="line"><span class="ln">1</span><span class="cl">╭─pulkit@pulkit-ER28-0652 ~/Capture_The_Flag/hsctf 
+</span></span><span class="line"><span class="ln">2</span><span class="cl">╰─$ python find_keys.py 
+</span></span><span class="line"><span class="ln">3</span><span class="cl">hsctf{k}ith_m~k}s_tr~sh_r}}
+</span></span></code></pre></div><p>we can see that &ldquo;}&rdquo; is also 3 and &ldquo;~&rdquo; is 4
 in the end flag comes out to be</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-plaintext" data-lang="plaintext"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1</span>hsctf{k3ith_m4k3s_tr4sh_r3}
-</code></pre></div><p>Thanks for reading that.</p>
-        </div>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-plaintext" data-lang="plaintext"><span class="line"><span class="ln">1</span><span class="cl">hsctf{k3ith_m4k3s_tr4sh_r3}
+</span></span></code></pre></div><p>Thanks for reading that.</p>
 
+    </div>
+    <footer class="document-footer">
+      
+    </footer>
+  </article>
 
+  
+    <nav class="document-nav" aria-label="Article navigation">
+      
+        <a href="/posts/plaintext_attack_on_zip_legacy_crypto/">prev: Plaintext Attack on Zip</a>
+      
+      
+        <a href="/posts/watevr_repyc/">next: Watevr_repyc</a>
+      
+    </nav>
+  
 
-        <footer class="post-footer">
-                
-                
-                
-                <span class="post-categories">
-                        <a href="https://x3ero0.github.io/categories/rev/">Rev</a>&emsp;
-                        
-                </span>
-                
-        
-                
-                
-                
-        </footer>
-        
-<table cellspacing="15" style="width:100%; border: none;">
-    <tr>
-        <td style="text-align: center; border: none; padding: 0px;">
-        </td>
-        <td style="text-align: center; border: none; padding: 0px;">
-        </td>
-    </tr>
-</table>
-
-        
-    </article>
-
-    
-
-</main>
-
-
-        <div class="sidebar1 widgets columns-1">
-
-    <aside>
-    
-</aside>
-    <aside class="widget widget_categories">
-        <h2>Categories</h2>
-        <ul class="widget__list"><li class="cat-item cat-item-2">
-                <a href="https://x3ero0.github.io/categories/crackmes/">Crackmes (7)</a>
-            </li><li class="cat-item cat-item-2">
-                <a href="https://x3ero0.github.io/categories/ctf/">CTF (2)</a>
-            </li><li class="cat-item cat-item-2">
-                <a href="https://x3ero0.github.io/categories/pwn/">Pwn (3)</a>
-            </li><li class="cat-item cat-item-2">
-                <a href="https://x3ero0.github.io/categories/rev/">Rev (5)</a>
-            </li>
-        </ul>
-    </aside>
-
-    <aside class="widget widget_recent_entries">
-        <h2>Recent Posts</h2>
-        <ul>
-            
-                
-                    <li>
-                        <a href="https://x3ero0.github.io/posts/orxw_balsn_ctf_2021_pwn/">or⊕w writeup from Balsn CTF 2021</a>
-                    </li>
-                
-            
-                
-                    <li>
-                        <a href="https://x3ero0.github.io/posts/easy_kernel_exploitation/">Easy_Kernel Writeup from K3RN3LCTF 2021</a>
-                    </li>
-                
-            
-                
-                    <li>
-                        <a href="https://x3ero0.github.io/posts/hyperion/">Hyperion Writeup</a>
-                    </li>
-                
-            
-                
-                    <li>
-                        <a href="https://x3ero0.github.io/posts/float-writeup/">Float Writeup</a>
-                    </li>
-                
-            
-                
-            
-                
-                    <li>
-                        <a href="https://x3ero0.github.io/posts/hell86_from_ttlhacker/">Hell86 - ttlhacker</a>
-                    </li>
-                
-            
-                
-                    <li>
-                        <a href="https://x3ero0.github.io/posts/reversing_a_malware_in_disguise/">Reversing a malware in disguise</a>
-                    </li>
-                
-            
-                
-                    <li>
-                        <a href="https://x3ero0.github.io/posts/watevr_repyc/">Watevr_repyc</a>
-                    </li>
-                
-            
-                
-            
-                
-                    <li>
-                        <a href="https://x3ero0.github.io/posts/hsctf-license/">HSCTF License</a>
-                    </li>
-                
-            
-        </ul>
-    </aside>
-
-    <aside class="widget widget_recent_entries">
-        <h2>Recent Crackmes</h2>
-        <ul>
-            
-                
-            
-                
-            
-                
-            
-                
-            
-                
-                    <li>
-                        <a href="https://x3ero0.github.io/crackmes/fl04t/">[0x007] fl04t</a>
-                    </li>
-                
-            
-                
-            
-                
-            
-                
-            
-                
-            
-                
-            
-        </ul>
-    </aside>
-</div>
-
-        </div>
-        </div>
-<footer role="contentinfo" class="document-footer contentinfo widgets columns-1">
-
-    <aside class="widget widget_text">
-        <div class="textwidget">
-            <p>© x3ero0&#39;s blog</p>
-        </div>
-    </aside>
+    </main>
+    <footer class="site-footer">
+  <div class="footer-panel">
+    <p>Copying is an act of love, feel free to copy.</p>
+  </div>
 </footer>
-</div>
 
-    </body>
+  </div>
+  
+
+
+
+
+
+  
+  
+  
+  
+
+
+<aside class="theme-sidebar" aria-label="Theme controls">
+  <div class="sidebar-stack">
+    <div class="theme-window">
+      <div class="window-titlebar" aria-hidden="true">
+        <span class="window-title">&nbsp;</span>
+      </div>
+      <div class="window-content theme-window-content">
+        <button class="theme-toggle" type="button" data-theme-toggle aria-pressed="false">
+          <span class="theme-toggle-track" aria-hidden="true">
+            <span class="theme-toggle-thumb"></span>
+          </span>
+          <span class="theme-toggle-text" data-theme-label>light</span>
+        </button>
+      </div>
+    </div>
+
+    <section class="guestbook-window" aria-label="Guestbook">
+      <div class="window-titlebar">
+        <span class="window-title">guestbook</span>
+      </div>
+      <div class="window-content guestbook-window-content">
+        <div class="guestbook-feed" data-guestbook-feed aria-live="polite"></div>
+        <form
+          class="guestbook-form"
+          data-guestbook-form
+          data-guestbook-remote-enabled="true"
+          method="post"
+          target="guestbook-hidden-transport"
+          action="https://docs.google.com/forms/d/e/1FAIpQLSctVbY2_aoazFFBBdS3CFGsKIb0JmXJTk1MbITiuh6rfHOLzg/formResponse"
+        >
+          <div class="guestbook-row">
+            <input
+              class="guestbook-input"
+              type="text"
+              maxlength="24"
+              placeholder="nickname"
+              aria-label="Nickname"
+              autocomplete="nickname"
+              data-guestbook-nickname
+              name="entry.1908159203" id="entry.1908159203"
+            >
+            <div class="guestbook-actions">
+              <button class="window-button" type="submit">send</button>
+            </div>
+          </div>
+          <input
+            class="guestbook-input"
+            type="text"
+            maxlength="240"
+            placeholder="website"
+            aria-label="Website"
+            autocomplete="off"
+            data-guestbook-website
+            name="entry.1928902955" id="entry.1928902955"
+          >
+          <textarea
+            class="guestbook-input guestbook-comment"
+            rows="4"
+            placeholder="comment"
+            aria-label="Comment"
+            autocomplete="off"
+            data-guestbook-comment
+            name="entry.1702949315" id="entry.1702949315"
+            maxlength="240"
+          ></textarea>
+          
+        </form>
+        <iframe
+          name="guestbook-hidden-transport"
+          class="guestbook-transport"
+          title="guestbook submission transport"
+          tabindex="-1"
+          hidden
+        ></iframe>
+      </div>
+    </section>
+  </div>
+
+  <div class="guestbook-dialog" data-guestbook-dialog hidden>
+    <button
+      class="guestbook-dialog-backdrop"
+      type="button"
+      aria-label="Close dialog"
+      data-guestbook-dialog-close
+    ></button>
+    <section class="guestbook-dialog-window" role="dialog" aria-modal="true" aria-labelledby="guestbook-dialog-title">
+      <div class="window-titlebar">
+        <span class="window-title" id="guestbook-dialog-title">guestbook</span>
+        <div class="window-actions">
+          <button
+            class="window-button window-button-icon"
+            type="button"
+            aria-label="Close dialog"
+            data-guestbook-dialog-close
+            data-guestbook-dialog-close-button
+          >X</button>
+        </div>
+      </div>
+      <div class="window-content guestbook-dialog-content">
+        <p>Your comment is under review. Check back later.</p>
+        <div class="guestbook-dialog-actions">
+          <button
+            class="window-button"
+            type="button"
+            data-guestbook-dialog-close
+          >OK</button>
+        </div>
+      </div>
+    </section>
+  </div>
+</aside>
+
+</body>
 </html>

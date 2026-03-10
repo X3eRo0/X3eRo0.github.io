@@ -1,8 +1,15 @@
 function changeText(text, success){
+    var status = document.getElementById("crackme-status");
+    if (status) {
+        status.textContent = text;
+        status.dataset.success = success ? "true" : "false";
+    }
 
-    stop_anim = true;
-    new_text = text;
-    color = success;
+    if (typeof stop_anim !== "undefined") {
+        stop_anim = true;
+        new_text = text;
+        color = success;
+    }
 }
 
 function crackme(){
@@ -26,4 +33,7 @@ function crackme(){
             changeText("WRONG!", false);
         }
     })
+    .catch(() => {
+        changeText("Unable to load crackme.", false);
+    });
 }

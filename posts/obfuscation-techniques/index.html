@@ -1,113 +1,135 @@
 <!DOCTYPE html>
-<html>
-    <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1">
-    <title>Obfuscation_Techniques - x3ero0&#39;s blog</title>
-    <link rel="shortcut icon" href="/img/favicon.ico">
-    <style type="text/css">
-        img.wp-smiley,
-        img.emoji {
-            display: inline !important;
-            border: none !important;
-            box-shadow: none !important;
-            height: 1em !important;
-            width: 1em !important;
-            margin: 0 .07em !important;
-            vertical-align: -0.1em !important;
-            background: none !important;
-            padding: 0 !important;
-        }
-    </style>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
-    <link rel='stylesheet' href='/css/custom.css' type='text/css' media='all' />
-    <link rel='stylesheet' href='/css/style.css' type='text/css' media='all' />
-    <link rel='stylesheet' href='/css/syntax.css' type='text/css' media='all' />
-    <link rel='stylesheet' href='/css/general.css' type='text/css' media='all' />
-    <link rel='stylesheet' href='/css/toc.css' type='text/css' media='all' />
-    <link rel='stylesheet' href='/css/image.css' type='text/css' media='all' />
+<html lang="en-us" dir="ltr">
+<head>
+  
+
+  
+
+
+
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Obfuscation_Techniques | x3ero0&#39;s blog</title>
+<meta name="description" content="x3ero0&#39;s blog contains reverse engineering notes, crackmes, and CTF writeups.">
+<meta name="theme-color" content="#f7f7f2">
+<script>
+  (() => {
+    const storageKey = "reflector-theme";
+    const root = document.documentElement;
+    let theme = "light";
+
+    try {
+      const stored = localStorage.getItem(storageKey);
+      if (stored === "light" || stored === "dark") {
+        theme = stored;
+      } else if (window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches) {
+        theme = "dark";
+      }
+    } catch (error) {
+      if (window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches) {
+        theme = "dark";
+      }
+    }
+
+    root.dataset.theme = theme;
+    const meta = document.querySelector('meta[name="theme-color"]');
+    if (meta) {
+      meta.setAttribute("content", theme === "dark" ? "#111315" : "#f7f7f2");
+    }
+  })();
+</script>
+<link rel="icon" href="/img/favicon.ico">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous" referrerpolicy="no-referrer">
+
+  <link rel="stylesheet" href="/css/chroma-light.css">
+  <link rel="stylesheet" href="/css/chroma-dark.css">
+      <link rel="stylesheet" href="/css/main.min.8922a1a49c9c90da672308fecef192f6cb5c5f0b6ca01ce4b6d648fa1a3e8b11.css" integrity="sha256-iSKhpJyckNpnIwj&#43;zvGS9stcXwtsoBzkttZI&#43;ho&#43;ixE=" crossorigin="anonymous">
+
+
+        <script src="/js/main.9a5dcf5db86a42efab8f8c1173e839a88165d67872dafbc375cc2a5c43546907.js" integrity="sha256-ml3PXbhqQu&#43;rj4wRc&#43;g5qIFl1nhy2vvDdcwqXENUaQc=" crossorigin="anonymous" defer></script>
+
+
 </head>
+<body class="page page-page section-posts">
+  <div class="page-frame">
+    <a class="skip-link" href="#main-content">Skip to content</a>
+    <header class="site-header">
+  <div class="header-panel">
+    <a class="brand" href="/">x3ero0&#39;s blog</a>
+    <p class="header-summary">reverse engineering, crackmes, and ctf writeups</p>
+    <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav" data-nav-toggle>[menu]</button>
+    <nav id="site-nav" class="site-nav" data-nav aria-label="Primary">
+      
+  <ul class="nav-list">
+      <li>
+        <a class="nav-link" href="/">home</a>
+      </li>
+      <li>
+        <a class="nav-link" href="/posts/">posts</a>
+      </li>
+      <li>
+        <a class="nav-link" href="/crackmes/">crackmes</a>
+      </li>
+  </ul>
 
-    <body class="two-column">
-        <a href="#content">Skip to content</a>
-<div class="wrapper">
-    <header role="banner" class="banner widgets columns-1">
-        <a href="/" rel="home">
-            <h1 class="site">x3ero0&#39;s blog</h1>
-            <p></p>
-        </a>
-        <nav role="navigation" aria-label="Primary Navigation">
+    </nav>
+  </div>
+</header>
 
-            <ul class="menu">
-                <li class="menu-item "><a class="menu__link" href="/">HOME</a></li>
-                <li class="menu-item "><a class="menu__link" href="/posts/">POSTS</a></li>
-                <li class="menu-item "><a class="menu__link" href="/crackmes/">CRACKMES</a></li>
-            </ul>
-            <select onChange="location.href=value;">
-                <option value="/" class="menu-item menu-item-type-custom menu-item-object-custom" >HOME</option>
-                <option value="/posts/" class="menu-item menu-item-type-custom menu-item-object-custom" >POSTS</option>
-                <option value="/crackmes/" class="menu-item menu-item-type-custom menu-item-object-custom" >CRACKMES</option>
-            </select>
-        </nav>
+    <main id="main-content" class="site-main">
+      
+  <article class="document">
+    <header class="document-header">
+      <h1>Obfuscation_Techniques</h1>
+      <div class="meta-line">
+  
+    <span>posts</span>
+  
+  
+    <time datetime="2020-02-05T06:34:52Z">2020-02-05</time>
+  
+  <span>3 min read</span>
+  
+</div>
+
+      
     </header>
+    <div class="document-body">
+      
 
-    <br>
-    <div style="width: 100%; max-height: 100px; text-align: center;">
-       
+
+
+  
+
+
+
+<div class="center image-window" data-image-window>
+  <div class="window-titlebar">
+    <span class="window-title">BeingDebugged under IDA Pro</span>
+    <button
+      class="window-button window-button-icon window-minimize"
+      type="button"
+      aria-expanded="true"
+      aria-label="Minimize image"
+      data-window-toggle
+    >−</button>
+  </div>
+  <div class="window-content">
+    <img
+      class="responsive"
+      src="/img/Obfuscation_Techniques/Cover.jpg"
+      alt="BeingDebugged under IDA Pro"
+      decoding="async"
+    />
+  </div>
 </div>
 
-    <div class="breadcrumbs">
-        
-    </div>
-
-        <div id="content" class="content">
-
-<main role="main">
-    <article role="article" class="post type-post format-standard hentry">
-        <header class="post-header">
-            <h1>Obfuscation_Techniques</h1>
-            <div class="post-details">
-                <a rel="bookmark">
-                    <time datetime="2020-02-05T25:634:526">2020-02-05</time>
-                </a>
-				
-<span style="float: right;">
-    <div id="fb-root" style="height: 100%;"></div>
-    
-    <script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v3.2"></script>
-    
-    <div class="fb-share-button" data-href="https://x3ero0.github.io/posts/obfuscation-techniques/" data-layout="button_count" data-size="small">
-        <a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3a%2f%2fx3ero0.github.io%2fposts%2fobfuscation-techniques%2f" class="fb-xfbml-parse-ignore">Share</a>
-    </div>
-    &nbsp;
-    <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" data-text="Obfuscation_Techniques" data-url="https://x3ero0.github.io/posts/obfuscation-techniques/" data-show-count="false">Tweet</a>
-    <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
-    &nbsp;
-    
-</span>
-
-            </div>
-        </header>
-
-        <div class="post-content">
-            <link rel="stylesheet" href="/css/styles/atelier-forest-dark.css">
-<script src="/js/highlight.pack.js"></script>
-<script>hljs.initHighlightingOnLoad();</script>
-
-
-
-
-<div class="center">
-  <img
-    class="responsive"
-    src="/img/Obfuscation_Techniques/Cover.jpg"
-    alt="BeingDebugged under IDA Pro"
-    decoding="async"
-  />
-</div>
 <hr>
-<p>Recently I was watching <a href="https://www.youtube.com/user/GynvaelEN">GynvaelEN&rsquo;s</a> Old <a href="https://www.youtube.com/watch?v=5RK7sYTOeNk">Stream</a> about ELF Packers, and I thought why not make a PE Packer. I decided that I will write a python script to Parse PE Headers from scratch, I was able to parse some headers and then I got stuck and decided that I will use <a href="https://github.com/erocarrera/pefile">PEFILE</a>.</p>
-<p>──────▄▌▐▀▀▀▀▀▀▀▀▀▀▀▀▀​▀▀▀▀▀▀▌<br>
+<p>Recently I was watching <a href="https://www.youtube.com/user/GynvaelEN">GynvaelEN&rsquo;s</a> Old <a href="https://www.youtube.com/watch?v=5RK7sYTOeNk">Stream</a> about ELF Packers, and I thought why not make a PE Packer. I decided that I will write a python script to Parse PE Headers from scratch, I was able to parse some headers and then I got stuck and decided that I will use <a href="https://github.com/erocarrera/pefile">PEFILE</a>.
+──────▄▌▐▀▀▀▀▀▀▀▀▀▀▀▀▀​▀▀▀▀▀▀▌<br>
 ───▄▄██▌█ BEEP BEEP <br>
 ▄▄▄▌▐██▌█ POOR SCRIPT AHEAD<br>
 ███████▌█▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▌ <br>
@@ -119,272 +141,265 @@ Now the question comes that what are some anti-debugging techniques in windows l
 <hr>
 <h2 id="windows">Windows</h2>
 <p><strong>1. BeingDebugged in PEB</strong>:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1</span><span style="color:#ff79c6">struct</span> _PEB {
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2</span>    <span style="color:#bd93f9">0x000</span> BYTE InheritedAddressSpace;
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3</span>    <span style="color:#bd93f9">0x001</span> BYTE ReadImageFileExecOptions;
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4</span>    <span style="color:#bd93f9">0x002</span> BYTE BeingDebugged; <span style="color:#6272a4">// fs:[0x30]
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5</span><span style="color:#6272a4"></span>    <span style="color:#6272a4">/*
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6</span><span style="color:#6272a4">    ..... .... ..............
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7</span><span style="color:#6272a4">    ..... .... ..............
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8</span><span style="color:#6272a4">    ..... .... ..............
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9</span><span style="color:#6272a4">    ..... .... ..............
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10</span><span style="color:#6272a4">    */</span>
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11</span>    <span style="color:#bd93f9">0x204</span> <span style="color:#8be9fd">void</span><span style="color:#ff79c6">*</span> SystemAssemblyStorageMap;
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12</span>    <span style="color:#bd93f9">0x208</span> DWORD MinimumStackCommit;
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13</span>};
-</code></pre></div><p>you can access the Process Environment Block in assembly using &ldquo;fs&rdquo;.
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="line"><span class="ln"> 1</span><span class="cl"><span class="k">struct</span> <span class="n">_PEB</span> <span class="p">{</span>
+</span></span><span class="line"><span class="ln"> 2</span><span class="cl">    <span class="mh">0x000</span> <span class="n">BYTE</span> <span class="n">InheritedAddressSpace</span><span class="p">;</span>
+</span></span><span class="line"><span class="ln"> 3</span><span class="cl">    <span class="mh">0x001</span> <span class="n">BYTE</span> <span class="n">ReadImageFileExecOptions</span><span class="p">;</span>
+</span></span><span class="line"><span class="ln"> 4</span><span class="cl">    <span class="mh">0x002</span> <span class="n">BYTE</span> <span class="n">BeingDebugged</span><span class="p">;</span> <span class="c1">// fs:[0x30]
+</span></span></span><span class="line"><span class="ln"> 5</span><span class="cl">    <span class="cm">/*
+</span></span></span><span class="line"><span class="ln"> 6</span><span class="cl"><span class="cm">    ..... .... ..............
+</span></span></span><span class="line"><span class="ln"> 7</span><span class="cl"><span class="cm">    ..... .... ..............
+</span></span></span><span class="line"><span class="ln"> 8</span><span class="cl"><span class="cm">    ..... .... ..............
+</span></span></span><span class="line"><span class="ln"> 9</span><span class="cl"><span class="cm">    ..... .... ..............
+</span></span></span><span class="line"><span class="ln">10</span><span class="cl"><span class="cm">    */</span>
+</span></span><span class="line"><span class="ln">11</span><span class="cl">    <span class="mh">0x204</span> <span class="kt">void</span><span class="o">*</span> <span class="n">SystemAssemblyStorageMap</span><span class="p">;</span>
+</span></span><span class="line"><span class="ln">12</span><span class="cl">    <span class="mh">0x208</span> <span class="n">DWORD</span> <span class="n">MinimumStackCommit</span><span class="p">;</span>
+</span></span><span class="line"><span class="ln">13</span><span class="cl"><span class="p">};</span>
+</span></span></code></pre></div><p>you can access the Process Environment Block in assembly using &ldquo;fs&rdquo;.
 the following inline assembly code fetches the value of BeingDebugged</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1</span><span style="color:#6272a4">/* MINGW add -masm=intel while compiling */</span>
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2</span>BOOL found <span style="color:#ff79c6">=</span> FALSE;
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3</span>__asm__(
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4</span>	<span style="color:#f1fa8c">&#34;xor eax, eax</span><span style="color:#f1fa8c">\n</span><span style="color:#f1fa8c">&#34;</span>
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5</span>	<span style="color:#f1fa8c">&#34;mov eax, fs:[0x30]</span><span style="color:#f1fa8c">\n</span><span style="color:#f1fa8c">&#34;</span>
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6</span>	<span style="color:#f1fa8c">&#34;mov eax, [eax + 0x02]</span><span style="color:#f1fa8c">\n</span><span style="color:#f1fa8c">&#34;</span>
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7</span>	<span style="color:#f1fa8c">&#34;and eax, 0x000000FF</span><span style="color:#f1fa8c">\n</span><span style="color:#f1fa8c">&#34;</span>
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8</span>	<span style="color:#f1fa8c">&#34;mov %0, eax</span><span style="color:#f1fa8c">\n</span><span style="color:#f1fa8c">&#34;</span> <span style="color:#ff79c6">:</span><span style="color:#f1fa8c">&#34;=r&#34;</span> (found)
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9</span>);
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10</span><span style="color:#ff79c6">if</span>(found){
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11</span>	printf(<span style="color:#f1fa8c">&#34;YES</span><span style="color:#f1fa8c">\n</span><span style="color:#f1fa8c">&#34;</span>);
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12</span>} <span style="color:#ff79c6">else</span> {
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13</span>	printf(<span style="color:#f1fa8c">&#34;NO</span><span style="color:#f1fa8c">\n</span><span style="color:#f1fa8c">&#34;</span>);
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14</span>}
-</code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1</span><span style="color:#6272a4">/* VISUALC++ */</span>
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2</span>BOOL found <span style="color:#ff79c6">=</span> FALSE;
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3</span>_asm
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4</span>{
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5</span>	xor eax, eax; 			<span style="color:#6272a4">// clear eax
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6</span><span style="color:#6272a4"></span>	mov eax, <span style="color:#8be9fd;font-style:italic">fs</span>:[<span style="color:#bd93f9">0x30</span>]; 	<span style="color:#6272a4">// Reference start of the PEB
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7</span><span style="color:#6272a4"></span>	mov eax, [eax <span style="color:#ff79c6">+</span> <span style="color:#bd93f9">0x02</span>]; 	<span style="color:#6272a4">// PEB+2 points to BeingDebugged
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8</span><span style="color:#6272a4"></span>	and eax, <span style="color:#bd93f9">0x000000FF</span>; 	<span style="color:#6272a4">// only reference one byte
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9</span><span style="color:#6272a4"></span>	mov found, eax; 		<span style="color:#6272a4">// Copy BeingDebugged into &#39;found&#39;
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10</span><span style="color:#6272a4"></span>}
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11</span><span style="color:#ff79c6">if</span>(found){
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12</span>	printf(<span style="color:#f1fa8c">&#34;YES</span><span style="color:#f1fa8c">\n</span><span style="color:#f1fa8c">&#34;</span>);
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13</span>} <span style="color:#ff79c6">else</span> {
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14</span>	printf(<span style="color:#f1fa8c">&#34;NO</span><span style="color:#f1fa8c">\n</span><span style="color:#f1fa8c">&#34;</span>);
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15</span>}
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16</span>
-</code></pre></div><p><strong>2. Detecting Breakpoints :</strong></p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1</span><span style="color:#6272a4">/* VISUALC++ */</span>
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2</span><span style="color:#8be9fd">void</span> <span style="color:#50fa7b">detect_breakpoint</span>() {
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3</span>	BOOL found <span style="color:#ff79c6">=</span> TRUE;
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4</span>	<span style="color:#ff79c6">__try</span> {
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5</span>		_asm {
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6</span>			<span style="color:#8be9fd">int</span> <span style="color:#bd93f9">3</span>; <span style="color:#6272a4">// \xCC
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7</span><span style="color:#6272a4"></span>		}
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8</span>	}
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9</span>	<span style="color:#ff79c6">__except</span> (EXCEPTION_EXECUTE_HANDLER) {
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10</span>		found <span style="color:#ff79c6">=</span> FALSE;
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11</span>	}
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12</span>	<span style="color:#ff79c6">if</span> (found) {
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13</span>		printf(<span style="color:#f1fa8c">&#34;NO DEBUGGING</span><span style="color:#f1fa8c">\n</span><span style="color:#f1fa8c">&#34;</span>);
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14</span>	} <span style="color:#ff79c6">else</span> {
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15</span>		printf(<span style="color:#f1fa8c">&#34;GOOD</span><span style="color:#f1fa8c">\n</span><span style="color:#f1fa8c">&#34;</span>);
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16</span>	}
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17</span>}
-</code></pre></div><p><strong>3. Erase PE Headers From Memory:</strong></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="line"><span class="ln"> 1</span><span class="cl"><span class="cm">/* MINGW add -masm=intel while compiling */</span>
+</span></span><span class="line"><span class="ln"> 2</span><span class="cl"><span class="n">BOOL</span> <span class="n">found</span> <span class="o">=</span> <span class="n">FALSE</span><span class="p">;</span>
+</span></span><span class="line"><span class="ln"> 3</span><span class="cl"><span class="nf">__asm__</span><span class="p">(</span>
+</span></span><span class="line"><span class="ln"> 4</span><span class="cl">	<span class="s">&#34;xor eax, eax</span><span class="se">\n</span><span class="s">&#34;</span>
+</span></span><span class="line"><span class="ln"> 5</span><span class="cl">	<span class="s">&#34;mov eax, fs:[0x30]</span><span class="se">\n</span><span class="s">&#34;</span>
+</span></span><span class="line"><span class="ln"> 6</span><span class="cl">	<span class="s">&#34;mov eax, [eax + 0x02]</span><span class="se">\n</span><span class="s">&#34;</span>
+</span></span><span class="line"><span class="ln"> 7</span><span class="cl">	<span class="s">&#34;and eax, 0x000000FF</span><span class="se">\n</span><span class="s">&#34;</span>
+</span></span><span class="line"><span class="ln"> 8</span><span class="cl">	<span class="s">&#34;mov %0, eax</span><span class="se">\n</span><span class="s">&#34;</span> <span class="o">:</span><span class="s">&#34;=r&#34;</span> <span class="p">(</span><span class="n">found</span><span class="p">)</span>
+</span></span><span class="line"><span class="ln"> 9</span><span class="cl"><span class="p">);</span>
+</span></span><span class="line"><span class="ln">10</span><span class="cl"><span class="k">if</span><span class="p">(</span><span class="n">found</span><span class="p">){</span>
+</span></span><span class="line"><span class="ln">11</span><span class="cl">	<span class="nf">printf</span><span class="p">(</span><span class="s">&#34;YES</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="ln">12</span><span class="cl"><span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+</span></span><span class="line"><span class="ln">13</span><span class="cl">	<span class="nf">printf</span><span class="p">(</span><span class="s">&#34;NO</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="ln">14</span><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="line"><span class="ln"> 1</span><span class="cl"><span class="cm">/* VISUALC++ */</span>
+</span></span><span class="line"><span class="ln"> 2</span><span class="cl"><span class="n">BOOL</span> <span class="n">found</span> <span class="o">=</span> <span class="n">FALSE</span><span class="p">;</span>
+</span></span><span class="line"><span class="ln"> 3</span><span class="cl"><span class="n">_asm</span>
+</span></span><span class="line"><span class="ln"> 4</span><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="ln"> 5</span><span class="cl">	<span class="n">xor</span> <span class="n">eax</span><span class="p">,</span> <span class="n">eax</span><span class="p">;</span> 			<span class="c1">// clear eax
+</span></span></span><span class="line"><span class="ln"> 6</span><span class="cl">	<span class="n">mov</span> <span class="n">eax</span><span class="p">,</span> <span class="nl">fs</span><span class="p">:[</span><span class="mh">0x30</span><span class="p">];</span> 	<span class="c1">// Reference start of the PEB
+</span></span></span><span class="line"><span class="ln"> 7</span><span class="cl">	<span class="n">mov</span> <span class="n">eax</span><span class="p">,</span> <span class="p">[</span><span class="n">eax</span> <span class="o">+</span> <span class="mh">0x02</span><span class="p">];</span> 	<span class="c1">// PEB+2 points to BeingDebugged
+</span></span></span><span class="line"><span class="ln"> 8</span><span class="cl">	<span class="n">and</span> <span class="n">eax</span><span class="p">,</span> <span class="mh">0x000000FF</span><span class="p">;</span> 	<span class="c1">// only reference one byte
+</span></span></span><span class="line"><span class="ln"> 9</span><span class="cl">	<span class="n">mov</span> <span class="n">found</span><span class="p">,</span> <span class="n">eax</span><span class="p">;</span> 		<span class="c1">// Copy BeingDebugged into &#39;found&#39;
+</span></span></span><span class="line"><span class="ln">10</span><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="ln">11</span><span class="cl"><span class="k">if</span><span class="p">(</span><span class="n">found</span><span class="p">){</span>
+</span></span><span class="line"><span class="ln">12</span><span class="cl">	<span class="nf">printf</span><span class="p">(</span><span class="s">&#34;YES</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="ln">13</span><span class="cl"><span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+</span></span><span class="line"><span class="ln">14</span><span class="cl">	<span class="nf">printf</span><span class="p">(</span><span class="s">&#34;NO</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="ln">15</span><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><p><strong>2. Detecting Breakpoints :</strong></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="line"><span class="ln"> 1</span><span class="cl"><span class="cm">/* VISUALC++ */</span>
+</span></span><span class="line"><span class="ln"> 2</span><span class="cl"><span class="kt">void</span> <span class="nf">detect_breakpoint</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="ln"> 3</span><span class="cl">	<span class="n">BOOL</span> <span class="n">found</span> <span class="o">=</span> <span class="n">TRUE</span><span class="p">;</span>
+</span></span><span class="line"><span class="ln"> 4</span><span class="cl">	<span class="kr">__try</span> <span class="p">{</span>
+</span></span><span class="line"><span class="ln"> 5</span><span class="cl">		<span class="n">_asm</span> <span class="p">{</span>
+</span></span><span class="line"><span class="ln"> 6</span><span class="cl">			<span class="kt">int</span> <span class="mi">3</span><span class="p">;</span> <span class="c1">// \xCC
+</span></span></span><span class="line"><span class="ln"> 7</span><span class="cl">		<span class="p">}</span>
+</span></span><span class="line"><span class="ln"> 8</span><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="ln"> 9</span><span class="cl">	<span class="kr">__except</span> <span class="p">(</span><span class="n">EXCEPTION_EXECUTE_HANDLER</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="ln">10</span><span class="cl">		<span class="n">found</span> <span class="o">=</span> <span class="n">FALSE</span><span class="p">;</span>
+</span></span><span class="line"><span class="ln">11</span><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="ln">12</span><span class="cl">	<span class="k">if</span> <span class="p">(</span><span class="n">found</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="ln">13</span><span class="cl">		<span class="nf">printf</span><span class="p">(</span><span class="s">&#34;NO DEBUGGING</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="ln">14</span><span class="cl">	<span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+</span></span><span class="line"><span class="ln">15</span><span class="cl">		<span class="nf">printf</span><span class="p">(</span><span class="s">&#34;GOOD</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="ln">16</span><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="ln">17</span><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><p><strong>3. Erase PE Headers From Memory:</strong></p>
 <p>This trick helps in ruining any attempt of dumping unpacked binary from memory</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1</span><span style="color:#6272a4">// from AntiRE.h
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2</span><span style="color:#6272a4"></span><span style="color:#ff79c6">inline</span> <span style="color:#8be9fd">void</span> <span style="color:#50fa7b">ErasePEHeaderFromMemory</span>()
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3</span>{
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4</span>	DWORD OldProtect <span style="color:#ff79c6">=</span> <span style="color:#bd93f9">0</span>;
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5</span>	
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6</span>	<span style="color:#6272a4">// Get base address of module
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7</span><span style="color:#6272a4"></span>	<span style="color:#8be9fd">char</span> <span style="color:#ff79c6">*</span>pBaseAddr <span style="color:#ff79c6">=</span> (<span style="color:#8be9fd">char</span><span style="color:#ff79c6">*</span>)GetModuleHandle(<span style="color:#8be9fd;font-style:italic">NULL</span>);
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8</span>
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9</span>	<span style="color:#6272a4">// Change memory protection
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10</span><span style="color:#6272a4"></span>	VirtualProtect(pBaseAddr, <span style="color:#bd93f9">4096</span>, <span style="color:#6272a4">// Assume x86 page size
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11</span><span style="color:#6272a4"></span>			PAGE_READWRITE, <span style="color:#ff79c6">&amp;</span>OldProtect);
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12</span>
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13</span>	<span style="color:#6272a4">// Erase the header
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14</span><span style="color:#6272a4"></span>	ZeroMemory(pBaseAddr, <span style="color:#bd93f9">4096</span>);
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15</span>}
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16</span>
-</code></pre></div><p><strong>4. OutputDebugString() :</strong></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="line"><span class="ln"> 1</span><span class="cl"><span class="c1">// from AntiRE.h
+</span></span></span><span class="line"><span class="ln"> 2</span><span class="cl"><span class="kr">inline</span> <span class="kt">void</span> <span class="nf">ErasePEHeaderFromMemory</span><span class="p">()</span>
+</span></span><span class="line"><span class="ln"> 3</span><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="ln"> 4</span><span class="cl">	<span class="n">DWORD</span> <span class="n">OldProtect</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="ln"> 5</span><span class="cl">	
+</span></span><span class="line"><span class="ln"> 6</span><span class="cl">	<span class="c1">// Get base address of module
+</span></span></span><span class="line"><span class="ln"> 7</span><span class="cl">	<span class="kt">char</span> <span class="o">*</span><span class="n">pBaseAddr</span> <span class="o">=</span> <span class="p">(</span><span class="kt">char</span><span class="o">*</span><span class="p">)</span><span class="nf">GetModuleHandle</span><span class="p">(</span><span class="nb">NULL</span><span class="p">);</span>
+</span></span><span class="line"><span class="ln"> 8</span><span class="cl">
+</span></span><span class="line"><span class="ln"> 9</span><span class="cl">	<span class="c1">// Change memory protection
+</span></span></span><span class="line"><span class="ln">10</span><span class="cl">	<span class="nf">VirtualProtect</span><span class="p">(</span><span class="n">pBaseAddr</span><span class="p">,</span> <span class="mi">4096</span><span class="p">,</span> <span class="c1">// Assume x86 page size
+</span></span></span><span class="line"><span class="ln">11</span><span class="cl">			<span class="n">PAGE_READWRITE</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">OldProtect</span><span class="p">);</span>
+</span></span><span class="line"><span class="ln">12</span><span class="cl">
+</span></span><span class="line"><span class="ln">13</span><span class="cl">	<span class="c1">// Erase the header
+</span></span></span><span class="line"><span class="ln">14</span><span class="cl">	<span class="nf">ZeroMemory</span><span class="p">(</span><span class="n">pBaseAddr</span><span class="p">,</span> <span class="mi">4096</span><span class="p">);</span>
+</span></span><span class="line"><span class="ln">15</span><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><p><strong>4. OutputDebugString() :</strong></p>
 <p>CheckOutputDebugString checks whether OutputDebugString causes an error to occur or not .if the error does occur then we know there&rsquo;s no debugger, otherwise if there IS a debugger no error will occur</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1</span><span style="color:#ff79c6">inline</span> <span style="color:#8be9fd">bool</span> <span style="color:#50fa7b">CheckOutputDebugString</span>(LPCTSTR String)
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2</span>{
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3</span>	OutputDebugString(String);
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4</span>	<span style="color:#ff79c6">if</span> (GetLastError() <span style="color:#ff79c6">==</span> <span style="color:#bd93f9">0</span>)
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5</span>		<span style="color:#ff79c6">return</span> <span style="color:#8be9fd;font-style:italic">true</span>;
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6</span>	<span style="color:#ff79c6">else</span>
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">7</span>		<span style="color:#ff79c6">return</span> <span style="color:#8be9fd;font-style:italic">false</span>;
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">8</span>}
-</code></pre></div><h2 id="linux">LINUX</h2>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="line"><span class="ln">1</span><span class="cl"><span class="kr">inline</span> <span class="kt">bool</span> <span class="nf">CheckOutputDebugString</span><span class="p">(</span><span class="n">LPCTSTR</span> <span class="n">String</span><span class="p">)</span>
+</span></span><span class="line"><span class="ln">2</span><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="ln">3</span><span class="cl">	<span class="nf">OutputDebugString</span><span class="p">(</span><span class="n">String</span><span class="p">);</span>
+</span></span><span class="line"><span class="ln">4</span><span class="cl">	<span class="k">if</span> <span class="p">(</span><span class="nf">GetLastError</span><span class="p">()</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span>
+</span></span><span class="line"><span class="ln">5</span><span class="cl">		<span class="k">return</span> <span class="nb">true</span><span class="p">;</span>
+</span></span><span class="line"><span class="ln">6</span><span class="cl">	<span class="k">else</span>
+</span></span><span class="line"><span class="ln">7</span><span class="cl">		<span class="k">return</span> <span class="nb">false</span><span class="p">;</span>
+</span></span><span class="line"><span class="ln">8</span><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><h2 id="linux">LINUX</h2>
 <ol>
 <li><strong>Ptrace :</strong></li>
 </ol>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1</span><span style="color:#6272a4">/* trying-to-make-your-binary-shut-up.txt : https://www.exploit-db.com/raw/13188 */</span>
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2</span><span style="color:#ff79c6">#include</span> <span style="color:#ff79c6">&lt;stdio.h&gt;</span><span style="color:#ff79c6">
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3</span><span style="color:#ff79c6">#include</span> <span style="color:#ff79c6">&lt;sys/ptrace.h&gt;</span><span style="color:#ff79c6">
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4</span><span style="color:#ff79c6"></span>
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5</span><span style="color:#8be9fd">void</span> <span style="color:#50fa7b">main</span>(<span style="color:#8be9fd">void</span>)
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6</span>{
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7</span> FILE <span style="color:#ff79c6">*</span>fd;
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8</span> <span style="color:#ff79c6">if</span> (ptrace(PTRACE_TRACEME, <span style="color:#bd93f9">0</span>, <span style="color:#bd93f9">1</span>, <span style="color:#bd93f9">0</span>) <span style="color:#ff79c6">==</span> <span style="color:#ff79c6">-</span><span style="color:#bd93f9">1</span>)
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9</span> {
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10</span>   printf(<span style="color:#f1fa8c">&#34;so you wanna trace me?...</span><span style="color:#f1fa8c">\n</span><span style="color:#f1fa8c">&#34;</span>);
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11</span>   <span style="color:#ff79c6">return</span>(<span style="color:#ff79c6">-</span><span style="color:#bd93f9">1</span>);
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12</span> }
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13</span>
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14</span> fd <span style="color:#ff79c6">=</span> fopen(<span style="color:#f1fa8c">&#34;/etc/passwd&#34;</span>, <span style="color:#f1fa8c">&#34;r&#34;</span>);
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15</span> <span style="color:#ff79c6">if</span>(fd <span style="color:#ff79c6">==</span> <span style="color:#8be9fd;font-style:italic">NULL</span>) <span style="color:#ff79c6">return</span>;
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16</span> <span style="color:#ff79c6">else</span> printf(<span style="color:#f1fa8c">&#34;file opend</span><span style="color:#f1fa8c">\n</span><span style="color:#f1fa8c">&#34;</span>);
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17</span> exit(<span style="color:#ff79c6">-</span><span style="color:#bd93f9">1</span>);
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18</span>}
-</code></pre></div><p><strong>2. You Tell :</strong></p>
-        </div>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="line"><span class="ln"> 1</span><span class="cl"><span class="cm">/* trying-to-make-your-binary-shut-up.txt : https://www.exploit-db.com/raw/13188 */</span>
+</span></span><span class="line"><span class="ln"> 2</span><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;stdio.h&gt;</span><span class="cp">
+</span></span></span><span class="line"><span class="ln"> 3</span><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;sys/ptrace.h&gt;</span><span class="cp">
+</span></span></span><span class="line"><span class="ln"> 4</span><span class="cl">
+</span></span><span class="line"><span class="ln"> 5</span><span class="cl"><span class="kt">void</span> <span class="nf">main</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span>
+</span></span><span class="line"><span class="ln"> 6</span><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="ln"> 7</span><span class="cl"> <span class="n">FILE</span> <span class="o">*</span><span class="n">fd</span><span class="p">;</span>
+</span></span><span class="line"><span class="ln"> 8</span><span class="cl"> <span class="k">if</span> <span class="p">(</span><span class="nf">ptrace</span><span class="p">(</span><span class="n">PTRACE_TRACEME</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+</span></span><span class="line"><span class="ln"> 9</span><span class="cl"> <span class="p">{</span>
+</span></span><span class="line"><span class="ln">10</span><span class="cl">   <span class="nf">printf</span><span class="p">(</span><span class="s">&#34;so you wanna trace me?...</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="ln">11</span><span class="cl">   <span class="k">return</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">);</span>
+</span></span><span class="line"><span class="ln">12</span><span class="cl"> <span class="p">}</span>
+</span></span><span class="line"><span class="ln">13</span><span class="cl">
+</span></span><span class="line"><span class="ln">14</span><span class="cl"> <span class="n">fd</span> <span class="o">=</span> <span class="nf">fopen</span><span class="p">(</span><span class="s">&#34;/etc/passwd&#34;</span><span class="p">,</span> <span class="s">&#34;r&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="ln">15</span><span class="cl"> <span class="k">if</span><span class="p">(</span><span class="n">fd</span> <span class="o">==</span> <span class="nb">NULL</span><span class="p">)</span> <span class="k">return</span><span class="p">;</span>
+</span></span><span class="line"><span class="ln">16</span><span class="cl"> <span class="k">else</span> <span class="nf">printf</span><span class="p">(</span><span class="s">&#34;file opend</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="ln">17</span><span class="cl"> <span class="nf">exit</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">);</span>
+</span></span><span class="line"><span class="ln">18</span><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><p><strong>2. You Tell :</strong></p>
 
+    </div>
+    <footer class="document-footer">
+      
+    </footer>
+  </article>
 
+  
+    <nav class="document-nav" aria-label="Article navigation">
+      
+      
+        <a href="/posts/year3000/">next: Year3000</a>
+      
+    </nav>
+  
 
-        <footer class="post-footer">
-                
-                
-                
-        
-                
-                
-                
-        </footer>
-        
-<table cellspacing="15" style="width:100%; border: none;">
-    <tr>
-        <td style="text-align: center; border: none; padding: 0px;">
-        </td>
-        <td style="text-align: center; border: none; padding: 0px;">
-        </td>
-    </tr>
-</table>
-
-        
-    </article>
-
-    
-
-</main>
-
-
-        <div class="sidebar1 widgets columns-1">
-
-    <aside>
-    
-</aside>
-    <aside class="widget widget_categories">
-        <h2>Categories</h2>
-        <ul class="widget__list"><li class="cat-item cat-item-2">
-                <a href="https://x3ero0.github.io/categories/crackmes/">Crackmes (7)</a>
-            </li><li class="cat-item cat-item-2">
-                <a href="https://x3ero0.github.io/categories/ctf/">CTF (2)</a>
-            </li><li class="cat-item cat-item-2">
-                <a href="https://x3ero0.github.io/categories/pwn/">Pwn (3)</a>
-            </li><li class="cat-item cat-item-2">
-                <a href="https://x3ero0.github.io/categories/rev/">Rev (5)</a>
-            </li>
-        </ul>
-    </aside>
-
-    <aside class="widget widget_recent_entries">
-        <h2>Recent Posts</h2>
-        <ul>
-            
-                
-                    <li>
-                        <a href="https://x3ero0.github.io/posts/orxw_balsn_ctf_2021_pwn/">or⊕w writeup from Balsn CTF 2021</a>
-                    </li>
-                
-            
-                
-                    <li>
-                        <a href="https://x3ero0.github.io/posts/easy_kernel_exploitation/">Easy_Kernel Writeup from K3RN3LCTF 2021</a>
-                    </li>
-                
-            
-                
-                    <li>
-                        <a href="https://x3ero0.github.io/posts/hyperion/">Hyperion Writeup</a>
-                    </li>
-                
-            
-                
-                    <li>
-                        <a href="https://x3ero0.github.io/posts/float-writeup/">Float Writeup</a>
-                    </li>
-                
-            
-                
-            
-                
-                    <li>
-                        <a href="https://x3ero0.github.io/posts/hell86_from_ttlhacker/">Hell86 - ttlhacker</a>
-                    </li>
-                
-            
-                
-                    <li>
-                        <a href="https://x3ero0.github.io/posts/reversing_a_malware_in_disguise/">Reversing a malware in disguise</a>
-                    </li>
-                
-            
-                
-                    <li>
-                        <a href="https://x3ero0.github.io/posts/watevr_repyc/">Watevr_repyc</a>
-                    </li>
-                
-            
-                
-            
-                
-                    <li>
-                        <a href="https://x3ero0.github.io/posts/hsctf-license/">HSCTF License</a>
-                    </li>
-                
-            
-        </ul>
-    </aside>
-
-    <aside class="widget widget_recent_entries">
-        <h2>Recent Crackmes</h2>
-        <ul>
-            
-                
-            
-                
-            
-                
-            
-                
-            
-                
-                    <li>
-                        <a href="https://x3ero0.github.io/crackmes/fl04t/">[0x007] fl04t</a>
-                    </li>
-                
-            
-                
-            
-                
-            
-                
-            
-                
-            
-                
-            
-        </ul>
-    </aside>
-</div>
-
-        </div>
-        </div>
-<footer role="contentinfo" class="document-footer contentinfo widgets columns-1">
-
-    <aside class="widget widget_text">
-        <div class="textwidget">
-            <p>© x3ero0&#39;s blog</p>
-        </div>
-    </aside>
+    </main>
+    <footer class="site-footer">
+  <div class="footer-panel">
+    <p>Copying is an act of love, feel free to copy.</p>
+  </div>
 </footer>
-</div>
 
-    </body>
+  </div>
+  
+
+
+
+
+
+  
+  
+  
+  
+
+
+<aside class="theme-sidebar" aria-label="Theme controls">
+  <div class="sidebar-stack">
+    <div class="theme-window">
+      <div class="window-titlebar" aria-hidden="true">
+        <span class="window-title">&nbsp;</span>
+      </div>
+      <div class="window-content theme-window-content">
+        <button class="theme-toggle" type="button" data-theme-toggle aria-pressed="false">
+          <span class="theme-toggle-track" aria-hidden="true">
+            <span class="theme-toggle-thumb"></span>
+          </span>
+          <span class="theme-toggle-text" data-theme-label>light</span>
+        </button>
+      </div>
+    </div>
+
+    <section class="guestbook-window" aria-label="Guestbook">
+      <div class="window-titlebar">
+        <span class="window-title">guestbook</span>
+      </div>
+      <div class="window-content guestbook-window-content">
+        <div class="guestbook-feed" data-guestbook-feed aria-live="polite"></div>
+        <form
+          class="guestbook-form"
+          data-guestbook-form
+          data-guestbook-remote-enabled="true"
+          method="post"
+          target="guestbook-hidden-transport"
+          action="https://docs.google.com/forms/d/e/1FAIpQLSctVbY2_aoazFFBBdS3CFGsKIb0JmXJTk1MbITiuh6rfHOLzg/formResponse"
+        >
+          <div class="guestbook-row">
+            <input
+              class="guestbook-input"
+              type="text"
+              maxlength="24"
+              placeholder="nickname"
+              aria-label="Nickname"
+              autocomplete="nickname"
+              data-guestbook-nickname
+              name="entry.1908159203" id="entry.1908159203"
+            >
+            <div class="guestbook-actions">
+              <button class="window-button" type="submit">send</button>
+            </div>
+          </div>
+          <input
+            class="guestbook-input"
+            type="text"
+            maxlength="240"
+            placeholder="website"
+            aria-label="Website"
+            autocomplete="off"
+            data-guestbook-website
+            name="entry.1928902955" id="entry.1928902955"
+          >
+          <textarea
+            class="guestbook-input guestbook-comment"
+            rows="4"
+            placeholder="comment"
+            aria-label="Comment"
+            autocomplete="off"
+            data-guestbook-comment
+            name="entry.1702949315" id="entry.1702949315"
+            maxlength="240"
+          ></textarea>
+          
+        </form>
+        <iframe
+          name="guestbook-hidden-transport"
+          class="guestbook-transport"
+          title="guestbook submission transport"
+          tabindex="-1"
+          hidden
+        ></iframe>
+      </div>
+    </section>
+  </div>
+
+  <div class="guestbook-dialog" data-guestbook-dialog hidden>
+    <button
+      class="guestbook-dialog-backdrop"
+      type="button"
+      aria-label="Close dialog"
+      data-guestbook-dialog-close
+    ></button>
+    <section class="guestbook-dialog-window" role="dialog" aria-modal="true" aria-labelledby="guestbook-dialog-title">
+      <div class="window-titlebar">
+        <span class="window-title" id="guestbook-dialog-title">guestbook</span>
+        <div class="window-actions">
+          <button
+            class="window-button window-button-icon"
+            type="button"
+            aria-label="Close dialog"
+            data-guestbook-dialog-close
+            data-guestbook-dialog-close-button
+          >X</button>
+        </div>
+      </div>
+      <div class="window-content guestbook-dialog-content">
+        <p>Your comment is under review. Check back later.</p>
+        <div class="guestbook-dialog-actions">
+          <button
+            class="window-button"
+            type="button"
+            data-guestbook-dialog-close
+          >OK</button>
+        </div>
+      </div>
+    </section>
+  </div>
+</aside>
+
+</body>
 </html>

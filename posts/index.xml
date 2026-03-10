@@ -4,191 +4,44 @@
     <title>Posts on x3ero0&#39;s blog</title>
     <link>https://x3ero0.github.io/posts/</link>
     <description>Recent content in Posts on x3ero0&#39;s blog</description>
-    <generator>Hugo -- gohugo.io</generator>
+    <generator>Hugo</generator>
     <language>en-us</language>
-    <copyright>Copyright © 2008–2021</copyright>
-    <lastBuildDate>Mon, 22 Nov 2021 17:33:36 +0530</lastBuildDate><atom:link href="https://x3ero0.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
-    <item>
-      <title>or⊕w writeup from Balsn CTF 2021</title>
-      <link>https://x3ero0.github.io/posts/orxw_balsn_ctf_2021_pwn/</link>
-      <pubDate>Mon, 22 Nov 2021 17:33:36 +0530</pubDate>
-      
-      <guid>https://x3ero0.github.io/posts/orxw_balsn_ctf_2021_pwn/</guid>
-      <description>Author : how2hack Upload : Nov 20th, 2021 Rating : I will rate it 10/10 Platform : Linux Files : or⊕w Desc : No more orw for you :(  First look  or⊕w was the easiest pwn challenge from Balsn CTF 2021. There were 3 more Pwn tasks, which were really hard. In total there were 4 pwn challenges and I only managed to solve or⊕w. Here is the list of Pwn challenges.</description>
-    </item>
-    
-    <item>
-      <title>Easy_Kernel Writeup from K3RN3LCTF 2021</title>
-      <link>https://x3ero0.github.io/posts/easy_kernel_exploitation/</link>
-      <pubDate>Sun, 14 Nov 2021 16:13:20 +0530</pubDate>
-      
-      <guid>https://x3ero0.github.io/posts/easy_kernel_exploitation/</guid>
-      <description>Author : Seal Twitter CTF : K3RN3LCTF Files: easy_kernel.tar.gz Platform : Linux Kernel 5.4.0 (KASLR, SMEP, SMAP, KPTI)  It&amp;rsquo;s been a while, huh?
-Today, we will dive into the basics of Linux Kernel Exploitation. I am not very experienced when it comes to Linux Kernel Exploitaion and I am still learning. So, I am writing about the challenge I solved this weekend in K3RN3LCTF 2021.
-First Look  We have a bunch of files to work with.</description>
-    </item>
-    
-    <item>
-      <title>Hyperion Writeup</title>
-      <link>https://x3ero0.github.io/posts/hyperion/</link>
-      <pubDate>Fri, 26 Mar 2021 12:13:38 +0530</pubDate>
-      
-      <guid>https://x3ero0.github.io/posts/hyperion/</guid>
-      <description>&lt;ul&gt;
-&lt;li&gt;Author : &lt;a href=&#34;https://gynvael.coldwind.pl/&#34;&gt;Gynvael Coldwind&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;Language : C/C++&lt;/li&gt;
-&lt;li&gt;Upload : May 9th, 2018&lt;/li&gt;
-&lt;li&gt;Level : I will rate it 8/10&lt;/li&gt;
-&lt;li&gt;Platform : Server: Linux | Client: Windows/Linux etc.&lt;/li&gt;
-&lt;li&gt;Files : &lt;a href=&#34;https://github.com/google/google-ctf/tree/master/2017/finals/2017-finals-pwn-hyperion/&#34;&gt;hyperion&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;Desc : It&amp;rsquo;s 2017, so even single-player games require Internet connection.&lt;/li&gt;
-&lt;/ul&gt;
-
-
-&lt;br&gt;
-
-&lt;p&gt;Hyperion was one of the pwn challenges from Google CTF 2017 Finals. One day I randomly asked Gynvael (who is the author of this challenge) to give me some CTF challenges. He gave me 3 Revs and 1 Pwn challenges. In the end I solved 2 Revs and 1 Pwn.  I received these challenges in June 2019, I solved the 2 Revs (the 3rd Rev is still unsolved and I still have no clue XD) sometime in 2020 but this Pwn (Hyperion) was still remaining. Just recently I decided that I will take a look and I will solve it finally.&lt;/p&gt;</description>
-    </item>
-    
-    <item>
-      <title>Float Writeup</title>
-      <link>https://x3ero0.github.io/posts/float-writeup/</link>
-      <pubDate>Sun, 07 Jun 2020 05:39:55 +0000</pubDate>
-      
-      <guid>https://x3ero0.github.io/posts/float-writeup/</guid>
-      <description>&lt;p&gt;Solving the Float &lt;a href=&#34;https://x3ero0.github.io/crackmes/fl04t/&#34;&gt;crackme&lt;/a&gt;&lt;/p&gt;</description>
-    </item>
-    
-    <item>
-      <title>Hell86 - ttlhacker</title>
-      <link>https://x3ero0.github.io/posts/hell86_from_ttlhacker/</link>
-      <pubDate>Mon, 18 May 2020 13:03:48 +0000</pubDate>
-      
-      <guid>https://x3ero0.github.io/posts/hell86_from_ttlhacker/</guid>
-      <description>Hell86  Author : ttlhacker Language : Assembler Upload : 8:03 PM 10/12/2018 Level : 3 Platform : Unix/Linux etc. Crackme : crackmes.one  1Desc: 2 3 - x86_64 linux binary (tested on debian 9 and ubuntu 18.04, should run on any distro). 4 - Takes one command line argument and outputs &amp;#34;OK!&amp;#34; if it&amp;#39;s correct, &amp;#34;Wrong&amp;#34; if it&amp;#39;s not. 5 - Partially written in C, actual verification routine is assembly.</description>
-    </item>
-    
-    <item>
-      <title>Reversing a malware in disguise</title>
-      <link>https://x3ero0.github.io/posts/reversing_a_malware_in_disguise/</link>
-      <pubDate>Tue, 14 Apr 2020 17:51:27 +0000</pubDate>
-      
-      <guid>https://x3ero0.github.io/posts/reversing_a_malware_in_disguise/</guid>
-      <description>&lt;link rel=&#34;stylesheet&#34; href=&#34;https://x3ero0.github.io/css/styles/atelier-forest-dark.css&#34;&gt;
-&lt;script src=&#34;https://x3ero0.github.io/js/highlight.pack.js&#34;&gt;&lt;/script&gt;
-&lt;script&gt;hljs.initHighlightingOnLoad();&lt;/script&gt;
-
-&lt;p&gt;My Friend recommended this Super Awesome game &lt;strong&gt;The_Elder_Scrolls_V_Skyrim.zip&lt;/strong&gt; and obviously it was downloaded from a random website from the internet ( some ripoff of the OceanOfGames.com ).
-The contents of the &lt;strong&gt;The_Elder_Scrolls_V_Skyrim.zip&lt;/strong&gt; are as follows : -&lt;/p&gt;</description>
-    </item>
-    
+    <lastBuildDate>Fri, 10 Apr 2020 20:20:07 +0000</lastBuildDate>
+    <atom:link href="https://x3ero0.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Watevr_repyc</title>
       <link>https://x3ero0.github.io/posts/watevr_repyc/</link>
       <pubDate>Fri, 10 Apr 2020 20:20:07 +0000</pubDate>
-      
       <guid>https://x3ero0.github.io/posts/watevr_repyc/</guid>
-      <description>&lt;link rel=&#34;stylesheet&#34; href=&#34;https://x3ero0.github.io/css/styles/atelier-forest-dark.css&#34;&gt;
-&lt;script src=&#34;https://x3ero0.github.io/js/highlight.pack.js&#34;&gt;&lt;/script&gt;
-&lt;script&gt;hljs.initHighlightingOnLoad();&lt;/script&gt;
-
-&lt;h3 id=&#34;challenge-repyc-rev---147-points&#34;&gt;Challenge: REPYC [REV] - 147 Points&lt;/h3&gt;
-&lt;p&gt;Challenge Description:&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;woo thi chal sooo repyc!&lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
-&lt;li&gt;File: &lt;a href=&#34;https://github.com/X3eRo0/Crackmes/blob/master/watevrctf/3nohtyp.pyc?raw=true&#34;&gt;3nohtyp.pyc&lt;/a&gt;&lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
-&lt;li&gt;Difficulty estimate: Easy&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;We are given a pyc file and running file on this pyc reveals that its a python 3.6 compiled python bytecode.&lt;/p&gt;</description>
+      <description>&lt;h3 id=&#34;challenge-repyc-rev---147-points&#34;&gt;Challenge: REPYC [REV] - 147 Points&lt;/h3&gt;&#xA;&lt;p&gt;Challenge Description:&lt;/p&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;woo thi chal sooo repyc!&lt;!-- raw HTML omitted --&gt;&lt;/li&gt;&#xA;&lt;li&gt;File: &lt;a href=&#34;https://github.com/X3eRo0/Crackmes/blob/master/watevrctf/3nohtyp.pyc?raw=true&#34;&gt;3nohtyp.pyc&lt;/a&gt;&lt;!-- raw HTML omitted --&gt;&lt;/li&gt;&#xA;&lt;li&gt;Difficulty estimate: Easy&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;p&gt;We are given a pyc file and running file on this pyc reveals that its a python 3.6 compiled python bytecode.&#xA;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-plaintext&#34; data-lang=&#34;plaintext&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;ln&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;cl&#34;&gt;[~]$ file 3nohtyp.pyc                                                                              &#xA;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;ln&#34;&gt;2&lt;/span&gt;&lt;span class=&#34;cl&#34;&gt;3nohtyp.pyc: python 3.6 byte-compiled&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/p&gt;&#xA;&lt;p&gt;so i went with the usuall approach to a python pyc challenge, where the first part is to decompile the bytecode.&#xA;i used uncompyle6 &lt;code&gt;[~]$ uncompyle6 3nohtyp.pyc &amp;gt; repyc.py&lt;/code&gt; and the output was very weird just look at this &lt;a href=&#34;https://pastebin.com/h8dM34Jt&#34;&gt;file&lt;/a&gt;&lt;/p&gt;</description>
     </item>
-    
     <item>
       <title>HSCTF License</title>
       <link>https://x3ero0.github.io/posts/hsctf-license/</link>
       <pubDate>Fri, 10 Apr 2020 20:06:26 +0000</pubDate>
-      
       <guid>https://x3ero0.github.io/posts/hsctf-license/</guid>
-      <description>&lt;h3 id=&#34;challenge-license--298dyn-re-&#34;&gt;Challenge: License [ 298(DYN) RE ]&lt;/h3&gt;
-&lt;p&gt;Challenge Description:&lt;/p&gt;
-&lt;p&gt;Written by: ItzSomebody&lt;/p&gt;
-&lt;p&gt;Description:&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;Keith made a cool license-checking program but he forgot the flag he used to create the key!
-To make matters worse, he lost the source code and stripped the binary for his
-license-generator program. Can you help Keith recover his flag? All he knows is:&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;ul&gt;
-&lt;li&gt;The license key is 4-EZF2M-7O5F4-V9P7O-EVFDP-E4VDO-O&lt;/li&gt;
-&lt;li&gt;He put his name (in the form of &amp;lsquo;k3ith&amp;rsquo;) as the first part of the flag&lt;/li&gt;
-&lt;li&gt;There are 3 underscores&lt;/li&gt;
-&lt;li&gt;The flag is in the format hsctf{}&lt;/li&gt;
-&lt;li&gt;The flag doesn&amp;rsquo;t have random character sequences (you should be able to read the&lt;/li&gt;
-&lt;li&gt;entire flag easily).&lt;/li&gt;
-&lt;li&gt;The flag only contains lowercase English letters and numbers.&lt;/li&gt;
-&lt;li&gt;The generator might produce the same keys for different inputs because
-Keith was too lazy to write the algorithm properly.&lt;/li&gt;
-&lt;/ul&gt;</description>
+      <description>&lt;h3 id=&#34;challenge-license--298dyn-re-&#34;&gt;Challenge: License [ 298(DYN) RE ]&lt;/h3&gt;&#xA;&lt;p&gt;Challenge Description:&lt;/p&gt;&#xA;&lt;p&gt;Written by: ItzSomebody&lt;/p&gt;&#xA;&lt;p&gt;Description:&lt;/p&gt;&#xA;&lt;blockquote&gt;&#xA;&lt;p&gt;Keith made a cool license-checking program but he forgot the flag he used to create the key!&#xA;To make matters worse, he lost the source code and stripped the binary for his&#xA;license-generator program. Can you help Keith recover his flag? All he knows is:&lt;/p&gt;&#xA;&lt;/blockquote&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;The license key is 4-EZF2M-7O5F4-V9P7O-EVFDP-E4VDO-O&lt;/li&gt;&#xA;&lt;li&gt;He put his name (in the form of &amp;lsquo;k3ith&amp;rsquo;) as the first part of the flag&lt;/li&gt;&#xA;&lt;li&gt;There are 3 underscores&lt;/li&gt;&#xA;&lt;li&gt;The flag is in the format hsctf{}&lt;/li&gt;&#xA;&lt;li&gt;The flag doesn&amp;rsquo;t have random character sequences (you should be able to read the&lt;/li&gt;&#xA;&lt;li&gt;entire flag easily).&lt;/li&gt;&#xA;&lt;li&gt;The flag only contains lowercase English letters and numbers.&lt;/li&gt;&#xA;&lt;li&gt;The generator might produce the same keys for different inputs because&#xA;Keith was too lazy to write the algorithm properly.&#xA;Binary : &lt;a href=&#34;https://github.com/X3eRo0/Crackmes/raw/master/hsctf/license&#34;&gt;license&lt;/a&gt;&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;p&gt;before opening the binary in any disassembler or any debugger, i thought lets take a look at what it does.&lt;/p&gt;</description>
     </item>
-    
     <item>
       <title>Plaintext Attack on Zip</title>
       <link>https://x3ero0.github.io/posts/plaintext_attack_on_zip_legacy_crypto/</link>
       <pubDate>Fri, 27 Mar 2020 09:54:19 +0000</pubDate>
-      
       <guid>https://x3ero0.github.io/posts/plaintext_attack_on_zip_legacy_crypto/</guid>
-      <description>&lt;link rel=&#34;stylesheet&#34; href=&#34;https://x3ero0.github.io/css/styles/atelier-forest-dark.css&#34;&gt;
-&lt;script src=&#34;https://x3ero0.github.io/js/highlight.pack.js&#34;&gt;&lt;/script&gt;
-&lt;script&gt;hljs.initHighlightingOnLoad();&lt;/script&gt;
-
-&lt;h3 id=&#34;the-vulnerability&#34;&gt;The Vulnerability&lt;/h3&gt;
-&lt;p&gt;The PKZIP program is one of the more widely used archive/compression programs on personal computers. PKZIP provides a stream cipher which allows users to scramble files with variable length keys ( passwords ). We can find the internal representation of the key within a few hours on a PC using a few bytes of known plaintext. This Stream cipher was designed by Roger Schlafly.&lt;/p&gt;</description>
+      <description>&lt;h3 id=&#34;the-vulnerability&#34;&gt;The Vulnerability&lt;/h3&gt;&#xA;&lt;p&gt;The PKZIP program is one of the more widely used archive/compression programs on personal computers. PKZIP provides a stream cipher which allows users to scramble files with variable length keys ( passwords ). We can find the internal representation of the key within a few hours on a PC using a few bytes of known plaintext. This Stream cipher was designed by Roger Schlafly.&#xA;We will take a look at the Forensics 3 challenge from RiftCTF2020, But first lets understand the weakness.&#xA;The attack primarily finds the 96-bit internal representation of the key, which suffices to decrypt the whole file and any other file encrypted under the same key. Later the original key can be constructed.&lt;/p&gt;</description>
     </item>
-    
     <item>
       <title>Year3000</title>
       <link>https://x3ero0.github.io/posts/year3000/</link>
       <pubDate>Sat, 08 Feb 2020 18:04:11 +0000</pubDate>
-      
       <guid>https://x3ero0.github.io/posts/year3000/</guid>
-      <description>&lt;link rel=&#34;stylesheet&#34; href=&#34;https://x3ero0.github.io/css/styles/atelier-forest-dark.css&#34;&gt;
-&lt;script src=&#34;https://x3ero0.github.io/js/highlight.pack.js&#34;&gt;&lt;/script&gt;
-&lt;script&gt;hljs.initHighlightingOnLoad();&lt;/script&gt;
-
-&lt;h2 id=&#34;year3000-re---nullcon-hackim2020-ctf&#34;&gt;Year3000 [RE - Nullcon Hackim2020 CTF]&lt;/h2&gt;
-&lt;p&gt;Description&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-plaintext&#34; data-lang=&#34;plaintext&#34;&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;1&lt;/span&gt;One day when I came home at lunchtime I heard a funny noise Went out to the
-&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;2&lt;/span&gt;back yard to find out If it was one of those rowdy boys Stood there was my
-&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;3&lt;/span&gt;neighbor called Peter And a flux capacitor. I guess there must be quite some
-&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;4&lt;/span&gt;entropy in a flux capacitor...
-&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;5&lt;/span&gt;
-&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;6&lt;/span&gt;Netcat Link : nc re.ctf.nullcon.net 1234
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;we were given 3000 stripped ELF binaries some 64bit binaries and 32bit binaries. the description of the challenge did&amp;rsquo;nt explained what exactly the task was, so i tried to connect to the given netcat link.&lt;/p&gt;</description>
+      <description>&lt;h2 id=&#34;year3000-re---nullcon-hackim2020-ctf&#34;&gt;Year3000 [RE - Nullcon Hackim2020 CTF]&lt;/h2&gt;&#xA;&lt;p&gt;Description&lt;/p&gt;&#xA;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-plaintext&#34; data-lang=&#34;plaintext&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;ln&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;cl&#34;&gt;One day when I came home at lunchtime I heard a funny noise Went out to the&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;ln&#34;&gt;2&lt;/span&gt;&lt;span class=&#34;cl&#34;&gt;back yard to find out If it was one of those rowdy boys Stood there was my&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;ln&#34;&gt;3&lt;/span&gt;&lt;span class=&#34;cl&#34;&gt;neighbor called Peter And a flux capacitor. I guess there must be quite some&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;ln&#34;&gt;4&lt;/span&gt;&lt;span class=&#34;cl&#34;&gt;entropy in a flux capacitor...&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;ln&#34;&gt;5&lt;/span&gt;&lt;span class=&#34;cl&#34;&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;ln&#34;&gt;6&lt;/span&gt;&lt;span class=&#34;cl&#34;&gt;Netcat Link : nc re.ctf.nullcon.net 1234&#xA;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;we were given 3000 stripped ELF binaries some 64bit binaries and 32bit binaries. the description of the challenge did&amp;rsquo;nt explained what exactly the task was, so i tried to connect to the given netcat link.&lt;/p&gt;</description>
     </item>
-    
     <item>
       <title>Obfuscation_Techniques</title>
       <link>https://x3ero0.github.io/posts/obfuscation-techniques/</link>
       <pubDate>Wed, 05 Feb 2020 06:34:52 +0000</pubDate>
-      
       <guid>https://x3ero0.github.io/posts/obfuscation-techniques/</guid>
-      <description>&lt;link rel=&#34;stylesheet&#34; href=&#34;https://x3ero0.github.io/css/styles/atelier-forest-dark.css&#34;&gt;
-&lt;script src=&#34;https://x3ero0.github.io/js/highlight.pack.js&#34;&gt;&lt;/script&gt;
-&lt;script&gt;hljs.initHighlightingOnLoad();&lt;/script&gt;
-
-
-
-
-&lt;div class=&#34;center&#34;&gt;
-  &lt;img
-    class=&#34;responsive&#34;
-    src=&#34;https://x3ero0.github.io/img/Obfuscation_Techniques/Cover.jpg&#34;
-    alt=&#34;BeingDebugged under IDA Pro&#34;
-    decoding=&#34;async&#34;
-  /&gt;
-&lt;/div&gt;
-&lt;hr&gt;
-&lt;p&gt;Recently I was watching &lt;a href=&#34;https://www.youtube.com/user/GynvaelEN&#34;&gt;GynvaelEN&amp;rsquo;s&lt;/a&gt; Old &lt;a href=&#34;https://www.youtube.com/watch?v=5RK7sYTOeNk&#34;&gt;Stream&lt;/a&gt; about ELF Packers, and I thought why not make a PE Packer. I decided that I will write a python script to Parse PE Headers from scratch, I was able to parse some headers and then I got stuck and decided that I will use &lt;a href=&#34;https://github.com/erocarrera/pefile&#34;&gt;PEFILE&lt;/a&gt;.&lt;/p&gt;</description>
+      <description>&lt;div class=&#34;center image-window&#34; data-image-window&gt;&#xA;  &lt;div class=&#34;window-titlebar&#34;&gt;&#xA;    &lt;span class=&#34;window-title&#34;&gt;BeingDebugged under IDA Pro&lt;/span&gt;&#xA;    &lt;button&#xA;      class=&#34;window-button window-button-icon window-minimize&#34;&#xA;      type=&#34;button&#34;&#xA;      aria-expanded=&#34;true&#34;&#xA;      aria-label=&#34;Minimize image&#34;&#xA;      data-window-toggle&#xA;    &gt;−&lt;/button&gt;&#xA;  &lt;/div&gt;&#xA;  &lt;div class=&#34;window-content&#34;&gt;&#xA;    &lt;img&#xA;      class=&#34;responsive&#34;&#xA;      src=&#34;https://x3ero0.github.io/img/Obfuscation_Techniques/Cover.jpg&#34;&#xA;      alt=&#34;BeingDebugged under IDA Pro&#34;&#xA;      decoding=&#34;async&#34;&#xA;    /&gt;&#xA;  &lt;/div&gt;&#xA;&lt;/div&gt;&#xA;&#xA;&lt;hr&gt;&#xA;&lt;p&gt;Recently I was watching &lt;a href=&#34;https://www.youtube.com/user/GynvaelEN&#34;&gt;GynvaelEN&amp;rsquo;s&lt;/a&gt; Old &lt;a href=&#34;https://www.youtube.com/watch?v=5RK7sYTOeNk&#34;&gt;Stream&lt;/a&gt; about ELF Packers, and I thought why not make a PE Packer. I decided that I will write a python script to Parse PE Headers from scratch, I was able to parse some headers and then I got stuck and decided that I will use &lt;a href=&#34;https://github.com/erocarrera/pefile&#34;&gt;PEFILE&lt;/a&gt;.&#xA;──────▄▌▐▀▀▀▀▀▀▀▀▀▀▀▀▀​▀▀▀▀▀▀▌&lt;br&gt;&#xA;───▄▄██▌█ BEEP BEEP &lt;br&gt;&#xA;▄▄▄▌▐██▌█ POOR SCRIPT AHEAD&lt;br&gt;&#xA;███████▌█▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▌ &lt;br&gt;&#xA;▀(@)▀▀▀▀▀▀▀(@)(@)▀▀▀▀▀▀▀▀(@)▀   &lt;br&gt;&#xA;so I made a poor packer which is available here &lt;a href=&#34;https://github.com/X3eRo0/packer/&#34;&gt;packer&lt;/a&gt;.&#xA;Keep in mind it only works for some 32bit Windows Executables.&#xA;Now the question comes that what are some anti-debugging techniques in windows like we have in Linux.&lt;/p&gt;</description>
     </item>
-    
   </channel>
 </rss>
