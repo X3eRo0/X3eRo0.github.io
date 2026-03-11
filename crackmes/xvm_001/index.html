@@ -9,21 +9,28 @@
 
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>[0x002] xvm_001 | x3ero0&#39;s blog</title>
+<title>xvm_001 | x3ero0&#39;s blog</title>
 <meta name="description" content="x3ero0&#39;s blog contains reverse engineering notes, crackmes, and CTF writeups.">
 <meta name="theme-color" content="#ecd7af">
 <script>
   (() => {
-    const storageKey = "reflector-theme";
+    const themeStorageKey = "reflector-theme";
+    const soundStorageKey = "reflector-sound";
     const root = document.documentElement;
     let theme = "light";
+    let sound = "off";
 
     try {
-      const stored = localStorage.getItem(storageKey);
-      if (stored === "light" || stored === "dark") {
-        theme = stored;
+      const storedTheme = localStorage.getItem(themeStorageKey);
+      if (storedTheme === "light" || storedTheme === "dark") {
+        theme = storedTheme;
       } else if (window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches) {
         theme = "dark";
+      }
+
+      const storedSound = localStorage.getItem(soundStorageKey);
+      if (storedSound === "on" || storedSound === "off") {
+        sound = storedSound;
       }
     } catch (error) {
       if (window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches) {
@@ -32,6 +39,7 @@
     }
 
     root.dataset.theme = theme;
+    root.dataset.sound = sound;
     const meta = document.querySelector('meta[name="theme-color"]');
     if (meta) {
       meta.setAttribute("content", theme === "dark" ? "#111315" : "#ecd7af");
@@ -46,10 +54,10 @@
 
   <link rel="stylesheet" href="/css/chroma-light.css">
   <link rel="stylesheet" href="/css/chroma-dark.css">
-      <link rel="stylesheet" href="/css/main.min.ab84453c0a2d4244b57ef088588542846dc4a1ebadec500a69bbc59dde6215d1.css" integrity="sha256-q4RFPAotQkS1fvCIWIVChG3Eoeut7FAKabvFnd5iFdE=" crossorigin="anonymous">
+      <link rel="stylesheet" href="/css/main.min.0e1a5ad7749886eb543eadd58831050e4e4746563f1f89e0742892f397b9bb46.css" integrity="sha256-Dhpa13SYhutUPq3ViDEFDk5HRlY/H4ngdCiS85e5u0Y=" crossorigin="anonymous">
 
 
-        <script src="/js/main.18f58ac4bc81769d572f5acba6b94652499eac9554aaa5c1a9981456dbcb73ea.js" integrity="sha256-GPWKxLyBdp1XL1rLprlGUkmerJVUqqXBqZgUVtvLc&#43;o=" crossorigin="anonymous" defer></script>
+        <script src="/js/main.103803d7a06dd9a650b71fe1b61c587ecbe92895d1e6f4633f6476e9b543effa.js" integrity="sha256-EDgD16Bt2aZQtx/hthxYfsvpKJXR5vRjP2R26bVD7/o=" crossorigin="anonymous" defer></script>
 
 
 </head>
@@ -81,17 +89,18 @@
 
     <main id="main-content" class="site-main">
       
+  
   <article class="document">
     <header class="document-header">
-      <h1>[0x002] xvm_001</h1>
+      <h1>xvm_001</h1>
       <div class="meta-line">
   
     <span>crackmes</span>
   
   
-    <time datetime="2020-02-05T05:06:29Z">2020-02-05</time>
+    <time class="page-meta-date" datetime="2020-02-05T05:06:29Z">2020-02-05</time>
   
-  <span>1 min read</span>
+  <span class="page-meta-reading-time">1 min read</span>
   
 </div>
 
@@ -109,7 +118,14 @@
   <h2 class="card-title">xvm_001</h2>
   <p class="crackme-download-copy">Download the provided crackme package or binary.</p>
   <div class="flex-header-buttons">
-    <a class="btn crackme-download-link" href="https://github.com/X3eRo0/Crackmes/raw/master/Crackmes/X3eRo0/xvm_001/xvm_001.zip">download files</a>
+    <div class="cassette-button-group crackme-download-group">
+      <a
+        class="cassette-button cassette-button-momentary crackme-download-link"
+        href="https://github.com/X3eRo0/Crackmes/raw/master/Crackmes/X3eRo0/xvm_001/xvm_001.zip"
+        data-momentary-button
+        data-hit-sound-trigger
+      >DOWNLOAD</a>
+    </div>
   </div>
 </section>
 
@@ -157,10 +173,13 @@
 
 
 
+
   
   
   
   
+  
+
 
 
 
@@ -185,6 +204,7 @@
             maxlength="24"
             placeholder="nickname"
             aria-label="Nickname"
+            required
             autocomplete="nickname"
             data-comments-nickname
             name="entry.1908159203"
@@ -205,13 +225,24 @@
           rows="4"
           placeholder="share your thoughts"
           aria-label="Thoughts"
+          required
           autocomplete="off"
           data-comments-comment
           name="entry.1702949315"
           maxlength="1000"
         ></textarea>
+        
+          <input type="hidden" name="entry.1864108282" value="/crackmes/xvm_001">
+        
         <div class="comments-actions">
-          <button class="window-button comments-send" type="submit">send</button>
+          <div class="cassette-button-group comments-submit-group">
+            <button
+              class="cassette-button cassette-button-momentary comments-send"
+              type="submit"
+              data-momentary-button
+              data-hit-sound-trigger
+            >send</button>
+          </div>
         </div>
       </form>
       <iframe
@@ -257,10 +288,10 @@
   
     <nav class="document-nav" aria-label="Article navigation">
       
-        <a href="/crackmes/not_so_good_encryption/">prev: [0x003] Not So Good Encryption</a>
+        <a href="/crackmes/not_so_good_encryption/">prev: Not So Good Encryption</a>
       
       
-        <a href="/crackmes/p41d_s0ftw43/">next: [0x001] p4id_s0ftwar3</a>
+        <a href="/crackmes/p41d_s0ftw43/">next: p4id_s0ftwar3</a>
       
     </nav>
   
@@ -303,7 +334,9 @@
             </div>
           </div>
           <div class="control-block">
-            <button class="cassette-button sound-button" type="button" data-sound-toggle aria-pressed="true"></button>
+            <div class="cassette-button-group">
+              <button class="cassette-button sound-button" type="button" data-sound-toggle aria-pressed="false"></button>
+            </div>
           </div>
         </div>
       </div>

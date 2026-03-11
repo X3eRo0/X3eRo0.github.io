@@ -14,16 +14,23 @@
 <meta name="theme-color" content="#ecd7af">
 <script>
   (() => {
-    const storageKey = "reflector-theme";
+    const themeStorageKey = "reflector-theme";
+    const soundStorageKey = "reflector-sound";
     const root = document.documentElement;
     let theme = "light";
+    let sound = "off";
 
     try {
-      const stored = localStorage.getItem(storageKey);
-      if (stored === "light" || stored === "dark") {
-        theme = stored;
+      const storedTheme = localStorage.getItem(themeStorageKey);
+      if (storedTheme === "light" || storedTheme === "dark") {
+        theme = storedTheme;
       } else if (window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches) {
         theme = "dark";
+      }
+
+      const storedSound = localStorage.getItem(soundStorageKey);
+      if (storedSound === "on" || storedSound === "off") {
+        sound = storedSound;
       }
     } catch (error) {
       if (window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches) {
@@ -32,6 +39,7 @@
     }
 
     root.dataset.theme = theme;
+    root.dataset.sound = sound;
     const meta = document.querySelector('meta[name="theme-color"]');
     if (meta) {
       meta.setAttribute("content", theme === "dark" ? "#111315" : "#ecd7af");
@@ -46,10 +54,10 @@
 
   <link rel="stylesheet" href="/css/chroma-light.css">
   <link rel="stylesheet" href="/css/chroma-dark.css">
-      <link rel="stylesheet" href="/css/main.min.ab84453c0a2d4244b57ef088588542846dc4a1ebadec500a69bbc59dde6215d1.css" integrity="sha256-q4RFPAotQkS1fvCIWIVChG3Eoeut7FAKabvFnd5iFdE=" crossorigin="anonymous">
+      <link rel="stylesheet" href="/css/main.min.0e1a5ad7749886eb543eadd58831050e4e4746563f1f89e0742892f397b9bb46.css" integrity="sha256-Dhpa13SYhutUPq3ViDEFDk5HRlY/H4ngdCiS85e5u0Y=" crossorigin="anonymous">
 
 
-        <script src="/js/main.18f58ac4bc81769d572f5acba6b94652499eac9554aaa5c1a9981456dbcb73ea.js" integrity="sha256-GPWKxLyBdp1XL1rLprlGUkmerJVUqqXBqZgUVtvLc&#43;o=" crossorigin="anonymous" defer></script>
+        <script src="/js/main.103803d7a06dd9a650b71fe1b61c587ecbe92895d1e6f4633f6476e9b543effa.js" integrity="sha256-EDgD16Bt2aZQtx/hthxYfsvpKJXR5vRjP2R26bVD7/o=" crossorigin="anonymous" defer></script>
 
 
 </head>
@@ -93,6 +101,7 @@
     <div class="archive-stack">
       
         
+
 <article class="page-card">
   <header class="page-card-header">
     <p class="page-card-date">
@@ -100,12 +109,13 @@
       <span aria-hidden="true"> - </span>
       <span>1 min</span>
     </p>
-    <a class="page-card-link" href="/crackmes/fl04t/">[0x007] fl04t</a>
+    <a class="page-card-link" href="/crackmes/fl04t/">fl04t</a>
   </header>
 </article>
 
       
         
+
 <article class="page-card">
   <header class="page-card-header">
     <p class="page-card-date">
@@ -113,12 +123,13 @@
       <span aria-hidden="true"> - </span>
       <span>1 min</span>
     </p>
-    <a class="page-card-link" href="/crackmes/real_web_cr4kme/">[0x006] WEB cr4kme</a>
+    <a class="page-card-link" href="/crackmes/real_web_cr4kme/">WEB cr4kme</a>
   </header>
 </article>
 
       
         
+
 <article class="page-card">
   <header class="page-card-header">
     <p class="page-card-date">
@@ -126,12 +137,13 @@
       <span aria-hidden="true"> - </span>
       <span>1 min</span>
     </p>
-    <a class="page-card-link" href="/crackmes/hackme/">[0x005] hackme</a>
+    <a class="page-card-link" href="/crackmes/hackme/">hackme</a>
   </header>
 </article>
 
       
         
+
 <article class="page-card">
   <header class="page-card-header">
     <p class="page-card-date">
@@ -139,12 +151,13 @@
       <span aria-hidden="true"> - </span>
       <span>1 min</span>
     </p>
-    <a class="page-card-link" href="/crackmes/easy_licensing/">[0x004] Easy Licensing</a>
+    <a class="page-card-link" href="/crackmes/easy_licensing/">Easy Licensing</a>
   </header>
 </article>
 
       
         
+
 <article class="page-card">
   <header class="page-card-header">
     <p class="page-card-date">
@@ -152,12 +165,13 @@
       <span aria-hidden="true"> - </span>
       <span>1 min</span>
     </p>
-    <a class="page-card-link" href="/crackmes/not_so_good_encryption/">[0x003] Not So Good Encryption</a>
+    <a class="page-card-link" href="/crackmes/not_so_good_encryption/">Not So Good Encryption</a>
   </header>
 </article>
 
       
         
+
 <article class="page-card">
   <header class="page-card-header">
     <p class="page-card-date">
@@ -165,12 +179,13 @@
       <span aria-hidden="true"> - </span>
       <span>1 min</span>
     </p>
-    <a class="page-card-link" href="/crackmes/xvm_001/">[0x002] xvm_001</a>
+    <a class="page-card-link" href="/crackmes/xvm_001/">xvm_001</a>
   </header>
 </article>
 
       
         
+
 <article class="page-card">
   <header class="page-card-header">
     <p class="page-card-date">
@@ -178,7 +193,7 @@
       <span aria-hidden="true"> - </span>
       <span>1 min</span>
     </p>
-    <a class="page-card-link" href="/crackmes/p41d_s0ftw43/">[0x001] p4id_s0ftwar3</a>
+    <a class="page-card-link" href="/crackmes/p41d_s0ftw43/">p4id_s0ftwar3</a>
   </header>
 </article>
 
@@ -226,7 +241,9 @@
             </div>
           </div>
           <div class="control-block">
-            <button class="cassette-button sound-button" type="button" data-sound-toggle aria-pressed="true"></button>
+            <div class="cassette-button-group">
+              <button class="cassette-button sound-button" type="button" data-sound-toggle aria-pressed="false"></button>
+            </div>
           </div>
         </div>
       </div>
