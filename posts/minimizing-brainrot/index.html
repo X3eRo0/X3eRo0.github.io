@@ -1,0 +1,1301 @@
+<!DOCTYPE html>
+<html lang="en-us" dir="ltr">
+<head>
+  
+
+  
+
+
+
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Minimizing Brainrot | x3ero0&#39;s blog</title>
+<meta name="description" content="x3ero0&#39;s blog contains reverse engineering notes, crackmes, and CTF writeups.">
+<meta name="theme-color" content="#ecd7af">
+<script>
+  (() => {
+    const themeStorageKey = "reflector-theme";
+    const soundStorageKey = "reflector-sound";
+    const root = document.documentElement;
+    let theme = "light";
+    let sound = "off";
+
+    try {
+      const storedTheme = localStorage.getItem(themeStorageKey);
+      if (storedTheme === "light" || storedTheme === "dark") {
+        theme = storedTheme;
+      } else if (window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches) {
+        theme = "dark";
+      }
+
+      const storedSound = localStorage.getItem(soundStorageKey);
+      if (storedSound === "on" || storedSound === "off") {
+        sound = storedSound;
+      }
+    } catch (error) {
+      if (window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches) {
+        theme = "dark";
+      }
+    }
+
+    root.dataset.theme = theme;
+    root.dataset.sound = sound;
+    const meta = document.querySelector('meta[name="theme-color"]');
+    if (meta) {
+      meta.setAttribute("content", theme === "dark" ? "#111315" : "#ecd7af");
+    }
+  })();
+</script>
+<link rel="icon" href="/img/favicon.ico">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous" referrerpolicy="no-referrer">
+
+  <link rel="stylesheet" href="/css/chroma-light.css">
+  <link rel="stylesheet" href="/css/chroma-dark.css">
+      <link rel="stylesheet" href="/css/main.min.add96884342c4c37474579e7f2152ce3feca0ab381c359a6937cd56c7d4a1e9f.css" integrity="sha256-rdlohDQsTDdHRXnn8hUs4/7KCrOBw1mmk3zVbH1KHp8=" crossorigin="anonymous">
+
+
+        <script src="/js/main.859fdd6a1bea467a0133393dcfb09d01fab1fc10222799ff542c91882070b727.js" integrity="sha256-hZ/dahvqRnoBMzk9z7CdAfqx/BAiJ5n/VCyRiCBwtyc=" crossorigin="anonymous" defer></script>
+
+
+</head>
+<body class="page page-page section-posts">
+  <div class="page-frame">
+    <a class="skip-link" href="#main-content">Skip to content</a>
+    <header class="site-header">
+  <div class="header-panel">
+    <a class="brand" href="/">x3ero0&#39;s blog</a>
+    <p class="header-summary">reverse engineering, crackmes, and ctf writeups</p>
+    <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav" data-nav-toggle>[menu]</button>
+    <nav id="site-nav" class="site-nav" data-nav aria-label="Primary">
+      
+  <ul class="nav-list">
+      <li>
+        <a class="nav-link" href="/">home</a>
+      </li>
+      <li>
+        <a class="nav-link" href="/posts/">posts</a>
+      </li>
+      <li>
+        <a class="nav-link" href="/crackmes/">crackmes</a>
+      </li>
+  </ul>
+
+    </nav>
+  </div>
+</header>
+
+    <main id="main-content" class="site-main">
+      
+  
+  
+  <article class="document">
+    <header class="document-header">
+      <h1>Minimizing Brainrot</h1>
+      <div class="meta-line">
+  
+  
+    <time class="page-meta-date" datetime="2026-03-17T05:18:39-07:00">2026-03-17</time>
+  
+  <span class="page-meta-reading-time">10 min read</span>
+  
+</div>
+
+      
+    </header>
+    <div class="document-body">
+      <p>I recently came across <span class="reference-cite" id="cite_ref-1"><span class="reference-term">PewDiePie&rsquo;s video titled &ldquo;A Secret that Fixes Your Brain&rdquo;</span><span class="reference-marker"><a class="reference-link" href="#cite_note-1" aria-label="Jump to reference 1">[1]</a></span></span>. It
+was a very entertaining video, as usual. In this video, he goes over how he
+fixed YouTube by removing Shorts and recommendations from the algorithm. As a
+long-time member of the 9-year-old army, I clicked on the video immediately.</p>
+<p>But as I was watching it, I realized I was doing almost all of the things he
+mentioned in his video about getting rid of brainrot. I was spending way too much time on
+Instagram and Reddit, so a couple of weeks ago I decided that the simplest fix to
+this problem was to remove as many triggers (anything that makes me want to go
+back to these platforms) as possible.</p>
+<p>My main attention drainers were Instagram, YouTube, and Reddit. After
+consuming so many reels and useless posts on <span class="reference-cite" id="cite_ref-2"><span class="reference-term">r/askReddit</span><span class="reference-marker"><a class="reference-link" href="#cite_note-2" aria-label="Jump to reference 2">[2]</a></span></span>, I was always looking
+for chances to go back to Instagram or Reddit. These platforms had started to feel
+like the default way to relax.</p>
+<p>In this post, I will go over some of the things I did to get rid of brainrot.</p>
+<h1 id="youtube">YouTube</h1>
+<p>YouTube was one of my most-used platforms. In a typical browsing session, you
+fall straight into the algorithmic rabbit hole. You start with a video about
+Minecraft speedrunning, then click a sidebar recommendation for Super Mario
+speedrunning, and a few minutes later you are somehow watching 3Blue1Brown. I
+fully realize that some of this is on me because I should have noticed when I
+was getting distracted, but I also blame the algorithm a little because it is
+extremely good at keeping people like me in that loop. I have not learned how
+to reprogram my brain yet, so the practical solution was to remove the
+triggers.</p>
+<p>In the early days of YouTube, the home page was mostly videos from your
+subscriptions or completely random videos, and for the most part, you just
+searched for the video that you wanted to watch. I realized the triggers for
+me were the videos that YouTube was recommending. This includes the home page
+and the sidebar. To get rid of these, I did the following:</p>
+<ol>
+<li>
+<p>Disable YouTube watch history on Google&rsquo;s My Activity page.
+What this does is prevent the YouTube algorithm from having enough data to
+recommend videos to you. Your home page will now be empty.</p>
+</li>
+<li>
+<p>Then I installed an extension called <span class="reference-cite" id="cite_ref-3"><span class="reference-term">ImprovedTube</span><span class="reference-marker"><a class="reference-link" href="#cite_note-3" aria-label="Jump to reference 3">[3]</a></span></span> to make my subscriptions page the default page. If
+I type <code>youtube.com</code> in my browser, it redirects me from <code>youtube.com</code> to
+<code>youtube.com/feed/subscriptions</code>. This way I only watch the content that I
+actually want to watch. It made me think, &ldquo;Hey, now I am finally consuming
+the content I subscribed to.&rdquo; Before this, I rarely watched my
+subscriptions. I also realized how many useless channels I was still
+subscribed to. I spent a few minutes cleaning them up, and that already felt
+good.</p>
+</li>
+<li>
+<p>The same extension also allowed me to get rid of the sidebar and
+automatically enable cinema mode, so the video takes up most of the screen
+space, which is how it should be. There are also options to hide the comment
+section if you think comments are also a distraction, but I kept them. The
+extension is so customizable that you can basically cherry-pick the features
+you want from YouTube and disable everything else.</p>
+</li>
+</ol>
+<div
+    class="image-window side-image-window side-image-window-right"
+    data-image-window
+    style="--side-image-width: 17rem;"
+  >
+    <div class="window-titlebar">
+      <span class="window-title">YouTube on Brave</span>
+      <button
+        class="window-button window-button-icon window-minimize"
+        type="button"
+        aria-expanded="true"
+        aria-label="Minimize image"
+        data-window-toggle
+      >−</button>
+    </div>
+    <div class="window-content">
+      <img
+        class="responsive"
+        src="/img/brainrot/brave.png"
+        alt="Brave browser screenshot"
+        decoding="async"
+        loading="lazy"
+      />
+        <p class="side-image-caption">YouTube.com after enabling Brave&rsquo;s distraction-blocking features.</p>
+    </div>
+  </div>
+<ol start="4">
+<li>
+<p>One of the features I got rid of was Shorts. I never want to watch a short
+again, and I don&rsquo;t have to explain to you why Shorts are not good. Shorts
+are the brainrot. Now there are no Shorts in my search results, sidebar,
+subscriptions, or home page. THEY ARE GONE! There is also an option to
+redirect YouTube Shorts to regular videos by using the <code>/watch?v=</code> URL with
+the same video ID. This lets me view a short if someone sends me one, but
+the scrolling view is no longer there, so I cannot scroll
+even if I wanted to.</p>
+</li>
+<li>
+<p>Lastly, I uninstalled the YouTube app from my phone and now strictly use
+the Brave browser for watching YouTube on my phone. Brave browser has a few
+very useful built-in functions to get rid of these pesky, annoying
+distractions as well. In Brave, go to <code>Settings &gt; Media</code>, then enable:</p>
+<ul>
+<li><code>Open YouTube links in Brave</code></li>
+<li><code>Block YouTube recommended content</code></li>
+<li><code>Block YouTube Shorts</code></li>
+<li>Optionally <code>Block YouTube distracting elements</code>
+I keep this one disabled because it also removes comments.</li>
+</ul>
+</li>
+</ol>
+<h1 id="reddit">Reddit</h1>
+<p>My Reddit usage was not as bad as my YouTube usage, so I did not take any
+drastic steps to ban it completely. I just added Reddit to my DNS blocklist so
+I could not casually open it on any of my devices. I also uninstalled the app
+from my phone. Sometimes I still bypass the blocklist to open Reddit posts
+from Google Search.</p>
+<h1 id="instagram">Instagram</h1>
+<p>Instagram is easily one of the worst platforms for me personally. YouTube,
+even with all of its distracting elements and soul-sucking algorithm, was
+still useful because there are plenty of videos, streams, and talks there that
+help me stay up to date with cybersecurity. Tutorials and lectures were a gold
+mine for a self-learner like me. But Instagram, in its current state, feels
+almost completely useless to me. It mostly exists to serve brainrot. TikTok is
+probably in the same category, but I will not say much about it because I have
+never used it.</p>
+<p>The reason I signed up for Instagram in 2018 was to interact with my friends
+and their posts, either by chatting with them or by engaging with what they
+shared. But by 2026, that had basically disappeared. The chat feature is now
+mostly used to forward Instagram reels, and meaningful conversations there are
+so rare that I can basically ignore them. That was true for me, at least; I
+cannot speak for everyone else.</p>
+<figure
+    class="side-image-window side-image-window-plain side-image-window-right"
+    style="--side-image-width: 5rem;"
+  >
+    <img
+      class="responsive"
+      src="/img/brainrot/pewdiepie.png"
+      alt=""
+      decoding="async"
+      loading="lazy"
+    />
+  </figure>
+<blockquote>
+<p>&ldquo;Everything [brainrot] I say in this video is okay to indulge with. But the key
+is intent. That&rsquo;s what matters. Intent matters&rdquo;</p>
+<p>— PewDiePie</p>
+</blockquote>
+<p>I absolutely agree with this. When Instagram shifted from a platform that encouraged
+people to interact with each other to what it is today, were you consciously choosing
+that version of it, or were you slowly pushed into it?</p>
+<p>The home page on Instagram was supposed to be for seeing posts from people you
+follow. You still see those posts, but they are very rare. Posts from
+followers are now buried between posts from people you don&rsquo;t even follow.
+Following someone doesn&rsquo;t mean you actually follow their posts; it just means
+you can now send each other reels and occasionally interact with their posts.
+Unlike YouTube, Instagram doesn&rsquo;t have a followers-only feed where you only
+see posts from people you follow.</p>
+<p>Maybe this is the new, modern way of socialising, where fewer people are
+actually interacting with their social circle. Ironic, isn&rsquo;t it?</p>
+<p>Similar to YouTube&rsquo;s algorithm, Instagram is designed to keep you inside the
+app for as long as possible. The more you use it, the more money they make
+from advertisements. The more time you spend on the platform, the more data
+they collect about your interests, behaviour, triggers, and the kind of
+content that keeps you engaged versus the kind you scroll past.</p>
+<p>At first I thought this algorithm was amazing because it kept finding the
+funniest memes for me. It really did understand my humour. But the same system
+can learn a lot more about you than just your taste in memes. These companies
+can build a fairly detailed profile of your habits, interests, likely
+relationships, and how persuadable you are. If you spend a bit of time reading
+about the kind of profiles they can build just by observing how you use the
+platform, it gets unsettling very quickly.</p>
+<p>Here are a few articles:</p>
+<ul>
+<li><span class="reference-cite" id="cite_ref-4"><span class="reference-term">ICO: Microtargeting</span><span class="reference-marker"><a class="reference-link" href="#cite_note-4" aria-label="Jump to reference 4">[4]</a></span></span></li>
+<li><span class="reference-cite" id="cite_ref-5"><span class="reference-term">FTC staff report on large social media and video streaming companies</span><span class="reference-marker"><a class="reference-link" href="#cite_note-5" aria-label="Jump to reference 5">[5]</a></span></span></li>
+<li><span class="reference-cite" id="cite_ref-6"><span class="reference-term">Why Metadata Matters</span><span class="reference-marker"><a class="reference-link" href="#cite_note-6" aria-label="Jump to reference 6">[6]</a></span></span></li>
+</ul>
+<p>Out of all the platforms I decided to quit, this one was the hardest to leave.
+Every now and then, a bunch of small triggers would pull me back to it.</p>
+<p>I deactivated my account several times, and in the process I noticed the
+little tricks they use to discourage you from doing it. When you deactivate
+your account, there is a button that is set by default to &ldquo;Reactivate my
+account in 7 days&rdquo; instead of &ldquo;Reactivate my account when I want to.&rdquo; If you
+do not pay attention, your account gets reactivated again without you noticing.</p>
+<p>On top of that, they have added a seven-day deactivation limit, so once your
+account gets reactivated without you noticing, you cannot deactivate it again
+for the next seven days. This feels like a made-up restriction that serves no
+real purpose other than keeping people on the platform.</p>
+<p>People have also reported cases where their account was automatically
+reactivated within a few minutes of being deactivated <span class="reference-cite" id="cite_ref-7"><span class="reference-term">Reddit discussion</span><span class="reference-marker"><a class="reference-link" href="#cite_note-7" aria-label="Jump to reference 7">[7]</a></span></span>.</p>
+<div
+    class="image-window side-image-window side-image-window-left"
+    data-image-window
+    style="--side-image-width: 21rem;"
+  >
+    <div class="window-titlebar">
+      <span class="window-title">nanogram</span>
+      <button
+        class="window-button window-button-icon window-minimize"
+        type="button"
+        aria-expanded="true"
+        aria-label="Minimize image"
+        data-window-toggle
+      >−</button>
+    </div>
+    <div class="window-content">
+      <img
+        class="responsive"
+        src="/img/brainrot/nanogram.png"
+        alt="nanogram"
+        decoding="async"
+        loading="lazy"
+      />
+        <p class="side-image-caption">My nanogram home page</p>
+    </div>
+  </div>
+<p>Before deleting my account, I requested a high-quality JSON export of my data,
+and I decided to build something for myself so I could still keep my chosen
+pictures online without using Instagram. That was the whole reason I had
+Instagram in the first place. I ended up making <span class="reference-cite" id="cite_ref-8"><span class="reference-term">nanogram</span><span class="reference-marker"><a class="reference-link" href="#cite_note-8" aria-label="Jump to reference 8">[8]</a></span></span>, which is a static site that hosts your pictures and
+videos in the same layout as Instagram. I have my instance of nanogram
+protected by a password that only I know. If a friend or family member wants
+to see the pictures I share, they still can, but nobody else can. That was
+exactly what I wanted.</p>
+<p>Nanogram has a few scripts that can parse the JSON export and rehost only the
+photos and videos from it. Anyone can rehost their Instagram profile with
+nanogram; all you need is your Instagram data. I am planning to add a feature
+that lets you upload new pictures and videos without relying on an export.
+Nanogram also supports comments through Google Forms.</p>
+<h1 id="self-hosting">Self-Hosting</h1>
+<p>If you don&rsquo;t know what self-hosting is, then here is a very basic definition for
+you.</p>
+<blockquote>
+<p>Self-hosting basically means running or hosting the services you use on your own
+hardware and resources. For example, you can host your own password manager instead
+of using and paying for something like LastPass or ProtonPass. The software will
+run on your hardware and you are responsible for maintaining it and keeping it up-to-date.</p>
+</blockquote>
+<p>There are lots of reasons to self-host a service, such as control, privacy, ownership, and
+the peace of mind that comes after the few weeks of initial setup that go into self-hosting.
+When I disabled YouTube watch history, I also moved away from YouTube Music. I was
+looking for an open-source platform to host my music and maybe all my other media, and that&rsquo;s how
+I found <span class="reference-cite" id="cite_ref-9"><span class="reference-term">Jellyfin</span><span class="reference-marker"><a class="reference-link" href="#cite_note-9" aria-label="Jump to reference 9">[9]</a></span></span>.</p>
+<p>You can easily get an instance of Jellyfin up and running in a few minutes with <code>Docker</code>.
+Here is my personal Docker Compose file for running Jellyfin.</p>
+<pre tabindex="0"><code>services:
+  jellyfin:
+    image: lscr.io/linuxserver/jellyfin:latest
+    container_name: jellyfin
+    env_file:
+      .env
+    volumes:
+      - ./library:/config
+      - ./media/tvshows:/data/tvshows
+      - ./media/movies:/data/movies
+      - ./media/audio/music/:/data/music
+      - ./media/videos:/data/videos
+    ports:
+      - 8096:8096
+    restart: unless-stopped
+</code></pre><p>All you have to do is save this in <code>docker-compose.yml</code> and run <code>docker-compose up -d</code> in
+the same directory and, BOOM! that&rsquo;s it.
+you can access your local instance of Jellyfin at <code>http://localhost:8096/web/index.html#/wizard/start</code>
+to set up Jellyfin for the first time. More information about installation via containers can be found <a href="https://jellyfin.org/docs/general/installation/container/">here</a>.</p>
+<p>Another piece of software I higly recommend you to host yourself is your own network-wide ad blocker. I
+use <span class="reference-cite" id="cite_ref-10"><span class="reference-term">Pi-hole</span><span class="reference-marker"><a class="reference-link" href="#cite_note-10" aria-label="Jump to reference 10">[10]</a></span></span> for this. Not only does it
+help block ads on your local area network, but you can also use it as a DNS server and create
+custom local domains for your home server and other devices.
+
+
+
+
+
+
+<div class="center image-window" data-image-window>
+  <div class="window-titlebar">
+    <span class="window-title">Pi-hole domain management</span>
+    <button
+      class="window-button window-button-icon window-minimize"
+      type="button"
+      aria-expanded="true"
+      aria-label="Minimize image"
+      data-window-toggle
+    >−</button>
+  </div>
+  <div class="window-content">
+    <img
+      class="responsive"
+      src="/img/brainrot/pi-hole.png"
+      alt=""
+      decoding="async"
+    />
+  </div>
+</div>
+</p>
+<p>You can install custom <span class="reference-cite" id="cite_ref-11"><span class="reference-term">blocklists</span><span class="reference-marker"><a class="reference-link" href="#cite_note-11" aria-label="Jump to reference 11">[11]</a></span></span>
+and just say bye-bye to ads and other annoying things on the internet forever. In fact, I use Pi-hole to ban
+Instagram, Reddit, and X on my local area network.</p>
+<p>That is pretty much it. This is how I made the internet fit me instead of
+letting it shape my habits. Anyway, what is your favorite kind of brainrot?
+Personally, my favorite is the Italian brainrot. Tung tung tung tung sahur vs
+Tralalero Tralala was peak!!!</p>
+
+    </div>
+    <footer class="document-footer">
+      
+    </footer>
+  </article>
+
+  
+
+
+
+
+
+
+
+
+  
+  
+  
+  
+  
+  
+  
+
+
+
+
+<section class="comments-section" aria-label="Thoughts">
+  <div class="comments-window">
+    <div class="window-titlebar">
+      <span class="window-title">Thoughts?</span>
+    </div>
+    <div class="window-content comments-window-content">
+      <form
+        class="comments-form"
+        data-comments-form
+        data-comments-remote-enabled="true"
+        method="post"
+        target="comments-hidden-transport"
+        action="https://docs.google.com/forms/d/e/1FAIpQLSfNnxL1kkRvil_ngtx3y30aKg45z4McPw8zfmzUsu6vIXnsJg/formResponse"
+      >
+        <div class="comments-row">
+          <input
+            class="guestbook-input"
+            type="text"
+            maxlength="24"
+            placeholder="nickname"
+            aria-label="Nickname"
+            required
+            autocomplete="nickname"
+            data-comments-nickname
+            name="entry.1908159203"
+          >
+          <input
+            class="guestbook-input"
+            type="text"
+            maxlength="240"
+            placeholder="website (optional)"
+            aria-label="Website"
+            autocomplete="off"
+            data-comments-website
+            name="entry.1928902955"
+          >
+        </div>
+        <textarea
+          class="guestbook-input guestbook-comment"
+          rows="4"
+          placeholder="share your thoughts"
+          aria-label="Thoughts"
+          required
+          autocomplete="off"
+          data-comments-comment
+          name="entry.1702949315"
+          maxlength="1000"
+        ></textarea>
+        
+          <input type="hidden" name="entry.1864108282" value="/posts/minimizing-brainrot">
+        
+        
+          <input type="hidden" name="entry.2038822061" value="" data-comments-id>
+        
+        
+          <input type="hidden" name="entry.2123909790" value="" data-comments-reply-to disabled>
+        
+        <div class="comments-actions">
+          <div class="comments-reply-indicator" data-comments-reply-indicator hidden>
+            <span class="comments-reply-label">replying to <strong data-comments-reply-name></strong></span>
+            <button type="button" class="comments-reply-cancel" data-comments-reply-cancel aria-label="Cancel reply">x</button>
+          </div>
+          <div class="cassette-button-group comments-submit-group">
+            <button
+              class="cassette-button cassette-button-momentary comments-send"
+              type="submit"
+              data-momentary-button
+              data-hit-sound-trigger
+            >send</button>
+          </div>
+        </div>
+      </form>
+      <iframe
+        name="comments-hidden-transport"
+        title="comments submission transport"
+        tabindex="-1"
+        hidden
+      ></iframe>
+      
+      
+      
+    </div>
+  </div>
+
+  <div class="comments-dialog" data-comments-dialog hidden>
+    <button
+      class="guestbook-dialog-backdrop"
+      type="button"
+      aria-label="Close dialog"
+      data-comments-dialog-close
+    ></button>
+    <section class="guestbook-dialog-window" role="dialog" aria-modal="true" aria-labelledby="comments-dialog-title">
+      <div class="window-titlebar">
+        <span class="window-title" id="comments-dialog-title">thoughts?</span>
+        <div class="window-actions">
+          <button
+            class="window-button window-button-icon"
+            type="button"
+            aria-label="Close dialog"
+            data-comments-dialog-close
+            data-comments-dialog-close-button
+          >X</button>
+        </div>
+      </div>
+      <div class="window-content guestbook-dialog-content">
+        <p>Your comment is under review. Thanks!</p>
+        <div class="guestbook-dialog-actions">
+          <button class="window-button" type="button" data-comments-dialog-close>OK</button>
+        </div>
+      </div>
+    </section>
+  </div>
+</section>
+
+  
+
+  
+    
+  
+
+
+  <section class="references-section" aria-labelledby="references-heading">
+    <h2 id="references-heading">References</h2>
+    <ol class="references-list">
+      
+        <li class="reference-entry" id="cite_note-1">
+          <a class="reference-backlink" href="#cite_ref-1" aria-label="Jump back to citation 1">↑</a>
+          
+            <span class="reference-author">PewDiePie</span>.
+          
+          <a class="reference-target" href="https://www.youtube.com/watch?v=5nL-Eq1lpDU">A Secret that Fixes Your Brain</a>
+          
+            <span class="reference-note">accessed March 21, 2026</span>
+          
+        </li>
+      
+        <li class="reference-entry" id="cite_note-2">
+          <a class="reference-backlink" href="#cite_ref-2" aria-label="Jump back to citation 2">↑</a>
+          
+            <span class="reference-author">Reddit</span>.
+          
+          <a class="reference-target" href="https://reddit.com/r/askreddit">r/askReddit</a>
+          
+            <span class="reference-note">accessed March 21, 2026</span>
+          
+        </li>
+      
+        <li class="reference-entry" id="cite_note-3">
+          <a class="reference-backlink" href="#cite_ref-3" aria-label="Jump back to citation 3">↑</a>
+          
+            <span class="reference-author">Code-Charity</span>.
+          
+          <a class="reference-target" href="https://github.com/code-charity/youtube">ImprovedTube</a>
+          
+            <span class="reference-note">accessed March 22, 2026</span>
+          
+        </li>
+      
+        <li class="reference-entry" id="cite_note-4">
+          <a class="reference-backlink" href="#cite_ref-4" aria-label="Jump back to citation 4">↑</a>
+          
+            <span class="reference-author">Information Commissioner&#39;s Office</span>.
+          
+          <a class="reference-target" href="https://ico.org.uk/for-the-public/microtargeting/">Microtargeting</a>
+          
+            <span class="reference-note">accessed March 21, 2026</span>
+          
+        </li>
+      
+        <li class="reference-entry" id="cite_note-5">
+          <a class="reference-backlink" href="#cite_ref-5" aria-label="Jump back to citation 5">↑</a>
+          
+            <span class="reference-author">Federal Trade Commission</span>.
+          
+          <a class="reference-target" href="https://www.ftc.gov/news-events/news/press-releases/2024/09/ftc-staff-report-finds-large-social-media-video-streaming-companies-have-engaged-vast-surveillance">FTC staff report finds large social media and video streaming companies have engaged in vast surveillance</a>
+          
+            <span class="reference-note">accessed March 21, 2026</span>
+          
+        </li>
+      
+        <li class="reference-entry" id="cite_note-6">
+          <a class="reference-backlink" href="#cite_ref-6" aria-label="Jump back to citation 6">↑</a>
+          
+            <span class="reference-author">Electronic Frontier Foundation</span>.
+          
+          <a class="reference-target" href="https://ssd.eff.org/module/why-metadata-matters">Why Metadata Matters</a>
+          
+            <span class="reference-note">accessed March 21, 2026</span>
+          
+        </li>
+      
+        <li class="reference-entry" id="cite_note-7">
+          <a class="reference-backlink" href="#cite_ref-7" aria-label="Jump back to citation 7">↑</a>
+          
+            <span class="reference-author">leozinhomaximus</span>.
+          
+          <a class="reference-target" href="https://www.reddit.com/r/Instagram/comments/13d1dzn/what_is_this_bullshit_i_just_temporarily/">Reddit - What is this bullshit? I just temporarily...</a>
+          
+            <span class="reference-note">accessed March 21, 2026</span>
+          
+        </li>
+      
+        <li class="reference-entry" id="cite_note-8">
+          <a class="reference-backlink" href="#cite_ref-8" aria-label="Jump back to citation 8">↑</a>
+          
+            <span class="reference-author">X3eRo0</span>.
+          
+          <a class="reference-target" href="https://github.com/x3ero0/nanogram">Nanogram</a>
+          
+            <span class="reference-note">accessed March 21, 2026</span>
+          
+        </li>
+      
+        <li class="reference-entry" id="cite_note-9">
+          <a class="reference-backlink" href="#cite_ref-9" aria-label="Jump back to citation 9">↑</a>
+          
+            <span class="reference-author">Jellyfin</span>.
+          
+          <a class="reference-target" href="https://jellyfin.org/">Jellyfin</a>
+          
+            <span class="reference-note">accessed March 22, 2026</span>
+          
+        </li>
+      
+        <li class="reference-entry" id="cite_note-10">
+          <a class="reference-backlink" href="#cite_ref-10" aria-label="Jump back to citation 10">↑</a>
+          
+            <span class="reference-author">Pi-hole</span>.
+          
+          <a class="reference-target" href="https://pi-hole.net/">Pi-Hole – Network-Wide Ad Blocking.</a>
+          
+            <span class="reference-note">accessed March 22, 2026</span>
+          
+        </li>
+      
+        <li class="reference-entry" id="cite_note-11">
+          <a class="reference-backlink" href="#cite_ref-11" aria-label="Jump back to citation 11">↑</a>
+          
+            <span class="reference-author">Mullvad VPN</span>.
+          
+          <a class="reference-target" href="https://github.com/mullvad/dns-blocklists">GitHub - Mullvad/Dns-Blocklists</a>
+          
+            <span class="reference-note">accessed March 22, 2026</span>
+          
+        </li>
+      
+    </ol>
+  </section>
+
+
+
+  
+    <nav class="document-nav" aria-label="Article navigation">
+      
+        <a href="/posts/orxw_balsn_ctf_2021_pwn/">prev: or⊕w writeup from Balsn CTF 2021</a>
+      
+      
+    </nav>
+  
+
+    </main>
+    
+
+
+
+
+
+  
+  
+  
+  
+
+
+<aside class="theme-sidebar" aria-label="Theme controls">
+  <div class="sidebar-stack">
+    <div class="sidebar-column">
+      <div class="theme-window sidebar-options">
+        <div class="window-titlebar">
+          <span class="window-title">options</span>
+        </div>
+        <div class="window-content theme-window-content">
+          <div class="control-grid">
+            <div class="control-block control-block-theme">
+              <div class="cassette-button-group" role="group" aria-label="Theme">
+                <button
+                  class="cassette-button"
+                  type="button"
+                  data-theme-choice="dark"
+                  aria-pressed="false"
+                >dark</button>
+                <button
+                  class="cassette-button"
+                  type="button"
+                  data-theme-choice="light"
+                  aria-pressed="false"
+                >light</button>
+              </div>
+            </div>
+            <div class="control-block">
+              <div class="cassette-button-group">
+                <button class="cassette-button sound-button" type="button" data-sound-toggle aria-pressed="false">
+                  <img class="sound-icon sound-icon-on" src="/img/on.svg" alt="Sound on" aria-hidden="true">
+                  <img class="sound-icon sound-icon-off" src="/img/off.svg" alt="Sound off" aria-hidden="true">
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      
+      <section class="guestbook-window links-inline sidebar-links" aria-label="Links">
+        <div class="window-titlebar">
+          <span class="window-title">links</span>
+        </div>
+        <div class="window-content guestbook-window-content">
+          
+
+  
+  
+  
+
+  
+    
+    
+  
+    
+    
+      
+        
+        
+        
+      
+    
+  
+    
+    
+      
+        
+        
+        
+        
+          
+          
+        
+        
+        
+      
+    
+  
+    
+    
+      
+        
+        
+        
+        
+          
+          
+        
+        
+        
+      
+    
+  
+    
+    
+  
+    
+    
+      
+        
+          
+        
+        
+        
+      
+    
+  
+    
+    
+      
+        
+        
+        
+        
+          
+          
+        
+        
+        
+      
+    
+  
+    
+    
+      
+        
+        
+        
+        
+          
+          
+        
+        
+        
+      
+    
+  
+    
+    
+      
+        
+        
+        
+        
+          
+          
+        
+        
+        
+      
+    
+  
+    
+    
+      
+        
+        
+        
+        
+          
+          
+        
+        
+        
+      
+    
+  
+    
+    
+      
+        
+        
+        
+        
+          
+          
+        
+        
+        
+      
+    
+  
+    
+    
+  
+    
+    
+      
+        
+          
+        
+        
+        
+      
+    
+  
+    
+    
+      
+        
+        
+        
+        
+          
+          
+        
+        
+        
+      
+    
+  
+    
+    
+  
+
+  
+    
+  
+
+  
+    <div class="links-columns">
+      <div class="links-column">
+        
+          
+          <section class="links-group">
+            <p class="links-group-title">personal</p>
+            <ul class="links-list">
+              
+              <li class="links-entry">
+                <a class="links-item" href="https://github.com/x3ero0" target="_blank" rel="noopener noreferrer">github</a>
+              </li>
+              
+              <li class="links-entry">
+                <a class="links-item" href="https://x3ero0.dev/nanogram.html" target="_blank" rel="noopener noreferrer">nanogram</a>
+              </li>
+              
+            </ul>
+          </section>
+          
+        
+          
+        
+          
+          <section class="links-group">
+            <p class="links-group-title">programming</p>
+            <ul class="links-list">
+              
+              <li class="links-entry">
+                <a class="links-item" href="https://brightprogrammer.in" target="_blank" rel="noopener noreferrer">brightprogrammer.in</a>
+              </li>
+              
+            </ul>
+          </section>
+          
+        
+      </div>
+      <div class="links-column">
+        
+          
+        
+          
+          <section class="links-group">
+            <p class="links-group-title">hacking</p>
+            <ul class="links-list">
+              
+              <li class="links-entry">
+                <a class="links-item" href="https://shellphish.net/" target="_blank" rel="noopener noreferrer">shellphish</a>
+              </li>
+              
+              <li class="links-entry">
+                <a class="links-item" href="https://ctf.asu.edu/education/ace-ctf-academy/" target="_blank" rel="noopener noreferrer">ctf-academy</a>
+              </li>
+              
+              <li class="links-entry">
+                <a class="links-item" href="https://pwn.college" target="_blank" rel="noopener noreferrer">pwn.college</a>
+              </li>
+              
+              <li class="links-entry">
+                <a class="links-item" href="https://blog.zolutal.io/" target="_blank" rel="noopener noreferrer">zolutal</a>
+              </li>
+              
+              <li class="links-entry">
+                <a class="links-item" href="https://deut-erium.github.io/" target="_blank" rel="noopener noreferrer">deut-erium</a>
+              </li>
+              
+            </ul>
+          </section>
+          
+        
+          
+        
+      </div>
+    </div>
+  
+
+
+          <div class="links-banner">
+  <p class="links-banner-label">ANDROID WILL BECOME A LOCKED-DOWN PLATFORM IN</p>
+  <div class="cassette-button-group links-banner-group">
+    <a
+      class="cassette-button cassette-button-momentary links-banner-button"
+      href="https://keepandroidopen.org/"
+      target="_blank"
+      rel="noopener noreferrer"
+      data-momentary-button
+      data-hit-sound-trigger
+      data-no-hover-sound
+      data-android-countdown-target="2026-09-01T00:00:00Z"
+      aria-live="polite"
+      aria-label="Open keepandroidopen.org in a new tab. Android lockdown countdown to September 1, 2026 UTC"
+    >000d 00h 00m 00s</a>
+  </div>
+</div>
+
+        </div>
+      </section>
+      
+    </div>
+
+    
+</aside>
+
+    <footer class="site-footer">
+  <div class="footer-panel">
+    <p>Copying is an act of love, feel free to copy.</p>
+  </div>
+</footer>
+
+  </div>
+  
+<aside class="links-sidebar" aria-label="Links">
+  <section class="guestbook-window">
+    <div class="window-titlebar">
+      <span class="window-title">links</span>
+    </div>
+    <div class="window-content guestbook-window-content">
+      
+
+  
+  
+  
+
+  
+    
+    
+  
+    
+    
+      
+        
+        
+        
+      
+    
+  
+    
+    
+      
+        
+        
+        
+        
+          
+          
+        
+        
+        
+      
+    
+  
+    
+    
+      
+        
+        
+        
+        
+          
+          
+        
+        
+        
+      
+    
+  
+    
+    
+  
+    
+    
+      
+        
+          
+        
+        
+        
+      
+    
+  
+    
+    
+      
+        
+        
+        
+        
+          
+          
+        
+        
+        
+      
+    
+  
+    
+    
+      
+        
+        
+        
+        
+          
+          
+        
+        
+        
+      
+    
+  
+    
+    
+      
+        
+        
+        
+        
+          
+          
+        
+        
+        
+      
+    
+  
+    
+    
+      
+        
+        
+        
+        
+          
+          
+        
+        
+        
+      
+    
+  
+    
+    
+      
+        
+        
+        
+        
+          
+          
+        
+        
+        
+      
+    
+  
+    
+    
+  
+    
+    
+      
+        
+          
+        
+        
+        
+      
+    
+  
+    
+    
+      
+        
+        
+        
+        
+          
+          
+        
+        
+        
+      
+    
+  
+    
+    
+  
+
+  
+    
+  
+
+  
+    <div class="links-feed">
+      
+      <section class="links-group">
+        <p class="links-group-title">personal</p>
+        <ul class="links-list">
+          
+          <li class="links-entry">
+            <a class="links-item" href="https://github.com/x3ero0" target="_blank" rel="noopener noreferrer">github</a>
+          </li>
+          
+          <li class="links-entry">
+            <a class="links-item" href="https://x3ero0.dev/nanogram.html" target="_blank" rel="noopener noreferrer">nanogram</a>
+          </li>
+          
+        </ul>
+      </section>
+      
+      <section class="links-group">
+        <p class="links-group-title">hacking</p>
+        <ul class="links-list">
+          
+          <li class="links-entry">
+            <a class="links-item" href="https://shellphish.net/" target="_blank" rel="noopener noreferrer">shellphish</a>
+          </li>
+          
+          <li class="links-entry">
+            <a class="links-item" href="https://ctf.asu.edu/education/ace-ctf-academy/" target="_blank" rel="noopener noreferrer">ctf-academy</a>
+          </li>
+          
+          <li class="links-entry">
+            <a class="links-item" href="https://pwn.college" target="_blank" rel="noopener noreferrer">pwn.college</a>
+          </li>
+          
+          <li class="links-entry">
+            <a class="links-item" href="https://blog.zolutal.io/" target="_blank" rel="noopener noreferrer">zolutal</a>
+          </li>
+          
+          <li class="links-entry">
+            <a class="links-item" href="https://deut-erium.github.io/" target="_blank" rel="noopener noreferrer">deut-erium</a>
+          </li>
+          
+        </ul>
+      </section>
+      
+      <section class="links-group">
+        <p class="links-group-title">programming</p>
+        <ul class="links-list">
+          
+          <li class="links-entry">
+            <a class="links-item" href="https://brightprogrammer.in" target="_blank" rel="noopener noreferrer">brightprogrammer.in</a>
+          </li>
+          
+        </ul>
+      </section>
+      
+    </div>
+  
+
+
+      <div class="links-banner">
+  <p class="links-banner-label">ANDROID WILL BECOME A LOCKED-DOWN PLATFORM IN</p>
+  <div class="cassette-button-group links-banner-group">
+    <a
+      class="cassette-button cassette-button-momentary links-banner-button"
+      href="https://keepandroidopen.org/"
+      target="_blank"
+      rel="noopener noreferrer"
+      data-momentary-button
+      data-hit-sound-trigger
+      data-no-hover-sound
+      data-android-countdown-target="2026-09-01T00:00:00Z"
+      aria-live="polite"
+      aria-label="Open keepandroidopen.org in a new tab. Android lockdown countdown to September 1, 2026 UTC"
+    >000d 00h 00m 00s</a>
+  </div>
+</div>
+
+    </div>
+  </section>
+</aside>
+
+
+</body>
+</html>
