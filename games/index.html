@@ -59,7 +59,7 @@
       <link rel="stylesheet" href="/css/main.min.9ac6b4b519c39f5c64b332bb770e681fa7fa36a5dba7a3d57730b7aa3ebb30cc.css" integrity="sha256-msa0tRnDn1xkszK7dw5oH6f6NqXbp6PVdzC3qj67MMw=" crossorigin="anonymous">
 
 
-        <script src="/js/main.859fdd6a1bea467a0133393dcfb09d01fab1fc10222799ff542c91882070b727.js" integrity="sha256-hZ/dahvqRnoBMzk9z7CdAfqx/BAiJ5n/VCyRiCBwtyc=" crossorigin="anonymous" defer></script>
+        <script src="/js/main.bf2560a6b0c883d7b56b2bf1d7a112dbd12e29a2cc0d99077443abc647c6d761.js" integrity="sha256-vyVgprDIg9e1ayvx16ES29EuKaLMDZkHdEOrxkfG12E=" crossorigin="anonymous" defer></script>
 
 
 </head>
@@ -145,7 +145,7 @@
     }
   </style>
 
-  <article class="document games-page">
+  <article class="document games-page" data-hover-sound="xpding">
     <header class="document-header">
       <h1>Games</h1>
       <div class="meta-line">
@@ -161,10 +161,20 @@
     </header>
 
     <div class="document-body">
-      <p>Remote Ludusavi backup data, sorted by newest backup first.</p>
+      <p>Here is a list of games currently installed on my gamestation.</p>
+<p>I have a strict policy of mostly playing single-player games to keep my sanity intact. That said, I still enjoy a good LAN party with my IRL friends, so I do make room for LAN multiplayer games. Those are usually older PC games from the era when local area network support was common. These days, a proper LAN option in a multiplayer game feels almost as rare as modern games shipping on physical disks. And yes, I absolutely love both LAN games and physical editions.</p>
+<p>I use <a href="https://github.com/mtkennerly/ludusavi">Ludusavi</a>, an open source tool for backing up save data. I also run a script every 30 minutes that scans all Wine prefixes on my game drive and extracts save files into a backup directory. That backup directory is then pushed to a private Git repository for redundancy. This setup lets me preserve my saves while also using <a href="https://lutris.net/">Lutris</a>, the Linux game launcher and manager I rely on to track how many hours I have put into each game.</p>
+<h2 id="specs">Specs</h2>
+<ul>
+<li><strong>CPU:</strong> Ryzen 9800X3D</li>
+<li><strong>GPU:</strong> RTX 5080</li>
+<li><strong>RAM:</strong> 32 GB</li>
+<li><strong>Disk:</strong> 2 TB</li>
+<li><strong>OS:</strong> <a href="https://cachyos.org/">CachyOS</a></li>
+<li><strong>Game launcher:</strong> Lutris</li>
+</ul>
+<p>If you want a bit more nostalgia, check out <a href="/xp-games/">windows xp.ps1</a>.</p>
 
-
-      <p><a class="page-card-link" href="/xp-games/">windows xp.ps1</a></p>
 
       <div class="games-summary meta-line" aria-label="Game activity summary">
         <span>33 total</span>
