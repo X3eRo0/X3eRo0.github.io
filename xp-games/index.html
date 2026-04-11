@@ -1,0 +1,1638 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>XP Games | x3ero0's XP Desktop</title>
+    <meta name="description" content="Windows XP desktop style game icon view.">
+    <link rel="stylesheet" href="/xp/98.css">
+    <link rel="stylesheet" href="/xp/xp.css">
+    <style>
+      :root {
+        color-scheme: light;
+        --desktop-scale: 1;
+        --desktop-rows: 6;
+        --desktop-padding: 1.1rem;
+        --base-icon-tile-width: 5.9rem;
+        --base-icon-size: 3.05rem;
+        --base-icon-gap-x: 0.35rem;
+        --base-icon-gap-y: 0.45rem;
+        --icon-tile-width: calc(var(--base-icon-tile-width) * var(--desktop-scale));
+        --icon-size: calc(var(--base-icon-size) * var(--desktop-scale));
+        --icon-gap-x: calc(var(--base-icon-gap-x) * var(--desktop-scale));
+        --icon-gap-y: calc(var(--base-icon-gap-y) * var(--desktop-scale));
+        --label-lines: 2;
+        --base-label-font-size: 0.78rem;
+        --label-font-size: calc(var(--base-label-font-size) * var(--desktop-scale));
+        --label-line-height: 1.14;
+        --label-height: calc(var(--label-font-size) * var(--label-line-height) * var(--label-lines));
+        --base-row-height: 6.55rem;
+        --row-height: calc(var(--base-row-height) * var(--desktop-scale));
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html,
+      body {
+        margin: 0;
+        min-height: 100%;
+      }
+
+      body {
+        min-height: 100vh;
+        overflow: hidden;
+        background: #5ea1e8 url("/xp/bliss-wide.jpg") center center / cover no-repeat fixed;
+        font-family: Tahoma, "Trebuchet MS", "Segoe UI", sans-serif;
+      }
+
+      .sr-only {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        white-space: nowrap;
+        border: 0;
+      }
+
+      .xp-desktop {
+        height: 100vh;
+        padding: var(--desktop-padding);
+        overflow: hidden;
+      }
+
+      .desktop-grid {
+        display: grid;
+        grid-auto-flow: column;
+        grid-auto-columns: var(--icon-tile-width);
+        grid-template-rows: repeat(var(--desktop-rows), minmax(var(--row-height), var(--row-height)));
+        gap: var(--icon-gap-y) var(--icon-gap-x);
+        align-content: start;
+        justify-content: start;
+        height: calc(100vh - (var(--desktop-padding) * 2));
+        max-height: calc(100vh - (var(--desktop-padding) * 2));
+        margin: 0;
+        padding: 0;
+        list-style: none;
+      }
+
+      .desktop-icon {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: flex-start;
+        width: var(--icon-tile-width);
+        padding: 0.1rem 0.14rem;
+        text-decoration: none;
+        user-select: none;
+        cursor: default;
+      }
+
+      .desktop-icon:hover .desktop-icon-label,
+      .desktop-icon:focus-visible .desktop-icon-label {
+        background: rgba(49, 106, 197, 0.55);
+      }
+
+      .desktop-icon.is-menu-target .desktop-icon-label,
+      .desktop-icon.is-menu-target:hover .desktop-icon-label {
+        background: rgba(49, 106, 197, 0.72);
+      }
+
+      .desktop-icon:focus-visible {
+        outline: none;
+      }
+
+      .desktop-icon-art {
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: var(--icon-size);
+        height: var(--icon-size);
+        margin-bottom: 0.14rem;
+      }
+
+      .desktop-icon-art img,
+      .desktop-icon-fallback {
+        display: block;
+        width: 100%;
+        height: 100%;
+      }
+
+      .desktop-icon-art img {
+        object-fit: contain;
+        filter: drop-shadow(0 1px 1px rgba(0, 0, 0, 0.35));
+      }
+
+      .desktop-icon-art::after {
+        content: "";
+        position: absolute;
+        left: -0.2rem;
+        bottom: -0.05rem;
+        width: 1.15rem;
+        height: 1.15rem;
+        background: url("/xp/shortcut-arrow.png") center / contain no-repeat;
+        pointer-events: none;
+      }
+
+      .desktop-icon-fallback {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 0.45rem;
+        background: rgba(255, 255, 255, 0.22);
+        color: #fff;
+        font-size: 1rem;
+        font-weight: 700;
+        letter-spacing: 0.06em;
+        text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.65);
+      }
+
+      .desktop-icon-label {
+        display: -webkit-box;
+        width: 100%;
+        height: var(--label-height);
+        max-height: var(--label-height);
+        padding: 0.04rem 0.2rem 0;
+        overflow: hidden;
+        color: #fff;
+        font-size: var(--label-font-size);
+        line-height: var(--label-line-height);
+        text-align: center;
+        text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.95);
+        text-overflow: ellipsis;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 2;
+        overflow-wrap: break-word;
+        word-break: normal;
+        border-radius: 0.18rem;
+      }
+
+      .desktop-context-menu {
+        position: fixed;
+        z-index: 9999;
+        min-width: 12rem;
+        padding: 0.16rem;
+        background: #f1efe8;
+        border: 1px solid #0054e3;
+        box-shadow:
+          inset 1px 1px 0 rgba(255, 255, 255, 0.9),
+          inset -1px -1px 0 rgba(0, 0, 0, 0.14),
+          2px 3px 10px rgba(0, 0, 0, 0.35);
+        font-family: Tahoma, "Trebuchet MS", "Segoe UI", sans-serif;
+        font-size: 0.73rem;
+        color: #000;
+      }
+
+      .desktop-context-menu[hidden] {
+        display: none;
+      }
+
+      .desktop-context-menu ul {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+      }
+
+      .desktop-context-menu li {
+        position: relative;
+      }
+
+      .desktop-context-menu hr {
+        margin: 0.18rem 0;
+        border: 0;
+        border-top: 1px solid #aca899;
+        border-bottom: 1px solid #fff;
+      }
+
+      .desktop-menu-item {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1rem;
+        min-height: 1.4rem;
+        padding: 0.08rem 1.9rem 0.08rem 1.45rem;
+        white-space: nowrap;
+      }
+
+      .desktop-menu-item.is-bold {
+        font-weight: 700;
+      }
+
+      .desktop-menu-item.is-disabled {
+        color: #8c8a7d;
+      }
+
+      .desktop-context-menu li:not(.is-disabled):hover > .desktop-menu-item,
+      .desktop-context-menu li.is-open > .desktop-menu-item {
+        background: linear-gradient(180deg, #316ac5 0%, #2359ad 100%);
+        color: #fff;
+      }
+
+      .desktop-context-menu li.is-disabled:hover > .desktop-menu-item {
+        background: transparent;
+        color: #8c8a7d;
+      }
+
+      .desktop-menu-caret {
+        margin-right: -0.9rem;
+        font-size: 0.68rem;
+      }
+
+      .desktop-context-submenu {
+        position: absolute;
+        top: -0.22rem;
+        left: calc(100% - 0.16rem);
+        min-width: 12rem;
+      }
+
+      .desktop-context-submenu[hidden] {
+        display: none;
+      }
+
+      .properties-overlay {
+        position: fixed;
+        inset: 0;
+        z-index: 10020;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: rgba(27, 60, 121, 0.16);
+      }
+
+      .properties-overlay[hidden] {
+        display: none;
+      }
+
+      .properties-window {
+        width: min(27.5rem, calc(100vw - 2rem));
+      }
+
+      .properties-window .title-bar {
+        min-height: 28px;
+        padding: 3px 4px 3px 6px;
+      }
+
+      .properties-window .title-bar-text {
+        display: flex;
+        align-items: center;
+        gap: 0.35rem;
+        font-size: 12px;
+        line-height: 1;
+        font-weight: 700;
+      }
+
+      .properties-window .title-bar-controls {
+        display: flex;
+        align-items: center;
+        margin-top: -1px;
+      }
+
+      .properties-window .title-bar-controls button {
+        width: 21px;
+        min-width: 21px;
+        height: 21px;
+        min-height: 21px;
+        margin-left: 2px;
+        padding: 0;
+        position: relative;
+        border-radius: 3px;
+        border: 1px solid rgba(0, 30, 80, 0.45);
+        box-shadow:
+          inset 1px 1px rgba(255, 255, 255, 0.65),
+          inset -1px -1px rgba(120, 25, 0, 0.18);
+      }
+
+      .properties-window #properties-close-button {
+        background: linear-gradient(180deg, #ffbd8f 0%, #ff905c 45%, #e35b27 100%);
+      }
+
+      .properties-window #properties-close-button::before {
+        content: "×";
+        position: absolute;
+        inset: 0;
+        display: grid;
+        place-items: center;
+        color: #fff;
+        font-size: 16px;
+        font-weight: 700;
+        line-height: 1;
+        text-shadow: 0 1px 0 rgba(0, 0, 0, 0.35);
+      }
+
+      .properties-window #properties-close-button:hover {
+        filter: brightness(1.04);
+      }
+
+      .properties-window #properties-close-button:active {
+        background: linear-gradient(180deg, #cf4e20 0%, #ef7841 100%);
+        box-shadow:
+          inset 1px 1px rgba(80, 16, 0, 0.35),
+          inset -1px -1px rgba(255, 255, 255, 0.2);
+        transform: translateY(1px);
+      }
+
+      .properties-title-icon {
+        width: 1rem;
+        height: 1rem;
+        object-fit: contain;
+      }
+
+      .properties-window .window-body {
+        padding-bottom: 0.65rem;
+        background: #ffffff;
+      }
+
+      .tabs {
+        display: flex;
+        gap: 2px;
+        margin: 0 6px;
+        position: relative;
+        top: 1px;
+      }
+
+      .tab {
+        font-size: 11px;
+        padding: 5px 12px 6px;
+        border: 1px solid #7f9db9;
+        border-bottom: none;
+        border-radius: 4px 4px 0 0;
+        background: linear-gradient(180deg, #ffffff 0%, #ece9d8 70%);
+        color: #222;
+      }
+
+      .tab.inactive {
+        background: linear-gradient(180deg, #f4f2e8 0%, #ddd8c4 100%);
+        color: #555;
+        margin-top: 3px;
+        padding-top: 3px;
+      }
+
+      .panel {
+        border: 1px solid #7f9db9;
+        background: #ffffff;
+        padding: 14px 12px 10px;
+        margin: 0 6px;
+        box-shadow: inset 1px 1px #ffffff;
+        min-height: 18rem;
+      }
+
+      .properties-panel[hidden] {
+        display: none;
+      }
+
+      .header-row {
+        display: grid;
+        grid-template-columns: 36px 1fr;
+        gap: 12px;
+        align-items: start;
+        margin-bottom: 12px;
+      }
+
+      .app-icon {
+        width: 32px;
+        height: 32px;
+        border: 1px solid #7f9db9;
+        background: linear-gradient(180deg, #0d6efd 0%, #0047ab 100%);
+        display: grid;
+        place-items: center;
+        box-shadow: inset 1px 1px rgba(255, 255, 255, 0.7);
+        overflow: hidden;
+      }
+
+      .app-icon img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+      }
+
+      .app-title {
+        font-size: 12px;
+        font-weight: bold;
+        margin-top: 2px;
+        color: #000;
+      }
+
+      .app-meta {
+        font-size: 11px;
+        color: #4a4a4a;
+        margin-top: 3px;
+      }
+
+      fieldset.info-group {
+        margin: 0 0 10px;
+        padding: 14px 10px 10px;
+        background: #ffffff;
+      }
+
+      fieldset.info-group > legend {
+        padding: 0 4px;
+        background: #ffffff;
+      }
+
+      .info-grid {
+        display: grid;
+        grid-template-columns: 108px 1fr;
+        row-gap: 8px;
+        column-gap: 8px;
+        align-items: center;
+      }
+
+      .info-grid label {
+        font-size: 11px;
+        color: #222;
+      }
+
+      .readonly-box {
+        min-height: 22px;
+        display: flex;
+        align-items: center;
+        padding: 2px 6px;
+        background: white;
+        border: 1px solid;
+        border-color: #7f9db9 #ffffff #ffffff #7f9db9;
+        font-size: 11px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        box-sizing: border-box;
+      }
+
+      .description {
+        border: 1px solid;
+        border-color: #7f9db9 #ffffff #ffffff #7f9db9;
+        background: white;
+        min-height: 56px;
+        padding: 6px;
+        font-size: 11px;
+        line-height: 1.35;
+        box-sizing: border-box;
+      }
+
+      .footer {
+        display: flex;
+        justify-content: flex-end;
+        gap: 6px;
+        margin-top: 12px;
+        padding: 0 6px;
+      }
+
+      .footer button {
+        min-width: 76px;
+      }
+
+      @media (max-width: 640px) {
+        body {
+          background-position: 62% center;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main class="xp-desktop" aria-labelledby="desktop-title">
+      <h1 id="desktop-title" class="sr-only">XP Games</h1>
+      <ul class="desktop-grid" role="list"><li>
+            <article
+              class="desktop-icon"
+              title="Resident Evil Requiem"
+              data-game-name="Resident Evil Requiem"
+              data-icon-url="/game-ico/resident-evil-requiem.png"
+              data-last-played-utc="2026-04-10T13:18:41&#43;00:00"
+              data-total-playtime-hours="0.09452891251861173"
+              data-total-playtime-text="6m"
+              data-runner="wine"
+              data-platform="Windows"
+              data-backup-snapshots="1"
+              data-backup-file-count="4"
+              data-total-size-bytes="316957"
+              data-latest-backup-utc="2026-04-10T13:54:08.721506537Z"
+              data-description="Current playtime came from the local Lutris database."
+              data-pcgw-url="https://www.pcgamingwiki.com/wiki/Resident_Evil_Requiem"
+            >
+              <div class="desktop-icon-art"><img src="/game-ico/resident-evil-requiem.png" alt="Resident Evil Requiem icon" loading="lazy"></div>
+              <div class="desktop-icon-label">Resident Evil Requiem</div>
+            </article>
+          </li><li>
+            <article
+              class="desktop-icon"
+              title="God of War"
+              data-game-name="God of War"
+              data-icon-url="/game-ico/god-of-war.png"
+              data-last-played-utc="2026-04-10T12:42:52&#43;00:00"
+              data-total-playtime-hours="16.97393201043722"
+              data-total-playtime-text="16h 58m"
+              data-runner="wine"
+              data-platform="Windows"
+              data-backup-snapshots="1"
+              data-backup-file-count="2"
+              data-total-size-bytes="33556564"
+              data-latest-backup-utc="2026-04-10T12:52:24.710588766Z"
+              data-description="Current playtime came from the local Lutris database."
+              data-pcgw-url="https://www.pcgamingwiki.com/wiki/God_of_War"
+            >
+              <div class="desktop-icon-art"><img src="/game-ico/god-of-war.png" alt="God of War icon" loading="lazy"></div>
+              <div class="desktop-icon-label">God of War</div>
+            </article>
+          </li><li>
+            <article
+              class="desktop-icon"
+              title="Fallout 4"
+              data-game-name="Fallout 4"
+              data-icon-url="/game-ico/fallout-4.png"
+              data-last-played-utc="2026-04-10T11:02:01&#43;00:00"
+              data-total-playtime-hours="18.0"
+              data-total-playtime-text="18h"
+              data-runner="wine"
+              data-platform="Windows"
+              data-backup-snapshots="1"
+              data-backup-file-count="42"
+              data-total-size-bytes="240046453"
+              data-latest-backup-utc="2026-04-10T11:20:12.060255942Z"
+              data-description="Latest save: Rajesh, Commonwealth, level 16"
+              data-pcgw-url="https://www.pcgamingwiki.com/wiki/Fallout_4"
+            >
+              <div class="desktop-icon-art"><img src="/game-ico/fallout-4.png" alt="Fallout 4 icon" loading="lazy"></div>
+              <div class="desktop-icon-label">Fallout 4</div>
+            </article>
+          </li><li>
+            <article
+              class="desktop-icon"
+              title="Midtown Madness"
+              data-game-name="Midtown Madness"
+              data-icon-url="/game-ico/midtown-madness.ico"
+              data-last-played-utc="2026-04-09T16:50:30&#43;00:00"
+              data-total-playtime-hours="1.01367"
+              data-total-playtime-text="1h 1m"
+              data-runner="wine"
+              data-platform="Windows"
+              data-backup-snapshots="1"
+              data-backup-file-count="8"
+              data-total-size-bytes="108027"
+              data-latest-backup-utc="2026-04-09T16:47:02.164808625Z"
+              data-description="Current playtime came from the local Lutris database."
+              data-pcgw-url="https://www.pcgamingwiki.com/wiki/Midtown_Madness"
+            >
+              <div class="desktop-icon-art"><img src="/game-ico/midtown-madness.ico" alt="Midtown Madness icon" loading="lazy"></div>
+              <div class="desktop-icon-label">Midtown Madness</div>
+            </article>
+          </li><li>
+            <article
+              class="desktop-icon"
+              title="Max Payne"
+              data-game-name="Max Payne"
+              data-icon-url="/game-ico/max-payne.png"
+              data-last-played-utc="2026-04-04T13:22:16&#43;00:00"
+              data-total-playtime-hours="0.61946"
+              data-total-playtime-text="37m"
+              data-runner="wine"
+              data-platform="Windows"
+              data-backup-snapshots="1"
+              data-backup-file-count="5"
+              data-total-size-bytes="6300954"
+              data-latest-backup-utc="2026-04-04T13:36:31.447075908Z"
+              data-description="Current playtime came from the local Lutris database."
+              data-pcgw-url="https://www.pcgamingwiki.com/wiki/Max_Payne"
+            >
+              <div class="desktop-icon-art"><img src="/game-ico/max-payne.png" alt="Max Payne icon" loading="lazy"></div>
+              <div class="desktop-icon-label">Max Payne</div>
+            </article>
+          </li><li>
+            <article
+              class="desktop-icon"
+              title="Hot Wheels: Beat That!"
+              data-game-name="Hot Wheels: Beat That!"
+              data-icon-url="/game-ico/hot-wheels-beat-that.png"
+              data-last-played-utc="2026-03-30T03:59:51&#43;00:00"
+              data-total-playtime-hours="0.2456"
+              data-total-playtime-text="15m"
+              data-runner="wine"
+              data-platform="Windows"
+              data-backup-snapshots="1"
+              data-backup-file-count="4"
+              data-total-size-bytes="4693888"
+              data-latest-backup-utc="2026-03-31T07:45:14.936116005Z"
+              data-description="Current playtime came from the local Lutris database."
+              data-pcgw-url="https://www.pcgamingwiki.com/wiki/Hot_Wheels%3A_Beat_That%21"
+            >
+              <div class="desktop-icon-art"><img src="/game-ico/hot-wheels-beat-that.png" alt="Hot Wheels: Beat That! icon" loading="lazy"></div>
+              <div class="desktop-icon-label">Hot Wheels: Beat That!</div>
+            </article>
+          </li><li>
+            <article
+              class="desktop-icon"
+              title="Counter-Strike 2"
+              data-game-name="Counter-Strike 2"
+              data-icon-url="/game-ico/counter-strike-2.ico"
+              data-last-played-utc="2026-01-04T04:31:59&#43;00:00"
+              data-total-playtime-hours="1541.2672227435453"
+              data-total-playtime-text="1541h 16m"
+              data-runner="steam"
+              data-platform="Linux"
+              data-backup-snapshots="1"
+              data-backup-file-count="49"
+              data-total-size-bytes="120634"
+              data-latest-backup-utc="2026-03-22T04:39:50.951896973Z"
+              data-description="Current playtime came from the local Lutris database."
+              data-pcgw-url="https://www.pcgamingwiki.com/wiki/Counter-Strike_2"
+            >
+              <div class="desktop-icon-art"><img src="/game-ico/counter-strike-2.ico" alt="Counter-Strike 2 icon" loading="lazy"></div>
+              <div class="desktop-icon-label">Counter-Strike 2</div>
+            </article>
+          </li><li>
+            <article
+              class="desktop-icon"
+              title="No More Room in Hell"
+              data-game-name="No More Room in Hell"
+              data-icon-url="/game-ico/no-more-room-in-hell.png"
+              data-last-played-utc="2026-03-14T09:25:37.086696696Z"
+              data-total-playtime-hours=""
+              data-total-playtime-text="No playtime recorded"
+              data-runner="Unknown"
+              data-platform="Unknown"
+              data-backup-snapshots="1"
+              data-backup-file-count="17"
+              data-total-size-bytes="15052"
+              data-latest-backup-utc="2026-03-14T09:25:37.086696696Z"
+              data-description="No additional details available."
+              data-pcgw-url="https://www.pcgamingwiki.com/wiki/No_More_Room_in_Hell"
+            >
+              <div class="desktop-icon-art"><img src="/game-ico/no-more-room-in-hell.png" alt="No More Room in Hell icon" loading="lazy"></div>
+              <div class="desktop-icon-label">No More Room in Hell</div>
+            </article>
+          </li><li>
+            <article
+              class="desktop-icon"
+              title="Counter-Strike: Source"
+              data-game-name="Counter-Strike: Source"
+              data-icon-url="/game-ico/counter-strike-source.png"
+              data-last-played-utc="2026-03-06T08:06:21&#43;00:00"
+              data-total-playtime-hours="0.75236"
+              data-total-playtime-text="45m"
+              data-runner="wine"
+              data-platform="Windows"
+              data-backup-snapshots="1"
+              data-backup-file-count="22"
+              data-total-size-bytes="4253290"
+              data-latest-backup-utc="2026-03-06T08:08:16.695227121Z"
+              data-description="Current playtime came from the local Lutris database."
+              data-pcgw-url="https://www.pcgamingwiki.com/wiki/Counter-Strike%3A_Source"
+            >
+              <div class="desktop-icon-art"><img src="/game-ico/counter-strike-source.png" alt="Counter-Strike: Source icon" loading="lazy"></div>
+              <div class="desktop-icon-label">Counter-Strike: Source</div>
+            </article>
+          </li><li>
+            <article
+              class="desktop-icon"
+              title="JDM: Japanese Drift Master"
+              data-game-name="JDM: Japanese Drift Master"
+              data-icon-url="/game-ico/jdm-japanese-drift-master.ico"
+              data-last-played-utc="2026-02-27T07:31:28&#43;00:00"
+              data-total-playtime-hours="4.004892159185555"
+              data-total-playtime-text="4h"
+              data-runner="wine"
+              data-platform="Windows"
+              data-backup-snapshots="1"
+              data-backup-file-count="6"
+              data-total-size-bytes="4987480"
+              data-latest-backup-utc="2026-02-28T04:01:41.350478931Z"
+              data-description="Current playtime came from the local Lutris database."
+              data-pcgw-url="https://www.pcgamingwiki.com/wiki/JDM%3A_Japanese_Drift_Master"
+            >
+              <div class="desktop-icon-art"><img src="/game-ico/jdm-japanese-drift-master.ico" alt="JDM: Japanese Drift Master icon" loading="lazy"></div>
+              <div class="desktop-icon-label">JDM: Japanese Drift Master</div>
+            </article>
+          </li><li>
+            <article
+              class="desktop-icon"
+              title="Fallout"
+              data-game-name="Fallout"
+              data-icon-url="/game-ico/fallout.png"
+              data-last-played-utc="2026-02-08T23:28:14&#43;00:00"
+              data-total-playtime-hours="1.558730771661111"
+              data-total-playtime-text="1h 34m"
+              data-runner="wine"
+              data-platform="Windows"
+              data-backup-snapshots="1"
+              data-backup-file-count="44"
+              data-total-size-bytes="7651770"
+              data-latest-backup-utc="2026-02-08T23:39:18.110904653Z"
+              data-description="Current playtime came from the local Lutris database."
+              data-pcgw-url="https://www.pcgamingwiki.com/wiki/Fallout"
+            >
+              <div class="desktop-icon-art"><img src="/game-ico/fallout.png" alt="Fallout icon" loading="lazy"></div>
+              <div class="desktop-icon-label">Fallout</div>
+            </article>
+          </li><li>
+            <article
+              class="desktop-icon"
+              title="The Elder Scrolls V: Skyrim Special Edition"
+              data-game-name="The Elder Scrolls V: Skyrim Special Edition"
+              data-icon-url="/game-ico/the-elder-scrolls-v-skyrim-special-edition.png"
+              data-last-played-utc="2026-01-30T08:24:06.001922826Z"
+              data-total-playtime-hours=""
+              data-total-playtime-text="No playtime recorded"
+              data-runner="Unknown"
+              data-platform="Unknown"
+              data-backup-snapshots="1"
+              data-backup-file-count="2"
+              data-total-size-bytes="5797"
+              data-latest-backup-utc="2026-01-30T08:24:06.001922826Z"
+              data-description="No additional details available."
+              data-pcgw-url="https://www.pcgamingwiki.com/wiki/The_Elder_Scrolls_V%3A_Skyrim_Special_Edition"
+            >
+              <div class="desktop-icon-art"><img src="/game-ico/the-elder-scrolls-v-skyrim-special-edition.png" alt="The Elder Scrolls V: Skyrim Special Edition icon" loading="lazy"></div>
+              <div class="desktop-icon-label">The Elder Scrolls V: Skyrim Special Edition</div>
+            </article>
+          </li><li>
+            <article
+              class="desktop-icon"
+              title="Need for Speed: Most Wanted"
+              data-game-name="Need for Speed: Most Wanted"
+              data-icon-url="/game-ico/need-for-speed-most-wanted.png"
+              data-last-played-utc="2026-01-30T08:23:39&#43;00:00"
+              data-total-playtime-hours="2.479293187655556"
+              data-total-playtime-text="2h 29m"
+              data-runner="wine"
+              data-platform="Windows"
+              data-backup-snapshots="1"
+              data-backup-file-count="4"
+              data-total-size-bytes="4468479"
+              data-latest-backup-utc="2026-01-30T08:24:05.710991411Z"
+              data-description="Current playtime came from the local Lutris database."
+              data-pcgw-url="https://www.pcgamingwiki.com/wiki/Need_for_Speed%3A_Most_Wanted"
+            >
+              <div class="desktop-icon-art"><img src="/game-ico/need-for-speed-most-wanted.png" alt="Need for Speed: Most Wanted icon" loading="lazy"></div>
+              <div class="desktop-icon-label">Need for Speed: Most Wanted</div>
+            </article>
+          </li><li>
+            <article
+              class="desktop-icon"
+              title="Schedule I"
+              data-game-name="Schedule I"
+              data-icon-url="/game-ico/schedule-i.png"
+              data-last-played-utc="2026-01-27T17:07:27.658753220Z"
+              data-total-playtime-hours=""
+              data-total-playtime-text="No playtime recorded"
+              data-runner="Unknown"
+              data-platform="Unknown"
+              data-backup-snapshots="1"
+              data-backup-file-count="104"
+              data-total-size-bytes="8582592"
+              data-latest-backup-utc="2026-01-27T17:07:27.658753220Z"
+              data-description="No additional details available."
+              data-pcgw-url="https://www.pcgamingwiki.com/wiki/Schedule_I"
+            >
+              <div class="desktop-icon-art"><img src="/game-ico/schedule-i.png" alt="Schedule I icon" loading="lazy"></div>
+              <div class="desktop-icon-label">Schedule I</div>
+            </article>
+          </li><li>
+            <article
+              class="desktop-icon"
+              title="Quarantine Zone: The Last Check"
+              data-game-name="Quarantine Zone: The Last Check"
+              data-icon-url="/game-ico/quarantine-zone-the-last-check.png"
+              data-last-played-utc="2026-01-25T09:26:06.629545780Z"
+              data-total-playtime-hours=""
+              data-total-playtime-text="No playtime recorded"
+              data-runner="Unknown"
+              data-platform="Unknown"
+              data-backup-snapshots="1"
+              data-backup-file-count="29"
+              data-total-size-bytes="35820119"
+              data-latest-backup-utc="2026-01-25T09:26:06.629545780Z"
+              data-description="No additional details available."
+              data-pcgw-url="https://www.pcgamingwiki.com/wiki/Quarantine_Zone%3A_The_Last_Check"
+            >
+              <div class="desktop-icon-art"><img src="/game-ico/quarantine-zone-the-last-check.png" alt="Quarantine Zone: The Last Check icon" loading="lazy"></div>
+              <div class="desktop-icon-label">Quarantine Zone: The Last Check</div>
+            </article>
+          </li><li>
+            <article
+              class="desktop-icon"
+              title="Portal 2"
+              data-game-name="Portal 2"
+              data-icon-url="/game-ico/portal-2.png"
+              data-last-played-utc="2026-01-22T09:22:17.233019971Z"
+              data-total-playtime-hours="0.5"
+              data-total-playtime-text="30m"
+              data-runner="steam"
+              data-platform="Linux"
+              data-backup-snapshots="1"
+              data-backup-file-count="93"
+              data-total-size-bytes="3940439"
+              data-latest-backup-utc="2026-01-22T09:22:17.233019971Z"
+              data-description="Current map marker: sp_a1_wakeup"
+              data-pcgw-url="https://www.pcgamingwiki.com/wiki/Portal_2"
+            >
+              <div class="desktop-icon-art"><img src="/game-ico/portal-2.png" alt="Portal 2 icon" loading="lazy"></div>
+              <div class="desktop-icon-label">Portal 2</div>
+            </article>
+          </li><li>
+            <article
+              class="desktop-icon"
+              title="Age of Empires II: The Age of Kings"
+              data-game-name="Age of Empires II: The Age of Kings"
+              data-icon-url="/game-ico/age-of-empires-ii-the-age-of-kings.png"
+              data-last-played-utc="2026-03-07T22:21:04&#43;00:00"
+              data-total-playtime-hours="0.05931"
+              data-total-playtime-text="4m"
+              data-runner="wine"
+              data-platform="Windows"
+              data-backup-snapshots="1"
+              data-backup-file-count="3"
+              data-total-size-bytes="3681"
+              data-latest-backup-utc="2026-01-18T00:01:03.437634027Z"
+              data-description="Current playtime came from the local Lutris database."
+              data-pcgw-url="https://www.pcgamingwiki.com/wiki/Age_of_Empires_II%3A_The_Age_of_Kings"
+            >
+              <div class="desktop-icon-art"><img src="/game-ico/age-of-empires-ii-the-age-of-kings.png" alt="Age of Empires II: The Age of Kings icon" loading="lazy"></div>
+              <div class="desktop-icon-label">Age of Empires II: The Age of Kings</div>
+            </article>
+          </li><li>
+            <article
+              class="desktop-icon"
+              title="Left 4 Dead 2"
+              data-game-name="Left 4 Dead 2"
+              data-icon-url="/game-ico/left-4-dead-2.png"
+              data-last-played-utc="2026-01-17T22:59:03.965319333Z"
+              data-total-playtime-hours=""
+              data-total-playtime-text="No playtime recorded"
+              data-runner="Unknown"
+              data-platform="Unknown"
+              data-backup-snapshots="1"
+              data-backup-file-count="1"
+              data-total-size-bytes="7355"
+              data-latest-backup-utc="2026-01-17T22:59:03.965319333Z"
+              data-description="No additional details available."
+              data-pcgw-url="https://www.pcgamingwiki.com/wiki/Left_4_Dead_2"
+            >
+              <div class="desktop-icon-art"><img src="/game-ico/left-4-dead-2.png" alt="Left 4 Dead 2 icon" loading="lazy"></div>
+              <div class="desktop-icon-label">Left 4 Dead 2</div>
+            </article>
+          </li><li>
+            <article
+              class="desktop-icon"
+              title="Clair Obscur: Expedition 33"
+              data-game-name="Clair Obscur: Expedition 33"
+              data-icon-url="/game-ico/clair-obscur-expedition-33.png"
+              data-last-played-utc="2026-01-17T06:06:22&#43;00:00"
+              data-total-playtime-hours="41.39941044606972"
+              data-total-playtime-text="41h 24m"
+              data-runner="wine"
+              data-platform="Windows"
+              data-backup-snapshots="1"
+              data-backup-file-count="8"
+              data-total-size-bytes="378854"
+              data-latest-backup-utc="2026-01-17T06:21:34.333941721Z"
+              data-description="Act 3, Level Lumiere Main V 2"
+              data-pcgw-url="https://www.pcgamingwiki.com/wiki/Clair_Obscur%3A_Expedition_33"
+            >
+              <div class="desktop-icon-art"><img src="/game-ico/clair-obscur-expedition-33.png" alt="Clair Obscur: Expedition 33 icon" loading="lazy"></div>
+              <div class="desktop-icon-label">Clair Obscur: Expedition 33</div>
+            </article>
+          </li><li>
+            <article
+              class="desktop-icon"
+              title="Call of Duty: Modern Warfare Remastered"
+              data-game-name="Call of Duty: Modern Warfare Remastered"
+              data-icon-url="/game-ico/call-of-duty-modern-warfare-remastered.png"
+              data-last-played-utc="2026-01-12T06:40:57&#43;00:00"
+              data-total-playtime-hours="1.1177803138399995"
+              data-total-playtime-text="1h 7m"
+              data-runner="wine"
+              data-platform="Windows"
+              data-backup-snapshots="1"
+              data-backup-file-count="7"
+              data-total-size-bytes="4484442"
+              data-latest-backup-utc="2026-01-12T06:44:54.852335252Z"
+              data-description="Current playtime came from the local Lutris database."
+              data-pcgw-url="https://www.pcgamingwiki.com/wiki/Call_of_Duty%3A_Modern_Warfare_Remastered"
+            >
+              <div class="desktop-icon-art"><img src="/game-ico/call-of-duty-modern-warfare-remastered.png" alt="Call of Duty: Modern Warfare Remastered icon" loading="lazy"></div>
+              <div class="desktop-icon-label">Call of Duty: Modern Warfare Remastered</div>
+            </article>
+          </li><li>
+            <article
+              class="desktop-icon"
+              title="NieR: Automata"
+              data-game-name="NieR: Automata"
+              data-icon-url="/game-ico/nier-automata.png"
+              data-last-played-utc="2026-01-03T11:33:23.434843819Z"
+              data-total-playtime-hours=""
+              data-total-playtime-text="No playtime recorded"
+              data-runner="Unknown"
+              data-platform="Unknown"
+              data-backup-snapshots="1"
+              data-backup-file-count="3"
+              data-total-size-bytes="1984"
+              data-latest-backup-utc="2026-01-03T11:33:23.434843819Z"
+              data-description="No additional details available."
+              data-pcgw-url="https://www.pcgamingwiki.com/wiki/NieR%3A_Automata"
+            >
+              <div class="desktop-icon-art"><img src="/game-ico/nier-automata.png" alt="NieR: Automata icon" loading="lazy"></div>
+              <div class="desktop-icon-label">NieR: Automata</div>
+            </article>
+          </li><li>
+            <article
+              class="desktop-icon"
+              title="Alan Wake"
+              data-game-name="Alan Wake"
+              data-icon-url="/game-ico/alan-wake.png"
+              data-last-played-utc="2026-01-02T22:05:42&#43;00:00"
+              data-total-playtime-hours="0.02891484403833323"
+              data-total-playtime-text="2m"
+              data-runner="wine"
+              data-platform="Windows"
+              data-backup-snapshots="1"
+              data-backup-file-count="3"
+              data-total-size-bytes="1888"
+              data-latest-backup-utc="2026-01-03T04:19:26.937092907Z"
+              data-description="Current playtime came from the local Lutris database."
+              data-pcgw-url="https://www.pcgamingwiki.com/wiki/Alan_Wake"
+            >
+              <div class="desktop-icon-art"><img src="/game-ico/alan-wake.png" alt="Alan Wake icon" loading="lazy"></div>
+              <div class="desktop-icon-label">Alan Wake</div>
+            </article>
+          </li><li>
+            <article
+              class="desktop-icon"
+              title="Halo: The Master Chief Collection"
+              data-game-name="Halo: The Master Chief Collection"
+              data-icon-url="/game-ico/halo-the-master-chief-collection.png"
+              data-last-played-utc="2026-01-02T08:56:13.888390437Z"
+              data-total-playtime-hours=""
+              data-total-playtime-text="No playtime recorded"
+              data-runner="Unknown"
+              data-platform="Unknown"
+              data-backup-snapshots="1"
+              data-backup-file-count="1"
+              data-total-size-bytes="17210"
+              data-latest-backup-utc="2026-01-02T08:56:13.888390437Z"
+              data-description="No additional details available."
+              data-pcgw-url="https://www.pcgamingwiki.com/wiki/Halo%3A_The_Master_Chief_Collection"
+            >
+              <div class="desktop-icon-art"><img src="/game-ico/halo-the-master-chief-collection.png" alt="Halo: The Master Chief Collection icon" loading="lazy"></div>
+              <div class="desktop-icon-label">Halo: The Master Chief Collection</div>
+            </article>
+          </li><li>
+            <article
+              class="desktop-icon"
+              title="Halo 4"
+              data-game-name="Halo 4"
+              data-icon-url="/game-ico/halo-4.png"
+              data-last-played-utc="2026-01-02T08:56:13.885199789Z"
+              data-total-playtime-hours=""
+              data-total-playtime-text="No playtime recorded"
+              data-runner="Unknown"
+              data-platform="Unknown"
+              data-backup-snapshots="1"
+              data-backup-file-count="1"
+              data-total-size-bytes="17210"
+              data-latest-backup-utc="2026-01-02T08:56:13.885199789Z"
+              data-description="No additional details available."
+              data-pcgw-url="https://www.pcgamingwiki.com/wiki/Halo_4"
+            >
+              <div class="desktop-icon-art"><img src="/game-ico/halo-4.png" alt="Halo 4 icon" loading="lazy"></div>
+              <div class="desktop-icon-label">Halo 4</div>
+            </article>
+          </li><li>
+            <article
+              class="desktop-icon"
+              title="Minecraft: Java Edition"
+              data-game-name="Minecraft: Java Edition"
+              data-icon-url="/game-ico/minecraft-java-edition.png"
+              data-last-played-utc="2025-12-30T22:16:46.929775423Z"
+              data-total-playtime-hours=""
+              data-total-playtime-text="No playtime recorded"
+              data-runner="Unknown"
+              data-platform="Unknown"
+              data-backup-snapshots="1"
+              data-backup-file-count="43"
+              data-total-size-bytes="22941543"
+              data-latest-backup-utc="2025-12-30T22:16:46.929775423Z"
+              data-description="No additional details available."
+              data-pcgw-url="https://www.pcgamingwiki.com/wiki/Minecraft%3A_Java_Edition"
+            >
+              <div class="desktop-icon-art"><img src="/game-ico/minecraft-java-edition.png" alt="Minecraft: Java Edition icon" loading="lazy"></div>
+              <div class="desktop-icon-label">Minecraft: Java Edition</div>
+            </article>
+          </li><li>
+            <article
+              class="desktop-icon"
+              title="Marvel&#39;s Spider-Man Remastered"
+              data-game-name="Marvel&#39;s Spider-Man Remastered"
+              data-icon-url="/game-ico/marvel-s-spider-man-remastered.png"
+              data-last-played-utc="2025-12-25T10:41:19&#43;00:00"
+              data-total-playtime-hours="0.24301"
+              data-total-playtime-text="15m"
+              data-runner="wine"
+              data-platform="Windows"
+              data-backup-snapshots="1"
+              data-backup-file-count="7"
+              data-total-size-bytes="4452993"
+              data-latest-backup-utc="2025-12-30T21:47:21.717942880Z"
+              data-description="Current playtime came from the local Lutris database."
+              data-pcgw-url="https://www.pcgamingwiki.com/wiki/Marvel%27s_Spider-Man_Remastered"
+            >
+              <div class="desktop-icon-art"><img src="/game-ico/marvel-s-spider-man-remastered.png" alt="Marvel&#39;s Spider-Man Remastered icon" loading="lazy"></div>
+              <div class="desktop-icon-label">Marvel&#39;s Spider-Man Remastered</div>
+            </article>
+          </li><li>
+            <article
+              class="desktop-icon"
+              title="Age of Empires II: Definitive Edition"
+              data-game-name="Age of Empires II: Definitive Edition"
+              data-icon-url="/game-ico/age-of-empires-ii-definitive-edition.ico"
+              data-last-played-utc="2025-12-30T21:47:21.700672536Z"
+              data-total-playtime-hours="409.7"
+              data-total-playtime-text="409h 42m"
+              data-runner="steam"
+              data-platform="Linux"
+              data-backup-snapshots="1"
+              data-backup-file-count="43"
+              data-total-size-bytes="46505207"
+              data-latest-backup-utc="2025-12-30T21:47:21.700672536Z"
+              data-description="Current playtime came from the local Lutris database."
+              data-pcgw-url="https://www.pcgamingwiki.com/wiki/Age_of_Empires_II%3A_Definitive_Edition"
+            >
+              <div class="desktop-icon-art"><img src="/game-ico/age-of-empires-ii-definitive-edition.ico" alt="Age of Empires II: Definitive Edition icon" loading="lazy"></div>
+              <div class="desktop-icon-label">Age of Empires II: Definitive Edition</div>
+            </article>
+          </li><li>
+            <article
+              class="desktop-icon"
+              title="Ghost of Tsushima Director&#39;s Cut"
+              data-game-name="Ghost of Tsushima Director&#39;s Cut"
+              data-icon-url="/game-ico/ghost-of-tsushima-director-s-cut.png"
+              data-last-played-utc="2025-10-28T13:30:38&#43;00:00"
+              data-total-playtime-hours="0.03559"
+              data-total-playtime-text="2m"
+              data-runner="wine"
+              data-platform="Windows"
+              data-backup-snapshots="1"
+              data-backup-file-count="6"
+              data-total-size-bytes="4842144"
+              data-latest-backup-utc="2025-12-30T21:47:21.677309162Z"
+              data-description="At least Act 3 (Izuhara, Toyotama, Kamiagata markers found)"
+              data-pcgw-url="https://www.pcgamingwiki.com/wiki/Ghost_of_Tsushima_Director%27s_Cut"
+            >
+              <div class="desktop-icon-art"><img src="/game-ico/ghost-of-tsushima-director-s-cut.png" alt="Ghost of Tsushima Director&#39;s Cut icon" loading="lazy"></div>
+              <div class="desktop-icon-label">Ghost of Tsushima Director&#39;s Cut</div>
+            </article>
+          </li><li>
+            <article
+              class="desktop-icon"
+              title="Neighbours Back from Hell"
+              data-game-name="Neighbours Back from Hell"
+              data-icon-url="/game-ico/neighbours-back-from-hell.ico"
+              data-last-played-utc="2025-12-23T05:21:08&#43;00:00"
+              data-total-playtime-hours="2.43182"
+              data-total-playtime-text="2h 26m"
+              data-runner="wine"
+              data-platform="Windows"
+              data-backup-snapshots="1"
+              data-backup-file-count="2"
+              data-total-size-bytes="3423"
+              data-latest-backup-utc="2025-12-30T21:47:21.673473641Z"
+              data-description="Current playtime came from the local Lutris database."
+              data-pcgw-url="https://www.pcgamingwiki.com/wiki/Neighbours_Back_from_Hell"
+            >
+              <div class="desktop-icon-art"><img src="/game-ico/neighbours-back-from-hell.ico" alt="Neighbours Back from Hell icon" loading="lazy"></div>
+              <div class="desktop-icon-label">Neighbours Back from Hell</div>
+            </article>
+          </li><li>
+            <article
+              class="desktop-icon"
+              title="Indiana Jones and the Great Circle"
+              data-game-name="Indiana Jones and the Great Circle"
+              data-icon-url="/game-ico/indiana-jones-and-the-great-circle.png"
+              data-last-played-utc="2025-12-22T07:59:39&#43;00:00"
+              data-total-playtime-hours="0.10634043542305557"
+              data-total-playtime-text="6m"
+              data-runner="wine"
+              data-platform="Windows"
+              data-backup-snapshots="1"
+              data-backup-file-count="1"
+              data-total-size-bytes="482"
+              data-latest-backup-utc="2025-12-30T21:47:20.854174186Z"
+              data-description="Current playtime came from the local Lutris database."
+              data-pcgw-url="https://www.pcgamingwiki.com/wiki/Indiana_Jones_and_the_Great_Circle"
+            >
+              <div class="desktop-icon-art"><img src="/game-ico/indiana-jones-and-the-great-circle.png" alt="Indiana Jones and the Great Circle icon" loading="lazy"></div>
+              <div class="desktop-icon-label">Indiana Jones and the Great Circle</div>
+            </article>
+          </li><li>
+            <article
+              class="desktop-icon"
+              title="Outlast 2"
+              data-game-name="Outlast 2"
+              data-icon-url="/game-ico/outlast-2.png"
+              data-last-played-utc="2025-12-30T21:47:20.807751399Z"
+              data-total-playtime-hours="7.866666666666666"
+              data-total-playtime-text="7h 52m"
+              data-runner="steam"
+              data-platform="Linux"
+              data-backup-snapshots="1"
+              data-backup-file-count="14"
+              data-total-size-bytes="201515"
+              data-latest-backup-utc="2025-12-30T21:47:20.807751399Z"
+              data-description="Current playtime came from the local Lutris database."
+              data-pcgw-url="https://www.pcgamingwiki.com/wiki/Outlast_2"
+            >
+              <div class="desktop-icon-art"><img src="/game-ico/outlast-2.png" alt="Outlast 2 icon" loading="lazy"></div>
+              <div class="desktop-icon-label">Outlast 2</div>
+            </article>
+          </li><li>
+            <article
+              class="desktop-icon"
+              title="OpenRCT2"
+              data-game-name="OpenRCT2"
+              data-icon-url="/game-ico/openrct2.png"
+              data-last-played-utc="2025-12-30T21:47:20.699294697Z"
+              data-total-playtime-hours=""
+              data-total-playtime-text="No playtime recorded"
+              data-runner="Unknown"
+              data-platform="Unknown"
+              data-backup-snapshots="1"
+              data-backup-file-count="2211"
+              data-total-size-bytes="123923552"
+              data-latest-backup-utc="2025-12-30T21:47:20.699294697Z"
+              data-description="No additional details available."
+              data-pcgw-url="https://www.pcgamingwiki.com/wiki/OpenRCT2"
+            >
+              <div class="desktop-icon-art"><img src="/game-ico/openrct2.png" alt="OpenRCT2 icon" loading="lazy"></div>
+              <div class="desktop-icon-label">OpenRCT2</div>
+            </article>
+          </li><li>
+            <article
+              class="desktop-icon"
+              title="The Walking Dead: The Telltale Definitive Series"
+              data-game-name="The Walking Dead: The Telltale Definitive Series"
+              data-icon-url="/game-ico/the-walking-dead-the-telltale-definitive-series.png"
+              data-last-played-utc="2025-12-30T21:47:20.598617072Z"
+              data-total-playtime-hours="13.333333333333334"
+              data-total-playtime-text="13h 20m"
+              data-runner="steam"
+              data-platform="Linux"
+              data-backup-snapshots="1"
+              data-backup-file-count="520"
+              data-total-size-bytes="5091624"
+              data-latest-backup-utc="2025-12-30T21:47:20.598617072Z"
+              data-description="Reached checkpoint 11 in save slot 1"
+              data-pcgw-url="https://www.pcgamingwiki.com/wiki/The_Walking_Dead%3A_The_Telltale_Definitive_Series"
+            >
+              <div class="desktop-icon-art"><img src="/game-ico/the-walking-dead-the-telltale-definitive-series.png" alt="The Walking Dead: The Telltale Definitive Series icon" loading="lazy"></div>
+              <div class="desktop-icon-label">The Walking Dead: The Telltale Definitive Series</div>
+            </article>
+          </li></ul>
+    </main>
+    <div class="desktop-context-menu" id="desktop-context-menu" hidden>
+      <ul role="menu" aria-label="Desktop context menu">
+        <li data-submenu="arrange-menu">
+          <div class="desktop-menu-item">Arrange Icons By <span class="desktop-menu-caret">▶</span></div>
+          <div class="desktop-context-menu desktop-context-submenu" id="arrange-menu" hidden>
+            <ul role="menu" aria-label="Arrange icons by submenu">
+              <li><div class="desktop-menu-item">Name</div></li>
+              <li><div class="desktop-menu-item">Size</div></li>
+              <li><div class="desktop-menu-item">Type</div></li>
+              <li><div class="desktop-menu-item">Modified</div></li>
+              <hr>
+              <li><div class="desktop-menu-item">Auto Arrange</div></li>
+              <li><div class="desktop-menu-item">Align to Grid</div></li>
+              <li><div class="desktop-menu-item">Show in Groups</div></li>
+            </ul>
+          </div>
+        </li>
+        <li><div class="desktop-menu-item">Refresh</div></li>
+        <hr>
+        <li class="is-disabled"><div class="desktop-menu-item is-disabled">Paste</div></li>
+        <li class="is-disabled"><div class="desktop-menu-item is-disabled">Paste Shortcut</div></li>
+        <hr>
+        <li data-submenu="new-menu">
+          <div class="desktop-menu-item">New <span class="desktop-menu-caret">▶</span></div>
+          <div class="desktop-context-menu desktop-context-submenu" id="new-menu" hidden>
+            <ul role="menu" aria-label="New submenu">
+              <li><div class="desktop-menu-item">Folder</div></li>
+              <li><div class="desktop-menu-item">Shortcut</div></li>
+              <li><div class="desktop-menu-item">Text Document</div></li>
+              <li><div class="desktop-menu-item">Bitmap Image</div></li>
+              <li><div class="desktop-menu-item">Rich Text Document</div></li>
+            </ul>
+          </div>
+        </li>
+        <li><div class="desktop-menu-item">Properties</div></li>
+      </ul>
+    </div>
+    <div class="desktop-context-menu" id="icon-context-menu" hidden>
+      <ul role="menu" aria-label="Icon context menu">
+        <li data-action="open"><div class="desktop-menu-item is-bold">Open</div></li>
+        <li data-submenu="sendto-menu">
+          <div class="desktop-menu-item">Send to <span class="desktop-menu-caret">▶</span></div>
+          <div class="desktop-context-menu desktop-context-submenu" id="sendto-menu" hidden>
+            <ul role="menu" aria-label="Send to submenu">
+              <li><div class="desktop-menu-item">Compressed (zipped) Folder</div></li>
+            </ul>
+          </div>
+        </li>
+        <hr>
+        <li><div class="desktop-menu-item">Cut</div></li>
+        <li><div class="desktop-menu-item">Copy</div></li>
+        <hr>
+        <li><div class="desktop-menu-item">Delete</div></li>
+        <li><div class="desktop-menu-item">Rename</div></li>
+        <hr>
+        <li data-action="properties"><div class="desktop-menu-item">Properties</div></li>
+      </ul>
+    </div>
+    <div class="properties-overlay" id="properties-overlay" hidden>
+      <div class="window properties-window" role="dialog" aria-modal="true" aria-labelledby="properties-window-title">
+        <div class="title-bar">
+          <div class="title-bar-text" id="properties-window-title">
+            <img class="properties-title-icon" id="properties-title-icon" alt="">
+            <span id="properties-window-title-text">Properties</span>
+          </div>
+          <div class="title-bar-controls">
+            <button aria-label="Close" id="properties-close-button"></button>
+          </div>
+        </div>
+        <div class="window-body">
+          <div class="tabs" role="tablist" aria-label="Game properties tabs">
+            <button type="button" class="tab" data-properties-tab="general" aria-selected="true">General</button>
+            <button type="button" class="tab inactive" data-properties-tab="activity" aria-selected="false">Activity</button>
+            <button type="button" class="tab inactive" data-properties-tab="backup" aria-selected="false">Backup</button>
+          </div>
+
+          <div class="panel">
+            <article class="properties-panel" id="properties-panel-general">
+              <div class="header-row">
+                <div class="app-icon">
+                  <img id="properties-icon" alt="">
+                </div>
+                <div>
+                  <div class="app-title" id="properties-name"></div>
+                  <div class="app-meta" id="properties-platform"></div>
+                </div>
+              </div>
+
+              <fieldset class="info-group">
+                <legend>Program details</legend>
+                <div class="info-grid">
+                  <label>Game name:</label>
+                  <div class="readonly-box" id="properties-game-name"></div>
+
+                  <label>Runner:</label>
+                  <div class="readonly-box" id="properties-runner"></div>
+
+                  <label>Platform:</label>
+                  <div class="readonly-box" id="properties-platform-box"></div>
+
+                </div>
+              </fieldset>
+
+              <fieldset class="info-group">
+                <legend>Description</legend>
+                <div class="description" id="properties-description"></div>
+              </fieldset>
+            </article>
+
+            <article class="properties-panel" hidden id="properties-panel-activity">
+              <fieldset class="info-group">
+                <legend>Play activity</legend>
+                <div class="info-grid">
+                  <label>Last played:</label>
+                  <div class="readonly-box" id="properties-last-played"></div>
+
+                  <label>Total playtime:</label>
+                  <div class="readonly-box" id="properties-total-playtime"></div>
+
+                  <label>Last backup:</label>
+                  <div class="readonly-box" id="properties-last-backup"></div>
+                </div>
+              </fieldset>
+            </article>
+
+            <article class="properties-panel" hidden id="properties-panel-backup">
+              <fieldset class="info-group">
+                <legend>Backup details</legend>
+                <div class="info-grid">
+                  <label>Snapshots:</label>
+                  <div class="readonly-box" id="properties-backup-snapshots"></div>
+
+                  <label>Files:</label>
+                  <div class="readonly-box" id="properties-backup-file-count"></div>
+
+                  <label>Size:</label>
+                  <div class="readonly-box" id="properties-backup-size"></div>
+                </div>
+              </fieldset>
+            </article>
+          </div>
+
+          <div class="footer">
+            <button type="button" id="properties-ok-button">OK</button>
+            <button type="button" id="properties-cancel-button">Cancel</button>
+            <button type="button" id="properties-apply-button">Apply</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script>
+      (() => {
+        const root = document.documentElement
+        const grid = document.querySelector('.desktop-grid')
+        const desktop = document.querySelector('.xp-desktop')
+        const desktopMenu = document.getElementById('desktop-context-menu')
+        const iconMenu = document.getElementById('icon-context-menu')
+        const propertiesOverlay = document.getElementById('properties-overlay')
+        const propertiesTitleIcon = document.getElementById('properties-title-icon')
+        const propertiesWindowTitleText = document.getElementById('properties-window-title-text')
+        const propertiesCloseButton = document.getElementById('properties-close-button')
+        const propertiesOkButton = document.getElementById('properties-ok-button')
+        const propertiesCancelButton = document.getElementById('properties-cancel-button')
+        const propertiesApplyButton = document.getElementById('properties-apply-button')
+        const propertiesIcon = document.getElementById('properties-icon')
+        const propertiesName = document.getElementById('properties-name')
+        const propertiesGameName = document.getElementById('properties-game-name')
+        const propertiesPlatform = document.getElementById('properties-platform')
+        const propertiesPlatformBox = document.getElementById('properties-platform-box')
+        const propertiesDescription = document.getElementById('properties-description')
+        const propertiesLastPlayed = document.getElementById('properties-last-played')
+        const propertiesTotalPlaytime = document.getElementById('properties-total-playtime')
+        const propertiesLastBackup = document.getElementById('properties-last-backup')
+        const propertiesRunner = document.getElementById('properties-runner')
+        const propertiesBackupSnapshots = document.getElementById('properties-backup-snapshots')
+        const propertiesBackupFileCount = document.getElementById('properties-backup-file-count')
+        const propertiesBackupSize = document.getElementById('properties-backup-size')
+        if (!grid) return
+
+        const count = grid.children.length
+        const base = {
+          padding: 1.1,
+          tileWidth: 5.9,
+          gapX: 0.35,
+          gapY: 0.45,
+          rowHeight: 6.55,
+        }
+        const rem = () => Number.parseFloat(getComputedStyle(root).fontSize) || 16
+
+        const layoutDesktop = () => {
+          const remPx = rem()
+          const availableWidth = window.innerWidth - ((base.padding * 2) * remPx)
+          const availableHeight = window.innerHeight - ((base.padding * 2) * remPx)
+          const maxRowsAtBaseScale = Math.max(
+            1,
+            Math.floor((availableHeight + (base.gapY * remPx)) / ((base.rowHeight + base.gapY) * remPx))
+          )
+
+          const rows = Math.min(count, maxRowsAtBaseScale)
+          const cols = Math.ceil(count / rows)
+          const requiredWidth = ((cols * base.tileWidth) + (Math.max(cols - 1, 0) * base.gapX)) * remPx
+          const requiredHeight = ((rows * base.rowHeight) + (Math.max(rows - 1, 0) * base.gapY)) * remPx
+          const scale = Math.min(availableWidth / requiredWidth, availableHeight / requiredHeight, 1)
+
+          root.style.setProperty('--desktop-rows', String(rows))
+          root.style.setProperty('--desktop-scale', String(Math.max(scale, 0.01)))
+        }
+
+        layoutDesktop()
+        window.addEventListener('resize', layoutDesktop, { passive: true })
+
+        let activeIcon = null
+        let activeMenu = null
+
+        const formatRelativeTime = (isoString) => {
+          if (!isoString) return 'Unknown'
+          const target = new Date(isoString)
+          if (Number.isNaN(target.getTime())) return 'Unknown'
+
+          const deltaSeconds = Math.max(0, Math.floor((Date.now() - target.getTime()) / 1000))
+          if (deltaSeconds < 60) return 'just now'
+
+          const units = [
+            ['day', 86400],
+            ['hour', 3600],
+            ['minute', 60],
+          ]
+
+          for (const [label, size] of units) {
+            const value = Math.floor(deltaSeconds / size)
+            if (value >= 1) return `${value} ${label}${value === 1 ? '' : 's'} ago`
+          }
+
+          return 'just now'
+        }
+
+        const formatPlaytime = (hoursValue, playtimeText) => {
+          const parsedHours = Number.parseFloat(hoursValue)
+          if (!Number.isFinite(parsedHours)) return playtimeText || 'Unknown'
+
+          const totalMinutes = Math.round(parsedHours * 60)
+          const hours = Math.floor(totalMinutes / 60)
+          const minutes = totalMinutes % 60
+          if (hours <= 0) return `${minutes} minute${minutes === 1 ? '' : 's'}`
+          if (minutes <= 0) return `${hours} hour${hours === 1 ? '' : 's'}`
+          return `${hours} hour${hours === 1 ? '' : 's'} ${minutes} minute${minutes === 1 ? '' : 's'}`
+        }
+
+        const formatBytes = (bytesValue) => {
+          const bytes = Number.parseInt(bytesValue, 10)
+          if (!Number.isFinite(bytes)) return 'Unknown'
+          if (bytes < 1024) return `${bytes} B`
+          const units = ['KB', 'MB', 'GB', 'TB']
+          let value = bytes / 1024
+          let unitIndex = 0
+          while (value >= 1024 && unitIndex < units.length - 1) {
+            value /= 1024
+            unitIndex += 1
+          }
+          return `${value.toFixed(value >= 10 ? 0 : 1)} ${units[unitIndex]}`
+        }
+
+        const formatAbsoluteTime = (isoString) => {
+          if (!isoString) return 'Unknown'
+          const value = new Date(isoString)
+          if (Number.isNaN(value.getTime())) return 'Unknown'
+          return value.toLocaleString(undefined, {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric',
+            hour: 'numeric',
+            minute: '2-digit',
+          })
+        }
+
+        const tabButtons = [...document.querySelectorAll('.tabs [data-properties-tab]')]
+        const switchTab = (targetId) => {
+          tabButtons.forEach((button) => {
+            const selected = button.dataset.propertiesTab === targetId
+            button.setAttribute('aria-selected', selected ? 'true' : 'false')
+            button.classList.toggle('inactive', !selected)
+          })
+
+          document.querySelectorAll('.properties-window .properties-panel').forEach((panel) => {
+            panel.hidden = panel.id !== `properties-panel-${targetId}`
+          })
+        }
+
+        tabButtons.forEach((button) => {
+          button.addEventListener('click', () => switchTab(button.dataset.propertiesTab))
+        })
+
+        const openProperties = (icon) => {
+          if (!icon || !propertiesOverlay) return
+          hideMenus()
+          propertiesName.textContent = icon.dataset.gameName || 'Unknown game'
+          propertiesGameName.textContent = propertiesName.textContent
+          propertiesPlatform.textContent = icon.dataset.platform || 'Unknown platform'
+          propertiesPlatformBox.textContent = icon.dataset.platform || 'Unknown platform'
+          propertiesIcon.src = icon.dataset.iconUrl || ''
+          propertiesIcon.alt = `${propertiesName.textContent} icon`
+          propertiesTitleIcon.src = icon.dataset.iconUrl || ''
+          propertiesTitleIcon.alt = `${propertiesName.textContent} icon`
+          propertiesWindowTitleText.textContent = `${propertiesName.textContent} Properties`
+          propertiesDescription.textContent = icon.dataset.description || 'No additional details available.'
+          propertiesLastPlayed.textContent = formatRelativeTime(icon.dataset.lastPlayedUtc)
+          propertiesTotalPlaytime.textContent = formatPlaytime(icon.dataset.totalPlaytimeHours, icon.dataset.totalPlaytimeText)
+          propertiesLastBackup.textContent = formatAbsoluteTime(icon.dataset.latestBackupUtc)
+          propertiesRunner.textContent = icon.dataset.runner || 'Unknown'
+          propertiesBackupSnapshots.textContent = icon.dataset.backupSnapshots || 'Unknown'
+          propertiesBackupFileCount.textContent = icon.dataset.backupFileCount || 'Unknown'
+          propertiesBackupSize.textContent = formatBytes(icon.dataset.totalSizeBytes)
+          switchTab('general')
+          propertiesOverlay.hidden = false
+          propertiesOkButton?.focus()
+        }
+
+        const closeProperties = () => {
+          if (!propertiesOverlay) return
+          propertiesOverlay.hidden = true
+        }
+
+        const openPcgw = (icon) => {
+          const url = icon?.dataset?.pcgwUrl
+          if (!url) return
+          window.open(url, '_blank', 'noopener,noreferrer')
+        }
+
+        const allMenus = [desktopMenu, iconMenu]
+
+        const closeSubmenus = (menu) => {
+          if (!menu) return
+          menu.querySelectorAll('[data-submenu]').forEach((item) => {
+            item.classList.remove('is-open')
+            const submenu = item.querySelector('.desktop-context-submenu')
+            if (submenu) submenu.hidden = true
+          })
+        }
+
+        const clearTarget = () => {
+          if (activeIcon) activeIcon.classList.remove('is-menu-target')
+          activeIcon = null
+        }
+
+        const hideMenus = () => {
+          allMenus.forEach((menu) => {
+            closeSubmenus(menu)
+            menu.hidden = true
+            menu.style.left = '-9999px'
+            menu.style.top = '-9999px'
+          })
+          activeMenu = null
+          clearTarget()
+        }
+
+        const positionMenu = (menu, x, y) => {
+          menu.hidden = false
+          menu.style.left = '0px'
+          menu.style.top = '0px'
+          const rect = menu.getBoundingClientRect()
+          const left = Math.min(x, window.innerWidth - rect.width - 8)
+          const top = Math.min(y, window.innerHeight - rect.height - 8)
+          menu.style.left = `${Math.max(8, left)}px`
+          menu.style.top = `${Math.max(8, top)}px`
+        }
+
+        const showMenu = (menu, x, y, icon) => {
+          hideMenus()
+          activeMenu = menu
+          activeIcon = icon || null
+          if (activeIcon) activeIcon.classList.add('is-menu-target')
+          positionMenu(menu, x, y)
+        }
+
+        document.addEventListener('contextmenu', (event) => {
+          const icon = event.target.closest('.desktop-icon')
+          if (!desktop.contains(event.target)) return
+
+          event.preventDefault()
+          showMenu(icon ? iconMenu : desktopMenu, event.clientX, event.clientY, icon)
+        })
+
+        document.addEventListener('click', (event) => {
+          const action = event.target.closest('[data-action]')
+          if (action?.dataset.action === 'open') {
+            openPcgw(activeIcon)
+            hideMenus()
+            return
+          }
+          if (action?.dataset.action === 'properties') {
+            openProperties(activeIcon)
+            return
+          }
+
+          if (!event.target.closest('.desktop-context-menu')) hideMenus()
+
+          if (event.target === propertiesOverlay) closeProperties()
+        })
+
+        document.addEventListener('keydown', (event) => {
+          if (event.key === 'Escape') {
+            hideMenus()
+            closeProperties()
+          }
+        })
+
+        window.addEventListener('blur', hideMenus)
+        window.addEventListener('resize', hideMenus)
+
+        propertiesCloseButton?.addEventListener('click', closeProperties)
+        propertiesOkButton?.addEventListener('click', closeProperties)
+        propertiesCancelButton?.addEventListener('click', closeProperties)
+        propertiesApplyButton?.addEventListener('click', closeProperties)
+
+        grid.querySelectorAll('.desktop-icon').forEach((icon) => {
+          icon.addEventListener('dblclick', () => openProperties(icon))
+        })
+
+        document.querySelectorAll('[data-submenu]').forEach((item) => {
+          const submenu = item.querySelector('.desktop-context-submenu')
+          if (!submenu) return
+
+          item.addEventListener('mouseenter', () => {
+            if (!item.closest('.desktop-context-menu') || item.closest('.desktop-context-menu')[hidden]) return
+            const parentMenu = item.closest('.desktop-context-menu')
+            closeSubmenus(parentMenu)
+            item.classList.add('is-open')
+            submenu.hidden = false
+
+            const itemRect = item.getBoundingClientRect()
+            const submenuRect = submenu.getBoundingClientRect()
+            const overflowRight = itemRect.right + submenuRect.width > window.innerWidth - 8
+            submenu.style.left = overflowRight ? `-${submenuRect.width - 4}px` : 'calc(100% - 0.16rem)'
+            submenu.style.top = '-0.22rem'
+          })
+
+          item.addEventListener('mouseleave', (event) => {
+            if (item.contains(event.relatedTarget)) return
+            item.classList.remove('is-open')
+            submenu.hidden = true
+          })
+        })
+      })()
+    </script>
+  </body>
+</html>
