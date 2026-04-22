@@ -57,7 +57,7 @@
       <link rel="stylesheet" href="/css/main.min.cb451411dabf4ebf4737495ede9113c075e9e0ab14109d3cd7beea82efa352a5.css" integrity="sha256-y0UUEdq/Tr9HN0le3pETwHXp4KsUEJ08177qgu&#43;jUqU=" crossorigin="anonymous">
 
 
-        <script src="/js/main.bf2560a6b0c883d7b56b2bf1d7a112dbd12e29a2cc0d99077443abc647c6d761.js" integrity="sha256-vyVgprDIg9e1ayvx16ES29EuKaLMDZkHdEOrxkfG12E=" crossorigin="anonymous" defer></script>
+        <script src="/js/main.3e1f47b5e6b7f0e82f1ec2bf8f6b6373a0e7dbee57099f1bf1037bc56f74c7ac.js" integrity="sha256-Ph9Htea38OgvHsK/j2tjc6Dn2&#43;5XCZ8b8QN7xW90x6w=" crossorigin="anonymous" defer></script>
 
 
 </head>
@@ -1347,7 +1347,11 @@ The solving script in action:
         </div>
       </div>
       <div class="window-content guestbook-dialog-content">
-        <p>Your comment is under review. Thanks!</p>
+        <p
+          data-comments-dialog-message
+          data-review-message="Your comment is under review. Thanks!"
+          data-rejected-message="Your comment is not under review"
+        >Your comment is under review. Thanks!</p>
         <div class="guestbook-dialog-actions">
           <button class="window-button" type="button" data-comments-dialog-close>OK</button>
         </div>
