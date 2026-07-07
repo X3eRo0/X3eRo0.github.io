@@ -368,30 +368,30 @@ was stored on the <strong>.BSS</strong> section, which was very crucial for my e
 
 
 <table class="responsive-table styled-table">
-  <thead>
-      <tr>
-          <th>SYS_NO.</th>
-          <th>Syscall</th>
-          <th>Filter</th>
-      </tr>
-  </thead>
-  <tbody>
-      <tr>
-          <td>001</td>
-          <td>SYS_write</td>
-          <td>Allowed</td>
-      </tr>
-      <tr>
-          <td>060</td>
-          <td>SYS_exit</td>
-          <td>Allowed</td>
-      </tr>
-      <tr>
-          <td>231</td>
-          <td>SYS_exit_group</td>
-          <td>Allowed</td>
-      </tr>
-  </tbody>
+	<thead>
+			<tr>
+					<th>SYS_NO.</th>
+					<th>Syscall</th>
+					<th>Filter</th>
+			</tr>
+	</thead>
+	<tbody>
+			<tr>
+					<td>001</td>
+					<td>SYS_write</td>
+					<td>Allowed</td>
+			</tr>
+			<tr>
+					<td>060</td>
+					<td>SYS_exit</td>
+					<td>Allowed</td>
+			</tr>
+			<tr>
+					<td>231</td>
+					<td>SYS_exit_group</td>
+					<td>Allowed</td>
+			</tr>
+	</tbody>
 </table>
 
 </p>
@@ -433,40 +433,40 @@ was stored on the <strong>.BSS</strong> section, which was very crucial for my e
 
 
 <table class="responsive-table styled-table">
-  <thead>
-      <tr>
-          <th>SYS_NO.</th>
-          <th>Syscall</th>
-          <th>Filter</th>
-      </tr>
-  </thead>
-  <tbody>
-      <tr>
-          <td>001</td>
-          <td>SYS_read</td>
-          <td>Allowed</td>
-      </tr>
-      <tr>
-          <td>002</td>
-          <td>SYS_open</td>
-          <td>Allowed</td>
-      </tr>
-      <tr>
-          <td>257</td>
-          <td>SYS_openat</td>
-          <td>Allowed</td>
-      </tr>
-      <tr>
-          <td>060</td>
-          <td>SYS_exit</td>
-          <td>Allowed</td>
-      </tr>
-      <tr>
-          <td>231</td>
-          <td>SYS_exit_group</td>
-          <td>Allowed</td>
-      </tr>
-  </tbody>
+	<thead>
+			<tr>
+					<th>SYS_NO.</th>
+					<th>Syscall</th>
+					<th>Filter</th>
+			</tr>
+	</thead>
+	<tbody>
+			<tr>
+					<td>001</td>
+					<td>SYS_read</td>
+					<td>Allowed</td>
+			</tr>
+			<tr>
+					<td>002</td>
+					<td>SYS_open</td>
+					<td>Allowed</td>
+			</tr>
+			<tr>
+					<td>257</td>
+					<td>SYS_openat</td>
+					<td>Allowed</td>
+			</tr>
+			<tr>
+					<td>060</td>
+					<td>SYS_exit</td>
+					<td>Allowed</td>
+			</tr>
+			<tr>
+					<td>231</td>
+					<td>SYS_exit_group</td>
+					<td>Allowed</td>
+			</tr>
+	</tbody>
 </table>
 
 </p>
@@ -653,26 +653,26 @@ was stored on the <strong>.BSS</strong> section, which was very crucial for my e
 
 
 <table class="responsive-table styled-table">
-  <thead>
-      <tr>
-          <th>GOT</th>
-          <th>gadget</th>
-      </tr>
-  </thead>
-  <tbody>
-      <tr>
-          <td><strong>fork</strong></td>
-          <td>xchg eax, ebp ; ret</td>
-      </tr>
-      <tr>
-          <td><strong>setbuf</strong></td>
-          <td>mov rax, qword ptr [rdi + 0x20] ; ret</td>
-      </tr>
-      <tr>
-          <td><strong>read</strong></td>
-          <td>pop rbx ; ret</td>
-      </tr>
-  </tbody>
+	<thead>
+			<tr>
+					<th>GOT</th>
+					<th>gadget</th>
+			</tr>
+	</thead>
+	<tbody>
+			<tr>
+					<td><strong>fork</strong></td>
+					<td>xchg eax, ebp ; ret</td>
+			</tr>
+			<tr>
+					<td><strong>setbuf</strong></td>
+					<td>mov rax, qword ptr [rdi + 0x20] ; ret</td>
+			</tr>
+			<tr>
+					<td><strong>read</strong></td>
+					<td>pop rbx ; ret</td>
+			</tr>
+	</tbody>
 </table>
 
 
